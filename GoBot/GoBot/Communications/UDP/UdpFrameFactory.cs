@@ -39,11 +39,11 @@ namespace GoBot.Communications.UDP
             return b;
         }
 
-        static public Frame Debug(Board carte, int numDebug)
+        static public Frame Debug(Board board, int numDebug)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)carte;
-            switch(carte)
+            tab[0] = (byte)board;
+            switch(board)
             {
                 case Board.RecIO:
                     tab[1] = (byte)UdpFrameFunction.Debug;
@@ -98,10 +98,10 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurPosition(MotorID moteur, int position)
+        static public Frame MoteurPosition(Board board, MotorID moteur, int position)
         {
             byte[] tab = new byte[5];
-            tab[0] = (byte)Board.RecIO;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.MoteurPosition;
             tab[2] = (byte)moteur;
             tab[3] = (byte)ByteDivide(position, true);
@@ -110,25 +110,13 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurStop(MotorID moteur, StopMode mode)
+        static public Frame MoteurStop(Board board, MotorID moteur, StopMode mode)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)Board.RecIO;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.MoteurStop;
             tab[2] = (byte)moteur;
             tab[3] = (byte)mode;
-
-            return new Frame(tab);
-        }
-
-        static public Frame BaliseVitesse(int vitesse)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)Board.RecMove;
-            tab[1] = (byte)UdpFrameFunction.MoteurPosition;
-            tab[2] = (byte)MotorID.Beacon;
-            tab[3] = (byte)ByteDivide(vitesse, true);
-            tab[4] = (byte)ByteDivide(vitesse, false);
 
             return new Frame(tab);
         }
@@ -146,10 +134,10 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurAcceleration(MotorID moteur, int acceleration)
+        static public Frame MoteurAcceleration(Board board, MotorID moteur, int acceleration)
         {
             byte[] tab = new byte[5];
-            tab[0] = (byte)Board.RecIO;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.MoteurAccel;
             tab[2] = (byte)moteur;
             tab[3] = (byte)ByteDivide(acceleration, true);
@@ -158,20 +146,20 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurResetPosition(MotorID moteur)
+        static public Frame MoteurResetPosition(Board board, MotorID moteur)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)Board.RecIO;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.MoteurResetPosition;
             tab[2] = (byte)moteur;
 
             return new Frame(tab);
         }
 
-        static public Frame MoteurOrigin(MotorID moteur)
+        static public Frame MoteurOrigin(Board board, MotorID moteur)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)Board.RecIO;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.MoteurOrigin;
             tab[2] = (byte)moteur;
 
@@ -397,10 +385,10 @@ namespace GoBot.Communications.UDP
             return retour;
         }
 
-        static public Frame TestConnexion(Board carte)
+        static public Frame TestConnexion(Board board)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)carte;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.TestConnexion;
             return new Frame(tab);
         }
@@ -428,20 +416,20 @@ namespace GoBot.Communications.UDP
             return retour;
         }
 
-        static public Frame DemandeValeursAnalogiques(Board carte)
+        static public Frame DemandeValeursAnalogiques(Board board)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)carte;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.DemandeValeursAnalogiques;
 
             Frame retour = new Frame(tab);
             return retour;
         }
 
-        static public Frame DemandeValeursNumeriques(Board carte)
+        static public Frame DemandeValeursNumeriques(Board board)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)carte;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.DemandeValeursNumeriques;
 
             Frame retour = new Frame(tab);
@@ -458,10 +446,10 @@ namespace GoBot.Communications.UDP
             return retour;
         }
 
-        static public Frame EnvoyerUart1(Board carte, Frame trame)
+        static public Frame EnvoyerUart1(Board board, Frame trame)
         {
             byte[] tab = new byte[3 + trame.Length];
-            tab[0] = (byte)carte;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.EnvoiUart1;
             tab[2] = (byte)trame.Length;
             for (int i = 0; i < trame.Length; i++)
@@ -471,10 +459,10 @@ namespace GoBot.Communications.UDP
             return retour;
         }
 
-        static public Frame EnvoyerCAN(Board carte, Frame trame)
+        static public Frame EnvoyerCAN(Board board, Frame trame)
         {
             byte[] tab = new byte[3 + trame.Length];
-            tab[0] = (byte)carte;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.EnvoiCAN;
             tab[2] = (byte)trame.Length;
             for (int i = 0; i < trame.Length; i++)
@@ -484,10 +472,10 @@ namespace GoBot.Communications.UDP
             return retour;
         }
 
-        static public Frame EnvoyerUart2(Board carte, Frame trame)
+        static public Frame EnvoyerUart2(Board board, Frame trame)
         {
             byte[] tab = new byte[3 + trame.Length];
-            tab[0] = (byte)carte;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.EnvoiUart2;
             tab[2] = (byte)trame.Length;
             for (int i = 0; i < trame.Length; i++)
@@ -497,10 +485,10 @@ namespace GoBot.Communications.UDP
             return retour;
         }
 
-        static public Frame CodeurPosition(Board carte, CodeurID codeur)
+        static public Frame CodeurPosition(Board board, CodeurID codeur)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)carte;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.DemandePositionCodeur;
             tab[2] = (byte)codeur;
 

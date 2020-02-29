@@ -121,6 +121,14 @@ namespace GoBot
             {
                 case SensorOnOffID.StartTrigger:
                     return "jack";
+                case SensorOnOffID.PressureSensorLeftBack:
+                    return "pression arrière gauche";
+                case SensorOnOffID.PressureSensorLeftFront:
+                    return "pression avant gauche";
+                case SensorOnOffID.PressureSensorRightBack:
+                    return "pression arrière droit";
+                case SensorOnOffID.PressureSensorRightFront:
+                    return "pression avant droit";
                 default:
                     return sensor.ToString();
             }
@@ -161,8 +169,6 @@ namespace GoBot
         {
             switch (motor)
             {
-                case MotorID.Beacon:
-                    return "balise";
                 default:
                     return motor.ToString();
             }

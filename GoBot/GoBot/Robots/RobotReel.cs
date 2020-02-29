@@ -25,6 +25,7 @@ namespace GoBot
         private Dictionary<SensorColorID, Board> _boardSensorColor;
         private Dictionary<SensorOnOffID, Board> _boardSensorOnOff;
         private Dictionary<ActuatorOnOffID, Board> _boardActuatorOnOff;
+        private Dictionary<MotorID, Board> _boardMotor;
 
         private Connection _asserConnection;
         private bool _positionReceived;
@@ -66,6 +67,10 @@ namespace GoBot
 
             _boardSensorOnOff = new Dictionary<SensorOnOffID, Board>();
             _boardSensorOnOff.Add(SensorOnOffID.StartTrigger, Board.RecMove);
+            _boardSensorOnOff.Add(SensorOnOffID.PressureSensorLeftBack, Board.RecMove);
+            _boardSensorOnOff.Add(SensorOnOffID.PressureSensorLeftFront, Board.RecMove);
+            _boardSensorOnOff.Add(SensorOnOffID.PressureSensorRightBack, Board.RecIO);
+            _boardSensorOnOff.Add(SensorOnOffID.PressureSensorRightFront, Board.RecIO);
 
             _boardActuatorOnOff = new Dictionary<ActuatorOnOffID, Board>();
             _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyLeft, Board.RecMove);
@@ -78,6 +83,8 @@ namespace GoBot
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumRightFront, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightBack, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightFront, Board.RecIO);
+
+            _boardMotor = new Dictionary<MotorID, Board>();
 
             SpeedConfig.ParamChange += SpeedConfig_ParamChange;
         }
@@ -164,7 +171,7 @@ namespace GoBot
             if (wait) _lockSensorColor[sensor] = new Semaphore(0, int.MaxValue);
 
             Frame t = UdpFrameFactory.DemandeCapteurCouleur(_boardSensorColor[sensor], sensor);
-            Connections.ConnectionIO.SendMessage(t);
+            Connections.UDPBoardConnection[_boardSensorColor[sensor]].SendMessage(t);
 
             if (wait) _lockSensorColor[sensor].WaitOne(100);
 
@@ -176,7 +183,7 @@ namespace GoBot
             if (wait) _lockSensorOnOff[sensor] = new Semaphore(0, int.MaxValue);
 
             Frame t = UdpFrameFactory.DemandeCapteurOnOff(_boardSensorOnOff[sensor], sensor);
-            Connections.ConnectionMove.SendMessage(t);
+            Connections.UDPBoardConnection[_boardSensorOnOff[sensor]].SendMessage(t);
 
             if (wait) _lockSensorOnOff[sensor].WaitOne(100);
 
@@ -620,8 +627,8 @@ namespace GoBot
 
             if (wait) _lockMotor[motor] = new Semaphore(0, int.MaxValue);
 
-            Frame frame = UdpFrameFactory.MoteurPosition(motor, position);
-            Connections.ConnectionIO.SendMessage(frame);
+            Frame frame = UdpFrameFactory.MoteurPosition(_boardMotor[motor], motor, position);
+            Connections.UDPBoardConnection[_boardMotor[motor]].SendMessage(frame);
 
             if (wait) _lockMotor[motor].WaitOne(5000);
         }
@@ -639,8 +646,8 @@ namespace GoBot
 
             if (wait) _lockMotor[motor] = new Semaphore(0, int.MaxValue);
 
-            Frame frame = UdpFrameFactory.MoteurOrigin(motor);
-            Connections.ConnectionIO.SendMessage(frame);
+            Frame frame = UdpFrameFactory.MoteurOrigin(_boardMotor[motor], motor);
+            Connections.UDPBoardConnection[_boardMotor[motor]].SendMessage(frame);
 
             if (wait) _lockMotor[motor].WaitOne(5000);
         }
@@ -665,8 +672,8 @@ namespace GoBot
         {
             base.SetMotorAcceleration(motor, acceleration);
 
-            Frame trame = UdpFrameFactory.MoteurAcceleration(motor, acceleration);
-            Connections.ConnectionIO.SendMessage(trame);
+            Frame trame = UdpFrameFactory.MoteurAcceleration(_boardMotor[motor], motor, acceleration);
+            Connections.UDPBoardConnection[_boardMotor[motor]].SendMessage(trame);
         }
 
         public override void EnablePower(bool on)

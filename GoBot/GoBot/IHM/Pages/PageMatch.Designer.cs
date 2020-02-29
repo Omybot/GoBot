@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PageMatch));
             this.btnTrap = new System.Windows.Forms.Button();
             this.btnColorRight = new System.Windows.Forms.Button();
             this.btnColorLeft = new System.Windows.Forms.Button();
@@ -265,7 +266,7 @@
             // 
             // picTeensy
             // 
-            this.picTeensy.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picTeensy.Image = ((System.Drawing.Image)(resources.GetObject("picTeensy.Image")));
             this.picTeensy.Location = new System.Drawing.Point(944, 55);
             this.picTeensy.Name = "picTeensy";
             this.picTeensy.Size = new System.Drawing.Size(48, 48);
@@ -274,7 +275,7 @@
             // 
             // picServo6
             // 
-            this.picServo6.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picServo6.Image = ((System.Drawing.Image)(resources.GetObject("picServo6.Image")));
             this.picServo6.Location = new System.Drawing.Point(790, 55);
             this.picServo6.Name = "picServo6";
             this.picServo6.Size = new System.Drawing.Size(48, 48);
@@ -301,7 +302,7 @@
             // 
             // picServo4
             // 
-            this.picServo4.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picServo4.Image = ((System.Drawing.Image)(resources.GetObject("picServo4.Image")));
             this.picServo4.Location = new System.Drawing.Point(636, 55);
             this.picServo4.Name = "picServo4";
             this.picServo4.Size = new System.Drawing.Size(48, 48);
@@ -310,7 +311,7 @@
             // 
             // picServo3
             // 
-            this.picServo3.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picServo3.Image = ((System.Drawing.Image)(resources.GetObject("picServo3.Image")));
             this.picServo3.Location = new System.Drawing.Point(559, 55);
             this.picServo3.Name = "picServo3";
             this.picServo3.Size = new System.Drawing.Size(48, 48);
@@ -319,7 +320,7 @@
             // 
             // picServo1
             // 
-            this.picServo1.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picServo1.Image = ((System.Drawing.Image)(resources.GetObject("picServo1.Image")));
             this.picServo1.Location = new System.Drawing.Point(405, 55);
             this.picServo1.Name = "picServo1";
             this.picServo1.Size = new System.Drawing.Size(48, 48);
@@ -328,7 +329,7 @@
             // 
             // picServo5
             // 
-            this.picServo5.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picServo5.Image = ((System.Drawing.Image)(resources.GetObject("picServo5.Image")));
             this.picServo5.Location = new System.Drawing.Point(713, 55);
             this.picServo5.Name = "picServo5";
             this.picServo5.Size = new System.Drawing.Size(48, 48);
@@ -337,7 +338,7 @@
             // 
             // picIO
             // 
-            this.picIO.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picIO.Image = ((System.Drawing.Image)(resources.GetObject("picIO.Image")));
             this.picIO.Location = new System.Drawing.Point(251, 55);
             this.picIO.Name = "picIO";
             this.picIO.Size = new System.Drawing.Size(48, 48);
@@ -346,7 +347,7 @@
             // 
             // picMove
             // 
-            this.picMove.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picMove.Image = ((System.Drawing.Image)(resources.GetObject("picMove.Image")));
             this.picMove.Location = new System.Drawing.Point(174, 55);
             this.picMove.Name = "picMove";
             this.picMove.Size = new System.Drawing.Size(48, 48);
@@ -355,7 +356,7 @@
             // 
             // picLidar2
             // 
-            this.picLidar2.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picLidar2.Image = ((System.Drawing.Image)(resources.GetObject("picLidar2.Image")));
             this.picLidar2.Location = new System.Drawing.Point(97, 55);
             this.picLidar2.Name = "picLidar2";
             this.picLidar2.Size = new System.Drawing.Size(48, 48);
@@ -364,7 +365,7 @@
             // 
             // picLidar1
             // 
-            this.picLidar1.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picLidar1.Image = ((System.Drawing.Image)(resources.GetObject("picLidar1.Image")));
             this.picLidar1.Location = new System.Drawing.Point(20, 55);
             this.picLidar1.Name = "picLidar1";
             this.picLidar1.Size = new System.Drawing.Size(48, 48);
@@ -373,7 +374,6 @@
             // 
             // picColor
             // 
-            this.picColor.Image = global::GoBot.Properties.Resources.ValidOk48;
             this.picColor.Location = new System.Drawing.Point(304, 168);
             this.picColor.Name = "picColor";
             this.picColor.Size = new System.Drawing.Size(96, 96);
@@ -391,7 +391,7 @@
             // 
             // picJack
             // 
-            this.picJack.Image = global::GoBot.Properties.Resources.ValidOk96;
+            this.picJack.Image = global::GoBot.Properties.Resources.ValidNok96;
             this.picJack.Location = new System.Drawing.Point(304, 309);
             this.picJack.Name = "picJack";
             this.picJack.Size = new System.Drawing.Size(96, 96);
@@ -409,7 +409,7 @@
             // 
             // picAlim
             // 
-            this.picAlim.Image = global::GoBot.Properties.Resources.ValidOk48;
+            this.picAlim.Image = ((System.Drawing.Image)(resources.GetObject("picAlim.Image")));
             this.picAlim.Location = new System.Drawing.Point(867, 55);
             this.picAlim.Name = "picAlim";
             this.picAlim.Size = new System.Drawing.Size(48, 48);

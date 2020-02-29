@@ -54,34 +54,36 @@
 
     public enum MotorID
     {
-        FingerFront = 0, // RecIO
-        FingerBack = 1, // RecIO
-        AvailableOnRecIO2 = 2, // RecIO
-        AvailableOnRecIO3 = 3, // RecIO
+        FingerFront = 0x00, // RecIO
+        FingerBack = 0x01, // RecIO
+        AvailableOnRecIO2 = 0x02, // RecIO
+        AvailableOnRecIO3 = 0x03, // RecIO
 
-        Beacon = 0x10, // RecMove
-
-        Gulp = 11, // RecMove
-        AvailableOnRecMove12 = 12 // RecMove
+        Gulp = 0x11, // RecMove
+        AvailableOnRecMove12 = 0x12 // RecMove
     }
 
     public enum ActuatorOnOffID
     {
-        PowerSensorColorBuoyLeft = 0,
-        PowerSensorColorBuoyRight = 1,
-        MakeVacuumLeftFront = 11,
-        MakeVacuumRightFront = 12,
-        MakeVacuumLeftBack = 13,
-        MakeVacuumRightBack = 14,
-        OpenVacuumLeftFront = 20,
-        OpenVacuumRightFront = 21,
-        OpenVacuumLeftBack = 22,
-        OpenVacuumRightBack = 23
+        PowerSensorColorBuoyLeft = 0x00,
+        PowerSensorColorBuoyRight = 0x01,
+        MakeVacuumRightFront = 0x11,
+        MakeVacuumLeftFront = 0x12,
+        MakeVacuumRightBack = 0x13,
+        MakeVacuumLeftBack = 0x14,
+        OpenVacuumRightFront = 0x20,
+        OpenVacuumLeftFront = 0x21,
+        OpenVacuumRightBack = 0x22,
+        OpenVacuumLeftBack = 0x23
     }
 
     public enum SensorOnOffID
     {
-        StartTrigger = 10
+        StartTrigger = 10,
+        PressureSensorRightFront = 0x11,
+        PressureSensorLeftFront = 0x12,
+        PressureSensorRightBack = 0x13,
+        PressureSensorLeftBack = 0x14
     }
 
     public enum SensorColorID
