@@ -77,10 +77,10 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame ActionneurOnOff(ActuatorOnOffID actionneur, bool onOff)
+        static public Frame ActionneurOnOff(Board board, ActuatorOnOffID actionneur, bool onOff)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)Board.RecIO;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.PilotageOnOff;
             tab[2] = (byte)actionneur;
             tab[3] = (byte)(onOff ? 1 : 0);

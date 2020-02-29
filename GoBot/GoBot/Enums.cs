@@ -67,8 +67,8 @@
 
     public enum ActuatorOnOffID
     {
-        PowerSensorColorBuoyLeft = 1,
-        PowerSensorColorBuoyRight = 2,
+        PowerSensorColorBuoyLeft = 0,
+        PowerSensorColorBuoyRight = 1,
         MakeVacuumLeftFront = 11,
         MakeVacuumRightFront = 12,
         MakeVacuumLeftBack = 13,
