@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows.Forms;
 
 namespace GoBot.Communications.UDP
 {
@@ -98,7 +100,7 @@ namespace GoBot.Communications.UDP
         public override bool SendMessage(Frame frame)
         {
             bool ok = false;
-            
+
             //if (Connections.EnableConnection[frame.Board])
             {
                 try
@@ -157,7 +159,15 @@ namespace GoBot.Communications.UDP
                 Frame trameRecue = new Frame(receiveBytes);
 
                 ConnectionChecker.NotifyAlive();
-                OnFrameReceived(trameRecue);
+
+                try
+                {
+                    OnFrameReceived(trameRecue);
+                }
+                catch (Exception e1)
+                {
+                    if (Debugger.IsAttached) MessageBox.Show("Trame reçue buguée : " + trameRecue.ToString() + Environment.NewLine + e1.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 u.BeginReceive(ReceptionCallback, new UdpState(u, e));
             }
