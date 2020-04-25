@@ -41,10 +41,8 @@ namespace Geometry.Shapes.ShapesInteractions
 
         public static List<RealPoint> GetCrossingPoints(Line line, Segment segment)
         {
-            List<RealPoint> output = new List<RealPoint>();
-
             // Vérifie de la même manière qu'une droite mais vérifie ensuite que le point obtenu (s'il existe) appartient bien au segment
-            output = LineWithLine.GetCrossingPoints(line, segment);
+            List<RealPoint>  output = LineWithLine.GetCrossingPoints(line, segment);
 
             if (output.Count > 0 && !segment.Contains(output[0]))
                 output.Clear();

@@ -13,5 +13,20 @@ namespace Geometry.Shapes.ShapesInteractions
 
             return containedCircle.Radius == 0 && containingLine.Contains(containedCircle.Center);
         }
+
+        public static bool Cross(Line line, Circle circle)
+        {
+            return CircleWithLine.Cross(circle, line);
+        }
+
+        public static double Distance(Line line, Circle circle)
+        {
+            return CircleWithLine.Distance(circle, line);
+        }
+
+        public static List<RealPoint> GetCrossingPoints(Line line, Circle circle)
+        {
+            return CircleWithLine.GetCrossingPoints(circle, line);
+        }
     }
 }

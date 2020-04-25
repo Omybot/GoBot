@@ -52,53 +52,6 @@ namespace Geometry.Shapes
 
         }
 
-        protected override bool Contains(RealPoint point)
-        {
-            // Plus rapide que la méthode des polygones
-            return point.X >= Points[0].X && point.X < Points[2].X && point.Y >= Points[0].Y && point.Y < Points[2].Y;
-        }
-
-        public override double Distance(RealPoint p)
-        {
-            // Plus rapide que la méthode des polygones
-            RealPoint topLeft = _sides[0].StartPoint;
-            RealPoint topRight = _sides[1].StartPoint;
-            RealPoint bottomRight = _sides[2].StartPoint;
-            RealPoint bottomLeft = _sides[3].StartPoint;
-
-            double distance = 0;
-
-            if (p.X < topLeft.X)
-            {
-                if (p.Y < topLeft.Y)
-                    distance = p.Distance(topLeft);
-                else if (p.Y > bottomRight.Y)
-                    distance = p.Distance(bottomLeft);
-                else
-                    distance = topLeft.X - p.X;
-            }
-            else if (p.X > bottomRight.X)
-            {
-                if (p.Y < topLeft.Y)
-                    distance = p.Distance(topRight);
-                else if (p.Y > bottomRight.Y)
-                    distance = p.Distance(bottomRight);
-                else
-                    distance = p.X - topRight.X;
-            }
-            else
-            {
-                if (p.Y < topLeft.Y)
-                    distance = topLeft.Y - p.Y;
-                else if (p.Y > bottomRight.Y)
-                    distance = p.Y - bottomLeft.Y;
-                else
-                    distance = 0;
-            }
-
-            return distance;
-        }
-
         public override string ToString()
         {
             return _sides[0].StartPoint.ToString() + "; " +

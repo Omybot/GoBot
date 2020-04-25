@@ -222,22 +222,19 @@ namespace Geometry.Shapes
         /// Dessine le cercle sur un Graphic
         /// </summary>
         /// <param name="g">Graphic sur lequel dessiner</param>
-        /// <param name="outlineColor">Couleur du contour du cercle</param>
-        /// <param name="outlineWidth">Epaisseur du contour</param>
-        /// <param name="fillColor">Couleur de remplissage du cercle</param>
+        /// <param name="outline">Pen utilisé pour dessiner le contour du cercle</param>
+        /// <param name="fill">Brush utilisé pour remplissage du cercle</param>
         /// <param name="scale">Echelle de conversion</param>
-        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
+        public void Paint(Graphics g, Pen outline, Brush fill, WorldScale scale)
         {
             Point screenPosition = scale.RealToScreenPosition(Center);
             int screenRadius = scale.RealToScreenDistance(Radius);
 
-            if (fillColor != Color.Transparent)
-                using (SolidBrush brush = new SolidBrush(fillColor))
-                    g.FillEllipse(brush, new Rectangle(screenPosition.X - screenRadius, screenPosition.Y - screenRadius, screenRadius * 2, screenRadius * 2));
+            if (fill != null)
+                g.FillEllipse(fill, new Rectangle(screenPosition.X - screenRadius, screenPosition.Y - screenRadius, screenRadius * 2, screenRadius * 2));
 
-            if (outlineColor != Color.Transparent)
-                using (Pen pen = new Pen(outlineColor, outlineWidth))
-                    g.DrawEllipse(pen, new Rectangle(screenPosition.X - screenRadius, screenPosition.Y - screenRadius, screenRadius * 2, screenRadius * 2));
+            if (outline != null)
+                g.DrawEllipse(outline, new Rectangle(screenPosition.X - screenRadius, screenPosition.Y - screenRadius, screenRadius * 2, screenRadius * 2));
 
         }
 

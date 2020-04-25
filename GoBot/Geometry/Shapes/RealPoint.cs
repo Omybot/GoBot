@@ -151,72 +151,13 @@ namespace Geometry.Shapes
         {
             double output = 0;
 
-            if (shape is RealPoint) output = this.Distance(shape as RealPoint);
-            else if (shape is Segment) output = this.Distance(shape as Segment);
-            else if (shape is Polygon) output = this.Distance(shape as Polygon);
-            else if(shape is Circle) output = this.Distance(shape as Circle);
-            else if (shape is Line) output = this.Distance(shape as Line);
+            if (shape is RealPoint) output = RealPointWithRealPoint.Distance(this, shape as RealPoint);
+            else if (shape is Segment) output = RealPointWithSegment.Distance(this, shape as Segment);
+            else if (shape is Polygon) output = RealPointWithPolygon.Distance(this, shape as Polygon);
+            else if(shape is Circle) output = RealPointWithCircle.Distance(this, shape as Circle);
+            else if (shape is Line) output = RealPointWithLine.Distance(this, shape as Line);
 
             return output;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et le Segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Distance minimale</returns>
-        protected double Distance(Segment segment)
-        {
-            // Le segment sait le faire
-            return segment.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et la Droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Distance minimale</returns>
-        protected double Distance(Line line)
-        {
-            // La droite sait le faire
-            return line.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et le Cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle testé</param>
-        /// <returns>Distance minimale</returns>
-        protected double Distance(Circle circle)
-        {
-            // Distance jusqu'au centre du cercle - son rayon
-            return Distance(circle.Center) - circle.Radius;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et le Polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Distance minimale</returns>
-        protected double Distance(Polygon polygon)
-        {
-            // Distance jusqu'au segment le plus proche
-            double minDistance = double.MaxValue;
-
-            foreach (Segment s in polygon.Sides)
-                minDistance = Math.Min(s.Distance(this), minDistance);
-
-            return minDistance;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et le PointReel donné
-        /// </summary>
-        /// <param name="point">PointReel testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(RealPoint point)
-        {
-            return Maths.Hypothenuse((X - point.X), (Y - point.Y));
         }
 
         #endregion
@@ -230,11 +171,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si le PointReel contient la IForme testée</returns>
         public bool Contains(IShape shape)
         {
-            // La seule chose qu'un point peut contenir, c'est un point identique à lui même
-            if (shape is RealPoint)
-                return (RealPoint)shape == this;
+            bool output = false;
 
-            return false;
+            if (shape is RealPoint) output = RealPointWithRealPoint.Contains(this, shape as RealPoint);
+            else if (shape is Segment) output = RealPointWithSegment.Contains(this, shape as Segment);
+            else if (shape is Polygon) output = RealPointWithPolygon.Contains(this, shape as Polygon);
+            else if (shape is Circle) output = RealPointWithCircle.Contains(this, shape as Circle);
+            else if (shape is Line) output = RealPointWithLine.Contains(this, shape as Line);
+
+            return output;
         }
 
         #endregion
@@ -249,7 +194,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si le PointReel courant croise la IForme donnée</returns>
         public bool Cross(IShape shape)
         {
-            return GetCrossingPoints(shape).Count > 0;
+            bool output = false;
+
+            if (shape is RealPoint) output = RealPointWithRealPoint.Cross(this, shape as RealPoint);
+            else if (shape is Segment) output = RealPointWithSegment.Cross(this, shape as Segment);
+            else if (shape is Polygon) output = RealPointWithPolygon.Cross(this, shape as Polygon);
+            else if (shape is Circle) output =  RealPointWithCircle.Cross(this, shape as Circle);
+            else if (shape is Line) output = RealPointWithLine.Cross(this, shape as Line);
+
+            return output;
         }
 
         /// <summary>
@@ -261,56 +214,11 @@ namespace Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
-            else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
-            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
-            else if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
-            else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
-
-            return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithSegment(Segment segment)
-        {
-            List<RealPoint> output = new List<RealPoint>();
-
-            if (segment.Contains(this)) output.Add(new RealPoint(this));
-
-            return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
-        {
-            List<RealPoint> output = new List<RealPoint>();
-
-            if (point.X == X && point.Y == Y) output.Add(new RealPoint(this));
-
-            return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithLine(Line line)
-        {
-            List<RealPoint> output = new List<RealPoint>();
-
-            if (line.Contains(this)) output.Add(new RealPoint(this));
-
-            return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithPolygon(Polygon polygon)
-        {
-            List<RealPoint> output = new List<RealPoint>();
-
-            if (polygon.Contains(this)) output.Add(new RealPoint(this));
-
-            return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
-        {
-            List<RealPoint> output = new List<RealPoint>();
-
-            if (circle.Contains(this)) output.Add(new RealPoint(this));
+            if (shape is RealPoint) output = RealPointWithRealPoint.GetCrossingPoints(this, shape as RealPoint);
+            else if (shape is Segment) output = RealPointWithSegment.GetCrossingPoints(this, shape as Segment);
+            else if (shape is Polygon) output = RealPointWithPolygon.GetCrossingPoints(this, shape as Polygon);
+            else if (shape is Circle) output = RealPointWithCircle.GetCrossingPoints(this, shape as Circle);
+            else if (shape is Line) output = RealPointWithLine.GetCrossingPoints(this, shape as Line);
 
             return output;
         }
@@ -374,24 +282,33 @@ namespace Geometry.Shapes
         /// Dessine le point sur un Graphic
         /// </summary>
         /// <param name="g">Graphic sur lequel dessiner</param>
-        /// <param name="outlineColor">Couleur du contour du point</param>
-        /// <param name="outlineWidth">Rayon du point</param>
-        /// <param name="fillColor">Couleur de remplissage du point</param>
+        /// <param name="outline">Pen pour dessiner le contour du point</param>
+        /// <param name="fill">Brush pour le remplissage du point</param>
         /// <param name="scale">Echelle de conversion</param>
-        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
+        public void Paint(Graphics g, Pen outline, Brush fill, WorldScale scale)
         {
             Point screenPosition = scale.RealToScreenPosition(this);
 
-            Rectangle rect = new Rectangle(screenPosition.X - outlineWidth, screenPosition.Y - outlineWidth, outlineWidth * 2, outlineWidth * 2);
+            Rectangle rect = new Rectangle(screenPosition.X - (int)outline.Width, screenPosition.Y - (int)outline.Width, (int)outline.Width * 2, (int)outline.Width * 2);
 
-            if (fillColor != Color.Transparent)
-                using (SolidBrush brush = new SolidBrush(fillColor))
-                    g.FillEllipse(brush, rect);
+            if (fill != null)
+                    g.FillEllipse(fill, rect);
 
-            if (outlineColor != Color.Transparent)
-                using (Pen pen = new Pen(outlineColor))
-                    g.DrawEllipse(pen, rect);
+            if (outline != null)
+            {
+                Pen tmp = new Pen(outline.Color);
+                g.DrawEllipse(tmp, rect);
+                tmp.Dispose();
+            }
+        }
 
+        #endregion
+
+        #region Statiques
+
+        public static RealPoint Shift(RealPoint realPoint, double dx, double dy)
+        {
+            return new RealPoint(realPoint.X + dx, realPoint.Y + dy);
         }
 
         #endregion

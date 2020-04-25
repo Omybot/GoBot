@@ -288,88 +288,13 @@ namespace Geometry.Shapes
         {
             double output = 0;
 
-            if (shape is RealPoint) output = Distance(shape as RealPoint);
-            else if (shape is Segment) output = Distance(shape as Segment);
-            else if (shape is Polygon) output = Distance(shape as Polygon);
-            else if (shape is Circle) output = CircleWithPolygon.Distance(shape as Circle, this);
-            else if (shape is Line) output = LineWithPolygon.Distance(shape as Line, this);
+            if (shape is RealPoint) output = PolygonWithRealPoint.Distance(this, shape as RealPoint);
+            else if (shape is Segment) output = PolygonWithSegment.Distance(this, shape as Segment);
+            else if (shape is Polygon) output = PolygonWithPolygon.Distance(this, shape as Polygon);
+            else if (shape is Circle) output = PolygonWithCircle.Distance(this, shape as Circle);
+            else if (shape is Line) output = PolygonWithLine.Distance(this, shape as Line);
 
             return output;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le polygone courant et le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Distance minimum entre le polygone et le segment donné</returns>
-        public double Distance(Segment segment)
-        {
-            // Le segment sait le faire
-            return segment.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le polygone courant et la droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Distance minimum entre le polygone et la droite donnée</returns>
-        public double Distance(Line line)
-        {
-            return line.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le polygone courant et le cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle testé</param>
-        /// <returns>Distance minimum entre le polygone et le cercle donné</returns>
-        public double Distance(Circle circle)
-        {
-            return circle.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le polygone courant et le polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Distance minimum entre le polygone et le polygone donné</returns>
-        public double Distance(Polygon polygon)
-        {
-            double minDistance = 0;
-
-            // Si les polygones se croisent ou se contiennent, la distance est nulle
-            if (!Cross(polygon) && !Contains(polygon) && !polygon.Contains(this))
-            {
-                minDistance = double.MaxValue;
-
-                foreach (Segment s1 in polygon.Sides)
-                    foreach (Segment s2 in Sides)
-                    {
-                        minDistance = Math.Min(minDistance, s1.Distance(s2));
-                    }
-            }
-
-            return minDistance;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le polygone courant et le point donné
-        /// </summary>
-        /// <param name="point">Point testé</param>
-        /// <returns>Distance minimum entre le polygone et le point donné</returns>
-        public virtual double Distance(RealPoint point)
-        {
-            // C'est la distance minimale entre le point et chaque segment
-
-            if (Contains(point))
-                return 0;
-
-            double minDistance = double.MaxValue;
-
-            foreach (Segment s in _sides)
-                minDistance = Math.Min(minDistance, s.Distance(point));
-
-            return minDistance;
         }
 
         #endregion
@@ -385,124 +310,13 @@ namespace Geometry.Shapes
         {
             bool output = false;
 
-            if (shape is RealPoint) output = Contains(shape as RealPoint);
-            else if (shape is Segment) output = Contains(shape as Segment);
-            else if (shape is Polygon) output = Contains(shape as Polygon);
-            else if (shape is Circle) output = Contains(shape as Circle);
-            else if (shape is Line) output = LineWithPolygon.Contains(shape as Line, this);
+            if (shape is RealPoint) output = PolygonWithRealPoint.Contains(this, shape as RealPoint);
+            else if (shape is Segment) output = PolygonWithSegment.Contains(this, shape as Segment);
+            else if (shape is Polygon) output = PolygonWithPolygon.Contains(this, shape as Polygon);
+            else if (shape is Circle) output = PolygonWithCircle.Contains(this, shape as Circle);
+            else if (shape is Line) output = PolygonWithLine.Contains(this, shape as Line);
 
             return output;
-        }
-
-        /// <summary>
-        /// Teste si le polygone courant contient le point donné
-        /// </summary>
-        /// <param name="point">PointReel testé</param>
-        /// <returns>Vrai si le polygone contient le point donné</returns>
-        protected virtual bool Contains(RealPoint point)
-        {
-            // Pour savoir si le Polygone contient un point on trace un segment entre ce point et un point très éloigné
-            // On compte combien de cotés du polygone croisent cette droite
-            // Si ce nombre est impaire alors le point est contenu dans le polygone
-
-            int crossCount = 0;
-            Segment testSeg = new Segment(point, new RealPoint(Sides.Min(o => o.StartPoint.X) - 10000, point.Y));
-
-            foreach (Segment s in Sides)
-            {
-                if (s.Contains(point))
-                    return true;
-
-                if (s.Cross(testSeg))
-                {
-                    List<RealPoint> cross = testSeg.GetCrossingPoints(s);
-                    if (cross.Count > 0 && cross[0] != s.EndPoint) // Pour ne pas compter 2 fois un croisement sur un sommet, il sera déjà compté sur le Begin d'un autre
-                        crossCount++;
-                }
-            }
-
-            crossCount -= Sides.Count(o => Math.Abs(o.StartPoint.Y - point.Y) < RealPoint.PRECISION);
-
-            return (crossCount % 2 == 1);
-        }
-
-        /// <summary>
-        /// Teste si le polygone courant contient le polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Vrai si le polygone contient le polygone donné</returns>
-        protected bool Contains(Polygon polygon)
-        {
-            // Il suffit de contenir tous les segments du polygone testé
-            foreach (Segment s in polygon.Sides)
-            {
-                if (!Contains(s))
-                    return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Teste si le polygone courant contient le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Vrai si le polygone contient le segment donné</returns>
-        protected bool Contains(Segment segment)
-        {
-            // Il suffit de contenir les deux extrémités du segment et de ne jamais croiser le segment
-            // À part si le croisement se fait sur une extremité
-
-            bool result = false;
-
-            if (Cross(segment))
-            {
-                // Si ça se croise : ça peut encore être les extremités qui touchent
-
-                List<RealPoint> crossPoints = GetCrossingPoints(segment);
-                if (crossPoints.Count > 2)
-                {
-                    // Plus de 2 croisements : le segment n'est pas contenu
-                    result = false;
-                }
-                else
-                {
-                    // Maximum 2 croisements : le segment est contenu si les 2 extremités et un point aléatoire du segment (genre le milieu) sont contenus
-                    if (Contains(segment.StartPoint) && Contains(segment.EndPoint) && Contains(segment.Barycenter))
-                        result = true;
-                    else
-                        result = false;
-                }
-            }
-            else
-            {
-                // Pas de croisement, il suffit de contenir un point du segment
-                result = Contains(segment.StartPoint);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Teste si le polygone courant contient la droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Vrai si le polygone contient la droite donnée</returns>
-        protected bool Contains(Line line)
-        {
-            // Un polygone ne peut pas contenir de droite
-            return false;
-        }
-
-        /// <summary>
-        /// Teste si le polygone courant contient le cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle testé</param>
-        /// <returns>Vrai si le polygone contient le cercle donné</returns>
-        protected bool Contains(Circle circle)
-        {
-            // Pour contenir un cercle, un polygone ne doit pas le croiser et contenir son centre
-            return !Cross(circle) && Contains(circle.Center);
         }
 
         #endregion
@@ -518,7 +332,11 @@ namespace Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            _sides.ForEach(s => output.AddRange(s.GetCrossingPoints(shape)));
+            if (shape is RealPoint) output = PolygonWithRealPoint.GetCrossingPoints(this, shape as RealPoint);
+            else if (shape is Segment) output = PolygonWithSegment.GetCrossingPoints(this, shape as Segment);
+            else if (shape is Polygon) output = PolygonWithPolygon.GetCrossingPoints(this, shape as Polygon);
+            else if (shape is Circle) output = PolygonWithCircle.GetCrossingPoints(this, shape as Circle);
+            else if (shape is Line) output = PolygonWithLine.GetCrossingPoints(this, shape as Line);
 
             return output;
         }
@@ -530,8 +348,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si le polygone croise la forme donnée</returns>
         public bool Cross(IShape shape)
         {
-            // On teste si la forme croise un des cotés du polygone
-            return _sides.Exists(s => s.Cross(shape));
+            bool output = false;
+
+            if (shape is RealPoint) output = PolygonWithRealPoint.Cross(this, shape as RealPoint);
+            else if (shape is Segment) output = PolygonWithSegment.Cross(this, shape as Segment);
+            else if (shape is Polygon) output = PolygonWithPolygon.Cross(this, shape as Polygon);
+            else if (shape is Circle) output = PolygonWithCircle.Cross(this, shape as Circle);
+            else if (shape is Line) output = PolygonWithLine.Cross(this, shape as Line);
+
+            return output;
         }
 
         #endregion
@@ -787,7 +612,7 @@ namespace Geometry.Shapes
         /// <param name="outlineWidth">Epaisseur du contour</param>
         /// <param name="fillColor">Couleur de remplissage du polygone</param>
         /// <param name="scale">Echelle de conversion</param>
-        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
+        public void Paint(Graphics g, Pen outline, Brush fill, WorldScale scale)
         {
             if (Sides.Count == 0)
                 return;
@@ -804,13 +629,11 @@ namespace Geometry.Shapes
 
             listePoints[listePoints.Length - 1] = listePoints[0];
 
-            if (fillColor != Color.Transparent)
-                using (SolidBrush brush = new SolidBrush(fillColor))
-                    g.FillPolygon(brush, listePoints, System.Drawing.Drawing2D.FillMode.Winding);
+            if (fill != null)
+                g.FillPolygon(fill, listePoints, System.Drawing.Drawing2D.FillMode.Winding);
 
-            if (outlineColor != Color.Transparent)
-                using (Pen pen = new Pen(outlineColor, outlineWidth))
-                    g.DrawPolygon(pen, listePoints);
+            if (outline != null)
+                g.DrawPolygon(outline, listePoints);
         }
 
         #endregion

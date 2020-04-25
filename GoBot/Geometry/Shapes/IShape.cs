@@ -47,11 +47,10 @@ namespace Geometry.Shapes
         /// Peint la forme sur le Graphic donné
         /// </summary>
         /// <param name="g">Graphic sur lequel peindre</param>
-        /// <param name="outlineColor">Couleur du contour de la forme</param>
-        /// <param name="outlineWidth">Epaisseur du contour de la forme. Peut représenter une autre épaisseur sur certaines formes.</param>
-        /// <param name="fillColor">Couleur de remplissag de la forme</param>
+        /// <param name="outline">Pen utilisé pour peindre le contour de la forme (null pour aucun contour)</param>
+        /// <param name="fillColor">Brush pour de remplissag de la forme (null pour aucun remplissage)</param>
         /// <param name="scale">Echelle de conversion</param>
-        void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale);
+        void Paint(Graphics g, Pen outline, Brush fill, WorldScale scale);
     }
 
     public static class IShapeExtensions
@@ -78,6 +77,17 @@ namespace Geometry.Shapes
         public static IShape Rotation(this IShape shape, AngleDelta angle, RealPoint rotationCenter = null)
         {
             return ((IShapeModifiable<IShape>)shape).Rotation(angle, rotationCenter);
+        }
+
+        public static void Paint(this IShape shape, Graphics g, Color outline, int outlineWidth, Color fill, WorldScale scale)
+        {
+            Pen p = new Pen(outline, outlineWidth);
+            Brush b = new SolidBrush(fill);
+
+            shape.Paint(g, p, b, scale);
+
+            p.Dispose();
+            b.Dispose();
         }
     }
 

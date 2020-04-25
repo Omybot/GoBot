@@ -170,11 +170,11 @@ namespace Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
-            else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
-            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
-            else if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
-            else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
+            if (shape is RealPoint) output = SegmentWithRealPoint.GetCrossingPoints(this, shape as RealPoint);
+            else if (shape is Segment) output = SegmentWithSegment.GetCrossingPoints(this, shape as Segment);
+            else if (shape is Polygon) output = SegmentWithPolygon.GetCrossingPoints(this, shape as Polygon);
+            else if (shape is Circle) output = SegmentWithCircle.GetCrossingPoints(this, shape as Circle);
+            else if (shape is Line) output = SegmentWithLine.GetCrossingPoints(this, shape as Line);
 
             return output;
         }
@@ -182,60 +182,6 @@ namespace Geometry.Shapes
         private List<RealPoint> GetCrossingPointsWithPolygon(Polygon polygon)
         {
             return polygon.GetCrossingPoints(this); // Le polygone sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
-        {
-            List<RealPoint> intersectsPoints = new List<RealPoint>();
-            double dx = _endPoint.X - _startPoint.X;
-            double dy = _endPoint.Y - _startPoint.Y;
-            double Ox = _startPoint.X - circle.Center.X;
-            double Oy = _startPoint.Y - circle.Center.Y;
-            double A = dx * dx + dy * dy;
-            double B = 2 * (dx * Ox + dy * Oy);
-            double C = Ox * Ox + Oy * Oy - circle.Radius * circle.Radius;
-            double delta = B * B - 4 * A * C;
-
-	        if (delta < 0 + double.Epsilon && delta > 0 - double.Epsilon)
-	        {
-                double t = -B / (2 * A);
-		        if (t >= 0 && t <= 1)
-                    intersectsPoints.Add(new RealPoint(_startPoint.X + t * dx, _startPoint.Y + t * dy));
-	        }
-	        if (delta > 0)
-	        {
-                double t1 = (double)((-B - Math.Sqrt(delta)) / (2 * A));
-                double t2 = (double)((-B + Math.Sqrt(delta)) / (2 * A));
-		        if (t1 >= 0 && t1 <= 1)
-                    intersectsPoints.Add(new RealPoint(_startPoint.X + t1 * dx, _startPoint.Y + t1 * dy));
-		        if (t2 >= 0 && t2 <= 1)
-                    intersectsPoints.Add(new RealPoint(_startPoint.X + t2 * dx, _startPoint.Y + t2 * dy));
-	        }
-
-	        return intersectsPoints;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithLine(Line line)
-        {
-            return line.GetCrossingPoints(this); // La ligne sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
-        {
-            return point.GetCrossingPoints(this); // Le point sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithSegment(Segment segment)
-        {
-            // Pour ne pas réécrire du code existant, on récupère le croisement entre ce segment et l'autre en tant que droite
-            // Si l'autre segment contient ce point, c'est le croisement, sinon il n'en existe pas
-
-            List<RealPoint> cross = new List<RealPoint>();
-
-            cross = base.GetCrossingPoints(segment);
-            if (cross.Count > 0 && !this.Contains(cross[0])) cross.Clear();
-
-            return cross;
         }
 
         /// <summary>
@@ -247,33 +193,13 @@ namespace Geometry.Shapes
         {
             bool output = false;
 
-            if (shape is RealPoint) output = Cross(shape as RealPoint);
-            else if (shape is Segment) output = Cross(shape as Segment);
-            else if (shape is Polygon) output = Cross(shape as Polygon);
-            else if (shape is Circle) output = CircleWithSegment.Cross(shape as Circle, this);
-            else if (shape is Line) output = LineWithSegment.Cross(shape as Line, this);
+            if (shape is RealPoint) output = SegmentWithRealPoint.Cross(this, shape as RealPoint);
+            else if (shape is Segment) output = SegmentWithSegment.Cross(this, shape as Segment);
+            else if (shape is Polygon) output = SegmentWithPolygon.Cross(this, shape as Polygon);
+            else if (shape is Circle) output = SegmentWithCircle.Cross(this, shape as Circle);
+            else if (shape is Line) output = SegmentWithLine.Cross(this, shape as Line);
 
             return output;
-        }
-
-        /// <summary>
-        /// Teste si le segment courant croise le point donné
-        /// </summary>
-        /// <param name="point">Point testé</param>
-        /// <returns>Vrai si le segment contient le point donné</returns>
-        protected bool Cross(RealPoint point)
-        {
-            return Contains(point);
-        }
-
-        /// <summary>
-        /// Teste si le segment courant croise le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Vrai si le segment contient le segment donné</returns>
-        protected  bool Cross(Segment segment)
-        {
-            return GetCrossingPoints(segment).Count > 0;
         }
 
         /// <summary>
@@ -284,16 +210,6 @@ namespace Geometry.Shapes
         protected bool Cross(Line line)
         {
             return GetCrossingPoints(line).Count > 0;
-        }
-
-        /// <summary>
-        /// Teste si le segment courant croise le cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle testé</param>
-        /// <returns>Vrai si la Droite contient le cercle donné</returns>
-        protected bool Cross(Circle circle)
-        {
-            return circle.Cross(this);
         }
 
         /// <summary>
@@ -319,82 +235,13 @@ namespace Geometry.Shapes
         {
             bool output = false;
 
-            if (shape is RealPoint) output = Contains(shape as RealPoint);
-            else if (shape is Segment) output = Contains(shape as Segment);
-            else if (shape is Polygon) output = Contains(shape as Polygon);
-            else if (shape is Circle) output = Contains(shape as Circle);
-            else if (shape is Line) output = LineWithSegment.Contains(shape as Line, this);
+            if (shape is RealPoint) output = SegmentWithRealPoint.Contains(this, shape as RealPoint);
+            else if (shape is Segment) output = SegmentWithSegment.Contains(this, shape as Segment);
+            else if (shape is Polygon) output = SegmentWithPolygon.Contains(this, shape as Polygon);
+            else if (shape is Circle) output = SegmentWithCircle.Contains(this, shape as Circle);
+            else if (shape is Line) output = SegmentWithLine.Contains(this, shape as Line);
 
             return output;
-        }
-
-        /// <summary>
-        /// Teste si le segment courant contient le PointReel donné
-        /// </summary>
-        /// <param name="point">PointReel testé</param>
-        /// <returns>Vrai si le segment contient le PointReel donné</returns>
-        protected bool Contains(RealPoint point)
-        {
-            // Vérifie que le point est situé sur la droite
-            if (!base.Contains(point))
-                return false;
-            // Puis qu'il est entre les deux extrémités
-
-            if (point.X - RealPoint.PRECISION > Math.Max(StartPoint.X, EndPoint.X) ||
-                point.X + RealPoint.PRECISION < Math.Min(StartPoint.X, EndPoint.X) ||
-                point.Y - RealPoint.PRECISION > Math.Max(StartPoint.Y, EndPoint.Y) ||
-                point.Y + RealPoint.PRECISION < Math.Min(StartPoint.Y, EndPoint.Y))
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Teste si le segment courant contient le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Vrai si le segment contient le segment donné</returns>
-        protected bool Contains(Segment segment)
-        {
-            // Il suffit de vérifier que le segment contient les deux extrémités
-            return Contains(segment.StartPoint) && Contains(segment.EndPoint);
-        }
-
-        /// <summary>
-        /// Teste si le segment courant contient la droite donnée
-        /// </summary>
-        /// <param name="droite">Droite testée</param>
-        /// <returns>Vrai si le segment contient la droite donnée</returns>
-        protected bool Contains(Line droite)
-        {
-            // Un segment ne peut pas contenir de Droite
-            return false;
-        }
-
-        /// <summary>
-        /// Teste si le segment courant contient le polygone donné
-        /// </summary>
-        /// <param name="polygone">Polygone testé</param>
-        /// <returns>Vrai si le segment contient le polygone donné</returns>
-        protected bool Contains(Polygon polygone)
-        {
-            // Contenir un polygone revient à contenir tous les points du polygone
-            foreach (RealPoint p in polygone.Points)
-                if (!Contains(p))
-                    return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Teste si le segment courant contient le cercle donné
-        /// </summary>
-        /// <param name="Cercle">Cercle testé</param>
-        /// <returns>Vrai si le segment contient le Cercle donné</returns>
-        protected bool Contains(Circle Cercle)
-        {
-            // Contenir un cercle revient à avoir un cercle de rayon 0 dont le centre se trouve sur le segment
-            return Contains(Cercle.Center) && Cercle.Radius == 0;
         }
 
         #endregion
@@ -405,53 +252,13 @@ namespace Geometry.Shapes
         {
             double output = 0;
 
-            if (shape is RealPoint) output = Distance(shape as RealPoint);
-            else if (shape is Segment) output = Distance(shape as Segment);
-            else if (shape is Polygon) output = Distance(shape as Polygon);
-            else if (shape is Circle) output = CircleWithSegment.Distance(shape as Circle, this);
-            else if (shape is Line) output = LineWithSegment.Distance(shape as Line, this);
+            if (shape is RealPoint) output = SegmentWithRealPoint.Distance(this, shape as RealPoint);
+            else if (shape is Segment) output = SegmentWithSegment.Distance(this, shape as Segment);
+            else if (shape is Polygon) output = SegmentWithPolygon.Distance(this, shape as Polygon);
+            else if (shape is Circle) output = SegmentWithCircle.Distance(this, shape as Circle);
+            else if (shape is Line) output = SegmentWithLine.Distance(this, shape as Line);
 
             return output;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le segment courant et le segment donné
-        /// </summary>
-        /// <param name="forme">Segment testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(Segment segment)
-        {
-            // Si les segments se croisent la distance est de 0
-            if (Cross(segment))
-                return 0;
-
-            // Sinon c'est la distance minimale entre (chaque extremité d'un segment) et (l'autre segment)
-            double minDistance = double.MaxValue;
-
-            // Le minimal est peut être entre les extremités
-            minDistance = Math.Min(minDistance, segment.StartPoint.Distance(StartPoint));
-            minDistance = Math.Min(minDistance, segment.StartPoint.Distance(EndPoint));
-            minDistance = Math.Min(minDistance, segment.EndPoint.Distance(StartPoint));
-            minDistance = Math.Min(minDistance, segment.EndPoint.Distance(EndPoint));
-
-            // Le minimal est peut etre entre une extremité et son projeté hortogonal sur l'autre segment
-            Line perpendicular = segment.GetPerpendicular(StartPoint);
-            List<RealPoint> cross = segment.GetCrossingPoints(perpendicular);
-            if(cross.Count > 0) minDistance = Math.Min(minDistance, cross[0].Distance(StartPoint));
-
-            perpendicular = segment.GetPerpendicular(EndPoint);
-            cross = segment.GetCrossingPoints(perpendicular);
-            if (cross.Count > 0) minDistance = Math.Min(minDistance, cross[0].Distance(EndPoint));
-
-            perpendicular = GetPerpendicular(segment.StartPoint);
-            cross = GetCrossingPoints(perpendicular);
-            if (cross.Count > 0) minDistance = Math.Min(minDistance, cross[0].Distance(segment.StartPoint));
-
-            perpendicular = GetPerpendicular(segment.EndPoint);
-            cross = GetCrossingPoints(perpendicular);
-            if (cross.Count > 0) minDistance = Math.Min(minDistance, cross[0].Distance(segment.EndPoint));
-
-            return minDistance;
         }
 
         /// <summary>
@@ -473,72 +280,7 @@ namespace Geometry.Shapes
 
             return minDistance;
         }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le segment courant et le cercle donné
-        /// </summary>
-        /// <param name="forme">Cercle testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(Circle circle)
-        {
-            if (Cross(circle))
-                return 0;
-
-            // Distance jusqu'au centre du cercle - son rayon
-            return Distance(circle.Center) - circle.Radius;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le segment courant et le polygone donné
-        /// </summary>
-        /// <param name="forme">Polygone testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(Polygon polygon)
-        {
-            // Distance jusqu'au segment le plus proche
-            double minDistance = double.MaxValue;
-
-            foreach (Segment s in polygon.Sides)
-            {
-                if (Cross(s))
-                    return 0;
-
-                minDistance = Math.Min(s.Distance(this), minDistance);
-            }
-
-            return minDistance;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le segment courant et un point donné
-        /// </summary>
-        /// <param name="point">Point testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(RealPoint point)
-        {
-            // Le raisonnement est le même que pour la droite cf Droite.Distance
-
-            Line perpendicular = GetPerpendicular(point);
-            List<RealPoint> cross = GetCrossingPoints(perpendicular);
-
-            double distance;
-
-            // Seule différence : on teste si l'intersection appartient bien au segment, sinon on retourne la distance avec l'extrémité la plus proche
-            if (cross.Count > 0 && Contains(cross[0]))
-            {
-                distance = point.Distance(cross[0]);
-            }
-            else
-            {
-                double distanceDebut = point.Distance(StartPoint);
-                double distanceFin = point.Distance(EndPoint);
-
-                distance = Math.Min(distanceDebut, distanceFin);
-            }
-
-            return distance;
-        }
-
+        
         #endregion
 
         #region Transformations
@@ -604,18 +346,13 @@ namespace Geometry.Shapes
         /// <param name="outlineWidth">Epaisseur du segment</param>
         /// <param name="fillColor">Couleur de remplissage</param>
         /// <param name="scale">Echelle de conversion</param>
-        public override void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
+        public override void Paint(Graphics g, Pen outline, Brush fill, WorldScale scale)
         {
             Point startPoint = scale.RealToScreenPosition(StartPoint);
             Point endPoint = scale.RealToScreenPosition(EndPoint);
             
-            if (outlineColor != Color.Transparent)
-                using (Pen pen = new Pen(outlineColor, outlineWidth))
-                    g.DrawLine(pen, startPoint.X, startPoint.Y, endPoint.X, endPoint.Y);
-
-            if (fillColor != Color.Transparent)
-                using (Pen pen = new Pen(fillColor, outlineWidth - 2))
-                    g.DrawLine(pen, startPoint.X, startPoint.Y, endPoint.X, endPoint.Y);
+            if (outline != null)
+                    g.DrawLine(outline, startPoint.X, startPoint.Y, endPoint.X, endPoint.Y);
         }
 
         #endregion

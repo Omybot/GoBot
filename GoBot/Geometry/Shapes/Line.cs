@@ -121,7 +121,7 @@ namespace Geometry.Shapes
             }
         }
 
-#       endregion
+        #endregion
 
         #region Propriétés
 
@@ -281,17 +281,17 @@ namespace Geometry.Shapes
             if (shape is RealPoint) output = LineWithRealPoint.Distance(this, shape as RealPoint);
             else if (shape is Segment) output = LineWithSegment.Distance(this, shape as Segment);
             else if (shape is Polygon) output = LineWithPolygon.Distance(this, shape as Polygon);
-            else if (shape is Circle) output = CircleWithLine.Distance(shape as Circle, this);
+            else if (shape is Circle) output = LineWithCircle.Distance(this, shape as Circle);
             else if (shape is Line) output = LineWithLine.Distance(this, shape as Line);
 
             return output;
         }
-        
+
 
         #endregion
-        
+
         #region Contient
-        
+
         /// <summary>
         /// Teste si la droite courante contient la forme donnée
         /// </summary>
@@ -304,7 +304,7 @@ namespace Geometry.Shapes
             if (shape is RealPoint) output = LineWithRealPoint.Contains(this, shape as RealPoint);
             else if (shape is Segment) output = LineWithSegment.Contains(this, shape as Segment);
             else if (shape is Polygon) output = LineWithPolygon.Contains(this, shape as Polygon);
-            else if (shape is Circle) output = Contains(shape as Circle);
+            else if (shape is Circle) output = LineWithCircle.Contains(this, shape as Circle);
             else if (shape is Line) output = LineWithLine.Contains(this, shape as Line);
 
             return output;
@@ -313,7 +313,7 @@ namespace Geometry.Shapes
         #endregion
 
         #region Croisement
-        
+
         /// <summary>
         /// Retourne la liste des points de croisement avec la forme donnée
         /// </summary>
@@ -326,7 +326,7 @@ namespace Geometry.Shapes
             if (shape is RealPoint) output = LineWithRealPoint.GetCrossingPoints(this, shape as RealPoint);
             else if (shape is Segment) output = LineWithSegment.GetCrossingPoints(this, shape as Segment);
             else if (shape is Polygon) output = LineWithPolygon.GetCrossingPoints(this, shape as Polygon);
-            else if (shape is Circle) output = CircleWithLine.GetCrossingPoints(shape as Circle, this);
+            else if (shape is Circle) output = LineWithCircle.GetCrossingPoints(this, shape as Circle);
             else if (shape is Line) output = LineWithLine.GetCrossingPoints(this, shape as Line);
 
             return output;
@@ -344,7 +344,7 @@ namespace Geometry.Shapes
             if (shape is RealPoint) output = LineWithRealPoint.Cross(this, shape as RealPoint);
             else if (shape is Segment) output = LineWithSegment.Cross(this, shape as Segment);
             else if (shape is Polygon) output = LineWithPolygon.Cross(this, shape as Polygon);
-            else if (shape is Circle) output = CircleWithLine.Cross(shape as Circle, this);
+            else if (shape is Circle) output = LineWithCircle.Cross(this, shape as Circle);
             else if (shape is Line) output = LineWithLine.Cross(this, shape as Line);
 
             return output;
@@ -395,7 +395,7 @@ namespace Geometry.Shapes
         }
 
         #endregion
-        
+
         /// <summary>
         /// Retourne l'équation de la droite perpendiculaire à celle-ci et passant par un point donné
         /// </summary>
@@ -444,20 +444,18 @@ namespace Geometry.Shapes
         #region Peinture
 
         /// <summary>
-        /// Peint la ligne sur le Graphic donné
-        /// Etant donné qu'on a besoin de limites pour peindre, on cherche des croisements assez loin
+        /// Dessine la ligne sur un Graphic
         /// </summary>
-        /// <param name="g">Graphique sur lequel peindre</param>
-        /// <param name="outlineColor">Couleur du contour</param>
-        /// <param name="outlineWidth">Epaisseur de la ligne</param>
-        /// <param name="fillColor">Couleur de remplissage</param>
+        /// <param name="g">Graphic sur lequel dessiner</param>
+        /// <param name="outline">Pen utilisé pour dessiner le contour de la ligne</param>
+        /// <param name="fill">Brush utilisé pour remplissage de la ligne</param>
         /// <param name="scale">Echelle de conversion</param>
-        public virtual void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
+        public virtual void Paint(Graphics g, Pen outline, Brush fill, WorldScale scale)
         {
             // Un peu douteux mais bon
             RealPoint p1, p2;
 
-            if(this.IsVertical)
+            if (this.IsVertical)
             {
                 p1 = GetCrossingPoints(new Line(new RealPoint(-100000, -100000), new RealPoint(+100000, -100000))).FirstOrDefault();
                 p2 = GetCrossingPoints(new Line(new RealPoint(-100000, +100000), new RealPoint(+100000, +100000))).FirstOrDefault();
@@ -469,7 +467,7 @@ namespace Geometry.Shapes
             }
 
             if (p1 != null && p2 != null)
-                new Segment(p1, p2).Paint(g, outlineColor, outlineWidth, fillColor, scale);
+                new Segment(p1, p2).Paint(g, outline, fill, scale);
         }
 
         #endregion
