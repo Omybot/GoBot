@@ -53,11 +53,17 @@
             this.btnAxes = new Composants.SwitchButton();
             this.lblAxes = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnZoom = new System.Windows.Forms.RadioButton();
+            this.btnZoomMinus = new System.Windows.Forms.Button();
+            this.btnZoomPlus = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnErase = new System.Windows.Forms.Button();
             this.picWorld = new System.Windows.Forms.PictureBox();
-            this.btnZoomPlus = new System.Windows.Forms.Button();
-            this.btnZoomMinus = new System.Windows.Forms.Button();
+            this.btnRight = new System.Windows.Forms.Button();
+            this.btnLeft = new System.Windows.Forms.Button();
+            this.btnUp = new System.Windows.Forms.Button();
+            this.btnDown = new System.Windows.Forms.Button();
+            this.btnOrigin = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.grpDrawTools.SuspendLayout();
             this.grpDisplay.SuspendLayout();
@@ -329,16 +335,48 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnZoom);
             this.groupBox1.Controls.Add(this.btnZoomMinus);
             this.groupBox1.Controls.Add(this.btnZoomPlus);
             this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.btnErase);
             this.groupBox1.Location = new System.Drawing.Point(3, 310);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(160, 116);
+            this.groupBox1.Size = new System.Drawing.Size(160, 160);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Outils";
+            // 
+            // btnZoom
+            // 
+            this.btnZoom.Appearance = System.Windows.Forms.Appearance.Button;
+            this.btnZoom.Image = global::TestShapes.Properties.Resources.Rectangle;
+            this.btnZoom.Location = new System.Drawing.Point(60, 114);
+            this.btnZoom.Name = "btnZoom";
+            this.btnZoom.Size = new System.Drawing.Size(40, 40);
+            this.btnZoom.TabIndex = 28;
+            this.btnZoom.UseVisualStyleBackColor = true;
+            this.btnZoom.CheckedChanged += new System.EventHandler(this.btnZoom_CheckedChanged);
+            // 
+            // btnZoomMinus
+            // 
+            this.btnZoomMinus.Location = new System.Drawing.Point(83, 85);
+            this.btnZoomMinus.Name = "btnZoomMinus";
+            this.btnZoomMinus.Size = new System.Drawing.Size(63, 23);
+            this.btnZoomMinus.TabIndex = 32;
+            this.btnZoomMinus.Text = "Zoom -";
+            this.btnZoomMinus.UseVisualStyleBackColor = true;
+            this.btnZoomMinus.Click += new System.EventHandler(this.btnZoomMinus_Click);
+            // 
+            // btnZoomPlus
+            // 
+            this.btnZoomPlus.Location = new System.Drawing.Point(14, 85);
+            this.btnZoomPlus.Name = "btnZoomPlus";
+            this.btnZoomPlus.Size = new System.Drawing.Size(63, 23);
+            this.btnZoomPlus.TabIndex = 31;
+            this.btnZoomPlus.Text = "Zoom +";
+            this.btnZoomPlus.UseVisualStyleBackColor = true;
+            this.btnZoomPlus.Click += new System.EventHandler(this.btnZoomPlus_Click);
             // 
             // btnDelete
             // 
@@ -385,40 +423,77 @@
             this.picWorld.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picWorld_MouseMove);
             this.picWorld.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picWorld_MouseUp);
             // 
-            // btnZoomPlus
+            // btnRight
             // 
-            this.btnZoomPlus.Location = new System.Drawing.Point(14, 85);
-            this.btnZoomPlus.Name = "btnZoomPlus";
-            this.btnZoomPlus.Size = new System.Drawing.Size(63, 23);
-            this.btnZoomPlus.TabIndex = 31;
-            this.btnZoomPlus.Text = "Zoom +";
-            this.btnZoomPlus.UseVisualStyleBackColor = true;
-            this.btnZoomPlus.Click += new System.EventHandler(this.btnZoomPlus_Click);
+            this.btnRight.Location = new System.Drawing.Point(90, 503);
+            this.btnRight.Name = "btnRight";
+            this.btnRight.Size = new System.Drawing.Size(23, 23);
+            this.btnRight.TabIndex = 31;
+            this.btnRight.Text = ">";
+            this.btnRight.UseVisualStyleBackColor = true;
+            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
             // 
-            // btnZoomMinus
+            // btnLeft
             // 
-            this.btnZoomMinus.Location = new System.Drawing.Point(83, 85);
-            this.btnZoomMinus.Name = "btnZoomMinus";
-            this.btnZoomMinus.Size = new System.Drawing.Size(63, 23);
-            this.btnZoomMinus.TabIndex = 32;
-            this.btnZoomMinus.Text = "Zoom -";
-            this.btnZoomMinus.UseVisualStyleBackColor = true;
-            this.btnZoomMinus.Click += new System.EventHandler(this.btnZoomMinus_Click);
+            this.btnLeft.Location = new System.Drawing.Point(44, 503);
+            this.btnLeft.Name = "btnLeft";
+            this.btnLeft.Size = new System.Drawing.Size(23, 23);
+            this.btnLeft.TabIndex = 32;
+            this.btnLeft.Text = "<";
+            this.btnLeft.UseVisualStyleBackColor = true;
+            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
+            // 
+            // btnUp
+            // 
+            this.btnUp.Location = new System.Drawing.Point(69, 476);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(23, 23);
+            this.btnUp.TabIndex = 33;
+            this.btnUp.Text = "^";
+            this.btnUp.UseVisualStyleBackColor = true;
+            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
+            // 
+            // btnDown
+            // 
+            this.btnDown.Location = new System.Drawing.Point(69, 532);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(23, 23);
+            this.btnDown.TabIndex = 34;
+            this.btnDown.Text = "v";
+            this.btnDown.UseVisualStyleBackColor = true;
+            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
+            // 
+            // btnOrigin
+            // 
+            this.btnOrigin.Location = new System.Drawing.Point(69, 505);
+            this.btnOrigin.Name = "btnOrigin";
+            this.btnOrigin.Size = new System.Drawing.Size(23, 23);
+            this.btnOrigin.TabIndex = 35;
+            this.btnOrigin.Text = "x";
+            this.btnOrigin.UseVisualStyleBackColor = true;
+            this.btnOrigin.Click += new System.EventHandler(this.btnOrigin_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 683);
+            this.Controls.Add(this.btnOrigin);
+            this.Controls.Add(this.btnDown);
+            this.Controls.Add(this.btnUp);
+            this.Controls.Add(this.btnLeft);
+            this.Controls.Add(this.btnRight);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grpDisplay);
             this.Controls.Add(this.grpDrawTools);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.picWorld);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "Geometry Tester";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.grpDrawTools.ResumeLayout(false);
@@ -461,6 +536,12 @@
         private System.Windows.Forms.Label lblAxes;
         private System.Windows.Forms.Button btnZoomMinus;
         private System.Windows.Forms.Button btnZoomPlus;
+        private System.Windows.Forms.RadioButton btnZoom;
+        private System.Windows.Forms.Button btnRight;
+        private System.Windows.Forms.Button btnLeft;
+        private System.Windows.Forms.Button btnUp;
+        private System.Windows.Forms.Button btnDown;
+        private System.Windows.Forms.Button btnOrigin;
     }
 }
 

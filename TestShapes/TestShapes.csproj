@@ -49,6 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GoBot\Extensions\RectangleExtensions.cs">
+      <Link>RectangleExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\GoBot\GoBot\Threading\ThreadLink.cs">
+      <Link>ThreadLink.cs</Link>
+    </Compile>
+    <Compile Include="..\GoBot\GoBot\Threading\ThreadManager.cs">
+      <Link>ThreadManager.cs</Link>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

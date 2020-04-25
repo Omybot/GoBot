@@ -1,8 +1,10 @@
 ﻿using Geometry;
 using Geometry.Shapes;
+using GoBot.Threading;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace TestShapes
@@ -16,7 +18,8 @@ namespace TestShapes
             Circle,
             CircleFromCenter,
             Segment,
-            Line
+            Line,
+            Zoom
         }
 
         private List<IShape> _shapes;
@@ -33,17 +36,28 @@ namespace TestShapes
         private RealPoint _startPoint;
         private IShape _currentShape;
 
+        private PolygonRectangle _rectZoomOrg, _rectZoomFinal;
+
+        ThreadLink _moveLoop;
+        double _moveVertical, _moveHorizontal;
+        double _moveZoom;
+
         public MainForm()
         {
             InitializeComponent();
+
+            ThreadManager.Init();
 
             _shapeMode = ShapeMode.Rectangle;
 
             _shapes = new List<IShape>();
 
-            _shapes.Add(new Segment(new RealPoint(500, 22), new RealPoint(2500, 22)));
-            _shapes.Add(new Segment(new RealPoint(1350, 850), new RealPoint(-100000, -100000)));
-            
+            _shapes.Add(new Line(new RealPoint(10, 10), new RealPoint(10, 100)));
+            _shapes.Add(new Line(new RealPoint(20, 20), new RealPoint(100, 20)));
+
+            //_shapes.Add(new Segment(new RealPoint(66.5, 9.9), new RealPoint(13.5, 84.2)));
+            //_shapes.Add(new Segment(new RealPoint(46.6, 44), new RealPoint(30, 44)));
+
             //_shapes.Add(new Circle(new RealPoint(200, 200), 30));
             //_shapes.Add(new Circle(new RealPoint(250, 180), 30));
             //_shapes.Add(new Segment(new RealPoint(10, 10), new RealPoint(300, 300)));
@@ -106,6 +120,24 @@ namespace TestShapes
 
                 DrawShape(shape, isCrossed, isContained, e.Graphics);
                 DrawBarycenter(shape.Barycenter, e.Graphics);
+            }
+
+            if (_shapeMode == ShapeMode.Zoom && _rectZoomOrg != null)
+            {
+                if (_rectZoomOrg != null)
+                {
+                    Pen pen = new Pen(Color.Black);
+                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                    _rectZoomOrg.Paint(e.Graphics, Color.LightGray, 1, Color.Transparent, _worldScale);
+                    pen.Dispose();
+                }
+                if (_rectZoomFinal != null)
+                {
+                    Pen pen = new Pen(Color.Black);
+                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                    _rectZoomFinal.Paint(e.Graphics, Color.DarkGray, 1, Color.Transparent, _worldScale);
+                    pen.Dispose();
+                }
             }
         }
 
@@ -175,7 +207,7 @@ namespace TestShapes
                 if (isContained)
                     fillColor = Color.FromArgb(100, Color.Green);
             }
-            
+
             shape.Paint(g, outlineColor, 1, fillColor, _worldScale);
         }
 
@@ -191,7 +223,7 @@ namespace TestShapes
 
                 new Segment(new RealPoint(0, -10000), new RealPoint(0, 10000)).Paint(g, Color.Black, 1, Color.Transparent, _worldScale);
                 new Segment(new RealPoint(-10000, 0), new RealPoint(10000, 0)).Paint(g, Color.Black, 1, Color.Transparent, _worldScale);
-                
+
                 //for (int i = 0; i < picWorld.Width; i += 10)
                 //    g.DrawLine(Pens.WhiteSmoke, i, 0, i, picWorld.Height);
 
@@ -245,17 +277,27 @@ namespace TestShapes
         private RealPoint PicCoordinates()
         {
             RealPoint pt = picWorld.PointToClient(Cursor.Position);
-            pt.X -= _worldScale.OffsetX;
-            pt.Y -= _worldScale.OffsetY;
 
-            pt.Y = -pt.Y;
-            return pt;
+            RealPoint output = new RealPoint();
+            output.X = (-_worldScale.OffsetX + pt.X) * _worldScale.Factor;
+            output.Y = ( + (picWorld.Height - pt.Y) - _worldScale.OffsetY) * _worldScale.Factor;
+
+            Console.WriteLine(_worldScale.OffsetY + " / " + pt.Y);
+            return output;
         }
 
         private void picWorld_MouseDown(object sender, MouseEventArgs e)
         {
             _startPoint = PicCoordinates();
-            _currentShape = BuildCurrentShape(_shapeMode, _startPoint, _startPoint);
+
+            if (_shapeMode == ShapeMode.Zoom)
+            {
+                _rectZoomOrg = new PolygonRectangle(_startPoint, 1, 1);
+            }
+            else
+            {
+                _currentShape = BuildCurrentShape(_shapeMode, _startPoint, _startPoint);
+            }
 
             picWorld.Invalidate();
         }
@@ -267,8 +309,28 @@ namespace TestShapes
 
             if (_startPoint != null)
             {
-                _currentShape = BuildCurrentShape(_shapeMode, _startPoint, pos);
-                lblItem.Text = _currentShape.GetType().Name + " : "+  _currentShape.ToString();
+                if (_shapeMode == ShapeMode.Zoom)
+                {
+                    double dx = pos.X - _startPoint.X;
+                    double dy = pos.Y - _startPoint.Y;
+                    double finalDx = dx;
+                    double finalDy = dy;
+
+                    _rectZoomOrg = new PolygonRectangle(_startPoint, dx, dy);
+
+                    if (Math.Abs(dx / dy) > Math.Abs(picWorld.Width / picWorld.Height))
+                        finalDx = Math.Sign(dx) * (picWorld.Width * (Math.Abs(dy) / picWorld.Height));
+                    else
+                        finalDy = Math.Sign(dy) * (picWorld.Height * (Math.Abs(dx) / picWorld.Width));
+
+                    _rectZoomFinal = new PolygonRectangle(RealPoint.Shift(_startPoint, -(finalDx - dx) / 2, -(finalDy - dy) / 2), finalDx, finalDy);
+                }
+                else if (_shapeMode != ShapeMode.None)
+                {
+                    _currentShape = BuildCurrentShape(_shapeMode, _startPoint, pos);
+                    lblItem.Text = _currentShape.GetType().Name + " : " + _currentShape.ToString();
+                }
+
                 picWorld.Invalidate();
             }
         }
@@ -277,12 +339,35 @@ namespace TestShapes
         {
             if (_startPoint != null)
             {
-                _shapes.Add(BuildCurrentShape(_shapeMode, _startPoint, PicCoordinates()));
-                lblItem.Text = "";
+                if (_shapeMode == ShapeMode.Zoom)
+                {
+                    double dx = _rectZoomFinal.Points.Max(pt => pt.X) - _rectZoomFinal.Points.Min(pt => pt.X);
+                    //dx = _worldScale.RealToScreenDistance(dx);
+                    WorldScale finalScale = CreateWorldScale(dx / picWorld.Width, _rectZoomFinal.Barycenter);
 
-                _currentShape = null;
-                _startPoint = null;
-                
+                    _moveZoom = (_worldScale.Factor - finalScale.Factor) / 20;
+                    _moveHorizontal = -finalScale.ScreenToRealDistance((finalScale.OffsetX - _worldScale.OffsetX) / 20);
+                    _moveVertical = -finalScale.ScreenToRealDistance((finalScale.OffsetY - _worldScale.OffsetY) / 20);
+
+                    _step = 0;
+                    ThreadManager.CreateThread(o => ZoomStepParam()).StartLoop(20, 40);
+                    //_worldScale = finalScale;
+
+                    _startPoint = null;
+                    _rectZoomFinal = null;
+                    _rectZoomOrg = null;
+                    _shapeMode = ShapeMode.None;
+                    btnZoom.Checked = false;
+                }
+                else if (_shapeMode != ShapeMode.None)
+                {
+                    _shapes.Add(BuildCurrentShape(_shapeMode, _startPoint, PicCoordinates()));
+                    lblItem.Text = "";
+
+                    _currentShape = null;
+                    _startPoint = null;
+                }
+
                 picWorld.Invalidate();
             }
         }
@@ -361,6 +446,8 @@ namespace TestShapes
         private void picWorld_SizeChanged(object sender, EventArgs e)
         {
             _worldScale = new WorldScale(1, picWorld.Width / 2, picWorld.Height / 2);
+
+            //SetScreenSize(picWorld.Size);
             picWorld.Invalidate();
         }
 
@@ -372,16 +459,176 @@ namespace TestShapes
 
         private void btnZoomPlus_Click(object sender, EventArgs e)
         {
-            _worldScale = new WorldScale(_worldScale.Factor * 0.85, picWorld.Width / 2, picWorld.Height / 2);
-            picWorld.Invalidate();
+            ThreadManager.CreateThread(o => ZoomPlus()).StartLoop(20, 20);
         }
 
         private void btnZoomMinus_Click(object sender, EventArgs e)
         {
-            //_worldScale = new WorldScale(_worldScale.Factor * 1.2, picWorld.Width / 2, picWorld.Height / 2);
-            //picWorld.Invalidate();
-            _worldScale = new WorldScale(_worldScale.Factor, -50, 600);
+            ThreadManager.CreateThread(o => ZoomMinus()).StartLoop(20, 20);
+        }
+
+        private void btnZoom_CheckedChanged(object sender, EventArgs e)
+        {
+            if (btnZoom.Checked) _shapeMode = ShapeMode.Zoom;
+        }
+
+        private WorldScale CreateWorldScale(double mmPerPixel, RealPoint center)
+        {
+            Console.WriteLine(center.ToString());
+            int x = (int)(picWorld.Width / 2 - center.X / mmPerPixel);
+            int y = (int)(picWorld.Height / 2 - center.Y / mmPerPixel);
+
+            return new WorldScale(mmPerPixel, x, y);
+        }
+
+        private RealPoint GetCenter()
+        {
+            return _worldScale.ScreenToRealPosition(new RealPoint(picWorld.Width / 2, picWorld.Height / 2));
+        }
+
+        private void btnUp_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(o => ZoomUp()).StartLoop(20, 20);
+        }
+
+        private void btnDown_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(o => ZoomDown()).StartLoop(20, 20);
+        }
+
+        private void btnRight_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(o => ZoomRight()).StartLoop(20, 20);
+        }
+
+        private void btnLeft_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(o => ZoomLeft()).StartLoop(20, 20);
+        }
+
+        private void ZoomPlus()
+        {
+            _worldScale = CreateWorldScale(_worldScale.Factor * 0.97, GetCenter());
             picWorld.Invalidate();
+        }
+
+        private void ZoomMinus()
+        {
+            _worldScale = CreateWorldScale(_worldScale.Factor * (1 / 0.97), GetCenter());
+            picWorld.Invalidate();
+        }
+
+        private void ZoomUp()
+        {
+            double dx = 0;
+            double dy = _worldScale.ScreenToRealDistance(picWorld.Height / 60f);
+
+            _worldScale = CreateWorldScale(_worldScale.Factor, RealPoint.Shift(GetCenter(), dx, dy));
+            picWorld.Invalidate();
+        }
+
+        private void ZoomDown()
+        {
+            double dx = 0;
+            double dy = -_worldScale.ScreenToRealDistance(picWorld.Height / 60f);
+
+            _worldScale = CreateWorldScale(_worldScale.Factor, RealPoint.Shift(GetCenter(), dx, dy));
+            picWorld.Invalidate();
+        }
+
+        private void ZoomLeft()
+        {
+            double dx = -_worldScale.ScreenToRealDistance(picWorld.Height / 60f);
+            double dy = 0;
+
+            _worldScale = CreateWorldScale(_worldScale.Factor, RealPoint.Shift(GetCenter(), dx, dy));
+            picWorld.Invalidate();
+        }
+
+        private void ZoomRight()
+        {
+            double dx = _worldScale.ScreenToRealDistance(picWorld.Height / 60f);
+            double dy = 0;
+
+            _worldScale = CreateWorldScale(_worldScale.Factor, RealPoint.Shift(GetCenter(), dx, dy));
+            picWorld.Invalidate();
+        }
+
+        private void ZoomStep()
+        {
+            double dx = _worldScale.ScreenToRealDistance(picWorld.Height / 60f) * _moveHorizontal;
+            double dy = _worldScale.ScreenToRealDistance(picWorld.Height / 60f) * _moveVertical;
+
+            _worldScale = CreateWorldScale(_worldScale.Factor + _moveZoom, RealPoint.Shift(GetCenter(), dx, dy));
+            //_worldScale = CreateWorldScale(_worldScale.Factor + _moveZoom, GetCenter());
+
+            picWorld.Invalidate();
+        }
+
+        int _step;
+
+        private void ZoomStepParam()
+        {
+            if(_step < 20)
+                _worldScale = CreateWorldScale(_worldScale.Factor, RealPoint.Shift(GetCenter(), _moveHorizontal, _moveVertical));
+            else if(_step < 40)
+                _worldScale = CreateWorldScale(_worldScale.Factor - _moveZoom, GetCenter());
+
+            _step++;
+            if(_step == 40)
+            {
+                _moveHorizontal = 0;
+                _moveVertical = 0;
+                _moveZoom = 0;
+            }
+
+            picWorld.Invalidate();
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up)
+            {
+                _moveVertical = 0;
+            }
+            else if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right)
+            {
+                _moveHorizontal = 0;
+            }
+
+            if (_moveVertical == 0 && _moveHorizontal == 0 && _moveLoop != null)
+            {
+                _moveLoop.Cancel();
+                _moveLoop.WaitEnd();
+                _moveLoop = null;
+            }
+        }
+
+        private void btnOrigin_Click(object sender, EventArgs e)
+        {
+            _worldScale = CreateWorldScale(_worldScale.Factor, new RealPoint());
+            picWorld.Invalidate();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Down)
+                _moveVertical = -1;
+            else if (keyData == Keys.Up)
+                _moveVertical = 1;
+            else if (keyData == Keys.Left)
+                _moveHorizontal = -1;
+            else if (keyData == Keys.Right)
+                _moveHorizontal = 1;
+
+            if ((_moveVertical != 0 || _moveHorizontal != 0) && _moveLoop == null)
+            {
+                _moveLoop = ThreadManager.CreateThread(o => ZoomStep());
+                _moveLoop.StartInfiniteLoop(20);
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
+
