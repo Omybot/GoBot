@@ -9,6 +9,8 @@ using System.IO;
 using GoBot.Threading;
 using GoBot.Devices;
 using GoBot.BoardContext;
+using System.Diagnostics;
+using Geometry.Shapes;
 
 namespace GoBot
 {
@@ -42,10 +44,13 @@ namespace GoBot
             {
                 panelGrosRobot.Init();
 
-                if (Screen.PrimaryScreen.Bounds.Width <= this.Width)
+                if (Screen.PrimaryScreen.Bounds.Width <= pnlMatch.Width)
                 {
                     WindowState = FormWindowState.Maximized;
                     FormBorderStyle = FormBorderStyle.None;
+                    tabControl.SelectedTab = tabMatch;
+                    tabControl.Location = new Point(-12, -34);
+                    tabControl.Width += 100;
                 }
                 else
                 {
@@ -110,6 +115,8 @@ namespace GoBot
 
             pnlNumericIO.SetBoard(Board.RecIO);
             pnlNumericMove.SetBoard(Board.RecMove);
+
+            panelTable.StartDisplay();
 
             this.Text = "GoBot 2020 - Beta";
         }

@@ -670,7 +670,6 @@ namespace GoBot
             // 
             // pnlMatch
             // 
-            this.pnlMatch.BackColor = System.Drawing.Color.Transparent;
             this.pnlMatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlMatch.Location = new System.Drawing.Point(8, 12);
             this.pnlMatch.Name = "pnlMatch";

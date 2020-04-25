@@ -124,7 +124,7 @@
             this.btnCalib.BackColor = System.Drawing.Color.Transparent;
             this.btnCalib.Enabled = false;
             this.btnCalib.Font = new System.Drawing.Font("Eras Demi ITC", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCalib.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnCalib.ForeColor = System.Drawing.Color.LimeGreen;
             this.btnCalib.Location = new System.Drawing.Point(19, 451);
             this.btnCalib.Name = "btnCalib";
             this.btnCalib.Size = new System.Drawing.Size(280, 100);
@@ -138,6 +138,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
+            this.label1.ForeColor = System.Drawing.Color.LimeGreen;
             this.label1.Location = new System.Drawing.Point(66, 331);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(174, 55);
@@ -146,7 +147,8 @@
             // 
             // label2
             // 
-            this.label2.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.LimeGreen;
             this.label2.Location = new System.Drawing.Point(8, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 18);
@@ -156,7 +158,8 @@
             // 
             // label3
             // 
-            this.label3.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.LimeGreen;
             this.label3.Location = new System.Drawing.Point(85, 34);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 18);
@@ -166,7 +169,8 @@
             // 
             // label4
             // 
-            this.label4.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.LimeGreen;
             this.label4.Location = new System.Drawing.Point(162, 34);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 18);
@@ -176,7 +180,8 @@
             // 
             // label5
             // 
-            this.label5.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.LimeGreen;
             this.label5.Location = new System.Drawing.Point(316, 34);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 18);
@@ -186,7 +191,8 @@
             // 
             // label6
             // 
-            this.label6.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.LimeGreen;
             this.label6.Location = new System.Drawing.Point(393, 34);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(73, 18);
@@ -196,7 +202,8 @@
             // 
             // label7
             // 
-            this.label7.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.LimeGreen;
             this.label7.Location = new System.Drawing.Point(470, 34);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(73, 18);
@@ -206,7 +213,8 @@
             // 
             // label8
             // 
-            this.label8.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.LimeGreen;
             this.label8.Location = new System.Drawing.Point(547, 34);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(73, 18);
@@ -216,7 +224,8 @@
             // 
             // label9
             // 
-            this.label9.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.LimeGreen;
             this.label9.Location = new System.Drawing.Point(624, 34);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(73, 18);
@@ -226,7 +235,8 @@
             // 
             // label10
             // 
-            this.label10.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.LimeGreen;
             this.label10.Location = new System.Drawing.Point(701, 34);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(73, 18);
@@ -236,7 +246,8 @@
             // 
             // label11
             // 
-            this.label11.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.LimeGreen;
             this.label11.Location = new System.Drawing.Point(778, 34);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(73, 18);
@@ -246,7 +257,8 @@
             // 
             // label12
             // 
-            this.label12.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.LimeGreen;
             this.label12.Location = new System.Drawing.Point(239, 34);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(73, 18);
@@ -256,7 +268,8 @@
             // 
             // label13
             // 
-            this.label13.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.LimeGreen;
             this.label13.Location = new System.Drawing.Point(932, 34);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(73, 18);
@@ -418,7 +431,8 @@
             // 
             // lblAlim
             // 
-            this.lblAlim.Font = new System.Drawing.Font("Eras Medium ITC", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlim.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlim.ForeColor = System.Drawing.Color.LimeGreen;
             this.lblAlim.Location = new System.Drawing.Point(855, 34);
             this.lblAlim.Name = "lblAlim";
             this.lblAlim.Size = new System.Drawing.Size(73, 18);
@@ -430,7 +444,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Transparent;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.picAlim);
             this.Controls.Add(this.lblAlim);
@@ -471,6 +485,7 @@
             this.Name = "PageMatch";
             this.Size = new System.Drawing.Size(1022, 598);
             this.Load += new System.EventHandler(this.PageMatch_Load);
+            this.BackColorChanged += new System.EventHandler(this.PageMatch_BackColorChanged);
             ((System.ComponentModel.ISupportInitialize)(this.picTeensy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).EndInit();

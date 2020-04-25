@@ -220,8 +220,12 @@ namespace GoBot.IHM.Pages
         {
             if (!Execution.DesignMode)
             {
-                btnAffichage_Click(null, null);
             }
+        }
+
+        public void StartDisplay()
+        {
+            btnAffichage_Click(null, null);
         }
 
         private int pSelected = -1;

@@ -7,12 +7,12 @@ namespace GeometryTester
     [TestClass]
     public class TestRectangle
     {
-        [TestMethod]                // Test bidon histoire de charger les librairies et vérifier temps execution des tests suivants
-        public void DummyTest()
-        {
-            Polygon r0 = new PolygonRectangle(new RealPoint(0, 0), 0, 0);
-            Assert.AreEqual(r0, r0.Rotation(90));
-        }
+        //[TestMethod]                // Test bidon histoire de charger les librairies et vérifier temps execution des tests suivants
+        //public void DummyTest()
+        //{
+        //    Polygon r0 = new PolygonRectangle(new RealPoint(0, 0), 0, 0);
+        //    Assert.AreEqual(r0, r0.Rotation(90));
+        //}
 
         // Tests d'égalité entre plusieurs rectangles
         [TestMethod]

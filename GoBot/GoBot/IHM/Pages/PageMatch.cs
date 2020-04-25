@@ -33,16 +33,16 @@ namespace GoBot.IHM.Pages
 
                 SetPicImage(picLidar1, Devices.AllDevices.LidarAvoid.ConnectionChecker.Connected);
                 SetPicImage(picLidar2, Devices.AllDevices.LidarGround.ConnectionChecker.Connected);
-                SetPicImage(picIO, Connections.ConnectionIO.Connected);
-                SetPicImage(picMove, Connections.ConnectionMove.Connected);
-                SetPicImage(picCAN, Connections.ConnectionCan.Connected);
-                SetPicImage(picServo1, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo1].Connected);
-                SetPicImage(picServo2, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo2].Connected);
-                SetPicImage(picServo3, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo3].Connected);
-                SetPicImage(picServo4, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo4].Connected);
-                SetPicImage(picServo5, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo5].Connected);
-                SetPicImage(picServo6, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo6].Connected);
-                SetPicImage(picServo6, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim].Connected);
+                SetPicImage(picIO, Connections.ConnectionIO.ConnectionChecker.Connected);
+                SetPicImage(picMove, Connections.ConnectionMove.ConnectionChecker.Connected);
+                SetPicImage(picCAN, Connections.ConnectionCanBridge.ConnectionChecker.Connected);
+                SetPicImage(picServo1, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo1].ConnectionChecker.Connected);
+                SetPicImage(picServo2, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo2].ConnectionChecker.Connected);
+                SetPicImage(picServo3, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo3].ConnectionChecker.Connected);
+                SetPicImage(picServo4, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo4].ConnectionChecker.Connected);
+                SetPicImage(picServo5, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo5].ConnectionChecker.Connected);
+                SetPicImage(picServo6, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo6].ConnectionChecker.Connected);
+                SetPicImage(picServo6, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim].ConnectionChecker.Connected);
 
                 bool jack = Robots.MainRobot.ReadStartTrigger();
                 SetPicImage(picJack, jack);
@@ -147,6 +147,11 @@ namespace GoBot.IHM.Pages
         {
             GameBoard.MyColor = GameBoard.ColorRightYellow;
             btnTrap.Focus();
+        }
+
+        private void PageMatch_BackColorChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("RE");
         }
     }
 }
