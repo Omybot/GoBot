@@ -3,7 +3,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GoBot"
-#define MyAppVersion "1.19.0"
+#define MyAppVersion "1.20.0"
 #define MyAppPublisher "Omybot"
 #define MyAppURL "www.omybot.com"
 #define MyAppExeName "GoBot.exe"
@@ -24,7 +24,7 @@ DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 OutputDir=.
 OutputBaseFilename=SetupGoBot
-SetupIconFile=iconeSetup.ico
+SetupIconFile=./iconeSetup.ico
 Compression=lzma
 SolidCompression=yes
 WizardSmallImageFile=RobotSmall.bmp

@@ -477,7 +477,7 @@ namespace GeometryTester
         [TestMethod]
         public void TestCrossingPointsSuperposed()
         {
-            // Cas un peu particulier, les cercles se superposent don se croisent, mais on ne calcule pas de points de croisement car il y en une infinité
+            // Cas un peu particulier, les cercles se superposent donc se croisent, mais on ne calcule pas de points de croisement car il y en une infinité
 
             Circle c1 = new Circle(new RealPoint(5, 5), 5);
             Circle c2 = new Circle(new RealPoint(5, 5), 5);

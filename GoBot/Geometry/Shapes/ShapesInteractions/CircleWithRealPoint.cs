@@ -18,7 +18,7 @@ namespace Geometry.Shapes.ShapesInteractions
         {
             // C'est la distance entre le centre du cercle et le point moins le rayon du cercle
 
-            return point.Distance(circle.Center) - circle.Radius;
+            return Math.Max(0, point.Distance(circle.Center) - circle.Radius);
         }
 
         public static bool Cross(Circle circle, RealPoint point)

@@ -159,7 +159,6 @@ namespace GeometryTester
 
             Assert.AreEqual(0, r1.Distance(c11));
             Assert.AreEqual(0, c11.Distance(r1));
-
         }
 
     }

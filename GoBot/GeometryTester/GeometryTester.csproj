@@ -56,6 +56,7 @@
     <Compile Include="TestCircle.cs" />
     <Compile Include="TestCircleWithCircle.cs" />
     <Compile Include="TestCircleWithRealPoint.cs" />
+    <Compile Include="TestPolygonWithPolygon.cs" />
     <Compile Include="TestRectangles.cs" />
   </ItemGroup>
   <ItemGroup>
