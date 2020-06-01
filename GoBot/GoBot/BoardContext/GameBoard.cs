@@ -143,6 +143,28 @@ namespace GoBot.BoardContext
             }
         }
 
+        /// <summary>
+        /// Liste complète des obstacles fixes et temporaires
+        /// </summary>
+        public static IEnumerable<IShape> ObstaclesBoardConstruction
+        {
+            get
+            {
+                return _obstacles.FromBoardConstruction.ToList(); // Pour concretiser la liste
+            }
+        }
+
+        /// <summary>
+        /// Liste complète des obstacles vus par un lidart au niveau du sol
+        /// </summary>
+        public static IEnumerable<IShape> ObstaclesLidarGround
+        {
+            get
+            {
+                return _obstacles.FromBoard.Concat(Elements.AsVisibleObstacles).ToList(); // Pour concretiser la liste
+            }
+        }
+
         public static IEnumerable<IShape> ObstaclesOpponents
         {
             get

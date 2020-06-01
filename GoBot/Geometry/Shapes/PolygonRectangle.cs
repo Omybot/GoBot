@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Geometry.Shapes
 {
@@ -48,6 +49,11 @@ namespace Geometry.Shapes
         }
 
         public PolygonRectangle(PolygonRectangle other) : base(other)
+        {
+
+        }
+
+        public PolygonRectangle(RectangleF other) : this(new RealPoint(other.Left, other.Top), other.Width, other.Height)
         {
 
         }

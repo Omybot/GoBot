@@ -87,6 +87,7 @@
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
     <Compile Include="Devices\Lidar.cs" />
+    <Compile Include="Devices\LidarSimu.cs" />
     <Compile Include="Devices\Pepperl\JsonDumbParser.cs" />
     <Compile Include="Devices\Pepperl\Pepperl.cs" />
     <Compile Include="Devices\Pepperl\PepperlComm.cs" />
@@ -107,10 +108,16 @@
     <Compile Include="IHM\Elements\PanelBoardCanServos.Designer.cs">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Pages\PageMatch.cs">
+    <Compile Include="IHM\PagesPanda\PagePandaLidar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Pages\PageMatch.Designer.cs">
+    <Compile Include="IHM\PagesPanda\PagePandaLidar.Designer.cs">
+      <DependentUpon>PagePandaLidar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PageMatch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PageMatch.Designer.cs">
       <DependentUpon>PageMatch.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Pages\PagePepperl.cs">
@@ -414,7 +421,10 @@
     <EmbeddedResource Include="IHM\Elements\PanelSensorOnOff.resx">
       <DependentUpon>PanelSensorOnOff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Pages\PageMatch.resx">
+    <EmbeddedResource Include="IHM\PagesPanda\PagePandaLidar.resx">
+      <DependentUpon>PagePandaLidar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PagesPanda\PageMatch.resx">
       <DependentUpon>PageMatch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PagePepperl.resx">
@@ -525,7 +535,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -627,6 +637,15 @@
     <None Include="Images\BigArrow.png" />
     <None Include="Images\BigArrowUp.png" />
     <None Include="Images\BigArrowDown.png" />
+    <None Include="Images\ZoomReset.png" />
+    <None Include="Images\ZoomMinus.png" />
+    <None Include="Images\ZoomPlus.png" />
+    <None Include="Images\LidarLines.png" />
+    <None Include="Images\LidarPoints.png" />
+    <None Include="Images\LidarLinesOn.png" />
+    <None Include="Images\LidarPointsOn.png" />
+    <None Include="Images\LidarBoardOn.png" />
+    <None Include="Images\LidarBoardOff.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

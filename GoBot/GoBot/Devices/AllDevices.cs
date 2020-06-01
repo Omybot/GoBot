@@ -22,6 +22,13 @@ namespace GoBot.Devices
             ((Pepperl)_lidarAvoid).SetFilter(PepperlFilter.Average, 3);
         }
 
+        public static void InitSimu()
+        {
+            _canServos = new CanServos(Connections.ConnectionCan);
+            _lidarGround = new LidarSimu();
+            _lidarAvoid = new LidarSimu();
+        }
+
         public static void Close()
         {
             _lidarAvoid.StopLoopMeasure();

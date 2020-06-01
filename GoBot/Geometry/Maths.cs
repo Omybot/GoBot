@@ -70,6 +70,20 @@ namespace Geometry
         }
 
         /// <summary>
+        /// Retourne les coordonnées d'une coordonnée initiale modifiée par une prise de direction
+        /// </summary>
+        /// <param name="startPoint">Coordonnée de départ</param>
+        /// <param name="direction">Direction suivie</param>
+        /// <returns>Coordonnées du point</returns>
+        public static RealPoint GetDestination(RealPoint startPoint, Direction direction)
+        {
+            double x = startPoint.X + direction.angle.Cos * direction.distance;
+            double y = startPoint.Y - direction.angle.Sin * direction.distance;
+
+            return new RealPoint(new RealPoint(x, y));
+        }
+
+        /// <summary>
         /// Retourne les coordonnées d'une position initiale modifiée par une prise de direction
         /// </summary>
         /// <param name="startPosition">Position de départ</param>
@@ -80,7 +94,7 @@ namespace Geometry
             AnglePosition endAngle = startPosition.Angle + direction.angle;
 
             double x = startPosition.Coordinates.X + endAngle.Cos * direction.distance;
-            double y = startPosition.Coordinates.Y + endAngle.Sin * direction.distance;
+            double y = startPosition.Coordinates.Y - endAngle.Sin * direction.distance;
 
             return new Position(endAngle, new RealPoint(x, y));
         }

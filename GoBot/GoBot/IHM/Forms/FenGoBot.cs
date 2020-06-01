@@ -193,6 +193,16 @@ namespace GoBot
         {
             Robots.EnableSimulation(value);
             panelGrosRobot.Init();
+
+            if (value)
+                AllDevices.InitSimu();
+            else
+                AllDevices.Init();
+
+
+
+            if (AllDevices.LidarAvoid != null)
+                AllDevices.LidarAvoid.Position = Robots.MainRobot.Position;
         }
 
         private void buttonFenetre_Click(object sender, EventArgs e)

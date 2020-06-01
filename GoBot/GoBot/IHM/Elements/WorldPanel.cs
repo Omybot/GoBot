@@ -16,12 +16,49 @@ namespace GoBot.IHM
         public delegate void WorldChangeDelegate();
         public event WorldChangeDelegate WorldChange;
 
+        public delegate void StartMoveDelegate();
+        public event StartMoveDelegate StartMove;
+
+        public delegate void StopMoveDelegate();
+        public event StopMoveDelegate StopMove;
+
         public WorldPanel()
         {
             InitializeComponent();
             Dimensions = new WorldDimensions();
             Dimensions.WorldChange += Dimensions_WorldChange;
             _pointClicked = null;
+        }
+
+        public bool Moving
+        {
+            get
+            {
+                return _pointClicked != null;
+            }
+        }
+
+        public RealPoint ClickedPoint
+        {
+            get
+            {
+                return _pointClicked;
+            }
+        }
+
+        protected void OnWorldChange()
+        {
+            WorldChange?.Invoke();
+        }
+
+        protected void OnStartMove()
+        {
+            StartMove?.Invoke();
+        }
+
+        protected void OnStopMove()
+        {
+            StopMove?.Invoke();
         }
 
         public WorldPanel(IContainer container)
@@ -36,7 +73,7 @@ namespace GoBot.IHM
 
         private void Dimensions_WorldChange()
         {
-            WorldChange?.Invoke();
+            OnWorldChange();
         }
 
         private void WorldPanel_MouseDown(object sender, MouseEventArgs e)
@@ -44,6 +81,8 @@ namespace GoBot.IHM
             _pointClicked = Dimensions.WorldScale.ScreenToRealPosition(e.Location);
             _centerAtStart = Dimensions.WorldRect.Center();
             _scaleAtStart = new WorldScale(Dimensions.WorldScale);
+
+            OnStartMove();
         }
 
         private void WorldPanel_MouseMove(object sender, MouseEventArgs e)
@@ -53,7 +92,7 @@ namespace GoBot.IHM
                 RealPoint newMousePosition = _scaleAtStart.ScreenToRealPosition(e.Location);
 
                 RealPoint delta = _pointClicked - newMousePosition;
-                
+
                 Dimensions.SetWorldCenter(_centerAtStart + delta);
             }
         }
@@ -61,6 +100,8 @@ namespace GoBot.IHM
         private void WorldPanel_MouseUp(object sender, MouseEventArgs e)
         {
             _pointClicked = null;
+
+            OnStopMove();
         }
 
         private void WorldPanel_SizeChanged(object sender, System.EventArgs e)

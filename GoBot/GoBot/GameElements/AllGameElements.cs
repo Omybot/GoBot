@@ -111,6 +111,23 @@ namespace GoBot.GameElements
             }
         }
 
+        public IEnumerable<IShape> AsVisibleObstacles
+        {
+            get
+            {
+                List<IShape> obstacles = new List<IShape>();
+
+                if (GameBoard.Strategy != null && GameBoard.Strategy.AvoidElements)
+                {
+                    
+                }
+
+                obstacles.AddRange(_buoys.Select(b => new Circle(b.Position, b.HoverRadius)));
+
+                return obstacles;
+            }
+        }
+
         public void SetOpponents(List<RealPoint> positions)
         {
             // TODOEACHYEAR Mettre à jour ICI les éléments en fonction de la position des adversaires

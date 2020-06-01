@@ -55,6 +55,14 @@ namespace GoBot.BoardContext
             }
         }
 
+        public IEnumerable<IShape> FromBoardConstruction
+        {
+            get
+            {
+                return _boardObstacles.Skip(4).ToList(); // 4 = les 4 contours
+            }
+        }
+
         public IEnumerable<IShape> FromBoard
         {
             get
