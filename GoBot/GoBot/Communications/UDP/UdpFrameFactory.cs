@@ -495,5 +495,13 @@ namespace GoBot.Communications.UDP
             Frame retour = new Frame(tab);
             return retour;
         }
+        static public Frame DemandeCouleurEquipe()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Board.RecMove;
+            tab[1] = (byte)UdpFrameFunction.DemandeCouleurEquipe;
+
+            return new Frame(tab);
+        }
     }
 }

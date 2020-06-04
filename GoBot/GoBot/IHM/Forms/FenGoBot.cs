@@ -11,6 +11,7 @@ using GoBot.Devices;
 using GoBot.BoardContext;
 using System.Diagnostics;
 using Geometry.Shapes;
+using GoBot.Communications.UDP;
 
 namespace GoBot
 {
@@ -105,6 +106,8 @@ namespace GoBot
                 Instance = this;
 
                 GameBoard.MyColor = GameBoard.ColorLeftBlue;
+
+                Connections.ConnectionMove.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
             }
 
             Connections.StartConnections();

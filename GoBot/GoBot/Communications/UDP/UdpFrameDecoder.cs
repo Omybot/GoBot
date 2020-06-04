@@ -371,6 +371,16 @@ namespace GoBot.Communications.UDP
                 case UdpFrameFunction.ReponseCAN:
                     output = "Reception message CAN";
                     break;
+                case UdpFrameFunction.DemandeCouleurEquipe:
+                    output = "Demande couleur équipe";
+                    break;
+                case UdpFrameFunction.RetourCouleurEquipe:
+                    output = "Retour couleur équipe : {0}";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, parameters[0].ToString());
+                    }
+                    break;
                 default:
                     output = "Inconnu";
                     break;

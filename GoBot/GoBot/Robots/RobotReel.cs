@@ -414,6 +414,9 @@ namespace GoBot
                         _lockFrame[UdpFrameFunction.ReponseLidar]?.Release();
                     }
                     break;
+                case UdpFrameFunction.RetourCouleurEquipe:
+                    GameBoard.MyColor = frame[2] == 0 ? GameBoard.ColorLeftBlue : GameBoard.ColorRightYellow;
+                    break;
             }
         }
 

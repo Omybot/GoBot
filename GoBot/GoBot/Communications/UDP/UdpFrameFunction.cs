@@ -62,7 +62,10 @@
         RetourUart2 = 0xA5,
 
         EnvoiCAN = 0xC0,
-        ReponseCAN = 0xC1
+        ReponseCAN = 0xC1,
+
+        DemandeCouleurEquipe = 0x72,
+        RetourCouleurEquipe = 0x73
     }
 
     public enum ServoFunction
