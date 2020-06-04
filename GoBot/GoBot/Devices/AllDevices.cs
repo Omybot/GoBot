@@ -1,4 +1,5 @@
-﻿using GoBot.Communications;
+﻿using Geometry;
+using GoBot.Communications;
 using GoBot.Devices.CAN;
 using System;
 using System.Collections.Generic;
@@ -68,6 +69,17 @@ namespace GoBot.Devices
             }
 
             return hok;
+        }
+
+        public static void SetRobotPosition(Position pos)
+        {
+            if (_lidarAvoid != null)
+                _lidarAvoid.Position = pos;
+            if (_lidarGround != null)
+            {
+                _lidarGround.Position.Coordinates = new Geometry.Shapes.RealPoint(pos.Coordinates.X + Math.Cos(pos.Angle) * 109, pos.Coordinates.Y + Math.Sin(pos.Angle) * 109);
+                _lidarGround.Position.Angle = pos.Angle;
+            }
         }
     }
 }

@@ -36,7 +36,6 @@
             this.btnTrap = new System.Windows.Forms.Button();
             this.btnEnableBoard = new System.Windows.Forms.Button();
             this.btnPoints = new System.Windows.Forms.Button();
-            this.btnLines = new System.Windows.Forms.Button();
             this.btnZoomReset = new System.Windows.Forms.Button();
             this.btnZoomMinus = new System.Windows.Forms.Button();
             this.btnZoomPlus = new System.Windows.Forms.Button();
@@ -47,7 +46,7 @@
             // boxGroup
             // 
             this.boxGroup.AutoSize = true;
-            this.boxGroup.Location = new System.Drawing.Point(19, 63);
+            this.boxGroup.Location = new System.Drawing.Point(16, 51);
             this.boxGroup.Name = "boxGroup";
             this.boxGroup.Size = new System.Drawing.Size(64, 17);
             this.boxGroup.TabIndex = 9;
@@ -58,7 +57,7 @@
             // 
             this.cboLidar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLidar.FormattingEnabled = true;
-            this.cboLidar.Location = new System.Drawing.Point(8, 15);
+            this.cboLidar.Location = new System.Drawing.Point(5, 3);
             this.cboLidar.Name = "cboLidar";
             this.cboLidar.Size = new System.Drawing.Size(96, 21);
             this.cboLidar.TabIndex = 18;
@@ -67,7 +66,7 @@
             // 
             this.switchBouton1.AutoSize = true;
             this.switchBouton1.BackColor = System.Drawing.Color.Transparent;
-            this.switchBouton1.Location = new System.Drawing.Point(39, 42);
+            this.switchBouton1.Location = new System.Drawing.Point(36, 30);
             this.switchBouton1.MaximumSize = new System.Drawing.Size(35, 15);
             this.switchBouton1.MinimumSize = new System.Drawing.Size(35, 15);
             this.switchBouton1.Mirrored = true;
@@ -90,7 +89,7 @@
             this.btnEnableBoard.BackColor = System.Drawing.Color.Transparent;
             this.btnEnableBoard.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
             this.btnEnableBoard.Image = global::GoBot.Properties.Resources.LidarBoardOn;
-            this.btnEnableBoard.Location = new System.Drawing.Point(19, 102);
+            this.btnEnableBoard.Location = new System.Drawing.Point(19, 78);
             this.btnEnableBoard.Name = "btnEnableBoard";
             this.btnEnableBoard.Size = new System.Drawing.Size(75, 75);
             this.btnEnableBoard.TabIndex = 25;
@@ -102,24 +101,12 @@
             this.btnPoints.BackColor = System.Drawing.Color.Transparent;
             this.btnPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
             this.btnPoints.Image = global::GoBot.Properties.Resources.LidarPointsOn;
-            this.btnPoints.Location = new System.Drawing.Point(19, 183);
+            this.btnPoints.Location = new System.Drawing.Point(19, 159);
             this.btnPoints.Name = "btnPoints";
             this.btnPoints.Size = new System.Drawing.Size(75, 75);
             this.btnPoints.TabIndex = 23;
             this.btnPoints.UseVisualStyleBackColor = false;
             this.btnPoints.Click += new System.EventHandler(this.btnPoints_Click);
-            // 
-            // btnLines
-            // 
-            this.btnLines.BackColor = System.Drawing.Color.Transparent;
-            this.btnLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.btnLines.Image = global::GoBot.Properties.Resources.LidarLines;
-            this.btnLines.Location = new System.Drawing.Point(19, 264);
-            this.btnLines.Name = "btnLines";
-            this.btnLines.Size = new System.Drawing.Size(75, 75);
-            this.btnLines.TabIndex = 22;
-            this.btnLines.UseVisualStyleBackColor = false;
-            this.btnLines.Click += new System.EventHandler(this.btnLines_Click);
             // 
             // btnZoomReset
             // 
@@ -175,12 +162,11 @@
             this.Controls.Add(this.btnEnableBoard);
             this.Controls.Add(this.btnTrap);
             this.Controls.Add(this.btnPoints);
-            this.Controls.Add(this.btnLines);
             this.Controls.Add(this.btnZoomReset);
             this.Controls.Add(this.btnZoomMinus);
             this.Controls.Add(this.btnZoomPlus);
-            this.Controls.Add(this.cboLidar);
             this.Controls.Add(this.picWorld);
+            this.Controls.Add(this.cboLidar);
             this.Controls.Add(this.boxGroup);
             this.Controls.Add(this.switchBouton1);
             this.Name = "PagePandaLidar";
@@ -200,7 +186,6 @@
         private System.Windows.Forms.Button btnZoomPlus;
         private System.Windows.Forms.Button btnZoomMinus;
         private System.Windows.Forms.Button btnZoomReset;
-        private System.Windows.Forms.Button btnLines;
         private System.Windows.Forms.Button btnPoints;
         private System.Windows.Forms.Button btnTrap;
         private System.Windows.Forms.Button btnEnableBoard;

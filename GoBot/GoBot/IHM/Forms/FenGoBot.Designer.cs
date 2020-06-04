@@ -62,7 +62,7 @@ namespace GoBot
             this.tabActionneurs = new System.Windows.Forms.TabPage();
             this.tabLidar = new System.Windows.Forms.TabPage();
             this.tabPepperl = new System.Windows.Forms.TabPage();
-            this.tabMatch = new System.Windows.Forms.TabPage();
+            this.tabPanda = new System.Windows.Forms.TabPage();
             this.tabControlPanda = new System.Windows.Forms.TabControl();
             this.tabPandaMatch = new System.Windows.Forms.TabPage();
             this.tabPandaLidar = new System.Windows.Forms.TabPage();
@@ -93,13 +93,13 @@ namespace GoBot
             this.pageLidar = new GoBot.IHM.Pages.PageLidar();
             this.pagePepperl1 = new GoBot.IHM.Pages.PagePepperl();
             this.pnlMatch = new GoBot.IHM.Pages.PageMatch();
+            this.pagePandaLidar = new GoBot.IHM.Pages.PagePandaLidar();
             this.pageStorage1 = new GoBot.IHM.Pages.PageStorage();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
             this.panelChargeCPU1 = new GoBot.IHM.Pages.PageDiagnosticMove();
             this.panelReglageAsserv = new GoBot.IHM.Pages.PageReglageAsserv();
             this.potarControl1 = new GoBot.IHM.PotarControl();
             this.panelAlimentation1 = new GoBot.IHM.Pages.PagePower();
-            this.pagePandaLidar1 = new GoBot.IHM.Pages.PagePandaLidar();
             this.tabAlimentation.SuspendLayout();
             this.tabConnexions.SuspendLayout();
             this.tabLogs.SuspendLayout();
@@ -130,7 +130,7 @@ namespace GoBot
             this.tabActionneurs.SuspendLayout();
             this.tabLidar.SuspendLayout();
             this.tabPepperl.SuspendLayout();
-            this.tabMatch.SuspendLayout();
+            this.tabPanda.SuspendLayout();
             this.tabControlPanda.SuspendLayout();
             this.tabPandaMatch.SuspendLayout();
             this.tabPandaLidar.SuspendLayout();
@@ -297,14 +297,15 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabActionneurs);
             this.tabControl.Controls.Add(this.tabLidar);
             this.tabControl.Controls.Add(this.tabPepperl);
-            this.tabControl.Controls.Add(this.tabMatch);
             this.tabControl.Controls.Add(this.tabPageStorage);
+            this.tabControl.Controls.Add(this.tabPanda);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1308, 738);
             this.tabControl.TabIndex = 25;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabCANServos
             // 
@@ -504,15 +505,15 @@ namespace GoBot
             this.tabPepperl.Text = "R2000";
             this.tabPepperl.UseVisualStyleBackColor = true;
             // 
-            // tabMatch
+            // tabPanda
             // 
-            this.tabMatch.Controls.Add(this.tabControlPanda);
-            this.tabMatch.Location = new System.Drawing.Point(4, 22);
-            this.tabMatch.Name = "tabMatch";
-            this.tabMatch.Size = new System.Drawing.Size(1300, 712);
-            this.tabMatch.TabIndex = 32;
-            this.tabMatch.Text = "Match";
-            this.tabMatch.UseVisualStyleBackColor = true;
+            this.tabPanda.Controls.Add(this.tabControlPanda);
+            this.tabPanda.Location = new System.Drawing.Point(4, 22);
+            this.tabPanda.Name = "tabPanda";
+            this.tabPanda.Size = new System.Drawing.Size(1300, 712);
+            this.tabPanda.TabIndex = 32;
+            this.tabPanda.Text = "LattePanda";
+            this.tabPanda.UseVisualStyleBackColor = true;
             // 
             // tabControlPanda
             // 
@@ -524,6 +525,7 @@ namespace GoBot
             this.tabControlPanda.SelectedIndex = 0;
             this.tabControlPanda.Size = new System.Drawing.Size(1300, 712);
             this.tabControlPanda.TabIndex = 1;
+            this.tabControlPanda.SelectedIndexChanged += new System.EventHandler(this.tabControlPanda_SelectedIndexChanged);
             // 
             // tabPandaMatch
             // 
@@ -538,7 +540,7 @@ namespace GoBot
             // 
             // tabPandaLidar
             // 
-            this.tabPandaLidar.Controls.Add(this.pagePandaLidar1);
+            this.tabPandaLidar.Controls.Add(this.pagePandaLidar);
             this.tabPandaLidar.Location = new System.Drawing.Point(4, 22);
             this.tabPandaLidar.Name = "tabPandaLidar";
             this.tabPandaLidar.Padding = new System.Windows.Forms.Padding(3);
@@ -796,6 +798,14 @@ namespace GoBot
             this.pnlMatch.Size = new System.Drawing.Size(1024, 600);
             this.pnlMatch.TabIndex = 0;
             // 
+            // pagePandaLidar
+            // 
+            this.pagePandaLidar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pagePandaLidar.Location = new System.Drawing.Point(6, 6);
+            this.pagePandaLidar.Name = "pagePandaLidar";
+            this.pagePandaLidar.Size = new System.Drawing.Size(1022, 598);
+            this.pagePandaLidar.TabIndex = 0;
+            // 
             // pageStorage1
             // 
             this.pageStorage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -842,14 +852,6 @@ namespace GoBot
             this.panelAlimentation1.Name = "panelAlimentation1";
             this.panelAlimentation1.Size = new System.Drawing.Size(1025, 501);
             this.panelAlimentation1.TabIndex = 0;
-            // 
-            // pagePandaLidar1
-            // 
-            this.pagePandaLidar1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pagePandaLidar1.Location = new System.Drawing.Point(6, 6);
-            this.pagePandaLidar1.Name = "pagePandaLidar1";
-            this.pagePandaLidar1.Size = new System.Drawing.Size(1022, 598);
-            this.pagePandaLidar1.TabIndex = 0;
             // 
             // FenGoBot
             // 
@@ -902,7 +904,7 @@ namespace GoBot
             this.tabActionneurs.PerformLayout();
             this.tabLidar.ResumeLayout(false);
             this.tabPepperl.ResumeLayout(false);
-            this.tabMatch.ResumeLayout(false);
+            this.tabPanda.ResumeLayout(false);
             this.tabControlPanda.ResumeLayout(false);
             this.tabPandaMatch.ResumeLayout(false);
             this.tabPandaLidar.ResumeLayout(false);
@@ -943,7 +945,7 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabAnalog;
         private System.Windows.Forms.TabPage tabNumeric;
         private System.Windows.Forms.TabPage tabPepperl;
-        private System.Windows.Forms.TabPage tabMatch;
+        private System.Windows.Forms.TabPage tabPanda;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage6;
@@ -985,7 +987,7 @@ namespace GoBot
         private System.Windows.Forms.TabControl tabControlPanda;
         private System.Windows.Forms.TabPage tabPandaMatch;
         private System.Windows.Forms.TabPage tabPandaLidar;
-        private IHM.Pages.PagePandaLidar pagePandaLidar1;
+        private IHM.Pages.PagePandaLidar pagePandaLidar;
     }
 }
 

@@ -18,6 +18,7 @@ namespace GoBot
     {
         public static FenGoBot Instance { get; private set; }
         private System.Windows.Forms.Timer timerSauvegarde;
+        private List<TabPage> _pagesInWindow;
 
         /// <summary>
         /// Anti scintillement
@@ -48,7 +49,7 @@ namespace GoBot
                 {
                     WindowState = FormWindowState.Maximized;
                     FormBorderStyle = FormBorderStyle.None;
-                    tabControl.SelectedTab = tabMatch;
+                    tabControl.SelectedTab = tabPanda;
                     tabControl.Location = new Point(-12, -34);
                     tabControl.Width += 100;
                 }
@@ -105,7 +106,7 @@ namespace GoBot
 
                 GameBoard.MyColor = GameBoard.ColorLeftBlue;
             }
-            
+
             Connections.StartConnections();
 
             SplashScreen.SetMessage("Youhou !", Color.Green);
@@ -117,6 +118,8 @@ namespace GoBot
             pnlNumericMove.SetBoard(Board.RecMove);
 
             panelTable.StartDisplay();
+
+            _pagesInWindow = new List<TabPage>();
 
             this.Text = "GoBot 2020 - Beta";
         }
@@ -157,7 +160,7 @@ namespace GoBot
             }
 
             Execution.Shutdown = true;
-            
+
             Config.Save();
             SauverLogs();
 
@@ -199,10 +202,7 @@ namespace GoBot
             else
                 AllDevices.Init();
 
-
-
-            if (AllDevices.LidarAvoid != null)
-                AllDevices.LidarAvoid.Position = Robots.MainRobot.Position;
+            AllDevices.SetRobotPosition(Robots.MainRobot.Position);
         }
 
         private void buttonFenetre_Click(object sender, EventArgs e)
@@ -210,10 +210,13 @@ namespace GoBot
             TabControl tab = new TabControl();
             tab.Height = tabControl.Height;
             tab.Width = tabControl.Width;
+            _pagesInWindow.Add(tabControl.SelectedTab);
             tab.TabPages.Add(tabControl.SelectedTab);
             Fenetre fen = new Fenetre(tab);
             fen.Show();
             fen.FormClosing += fen_FormClosing;
+
+            EnableTabControl();
         }
 
         private Dictionary<TabPage, TabPage> tabPrecedent;
@@ -223,6 +226,8 @@ namespace GoBot
             Fenetre fen = (Fenetre)sender;
             TabControl tab = (TabControl)fen.Control;
             TabPage page = tab.TabPages[0];
+
+            _pagesInWindow.Remove(page);
 
             TabPage tabPrec = tabPrecedent[page];
             bool trouve = false;
@@ -247,6 +252,33 @@ namespace GoBot
                         tabControl.TabPages.Insert(0, page);
                 }
             }
+
+            EnableTabControl();
+        }
+
+        private void tabControlPanda_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            EnableTabControl();
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            EnableTabControl();
+        }
+
+        private void EnableTabControl()
+        {
+            bool lidarEnable = false;
+
+            if (tabControl.SelectedTab == tabPanda || _pagesInWindow.Contains(tabPanda))
+            {
+                if (tabControlPanda.SelectedTab == tabPandaLidar)
+                {
+                    lidarEnable = true;
+                }
+            }
+
+            pagePandaLidar.LidarEnable(lidarEnable);
         }
     }
 }

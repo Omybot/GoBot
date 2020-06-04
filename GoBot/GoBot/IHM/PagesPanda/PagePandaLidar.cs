@@ -24,6 +24,8 @@ namespace GoBot.IHM.Pages
         private bool _enableBoard;
         private bool _showLines, _showPoints;
 
+        private bool _running;
+
         public PagePandaLidar()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace GoBot.IHM.Pages
             _enableBoard = true;
             _showPoints = true;
             _showLines = false;
+            _running = false;
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
@@ -80,22 +83,22 @@ namespace GoBot.IHM.Pages
         private void lidar_NewMeasure(List<RealPoint> measure)
         {
             List<IShape> obstacles = GameBoard.ObstaclesBoardConstruction.ToList();
+            List<RealPoint> tmpObjects, tmpBoard;
 
             if (!_enableBoard)
             {
-                _measureObjects = measure.Where(o => GameBoard.IsInside(o, 50)).ToList();
-                _measureObjects = _measureObjects.Where(p => !obstacles.Exists(o => o.Distance(p) < 30)).ToList();
+                tmpObjects = measure.Where(o => GameBoard.IsInside(o, 50)).ToList();
+                tmpObjects = tmpObjects.Where(p => !obstacles.Exists(o => o.Distance(p) < 30)).ToList();
 
-                _measureBoard = measure.Where(p => !_measureObjects.Contains(p)).ToList();
-                _measureBoard = _measureBoard.Select(p => new RealPoint(p.X - _selectedLidar.Position.Coordinates.X, p.Y - _selectedLidar.Position.Coordinates.Y)).ToList();
+                tmpBoard = measure.Where(p => !tmpObjects.Contains(p)).ToList();
+                _measureObjects = tmpObjects.Select(p => new RealPoint(p.X - _selectedLidar.Position.Coordinates.X, p.Y - _selectedLidar.Position.Coordinates.Y)).ToList();
+                _measureBoard = tmpBoard.Select(p => new RealPoint(p.X - _selectedLidar.Position.Coordinates.X, p.Y - _selectedLidar.Position.Coordinates.Y)).ToList();
             }
             else
             {
-                _measureObjects = measure;
+                _measureObjects = measure.Select(p => new RealPoint(p.X - _selectedLidar.Position.Coordinates.X, p.Y - _selectedLidar.Position.Coordinates.Y)).ToList();
                 _measureBoard = null;
             }
-
-            _measureObjects = _measureObjects.Select(p => new RealPoint(p.X - _selectedLidar.Position.Coordinates.X, p.Y - _selectedLidar.Position.Coordinates.Y)).ToList();
 
             picWorld.Invalidate();
         }
@@ -106,6 +109,8 @@ namespace GoBot.IHM.Pages
             {
                 cboLidar.Items.Add("Ground");
                 cboLidar.Items.Add("Avoid");
+
+                cboLidar.SelectedIndex = 1;
             }
         }
 
@@ -172,7 +177,7 @@ namespace GoBot.IHM.Pages
 
             if (picWorld.Width > 0 && picWorld.Height > 0)
             {
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 g.DrawImage(background, 0, 0);
 
@@ -201,7 +206,7 @@ namespace GoBot.IHM.Pages
                     {
                         foreach (RealPoint p in pointsBoard)
                         {
-                            p.Paint(g, Color.Black, 3, Color.Red, picWorld.Dimensions.WorldScale);
+                            p.Paint(g, Color.DarkRed, 3, Color.Red, picWorld.Dimensions.WorldScale);
                         }
                     }
                     if (_showLines)
@@ -220,7 +225,7 @@ namespace GoBot.IHM.Pages
                     {
                         foreach (RealPoint p in pointsObjects)
                         {
-                            p.Paint(g, Color.Black, 3, Color.Lime, picWorld.Dimensions.WorldScale);
+                            p.Paint(g, Color.DarkGreen, 3, Color.Lime, picWorld.Dimensions.WorldScale);
                         }
                     }
                     if (_showLines)
@@ -237,25 +242,12 @@ namespace GoBot.IHM.Pages
                         //points = points.Where(o => GameBoard.IsInside(o)).ToList();
                         List<List<RealPoint>> groups = pointsObjects.GroupByDistance(80, -1);
 
-                        List<Color> colors = new List<Color>() { Color.Blue, Color.Green, Color.Red, Color.Brown };
-
-                        List<IShape> shapes = new List<IShape>();
-
                         for (int i = 0; i < groups.Count; i++)
                         {
                             Circle circle = groups[i].FitCircle();
-                            if (circle.Radius < 100 && groups[i].Count > 4)// && i < colors.Count)
+                            if (circle.Radius < 100 && groups[i].Count > 4)
                             {
-                                //Line line = groups[i].FitLine();
-                                //Segment line = groups[i].FitSegment();
-
-                                shapes.Add(circle);
-
                                 circle.Paint(g, Color.White, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
-                                g.DrawString((circle.Radius * 2).ToString("0") + "mm / " + (groups[i].FitCircleScore(circle) * 100).ToString("0") + "% / " + (groups[i].FitLineCorrelation()).ToString("0.00") + "%", new Font("Calibri", 9), new SolidBrush(colors[i % colors.Count]), picWorld.Dimensions.WorldScale.RealToScreenPosition(circle.Center.Translation(circle.Radius, 0)));
-
-                                //line.Paint(g, colors[i], 1, Color.Transparent, picWorld.Dimensions.WorldScale);
-
                             }
                         }
 
@@ -265,8 +257,33 @@ namespace GoBot.IHM.Pages
                     {
                         //Plateau.Detections = new List<IShape>(points);
                     }
+                }
+            }
+        }
 
-                    new Circle(_selectedLidar.Position.Coordinates, 20).Paint(g, Color.Black, 1, Color.White, picWorld.Dimensions.WorldScale);
+        public void LidarEnable(bool lidarEnable)
+        {
+            if (_selectedLidar != null && !lidarEnable && _running)
+            {
+                _selectedLidar.NewMeasure -= lidar_NewMeasure;
+                _selectedLidar.StopLoopMeasure();
+                _running = false;
+            }
+
+            if (lidarEnable && !_running)
+            {
+                if ((String)cboLidar.Text == "Ground")
+                    _selectedLidar = AllDevices.LidarGround;
+                else if ((String)cboLidar.Text == "Avoid")
+                    _selectedLidar = AllDevices.LidarAvoid;
+                else
+                    _selectedLidar = null;
+
+                if (_selectedLidar != null)
+                {
+                    _selectedLidar.NewMeasure += lidar_NewMeasure;
+                    _selectedLidar.StartLoopMeasure();
+                    _running = true;
                 }
             }
         }
@@ -313,24 +330,12 @@ namespace GoBot.IHM.Pages
             btnTrap.Focus();
         }
 
-        private void btnLines_Click(object sender, EventArgs e)
-        {
-            _showPoints = false;
-            _showLines = true;
-
-            btnPoints.Image = GoBot.Properties.Resources.LidarPoints;
-            btnLines.Image = GoBot.Properties.Resources.LidarLinesOn;
-
-            btnTrap.Focus();
-        }
-
         private void btnPoints_Click(object sender, EventArgs e)
         {
-            _showPoints = true;
-            _showLines = false;
+            _showPoints = !_showPoints;
+            _showLines = !_showLines;
 
-            btnPoints.Image = GoBot.Properties.Resources.LidarPointsOn;
-            btnLines.Image = GoBot.Properties.Resources.LidarLines;
+            btnPoints.Image = _showPoints ? Properties.Resources.LidarPointsOn : Properties.Resources.LidarLinesOn;
 
             btnTrap.Focus();
         }

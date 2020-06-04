@@ -39,7 +39,7 @@ namespace GoBot
                 MainRobot = new RobotSimu(IDRobot.GrosRobot);
 
             MainRobot.SetDimensions(335, 271, 295, 390);
-            MainRobot.PositionChanged += GrosRobot_PositionChanged;
+            MainRobot.PositionChanged += MainRobot_PositionChanged;
 
             DicRobots = new Dictionary<IDRobot, Robot>();
             DicRobots.Add(IDRobot.GrosRobot, MainRobot);
@@ -51,10 +51,9 @@ namespace GoBot
             MainRobot.SetSpeedFast();
         }
 
-        private static void GrosRobot_PositionChanged(Geometry.Position position)
+        private static void MainRobot_PositionChanged(Geometry.Position position)
         {
-            if (AllDevices.LidarAvoid != null)
-                AllDevices.LidarAvoid.Position = position;
+            AllDevices.SetRobotPosition(position);
         }
 
         public static void EnableSimulation(bool isSimulation)
