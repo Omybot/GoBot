@@ -187,6 +187,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SpeedSampler.cs" />
+    <Compile Include="Strategies\StrategyMini.cs" />
     <Compile Include="Strategies\StrategyEmpty.cs" />
     <Compile Include="Threading\ThreadLink.cs" />
     <Compile Include="Threading\ThreadManager.cs" />
@@ -394,11 +395,11 @@
       <DependentUpon>FenGoBot.cs</DependentUpon>
     </Compile>
     <Compile Include="Historique.cs" />
-    <Compile Include="IHM\Pages\PageGrosRobot.cs">
+    <Compile Include="IHM\Pages\PageRobot.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Pages\PageGrosRobot.Designer.cs">
-      <DependentUpon>PageGrosRobot.cs</DependentUpon>
+    <Compile Include="IHM\Pages\PageRobot.Designer.cs">
+      <DependentUpon>PageRobot.cs</DependentUpon>
     </Compile>
     <Compile Include="BoardContext\GameBoard.cs" />
     <Compile Include="Program.cs" />
@@ -508,8 +509,8 @@
     <EmbeddedResource Include="IHM\Forms\FenGoBot.resx">
       <DependentUpon>FenGoBot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Pages\PageGrosRobot.resx">
-      <DependentUpon>PageGrosRobot.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Pages\PageRobot.resx">
+      <DependentUpon>PageRobot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelPositionables.resx">
       <DependentUpon>PanelPositionables.cs</DependentUpon>

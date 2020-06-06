@@ -212,7 +212,11 @@ namespace GoBot.IHM.Pages
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            GameBoard.Strategy = new StrategyMatch();
+            if(Config.CurrentConfig.IsMiniRobot)
+                GameBoard.Strategy = new StrategyMini();
+            else
+                GameBoard.Strategy = new StrategyMatch();
+
             GameBoard.Strategy.ExecuteMatch();
         }
 

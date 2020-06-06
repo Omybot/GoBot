@@ -79,7 +79,7 @@
 
     public enum SensorOnOffID
     {
-        StartTrigger = 10,
+        StartTrigger = 0x10,
         PressureSensorRightFront = 0x11,
         PressureSensorLeftFront = 0x12,
         PressureSensorRightBack = 0x13,

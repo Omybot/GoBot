@@ -62,6 +62,8 @@ namespace GoBot
             ConfigRapide = new SpeedConfig();
         }
 
+        public bool IsMiniRobot { get; set; }
+
         public int AfficheDetailTraj { get; set; }
 
         // Batteries

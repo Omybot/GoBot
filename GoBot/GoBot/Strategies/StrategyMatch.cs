@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading;
 using GoBot.Movements;
 using GoBot.BoardContext;
+using Geometry;
+using Geometry.Shapes;
 
 namespace GoBot.Strategies
 {
@@ -25,6 +27,7 @@ namespace GoBot.Strategies
             // Sortir ICI de la zonde de départ
             Robots.MainRobot.UpdateGraph(GameBoard.ObstaclesAll);
             Robots.MainRobot.MoveForward(500);
+            Robots.MainRobot.GoToPosition(new Position(50, new RealPoint(1800, 1800)));
             
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 

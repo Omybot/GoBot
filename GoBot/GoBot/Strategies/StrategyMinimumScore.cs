@@ -22,8 +22,7 @@ namespace GoBot.Strategies
             // Sortir ICI de la zonde de départ
 
             Robots.MainRobot.UpdateGraph(GameBoard.ObstaclesAll);
-            
-            Robots.MainRobot.MoveForward(500);
+            //Robots.MainRobot.MoveForward(500);
             
             if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
             {

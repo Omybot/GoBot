@@ -12,6 +12,7 @@ using GoBot.Threading;
 using GoBot.Communications.UDP;
 using GoBot.BoardContext;
 using GoBot.Communications.CAN;
+using GoBot.Strategies;
 
 namespace GoBot
 {
@@ -127,8 +128,14 @@ namespace GoBot
             if (!state && StartTriggerEnable)
             {
                 StartTriggerEnable = false;
+
                 if (GameBoard.Strategy == null)
-                    GameBoard.Strategy = new Strategies.StrategyMatch();
+                {
+                    if (Config.CurrentConfig.IsMiniRobot)
+                        GameBoard.Strategy = new StrategyMini();
+                    else
+                        GameBoard.Strategy = new StrategyMatch();
+                }
 
                 GameBoard.Strategy.ExecuteMatch();
             }
