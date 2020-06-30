@@ -44,7 +44,6 @@ namespace GoBot.BoardContext
 
                 //Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
 
-                _currentStrategy = new StrategyMatch();
                 Robots.MainRobot.UpdateGraph(_obstacles.FromAllExceptBoard);
 
                 // TODOEACHYEAR Définir ici la zone correspondant au plateau où les detections d'adversaire sont autorisées (enlever les pentes par exemple)

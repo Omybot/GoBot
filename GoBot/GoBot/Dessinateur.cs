@@ -211,7 +211,7 @@ namespace GoBot
                         DessinePositionEnnemis(g);
 
                         DessineDetections(g);
-                        
+
                         Robots.MainRobot.PositionTarget?.Paint(g, Color.Red, 5, Color.Red, Scale);
 
                         if (AfficheCoutsMouvements)
@@ -348,13 +348,17 @@ namespace GoBot
         {
             Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordinates);
 
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.TranslateTransform(positionRobot.X, positionRobot.Y);
             g.RotateTransform((float)(robot.Position.Angle.InDegrees));
             g.TranslateTransform(-positionRobot.X, -positionRobot.Y);
 
             Rectangle robotRect = new Rectangle(positionRobot.X - Scale.RealToScreenDistance(robot.Lenght / 2), positionRobot.Y - Scale.RealToScreenDistance(robot.Width / 2), Scale.RealToScreenDistance(robot.Lenght), Scale.RealToScreenDistance(robot.Width));
 
-            g.DrawImage(Properties.Resources.Robot, robotRect);
+            if (Config.CurrentConfig.IsMiniRobot)
+                g.DrawImage(Properties.Resources.RobotMiniClose, robotRect);
+            else
+                g.DrawImage(Properties.Resources.Robot, robotRect);
 
             //g.FillRectangle(Brushes.White, robotRect);
             //using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, GameBoard.MyColor)))
@@ -447,7 +451,7 @@ namespace GoBot
                     //Dessin des noeuds
                     foreach (Node n in robot.Graph.Nodes)
                     {
-                        n.Position.Paint(g, n.Passable ? Color.Black : Color.RoyalBlue, 3,  n.Passable ? Color.RoyalBlue : Color.Transparent, Scale);
+                        n.Position.Paint(g, n.Passable ? Color.Black : Color.RoyalBlue, 3, n.Passable ? Color.RoyalBlue : Color.Transparent, Scale);
                     }
             }
 

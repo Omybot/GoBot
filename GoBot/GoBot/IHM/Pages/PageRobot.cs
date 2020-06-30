@@ -30,7 +30,10 @@ namespace GoBot.IHM.Pages
         private void rdoMainRobot_CheckedChanged(object sender, EventArgs e)
         {
             if (Config.CurrentConfig.IsMiniRobot != !rdoMainRobot.Checked)
+            {
                 Config.CurrentConfig.IsMiniRobot = !rdoMainRobot.Checked;
+                Robots.Init();
+            }
         }
 
         private void PageRobot_Load(object sender, EventArgs e)

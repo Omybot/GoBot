@@ -647,6 +647,7 @@
     <None Include="Images\LidarPointsOn.png" />
     <None Include="Images\LidarBoardOn.png" />
     <None Include="Images\LidarBoardOff.png" />
+    <None Include="Images\RobotMiniClose.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

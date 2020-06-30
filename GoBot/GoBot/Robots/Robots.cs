@@ -32,13 +32,22 @@ namespace GoBot
                 graphGros = Robots.MainRobot.Graph;
 
             Robots.MainRobot?.DeInit();
-            
+
             if (!Simulation)
                 MainRobot = new RobotReel(IDRobot.GrosRobot, Board.RecMove);
             else
                 MainRobot = new RobotSimu(IDRobot.GrosRobot);
 
-            MainRobot.SetDimensions(335, 271, 295, 390);
+            if (!Config.CurrentConfig.IsMiniRobot)
+            {
+                // Position LIDAR : 18.27cm à gauche du centre
+                MainRobot.SetDimensions(335, 271, 295, 390);
+            }
+            else
+            {
+                MainRobot.SetDimensions(220, 320, 143.8, 346);
+            }
+
             MainRobot.PositionChanged += MainRobot_PositionChanged;
 
             DicRobots = new Dictionary<IDRobot, Robot>();
