@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagePandaLidar));
             this.boxGroup = new System.Windows.Forms.CheckBox();
             this.cboLidar = new System.Windows.Forms.ComboBox();
-            this.switchBouton1 = new Composants.SwitchButton();
             this.btnTrap = new System.Windows.Forms.Button();
             this.btnEnableBoard = new System.Windows.Forms.Button();
             this.btnPoints = new System.Windows.Forms.Button();
@@ -61,20 +60,6 @@
             this.cboLidar.Name = "cboLidar";
             this.cboLidar.Size = new System.Drawing.Size(96, 21);
             this.cboLidar.TabIndex = 18;
-            // 
-            // switchBouton1
-            // 
-            this.switchBouton1.AutoSize = true;
-            this.switchBouton1.BackColor = System.Drawing.Color.Transparent;
-            this.switchBouton1.Location = new System.Drawing.Point(36, 30);
-            this.switchBouton1.MaximumSize = new System.Drawing.Size(35, 15);
-            this.switchBouton1.MinimumSize = new System.Drawing.Size(35, 15);
-            this.switchBouton1.Mirrored = true;
-            this.switchBouton1.Name = "switchBouton1";
-            this.switchBouton1.Size = new System.Drawing.Size(35, 15);
-            this.switchBouton1.TabIndex = 2;
-            this.switchBouton1.Value = false;
-            this.switchBouton1.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchEnable_ValueChanged);
             // 
             // btnTrap
             // 
@@ -168,7 +153,6 @@
             this.Controls.Add(this.picWorld);
             this.Controls.Add(this.cboLidar);
             this.Controls.Add(this.boxGroup);
-            this.Controls.Add(this.switchBouton1);
             this.Name = "PagePandaLidar";
             this.Size = new System.Drawing.Size(1022, 598);
             this.Load += new System.EventHandler(this.PanelLidar_Load);
@@ -179,7 +163,6 @@
         }
 
         #endregion
-        private Composants.SwitchButton switchBouton1;
         private System.Windows.Forms.CheckBox boxGroup;
         private WorldPanel picWorld;
         private System.Windows.Forms.ComboBox cboLidar;

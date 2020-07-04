@@ -165,7 +165,9 @@ namespace GoBot.Strategies
             Devices.AllDevices.CanServos.DisableAll();
 
             // On renvoie le score au cas où histoire d'assurer le truc...
-            ((Pepperl)AllDevices.LidarAvoid).ShowMessage("Estimation :", ((int)(GameBoard.Score * 0.9)).ToString()); // Sous estimation pour essaye de se rapprocher su score réel
+
+            if (!Config.CurrentConfig.IsMiniRobot)
+                ((Pepperl)AllDevices.LidarAvoid).ShowMessage("Estimation :", ((int)(GameBoard.Score * 0.9)).ToString()); // Sous estimation pour essaye de se rapprocher su score réel
         }
     }
 }

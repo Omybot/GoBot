@@ -18,9 +18,17 @@ namespace GoBot.Devices
         {
             _canServos = new CanServos(Connections.ConnectionCan);
             _lidarGround = new HokuyoRec(LidarID.Ground);
-            _lidarAvoid = new Pepperl(IPAddress.Parse("10.1.0.50"));
-            ((Pepperl)_lidarAvoid).SetFrequency(PepperlFreq.Hz20);
-            ((Pepperl)_lidarAvoid).SetFilter(PepperlFilter.Average, 3);
+
+            if (Config.CurrentConfig.IsMiniRobot)
+            {
+                _lidarAvoid = new Hokuyo(LidarID.Avoid, "COM3");
+            }
+            else
+            {
+                _lidarAvoid = new Pepperl(IPAddress.Parse("10.1.0.50"));
+                ((Pepperl)_lidarAvoid).SetFrequency(PepperlFreq.Hz20);
+                ((Pepperl)_lidarAvoid).SetFilter(PepperlFilter.Average, 3);
+            }
         }
 
         public static void InitSimu()
@@ -73,12 +81,20 @@ namespace GoBot.Devices
 
         public static void SetRobotPosition(Position pos)
         {
-            if (_lidarAvoid != null)
-                _lidarAvoid.Position = pos;
-            if (_lidarGround != null)
+            if (Config.CurrentConfig.IsMiniRobot)
             {
-                _lidarGround.Position.Coordinates = new Geometry.Shapes.RealPoint(pos.Coordinates.X + Math.Cos(pos.Angle) * 109, pos.Coordinates.Y + Math.Sin(pos.Angle) * 109);
-                _lidarGround.Position.Angle = pos.Angle;
+                if (_lidarAvoid != null)
+                    _lidarAvoid.Position = new Position(pos.Angle - new AngleDelta(90), pos.Coordinates);
+            }
+            else
+            {
+                if (_lidarAvoid != null)
+                    _lidarAvoid.Position = pos;
+                if (_lidarGround != null)
+                {
+                    _lidarGround.Position.Coordinates = new Geometry.Shapes.RealPoint(pos.Coordinates.X + Math.Cos(pos.Angle) * 109, pos.Coordinates.Y + Math.Sin(pos.Angle) * 109);
+                    _lidarGround.Position.Angle = pos.Angle;
+                }
             }
         }
     }

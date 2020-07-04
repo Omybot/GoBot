@@ -55,31 +55,6 @@ namespace GoBot.IHM.Pages
             }
         }
 
-        private void switchEnable_ValueChanged(object sender, bool value)
-        {
-            if (_selectedLidar != null)
-            {
-                _selectedLidar.NewMeasure -= lidar_NewMeasure;
-                _selectedLidar.StartLoopMeasure();
-            }
-
-            if (value)
-            {
-                if ((String)cboLidar.Text == "Ground")
-                    _selectedLidar = AllDevices.LidarGround;
-                else if ((String)cboLidar.Text == "Avoid")
-                    _selectedLidar = AllDevices.LidarAvoid;
-                else
-                    _selectedLidar = null;
-
-                if (_selectedLidar != null)
-                {
-                    _selectedLidar.NewMeasure += lidar_NewMeasure;
-                    _selectedLidar.StartLoopMeasure();
-                }
-            }
-        }
-
         private void lidar_NewMeasure(List<RealPoint> measure)
         {
             List<IShape> obstacles = GameBoard.ObstaclesBoardConstruction.ToList();

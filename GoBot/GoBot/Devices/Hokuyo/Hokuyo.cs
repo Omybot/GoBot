@@ -121,7 +121,7 @@ namespace GoBot.Devices
         {
             _linkMeasures = ThreadManager.CreateThread(link => DoMeasure());
             _linkMeasures.Name = "Mesure Hokuyo " + _id.ToString();
-            _linkMeasures.StartInfiniteLoop(new TimeSpan());
+            _linkMeasures.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
 
             return true;
         }
@@ -236,8 +236,15 @@ namespace GoBot.Devices
 
         private void DoMeasure()
         {
-            _lastMeasure = GetPoints();
-            if (!_linkMeasures.Cancelled) OnNewMeasure(_lastMeasure);
+            try
+            {
+                _lastMeasure = GetPoints();
+                if (!_linkMeasures.Cancelled) OnNewMeasure(_lastMeasure);
+            }
+            catch(Exception ex)
+            {
+                Debug.Print("ERREUR LIDAR : " + ex.Message);
+            }
         }
 
         private List<RealPoint> ValuesToPositions(List<int> measures, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
