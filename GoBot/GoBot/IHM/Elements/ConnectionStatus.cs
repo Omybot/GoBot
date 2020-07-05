@@ -10,7 +10,7 @@ namespace GoBot.IHM
     {
         private ConnectionChecker _connection;
         private Timer _timer;
-        
+
         public ConnectionStatus()
         {
             InitializeComponent();
@@ -23,7 +23,8 @@ namespace GoBot.IHM
 
         private void _timer_Tick(object sender, EventArgs e)
         {
-            this.InvokeAuto(() => _conIndicator.BlinkColor(GetColor(_connection.Connected, _connection.Connected)));
+            if (_connection != null)
+                this.InvokeAuto(() => _conIndicator.BlinkColor(GetColor(_connection.Connected, _connection.Connected)));
         }
 
         public ConnectionChecker Connection
@@ -51,7 +52,12 @@ namespace GoBot.IHM
         {
             set { _lblName.Text = value; }
         }
-        
+
+        public Color TextColor
+        {
+            set { _lblName.ForeColor = value; }
+        }
+
         private void ConnexionCheck_ConnectionStatusChange(Connection sender, bool connected)
         {
             this.InvokeAuto(() => _conIndicator.BlinkColor(GetColor(_connection.Connected, connected)));

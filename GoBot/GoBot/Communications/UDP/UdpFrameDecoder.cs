@@ -24,6 +24,12 @@ namespace GoBot.Communications.UDP
 
             switch (function)
             {
+                case UdpFrameFunction.DemandeLidar:
+                    output = "Demande LIDAR";
+                    break;
+                case UdpFrameFunction.ReponseLidar:
+                    output = "Reponse LIDAR";
+                    break;
                 case UdpFrameFunction.EnvoiUart2:
                     output = "Envoi UART2";
                     break;

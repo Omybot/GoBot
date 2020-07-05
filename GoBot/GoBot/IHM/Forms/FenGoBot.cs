@@ -46,13 +46,26 @@ namespace GoBot
             {
                 panelGrosRobot.Init();
 
-                if (Screen.PrimaryScreen.Bounds.Width <= pnlMatch.Width)
+                if (Screen.PrimaryScreen.Bounds.Width <= 1024)
                 {
                     WindowState = FormWindowState.Maximized;
                     FormBorderStyle = FormBorderStyle.None;
                     tabControl.SelectedTab = tabPanda;
-                    tabControl.Location = new Point(-12, -34);
+                    tabControl.Location = new Point(-14, -50);
                     tabControl.Width += 100;
+                    tabControl.Height += 100;
+                    this.BackColor = Color.FromArgb(32, 32, 32);
+                    panelConnexions.Visible = false;
+                    lblSimulation.Visible = false;
+                    switchBoutonSimu.Visible = false;
+                    btnFenetre.Width = 50;
+                    btnFenetre.Height = 50;
+                    btnClose.Width = 50;
+                    btnClose.Height = 50;
+                    btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                    btnClose.Location = new Point(1024 - 52, 600 - 52);
+                    btnClose.BringToFront();
+                    tabControlPanda.Height = 675;
                 }
                 else
                 {
@@ -210,16 +223,23 @@ namespace GoBot
 
         private void buttonFenetre_Click(object sender, EventArgs e)
         {
-            TabControl tab = new TabControl();
-            tab.Height = tabControl.Height;
-            tab.Width = tabControl.Width;
-            _pagesInWindow.Add(tabControl.SelectedTab);
-            tab.TabPages.Add(tabControl.SelectedTab);
-            Fenetre fen = new Fenetre(tab);
-            fen.Show();
-            fen.FormClosing += fen_FormClosing;
+            if (Screen.PrimaryScreen.Bounds.Width == 1024)
+            {
+                tabControlPanda.SelectedIndex = (tabControlPanda.SelectedIndex + 1) % tabControlPanda.TabCount;
+            }
+            else
+            {
+                TabControl tab = new TabControl();
+                tab.Height = tabControl.Height;
+                tab.Width = tabControl.Width;
+                _pagesInWindow.Add(tabControl.SelectedTab);
+                tab.TabPages.Add(tabControl.SelectedTab);
+                Fenetre fen = new Fenetre(tab);
+                fen.Show();
+                fen.FormClosing += fen_FormClosing;
 
-            EnableTabControl();
+                EnableTabControl();
+            }
         }
 
         private Dictionary<TabPage, TabPage> tabPrecedent;
@@ -282,6 +302,11 @@ namespace GoBot
             }
 
             pagePandaLidar.LidarEnable(lidarEnable);
+        }
+
+        private void btnNextPage_Click(object sender, EventArgs e)
+        {
+            tabControlPanda.SelectedIndex = (tabControlPanda.SelectedIndex + 1) % tabControlPanda.TabCount;
         }
     }
 }

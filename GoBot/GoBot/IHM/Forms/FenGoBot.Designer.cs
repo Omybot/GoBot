@@ -89,9 +89,10 @@ namespace GoBot
             this.pnlMatch = new GoBot.IHM.Pages.PageMatch();
             this.tabPandaLidar = new System.Windows.Forms.TabPage();
             this.pagePandaLidar = new GoBot.IHM.Pages.PagePandaLidar();
+            this.tabPandaMove = new System.Windows.Forms.TabPage();
+            this.pnlPandaMove = new GoBot.IHM.Pages.PagePandaMove();
+            this.btnNextPage = new System.Windows.Forms.Button();
             this.tabControl6 = new System.Windows.Forms.TabControl();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnFenetre = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelChargeCPU1 = new GoBot.IHM.Pages.PageDiagnosticMove();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -100,6 +101,8 @@ namespace GoBot
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
             this.potarControl1 = new GoBot.IHM.PotarControl();
             this.panelAlimentation1 = new GoBot.IHM.Pages.PagePower();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnFenetre = new System.Windows.Forms.Button();
             this.tabAlimentation.SuspendLayout();
             this.tabConnexions.SuspendLayout();
             this.tabLogs.SuspendLayout();
@@ -135,6 +138,7 @@ namespace GoBot
             this.tabControlPanda.SuspendLayout();
             this.tabPandaMatch.SuspendLayout();
             this.tabPandaLidar.SuspendLayout();
+            this.tabPandaMove.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
@@ -687,6 +691,7 @@ namespace GoBot
             // 
             // tabPanda
             // 
+            this.tabPanda.Controls.Add(this.btnNextPage);
             this.tabPanda.Controls.Add(this.tabControlPanda);
             this.tabPanda.Location = new System.Drawing.Point(4, 22);
             this.tabPanda.Name = "tabPanda";
@@ -699,6 +704,7 @@ namespace GoBot
             // 
             this.tabControlPanda.Controls.Add(this.tabPandaMatch);
             this.tabControlPanda.Controls.Add(this.tabPandaLidar);
+            this.tabControlPanda.Controls.Add(this.tabPandaMove);
             this.tabControlPanda.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlPanda.Location = new System.Drawing.Point(0, 0);
             this.tabControlPanda.Name = "tabControlPanda";
@@ -709,6 +715,7 @@ namespace GoBot
             // 
             // tabPandaMatch
             // 
+            this.tabPandaMatch.BackColor = System.Drawing.Color.Transparent;
             this.tabPandaMatch.Controls.Add(this.pnlMatch);
             this.tabPandaMatch.Location = new System.Drawing.Point(4, 22);
             this.tabPandaMatch.Name = "tabPandaMatch";
@@ -716,12 +723,10 @@ namespace GoBot
             this.tabPandaMatch.Size = new System.Drawing.Size(1292, 686);
             this.tabPandaMatch.TabIndex = 0;
             this.tabPandaMatch.Text = "Match";
-            this.tabPandaMatch.UseVisualStyleBackColor = true;
             // 
             // pnlMatch
             // 
-            this.pnlMatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pnlMatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMatch.BackColor = System.Drawing.Color.Black;
             this.pnlMatch.Location = new System.Drawing.Point(6, 6);
             this.pnlMatch.Name = "pnlMatch";
             this.pnlMatch.Size = new System.Drawing.Size(1024, 600);
@@ -740,11 +745,40 @@ namespace GoBot
             // 
             // pagePandaLidar
             // 
-            this.pagePandaLidar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pagePandaLidar.BackColor = System.Drawing.Color.Black;
             this.pagePandaLidar.Location = new System.Drawing.Point(6, 6);
             this.pagePandaLidar.Name = "pagePandaLidar";
-            this.pagePandaLidar.Size = new System.Drawing.Size(1022, 598);
+            this.pagePandaLidar.Size = new System.Drawing.Size(1024, 600);
             this.pagePandaLidar.TabIndex = 0;
+            // 
+            // tabPandaMove
+            // 
+            this.tabPandaMove.Controls.Add(this.pnlPandaMove);
+            this.tabPandaMove.Location = new System.Drawing.Point(4, 22);
+            this.tabPandaMove.Name = "tabPandaMove";
+            this.tabPandaMove.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPandaMove.Size = new System.Drawing.Size(1292, 686);
+            this.tabPandaMove.TabIndex = 2;
+            this.tabPandaMove.Text = "Déplacement";
+            this.tabPandaMove.UseVisualStyleBackColor = true;
+            // 
+            // pnlPandaMove
+            // 
+            this.pnlPandaMove.BackColor = System.Drawing.Color.Black;
+            this.pnlPandaMove.Location = new System.Drawing.Point(6, 6);
+            this.pnlPandaMove.Name = "pnlPandaMove";
+            this.pnlPandaMove.Size = new System.Drawing.Size(1024, 600);
+            this.pnlPandaMove.TabIndex = 0;
+            // 
+            // btnNextPage
+            // 
+            this.btnNextPage.Image = global::GoBot.Properties.Resources.NextPage48;
+            this.btnNextPage.Location = new System.Drawing.Point(953, 474);
+            this.btnNextPage.Name = "btnNextPage";
+            this.btnNextPage.Size = new System.Drawing.Size(80, 80);
+            this.btnNextPage.TabIndex = 1;
+            this.btnNextPage.UseVisualStyleBackColor = true;
+            this.btnNextPage.Click += new System.EventHandler(this.btnNextPage_Click);
             // 
             // tabControl6
             // 
@@ -754,28 +788,6 @@ namespace GoBot
             this.tabControl6.SelectedIndex = 0;
             this.tabControl6.Size = new System.Drawing.Size(1280, 674);
             this.tabControl6.TabIndex = 3;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Image = global::GoBot.Properties.Resources.Close16;
-            this.btnClose.Location = new System.Drawing.Point(1286, 0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(20, 20);
-            this.btnClose.TabIndex = 71;
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // btnFenetre
-            // 
-            this.btnFenetre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFenetre.Image = global::GoBot.Properties.Resources.Windows16;
-            this.btnFenetre.Location = new System.Drawing.Point(1262, 0);
-            this.btnFenetre.Name = "btnFenetre";
-            this.btnFenetre.Size = new System.Drawing.Size(20, 20);
-            this.btnFenetre.TabIndex = 75;
-            this.btnFenetre.UseVisualStyleBackColor = true;
-            this.btnFenetre.Click += new System.EventHandler(this.buttonFenetre_Click);
             // 
             // tabPage1
             // 
@@ -853,6 +865,28 @@ namespace GoBot
             this.panelAlimentation1.Size = new System.Drawing.Size(1025, 501);
             this.panelAlimentation1.TabIndex = 0;
             // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Image = global::GoBot.Properties.Resources.Close16;
+            this.btnClose.Location = new System.Drawing.Point(1286, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(20, 20);
+            this.btnClose.TabIndex = 71;
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnFenetre
+            // 
+            this.btnFenetre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFenetre.Image = global::GoBot.Properties.Resources.Windows16;
+            this.btnFenetre.Location = new System.Drawing.Point(1262, 0);
+            this.btnFenetre.Name = "btnFenetre";
+            this.btnFenetre.Size = new System.Drawing.Size(20, 20);
+            this.btnFenetre.TabIndex = 75;
+            this.btnFenetre.UseVisualStyleBackColor = true;
+            this.btnFenetre.Click += new System.EventHandler(this.buttonFenetre_Click);
+            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -909,6 +943,7 @@ namespace GoBot
             this.tabControlPanda.ResumeLayout(false);
             this.tabPandaMatch.ResumeLayout(false);
             this.tabPandaLidar.ResumeLayout(false);
+            this.tabPandaMove.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -982,12 +1017,15 @@ namespace GoBot
         private IHM.Pages.PanelBoardNumeric pnlNumericMove;
         private IHM.Pages.PagePepperl pagePepperl1;
         private IHM.Pages.PageMatch pnlMatch;
+        private IHM.Pages.PagePandaMove pnlPandaMove;
         private System.Windows.Forms.TabPage tabPageStorage;
         private IHM.Pages.PageStorage pageStorage1;
         private System.Windows.Forms.TabControl tabControlPanda;
         private System.Windows.Forms.TabPage tabPandaMatch;
         private System.Windows.Forms.TabPage tabPandaLidar;
         private IHM.Pages.PagePandaLidar pagePandaLidar;
+        private System.Windows.Forms.TabPage tabPandaMove;
+        private System.Windows.Forms.Button btnNextPage;
     }
 }
 

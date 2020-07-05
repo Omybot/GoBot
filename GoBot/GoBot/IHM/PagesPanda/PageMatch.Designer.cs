@@ -45,8 +45,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.picTeensy = new System.Windows.Forms.PictureBox();
+            this.lblAlim = new System.Windows.Forms.Label();
+            this.picAlim = new System.Windows.Forms.PictureBox();
             this.picServo6 = new System.Windows.Forms.PictureBox();
             this.picServo2 = new System.Windows.Forms.PictureBox();
             this.picCAN = new System.Windows.Forms.PictureBox();
@@ -62,9 +62,7 @@
             this.picCalibration = new System.Windows.Forms.PictureBox();
             this.picJack = new System.Windows.Forms.PictureBox();
             this.picTable = new System.Windows.Forms.PictureBox();
-            this.picAlim = new System.Windows.Forms.PictureBox();
-            this.lblAlim = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.picTeensy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAlim)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).BeginInit();
@@ -80,7 +78,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCalibration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picJack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTable)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picAlim)).BeginInit();
             this.SuspendLayout();
             // 
             // btnTrap
@@ -160,7 +157,7 @@
             // 
             this.label3.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label3.Location = new System.Drawing.Point(85, 34);
+            this.label3.Location = new System.Drawing.Point(92, 34);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 18);
             this.label3.TabIndex = 103;
@@ -171,7 +168,7 @@
             // 
             this.label4.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label4.Location = new System.Drawing.Point(162, 34);
+            this.label4.Location = new System.Drawing.Point(176, 34);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 18);
             this.label4.TabIndex = 104;
@@ -182,7 +179,7 @@
             // 
             this.label5.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label5.Location = new System.Drawing.Point(316, 34);
+            this.label5.Location = new System.Drawing.Point(344, 34);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 18);
             this.label5.TabIndex = 105;
@@ -193,7 +190,7 @@
             // 
             this.label6.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label6.Location = new System.Drawing.Point(393, 34);
+            this.label6.Location = new System.Drawing.Point(428, 34);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(73, 18);
             this.label6.TabIndex = 106;
@@ -204,7 +201,7 @@
             // 
             this.label7.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label7.Location = new System.Drawing.Point(470, 34);
+            this.label7.Location = new System.Drawing.Point(512, 34);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(73, 18);
             this.label7.TabIndex = 107;
@@ -215,7 +212,7 @@
             // 
             this.label8.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label8.Location = new System.Drawing.Point(547, 34);
+            this.label8.Location = new System.Drawing.Point(596, 34);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(73, 18);
             this.label8.TabIndex = 108;
@@ -226,7 +223,7 @@
             // 
             this.label9.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label9.Location = new System.Drawing.Point(624, 34);
+            this.label9.Location = new System.Drawing.Point(680, 34);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(73, 18);
             this.label9.TabIndex = 109;
@@ -237,7 +234,7 @@
             // 
             this.label10.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label10.Location = new System.Drawing.Point(701, 34);
+            this.label10.Location = new System.Drawing.Point(764, 34);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(73, 18);
             this.label10.TabIndex = 110;
@@ -248,7 +245,7 @@
             // 
             this.label11.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label11.Location = new System.Drawing.Point(778, 34);
+            this.label11.Location = new System.Drawing.Point(848, 34);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(73, 18);
             this.label11.TabIndex = 111;
@@ -259,37 +256,37 @@
             // 
             this.label12.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label12.Location = new System.Drawing.Point(239, 34);
+            this.label12.Location = new System.Drawing.Point(260, 34);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(73, 18);
             this.label12.TabIndex = 112;
             this.label12.Text = "IO";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label13
+            // lblAlim
             // 
-            this.label13.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label13.Location = new System.Drawing.Point(932, 34);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(73, 18);
-            this.label13.TabIndex = 113;
-            this.label13.Text = "Teensy";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblAlim.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlim.ForeColor = System.Drawing.Color.LimeGreen;
+            this.lblAlim.Location = new System.Drawing.Point(932, 34);
+            this.lblAlim.Name = "lblAlim";
+            this.lblAlim.Size = new System.Drawing.Size(73, 18);
+            this.lblAlim.TabIndex = 126;
+            this.lblAlim.Text = "Alim";
+            this.lblAlim.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // picTeensy
+            // picAlim
             // 
-            this.picTeensy.Image = ((System.Drawing.Image)(resources.GetObject("picTeensy.Image")));
-            this.picTeensy.Location = new System.Drawing.Point(944, 55);
-            this.picTeensy.Name = "picTeensy";
-            this.picTeensy.Size = new System.Drawing.Size(48, 48);
-            this.picTeensy.TabIndex = 125;
-            this.picTeensy.TabStop = false;
+            this.picAlim.Image = ((System.Drawing.Image)(resources.GetObject("picAlim.Image")));
+            this.picAlim.Location = new System.Drawing.Point(944, 55);
+            this.picAlim.Name = "picAlim";
+            this.picAlim.Size = new System.Drawing.Size(48, 48);
+            this.picAlim.TabIndex = 127;
+            this.picAlim.TabStop = false;
             // 
             // picServo6
             // 
             this.picServo6.Image = ((System.Drawing.Image)(resources.GetObject("picServo6.Image")));
-            this.picServo6.Location = new System.Drawing.Point(790, 55);
+            this.picServo6.Location = new System.Drawing.Point(860, 55);
             this.picServo6.Name = "picServo6";
             this.picServo6.Size = new System.Drawing.Size(48, 48);
             this.picServo6.TabIndex = 124;
@@ -298,7 +295,7 @@
             // picServo2
             // 
             this.picServo2.Image = global::GoBot.Properties.Resources.ValidNok48;
-            this.picServo2.Location = new System.Drawing.Point(482, 55);
+            this.picServo2.Location = new System.Drawing.Point(524, 55);
             this.picServo2.Name = "picServo2";
             this.picServo2.Size = new System.Drawing.Size(48, 48);
             this.picServo2.TabIndex = 123;
@@ -307,7 +304,7 @@
             // picCAN
             // 
             this.picCAN.Image = global::GoBot.Properties.Resources.ValidNok48;
-            this.picCAN.Location = new System.Drawing.Point(328, 55);
+            this.picCAN.Location = new System.Drawing.Point(356, 55);
             this.picCAN.Name = "picCAN";
             this.picCAN.Size = new System.Drawing.Size(48, 48);
             this.picCAN.TabIndex = 122;
@@ -316,7 +313,7 @@
             // picServo4
             // 
             this.picServo4.Image = ((System.Drawing.Image)(resources.GetObject("picServo4.Image")));
-            this.picServo4.Location = new System.Drawing.Point(636, 55);
+            this.picServo4.Location = new System.Drawing.Point(692, 55);
             this.picServo4.Name = "picServo4";
             this.picServo4.Size = new System.Drawing.Size(48, 48);
             this.picServo4.TabIndex = 121;
@@ -325,7 +322,7 @@
             // picServo3
             // 
             this.picServo3.Image = ((System.Drawing.Image)(resources.GetObject("picServo3.Image")));
-            this.picServo3.Location = new System.Drawing.Point(559, 55);
+            this.picServo3.Location = new System.Drawing.Point(608, 55);
             this.picServo3.Name = "picServo3";
             this.picServo3.Size = new System.Drawing.Size(48, 48);
             this.picServo3.TabIndex = 120;
@@ -334,7 +331,7 @@
             // picServo1
             // 
             this.picServo1.Image = ((System.Drawing.Image)(resources.GetObject("picServo1.Image")));
-            this.picServo1.Location = new System.Drawing.Point(405, 55);
+            this.picServo1.Location = new System.Drawing.Point(440, 55);
             this.picServo1.Name = "picServo1";
             this.picServo1.Size = new System.Drawing.Size(48, 48);
             this.picServo1.TabIndex = 119;
@@ -343,7 +340,7 @@
             // picServo5
             // 
             this.picServo5.Image = ((System.Drawing.Image)(resources.GetObject("picServo5.Image")));
-            this.picServo5.Location = new System.Drawing.Point(713, 55);
+            this.picServo5.Location = new System.Drawing.Point(776, 55);
             this.picServo5.Name = "picServo5";
             this.picServo5.Size = new System.Drawing.Size(48, 48);
             this.picServo5.TabIndex = 118;
@@ -352,7 +349,7 @@
             // picIO
             // 
             this.picIO.Image = ((System.Drawing.Image)(resources.GetObject("picIO.Image")));
-            this.picIO.Location = new System.Drawing.Point(251, 55);
+            this.picIO.Location = new System.Drawing.Point(272, 55);
             this.picIO.Name = "picIO";
             this.picIO.Size = new System.Drawing.Size(48, 48);
             this.picIO.TabIndex = 117;
@@ -361,7 +358,7 @@
             // picMove
             // 
             this.picMove.Image = ((System.Drawing.Image)(resources.GetObject("picMove.Image")));
-            this.picMove.Location = new System.Drawing.Point(174, 55);
+            this.picMove.Location = new System.Drawing.Point(188, 55);
             this.picMove.Name = "picMove";
             this.picMove.Size = new System.Drawing.Size(48, 48);
             this.picMove.TabIndex = 116;
@@ -370,7 +367,7 @@
             // picLidar2
             // 
             this.picLidar2.Image = ((System.Drawing.Image)(resources.GetObject("picLidar2.Image")));
-            this.picLidar2.Location = new System.Drawing.Point(97, 55);
+            this.picLidar2.Location = new System.Drawing.Point(104, 55);
             this.picLidar2.Name = "picLidar2";
             this.picLidar2.Size = new System.Drawing.Size(48, 48);
             this.picLidar2.TabIndex = 115;
@@ -420,35 +417,13 @@
             this.picTable.TabIndex = 0;
             this.picTable.TabStop = false;
             // 
-            // picAlim
-            // 
-            this.picAlim.Image = ((System.Drawing.Image)(resources.GetObject("picAlim.Image")));
-            this.picAlim.Location = new System.Drawing.Point(867, 55);
-            this.picAlim.Name = "picAlim";
-            this.picAlim.Size = new System.Drawing.Size(48, 48);
-            this.picAlim.TabIndex = 127;
-            this.picAlim.TabStop = false;
-            // 
-            // lblAlim
-            // 
-            this.lblAlim.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAlim.ForeColor = System.Drawing.Color.LimeGreen;
-            this.lblAlim.Location = new System.Drawing.Point(855, 34);
-            this.lblAlim.Name = "lblAlim";
-            this.lblAlim.Size = new System.Drawing.Size(73, 18);
-            this.lblAlim.TabIndex = 126;
-            this.lblAlim.Text = "Alim";
-            this.lblAlim.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // PageMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.picAlim);
             this.Controls.Add(this.lblAlim);
-            this.Controls.Add(this.picTeensy);
             this.Controls.Add(this.picServo6);
             this.Controls.Add(this.picServo2);
             this.Controls.Add(this.picCAN);
@@ -460,7 +435,6 @@
             this.Controls.Add(this.picMove);
             this.Controls.Add(this.picLidar2);
             this.Controls.Add(this.picLidar1);
-            this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -483,10 +457,10 @@
             this.Controls.Add(this.picTable);
             this.DoubleBuffered = true;
             this.Name = "PageMatch";
-            this.Size = new System.Drawing.Size(1022, 598);
+            this.Size = new System.Drawing.Size(1024, 600);
             this.Load += new System.EventHandler(this.PageMatch_Load);
             this.BackColorChanged += new System.EventHandler(this.PageMatch_BackColorChanged);
-            ((System.ComponentModel.ISupportInitialize)(this.picTeensy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAlim)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).EndInit();
@@ -502,7 +476,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCalibration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picJack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTable)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picAlim)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -530,7 +503,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.PictureBox picLidar1;
         private System.Windows.Forms.PictureBox picLidar2;
         private System.Windows.Forms.PictureBox picMove;
@@ -542,7 +514,6 @@
         private System.Windows.Forms.PictureBox picCAN;
         private System.Windows.Forms.PictureBox picServo2;
         private System.Windows.Forms.PictureBox picServo6;
-        private System.Windows.Forms.PictureBox picTeensy;
         private System.Windows.Forms.PictureBox picAlim;
         private System.Windows.Forms.Label lblAlim;
     }

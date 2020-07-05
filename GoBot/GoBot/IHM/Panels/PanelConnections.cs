@@ -1,6 +1,7 @@
 ﻿using Composants;
 using GoBot.Communications;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GoBot.IHM
@@ -46,7 +47,7 @@ namespace GoBot.IHM
             if (!Execution.DesignMode)
             {
                 ConnectionStatus statusAvoid = new ConnectionStatus();
-                statusAvoid.Connection = Devices.AllDevices.LidarAvoid.ConnectionChecker;
+                statusAvoid.Connection = Devices.AllDevices.LidarAvoid?.ConnectionChecker;
                 statusAvoid.ConnectionName = "Avoid";
                 _ledsPanel.Controls.Add(statusAvoid);
 
@@ -68,6 +69,11 @@ namespace GoBot.IHM
                 _timerBatteries.Tick += new EventHandler(timerBatteries_Tick);
                 _timerBatteries.Start();
             }
+        }
+
+        public void SetPandaMode()
+        {
+            this.BackColor = Color.FromArgb(32, 32, 32);
         }
     }
 }

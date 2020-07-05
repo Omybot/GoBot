@@ -60,6 +60,7 @@
             this.cboLidar.Name = "cboLidar";
             this.cboLidar.Size = new System.Drawing.Size(96, 21);
             this.cboLidar.TabIndex = 18;
+            this.cboLidar.SelectedIndexChanged += new System.EventHandler(this.cboLidar_SelectedIndexChanged);
             // 
             // btnTrap
             // 
@@ -133,7 +134,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picWorld.Location = new System.Drawing.Point(110, 16);
             this.picWorld.Name = "picWorld";
-            this.picWorld.Size = new System.Drawing.Size(898, 566);
+            this.picWorld.Size = new System.Drawing.Size(900, 568);
             this.picWorld.TabIndex = 11;
             this.picWorld.TabStop = false;
             this.picWorld.WorldChange += new GoBot.IHM.WorldPanel.WorldChangeDelegate(this.picWorld_WorldChange);
@@ -143,7 +144,7 @@
             // 
             // PagePandaLidar
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.btnEnableBoard);
             this.Controls.Add(this.btnTrap);
             this.Controls.Add(this.btnPoints);
@@ -154,7 +155,7 @@
             this.Controls.Add(this.cboLidar);
             this.Controls.Add(this.boxGroup);
             this.Name = "PagePandaLidar";
-            this.Size = new System.Drawing.Size(1022, 598);
+            this.Size = new System.Drawing.Size(1024, 600);
             this.Load += new System.EventHandler(this.PanelLidar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
             this.ResumeLayout(false);

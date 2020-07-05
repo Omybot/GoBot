@@ -45,13 +45,13 @@
             this.lblVoltage.TabIndex = 98;
             this.lblVoltage.Text = "-";
             // 
-            // batteriePack
+            // batteryPack
             // 
             this.batteryPack.CurrentState = Composants.Battery.State.VeryLow;
             this.batteryPack.CurrentVoltage = 0D;
-            this.batteryPack.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack.Image")));
+            this.batteryPack.Image = ((System.Drawing.Image)(resources.GetObject("batteryPack.Image")));
             this.batteryPack.Location = new System.Drawing.Point(14, 6);
-            this.batteryPack.Name = "batteriePack";
+            this.batteryPack.Name = "batteryPack";
             this.batteryPack.Size = new System.Drawing.Size(16, 16);
             this.batteryPack.TabIndex = 89;
             this.batteryPack.TabStop = false;
@@ -62,6 +62,7 @@
             // 
             // _ledsPanel
             // 
+            this._ledsPanel.BackColor = System.Drawing.Color.Transparent;
             this._ledsPanel.Location = new System.Drawing.Point(83, 3);
             this._ledsPanel.Name = "_ledsPanel";
             this._ledsPanel.Size = new System.Drawing.Size(1165, 24);

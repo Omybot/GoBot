@@ -108,6 +108,12 @@
     <Compile Include="IHM\Elements\PanelBoardCanServos.Designer.cs">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaMove.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaMove.Designer.cs">
+      <DependentUpon>PagePandaMove.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PagesPanda\PagePandaLidar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -422,6 +428,9 @@
     <EmbeddedResource Include="IHM\Elements\PanelSensorOnOff.resx">
       <DependentUpon>PanelSensorOnOff.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PagesPanda\PagePandaMove.resx">
+      <DependentUpon>PagePandaMove.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaLidar.resx">
       <DependentUpon>PagePandaLidar.cs</DependentUpon>
     </EmbeddedResource>
@@ -648,6 +657,14 @@
     <None Include="Images\LidarBoardOn.png" />
     <None Include="Images\LidarBoardOff.png" />
     <None Include="Images\RobotMiniClose.png" />
+    <None Include="Images\Calibration124.png" />
+    <None Include="Images\Down124.png" />
+    <None Include="Images\GearsOff124.png" />
+    <None Include="Images\GearsOn124.png" />
+    <None Include="Images\NextPage48.png" />
+    <None Include="Images\TurnLeft124.png" />
+    <None Include="Images\TurnRight124.png" />
+    <None Include="Images\Up124.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

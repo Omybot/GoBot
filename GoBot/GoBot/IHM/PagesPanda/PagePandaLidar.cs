@@ -296,6 +296,28 @@ namespace GoBot.IHM.Pages
             btnTrap.Focus();
         }
 
+        private void cboLidar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_selectedLidar != null)
+            {
+                _selectedLidar.NewMeasure -= lidar_NewMeasure;
+                _selectedLidar.StopLoopMeasure();
+            }
+
+            if ((String)cboLidar.Text == "Ground")
+                _selectedLidar = AllDevices.LidarGround;
+            else if ((String)cboLidar.Text == "Avoid")
+                _selectedLidar = AllDevices.LidarAvoid;
+            else
+                _selectedLidar = null;
+
+            if (_selectedLidar != null)
+            {
+                _selectedLidar.NewMeasure += lidar_NewMeasure;
+                _selectedLidar.StartLoopMeasure();
+            }
+        }
+
         private void btnEnableBoard_Click(object sender, EventArgs e)
         {
             _enableBoard = !_enableBoard;

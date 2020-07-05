@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Windows.Forms;
 
 namespace GoBot.Devices
 {
@@ -16,18 +17,25 @@ namespace GoBot.Devices
 
         public static void Init()
         {
-            _canServos = new CanServos(Connections.ConnectionCan);
-            _lidarGround = new HokuyoRec(LidarID.Ground);
+            try
+            {
+                _canServos = new CanServos(Connections.ConnectionCan);
+                _lidarGround = new HokuyoRec(LidarID.Ground);
 
-            if (Config.CurrentConfig.IsMiniRobot)
-            {
-                _lidarAvoid = new Hokuyo(LidarID.Avoid, "COM3");
+                if (Config.CurrentConfig.IsMiniRobot)
+                {
+                    _lidarAvoid = new Hokuyo(LidarID.Avoid, "COM3");
+                }
+                else
+                {
+                    _lidarAvoid = new Pepperl(IPAddress.Parse("10.1.0.50"));
+                    ((Pepperl)_lidarAvoid).SetFrequency(PepperlFreq.Hz20);
+                    ((Pepperl)_lidarAvoid).SetFilter(PepperlFilter.Average, 3);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _lidarAvoid = new Pepperl(IPAddress.Parse("10.1.0.50"));
-                ((Pepperl)_lidarAvoid).SetFrequency(PepperlFreq.Hz20);
-                ((Pepperl)_lidarAvoid).SetFilter(PepperlFilter.Average, 3);
+                MessageBox.Show("ERREUR INIT LIDAR : " + ex.Message);
             }
         }
 
@@ -40,8 +48,8 @@ namespace GoBot.Devices
 
         public static void Close()
         {
-            _lidarAvoid.StopLoopMeasure();
-            _lidarGround.StopLoopMeasure();
+            _lidarAvoid?.StopLoopMeasure();
+            _lidarGround?.StopLoopMeasure();
         }
 
         public static CanServos CanServos
@@ -89,7 +97,7 @@ namespace GoBot.Devices
             else
             {
                 if (_lidarAvoid != null)
-                    _lidarAvoid.Position = pos;
+                    _lidarAvoid.Position = new Position(pos.Angle - new AngleDelta(90), pos.Coordinates);
                 if (_lidarGround != null)
                 {
                     _lidarGround.Position.Coordinates = new Geometry.Shapes.RealPoint(pos.Coordinates.X + Math.Cos(pos.Angle) * 109, pos.Coordinates.Y + Math.Sin(pos.Angle) * 109);
