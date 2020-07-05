@@ -589,9 +589,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\Crochet.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Images\Folder16.png" />
     <None Include="Images\DownGreen16.png" />
     <None Include="Images\Close16.png" />
@@ -623,18 +620,10 @@
     <None Include="Images\TopToLeft16.png" />
     <None Include="Images\TopToRigth16.png" />
     <None Include="Images\Motor16.png" />
-    <None Include="Images\Pump16.png" />
     <None Include="Images\Speed16.png" />
     <None Include="Images\Robot.png" />
     <None Include="Images\Pacman.png" />
-    <None Include="Images\Star16.png" />
-    <None Include="Images\PumpDisable16.png" />
     <None Include="Images\UpLine16.png" />
-    <None Include="Images\Open16.png" />
-    <None Include="Images\OpenClose16.png" />
-    <None Include="Images\OpenMid16.png" />
-    <None Include="Images\VerticalLock16.png" />
-    <None Include="Images\VerticalUnlock16.png" />
     <None Include="Images\GlassPause48.png" />
     <None Include="Images\GlassStart48.png" />
     <None Include="Images\UncheckAll16.png" />

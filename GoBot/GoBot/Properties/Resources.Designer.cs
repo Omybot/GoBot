@@ -343,36 +343,6 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Open16 {
-            get {
-                object obj = ResourceManager.GetObject("Open16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap OpenClose16 {
-            get {
-                object obj = ResourceManager.GetObject("OpenClose16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap OpenMid16 {
-            get {
-                object obj = ResourceManager.GetObject("OpenMid16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Pacman {
             get {
                 object obj = ResourceManager.GetObject("Pacman", resourceCulture);
@@ -416,16 +386,6 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap Play16 {
             get {
                 object obj = ResourceManager.GetObject("Play16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Pump16 {
-            get {
-                object obj = ResourceManager.GetObject("Pump16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
