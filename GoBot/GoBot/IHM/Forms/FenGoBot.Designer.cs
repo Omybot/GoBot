@@ -86,7 +86,7 @@ namespace GoBot
             this.tabPanda = new System.Windows.Forms.TabPage();
             this.tabControlPanda = new System.Windows.Forms.TabControl();
             this.tabPandaMatch = new System.Windows.Forms.TabPage();
-            this.pnlMatch = new GoBot.IHM.Pages.PageMatch();
+            this.pnlMatch = new GoBot.IHM.Pages.PagePandaMatch();
             this.tabPandaLidar = new System.Windows.Forms.TabPage();
             this.pagePandaLidar = new GoBot.IHM.Pages.PagePandaLidar();
             this.tabPandaMove = new System.Windows.Forms.TabPage();
@@ -1016,7 +1016,7 @@ namespace GoBot
         private IHM.Pages.PanelBoardNumeric pnlNumericIO;
         private IHM.Pages.PanelBoardNumeric pnlNumericMove;
         private IHM.Pages.PagePepperl pagePepperl1;
-        private IHM.Pages.PageMatch pnlMatch;
+        private IHM.Pages.PagePandaMatch pnlMatch;
         private IHM.Pages.PagePandaMove pnlPandaMove;
         private System.Windows.Forms.TabPage tabPageStorage;
         private IHM.Pages.PageStorage pageStorage1;

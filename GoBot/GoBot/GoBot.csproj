@@ -120,11 +120,11 @@
     <Compile Include="IHM\PagesPanda\PagePandaLidar.Designer.cs">
       <DependentUpon>PagePandaLidar.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PagesPanda\PageMatch.cs">
+    <Compile Include="IHM\PagesPanda\PagePandaMatch.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PagesPanda\PageMatch.Designer.cs">
-      <DependentUpon>PageMatch.cs</DependentUpon>
+    <Compile Include="IHM\PagesPanda\PagePandaMatch.Designer.cs">
+      <DependentUpon>PagePandaMatch.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Pages\PagePepperl.cs">
       <SubType>UserControl</SubType>
@@ -434,8 +434,8 @@
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaLidar.resx">
       <DependentUpon>PagePandaLidar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PagesPanda\PageMatch.resx">
-      <DependentUpon>PageMatch.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PagesPanda\PagePandaMatch.resx">
+      <DependentUpon>PagePandaMatch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PagePepperl.resx">
       <DependentUpon>PagePepperl.cs</DependentUpon>

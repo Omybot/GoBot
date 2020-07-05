@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM.Pages
 {
-    partial class PageMatch
+    partial class PagePandaMatch
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PageMatch));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagePandaMatch));
             this.btnTrap = new System.Windows.Forms.Button();
             this.btnColorRight = new System.Windows.Forms.Button();
             this.btnColorLeft = new System.Windows.Forms.Button();

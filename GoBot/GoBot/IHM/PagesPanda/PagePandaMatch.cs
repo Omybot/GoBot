@@ -9,9 +9,9 @@ using GoBot.Threading;
 
 namespace GoBot.IHM.Pages
 {
-    public partial class PageMatch : UserControl
+    public partial class PagePandaMatch : UserControl
     {
-        public PageMatch()
+        public PagePandaMatch()
         {
             InitializeComponent();
 
