@@ -641,8 +641,6 @@
     <None Include="Images\ZoomPlus.png" />
     <None Include="Images\LidarLines.png" />
     <None Include="Images\LidarPoints.png" />
-    <None Include="Images\LidarLinesOn.png" />
-    <None Include="Images\LidarPointsOn.png" />
     <None Include="Images\LidarBoardOn.png" />
     <None Include="Images\LidarBoardOff.png" />
     <None Include="Images\RobotMiniClose.png" />

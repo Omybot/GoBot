@@ -332,7 +332,7 @@ namespace GoBot.IHM.Pages
             _showPoints = !_showPoints;
             _showLines = !_showLines;
 
-            btnPoints.Image = _showPoints ? Properties.Resources.LidarPointsOn : Properties.Resources.LidarLinesOn;
+            btnPoints.Image = _showPoints ? Properties.Resources.LidarPoints : Properties.Resources.LidarLines;
 
             btnTrap.Focus();
         }

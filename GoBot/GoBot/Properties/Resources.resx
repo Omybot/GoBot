@@ -139,9 +139,6 @@
   <data name="TablePlan" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TablePlan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LidarLinesOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\LidarLinesOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ConnectionOk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ConnectionOk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -235,9 +232,6 @@
   <data name="ValidNok48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ValidNok48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LidarLines" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\LidarLines.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ZoomMinus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ZoomMinus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -283,9 +277,6 @@
   <data name="LidarBoardOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\LidarBoardOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LidarPoints" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\LidarPoints.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Stop16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Stop16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -297,9 +288,6 @@
   </data>
   <data name="ConnectionNok" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ConnectionNok.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LidarPointsOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\LidarPointsOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LeftArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\LeftArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -327,5 +315,11 @@
   </data>
   <data name="Up124" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Up124.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LidarLines" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\LidarLines.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LidarPoints" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\LidarPoints.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

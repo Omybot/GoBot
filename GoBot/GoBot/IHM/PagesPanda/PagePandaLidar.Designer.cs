@@ -86,7 +86,7 @@
             // 
             this.btnPoints.BackColor = System.Drawing.Color.Transparent;
             this.btnPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.btnPoints.Image = global::GoBot.Properties.Resources.LidarPointsOn;
+            this.btnPoints.Image = global::GoBot.Properties.Resources.LidarPoints;
             this.btnPoints.Location = new System.Drawing.Point(19, 159);
             this.btnPoints.Name = "btnPoints";
             this.btnPoints.Size = new System.Drawing.Size(75, 75);

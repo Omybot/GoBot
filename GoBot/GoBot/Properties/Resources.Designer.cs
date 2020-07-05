@@ -283,39 +283,9 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LidarLinesOn {
-            get {
-                object obj = ResourceManager.GetObject("LidarLinesOn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap LidarPoints {
             get {
                 object obj = ResourceManager.GetObject("LidarPoints", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap LidarPointsOn {
-            get {
-                object obj = ResourceManager.GetObject("LidarPointsOn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Motor14 {
-            get {
-                object obj = ResourceManager.GetObject("Motor14", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -386,16 +356,6 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap Play16 {
             get {
                 object obj = ResourceManager.GetObject("Play16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PumpDisable16 {
-            get {
-                object obj = ResourceManager.GetObject("PumpDisable16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -486,16 +446,6 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap Splash {
             get {
                 object obj = ResourceManager.GetObject("Splash", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Star16 {
-            get {
-                object obj = ResourceManager.GetObject("Star16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -706,26 +656,6 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap ValidOk96 {
             get {
                 object obj = ResourceManager.GetObject("ValidOk96", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap VerticalLock16 {
-            get {
-                object obj = ResourceManager.GetObject("VerticalLock16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap VerticalUnlock16 {
-            get {
-                object obj = ResourceManager.GetObject("VerticalUnlock16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
