@@ -652,6 +652,8 @@
     <None Include="Images\TurnLeft124.png" />
     <None Include="Images\TurnRight124.png" />
     <None Include="Images\Up124.png" />
+    <None Include="Images\LidarGroup.png" />
+    <None Include="Images\LidarGroupDisable.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

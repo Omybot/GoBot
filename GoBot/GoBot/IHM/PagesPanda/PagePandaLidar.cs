@@ -23,6 +23,8 @@ namespace GoBot.IHM.Pages
         private bool _enableBoard;
         private bool _showLines, _showPoints;
 
+        private bool _enableGroup;
+
         private bool _running;
 
         public PagePandaLidar()
@@ -33,6 +35,7 @@ namespace GoBot.IHM.Pages
 
             picWorld.Dimensions.SetZoomFactor(5);
 
+            _enableGroup = false;
             _enableBoard = true;
             _showPoints = true;
             _showLines = false;
@@ -211,7 +214,7 @@ namespace GoBot.IHM.Pages
                         }
                     }
 
-                    if (boxGroup.Checked)
+                    if (_enableGroup)
                     {
                         //points = points.Where(o => GameBoard.IsInside(o)).ToList();
                         List<List<RealPoint>> groups = pointsObjects.GroupByDistance(80, -1);
@@ -317,6 +320,12 @@ namespace GoBot.IHM.Pages
             }
         }
 
+        private void btnGroup_Click(object sender, EventArgs e)
+        {
+            _enableGroup = !_enableGroup;
+            btnGroup.Image = _enableGroup ? Properties.Resources.LidarGroup : Properties.Resources.LidarGroupDisable;
+        }
+        
         private void btnEnableBoard_Click(object sender, EventArgs e)
         {
             _enableBoard = !_enableBoard;

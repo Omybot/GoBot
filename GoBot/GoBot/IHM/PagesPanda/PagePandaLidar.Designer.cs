@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagePandaLidar));
-            this.boxGroup = new System.Windows.Forms.CheckBox();
             this.cboLidar = new System.Windows.Forms.ComboBox();
             this.btnTrap = new System.Windows.Forms.Button();
+            this.btnGroup = new System.Windows.Forms.Button();
             this.btnEnableBoard = new System.Windows.Forms.Button();
             this.btnPoints = new System.Windows.Forms.Button();
             this.btnZoomReset = new System.Windows.Forms.Button();
@@ -41,16 +41,6 @@
             this.picWorld = new GoBot.IHM.WorldPanel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).BeginInit();
             this.SuspendLayout();
-            // 
-            // boxGroup
-            // 
-            this.boxGroup.AutoSize = true;
-            this.boxGroup.Location = new System.Drawing.Point(16, 51);
-            this.boxGroup.Name = "boxGroup";
-            this.boxGroup.Size = new System.Drawing.Size(64, 17);
-            this.boxGroup.TabIndex = 9;
-            this.boxGroup.Text = "Grouper";
-            this.boxGroup.UseVisualStyleBackColor = true;
             // 
             // cboLidar
             // 
@@ -69,6 +59,18 @@
             this.btnTrap.Size = new System.Drawing.Size(23, 23);
             this.btnTrap.TabIndex = 24;
             this.btnTrap.UseVisualStyleBackColor = true;
+            // 
+            // btnGroup
+            // 
+            this.btnGroup.BackColor = System.Drawing.Color.Transparent;
+            this.btnGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
+            this.btnGroup.Image = global::GoBot.Properties.Resources.LidarGroupDisable;
+            this.btnGroup.Location = new System.Drawing.Point(19, 240);
+            this.btnGroup.Name = "btnGroup";
+            this.btnGroup.Size = new System.Drawing.Size(75, 75);
+            this.btnGroup.TabIndex = 26;
+            this.btnGroup.UseVisualStyleBackColor = false;
+            this.btnGroup.Click += new System.EventHandler(this.btnGroup_Click);
             // 
             // btnEnableBoard
             // 
@@ -145,6 +147,7 @@
             // PagePandaLidar
             // 
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.btnGroup);
             this.Controls.Add(this.btnEnableBoard);
             this.Controls.Add(this.btnTrap);
             this.Controls.Add(this.btnPoints);
@@ -153,18 +156,15 @@
             this.Controls.Add(this.btnZoomPlus);
             this.Controls.Add(this.picWorld);
             this.Controls.Add(this.cboLidar);
-            this.Controls.Add(this.boxGroup);
             this.Name = "PagePandaLidar";
             this.Size = new System.Drawing.Size(1024, 600);
             this.Load += new System.EventHandler(this.PanelLidar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.CheckBox boxGroup;
         private WorldPanel picWorld;
         private System.Windows.Forms.ComboBox cboLidar;
         private System.Windows.Forms.Button btnZoomPlus;
@@ -173,5 +173,6 @@
         private System.Windows.Forms.Button btnPoints;
         private System.Windows.Forms.Button btnTrap;
         private System.Windows.Forms.Button btnEnableBoard;
+        private System.Windows.Forms.Button btnGroup;
     }
 }
