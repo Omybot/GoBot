@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using Geometry.Shapes;
 using GoBot.Devices;
 using GoBot.BoardContext;
-using System.Diagnostics;
 using System.Drawing.Drawing2D;
 
 namespace GoBot.IHM.Pages

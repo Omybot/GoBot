@@ -26,7 +26,7 @@ namespace GoBot.IHM.Pages
             if (!Execution.DesignMode)
             {
                 Dessinateur.TableDessinee += Dessinateur_TableDessinee;
-                Robots.MainRobot.SensorOnOffChanged += GrosRobot_ChangementEtatCapteurOnOff;
+                Robots.MainRobot.SensorOnOffChanged += MainRobot_SensorOnOffChanged;
                 Connections.AllConnections.ForEach(c => c.ConnectionChecker.ConnectionStatusChange += ConnectionChecker_ConnectionStatusChange);
                 Devices.AllDevices.LidarAvoid.ConnectionChecker.ConnectionStatusChange += LidarAvoid_ConnectionStatusChange;
                 Devices.AllDevices.LidarGround.ConnectionChecker.ConnectionStatusChange += LidarGround_ConnectionStatusChange;
@@ -84,7 +84,7 @@ namespace GoBot.IHM.Pages
                 SetPicImage(picAlim, connected);
         }
 
-        private void GrosRobot_ChangementEtatCapteurOnOff(SensorOnOffID capteur, bool etat)
+        private void MainRobot_SensorOnOffChanged(SensorOnOffID capteur, bool etat)
         {
             if (capteur == SensorOnOffID.StartTrigger)
             {
@@ -147,11 +147,6 @@ namespace GoBot.IHM.Pages
         {
             GameBoard.MyColor = GameBoard.ColorRightYellow;
             btnTrap.Focus();
-        }
-
-        private void PageMatch_BackColorChanged(object sender, EventArgs e)
-        {
-            Console.WriteLine("RE");
         }
     }
 }

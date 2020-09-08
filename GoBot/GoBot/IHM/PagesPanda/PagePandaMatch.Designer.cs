@@ -459,7 +459,6 @@
             this.Name = "PageMatch";
             this.Size = new System.Drawing.Size(1024, 600);
             this.Load += new System.EventHandler(this.PageMatch_Load);
-            this.BackColorChanged += new System.EventHandler(this.PageMatch_BackColorChanged);
             ((System.ComponentModel.ISupportInitialize)(this.picAlim)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).EndInit();
