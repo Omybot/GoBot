@@ -122,8 +122,9 @@ namespace GoBot.IHM
             {
                 _servo.SetPositionMin(val);
                 gphMonitoringPos.MinLimit = val;
-                trkPosition.Min = val;
             }
+
+            trkPosition.Min = val;
         }
 
         private void numPositionMax_ValueChanged(object sender, EventArgs e)
@@ -134,8 +135,9 @@ namespace GoBot.IHM
             {
                 _servo.SetPositionMax(val);
                 gphMonitoringPos.MaxLimit = val;
-                trkPosition.Max = val;
             }
+
+            trkPosition.Max = val;
         }
 
         private void numAccel_ValueChanged(object sender, EventArgs e)
@@ -256,22 +258,22 @@ namespace GoBot.IHM
             {
                 numPosition.Value = _servo.ReadPosition();
 
-                trkPosition.SetValue(_servo.LastPosition, false);
-                trkPosition.Min = _servo.LastPositionMin;
-                trkPosition.Max = _servo.LastPositionMax;
-
                 numPositionMin.Value = _servo.ReadPositionMin();
                 numPositionMax.Value = _servo.ReadPositionMax();
                 numAccel.Value = _servo.ReadAcceleration();
                 numSpeedMax.Value = _servo.ReadSpeedMax();
                 numTorqueMax.Value = _servo.ReadTorqueMax();
 
+                trkPosition.SetValue(_servo.LastPosition, false);
+                trkPosition.Min = _servo.LastPositionMin;
+                trkPosition.Max = _servo.LastPositionMax;
+
                 //trkTrajectoryTarget.Min = _servo.LastPositionMin;
                 //trkTrajectoryTarget.Max = _servo.LastPositionMax;
                 //trkTrajectoryTarget.SetValue(_servo.LastPosition);
                 //trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
                 //trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
-                
+
                 gphMonitoringTorque.MinLimit = 0;
                 gphMonitoringTorque.MaxLimit = _servo.LastTorqueMax * 1.5;
 
