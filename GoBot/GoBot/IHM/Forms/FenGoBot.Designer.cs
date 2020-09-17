@@ -84,6 +84,7 @@ namespace GoBot
             this.tabPageStorage = new System.Windows.Forms.TabPage();
             this.pageStorage1 = new GoBot.IHM.Pages.PageStorage();
             this.tabPanda = new System.Windows.Forms.TabPage();
+            this.btnNextPage = new System.Windows.Forms.Button();
             this.tabControlPanda = new System.Windows.Forms.TabControl();
             this.tabPandaMatch = new System.Windows.Forms.TabPage();
             this.pnlMatch = new GoBot.IHM.Pages.PagePandaMatch();
@@ -91,7 +92,6 @@ namespace GoBot
             this.pagePandaLidar = new GoBot.IHM.Pages.PagePandaLidar();
             this.tabPandaMove = new System.Windows.Forms.TabPage();
             this.pnlPandaMove = new GoBot.IHM.Pages.PagePandaMove();
-            this.btnNextPage = new System.Windows.Forms.Button();
             this.tabControl6 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelChargeCPU1 = new GoBot.IHM.Pages.PageDiagnosticMove();
@@ -700,6 +700,16 @@ namespace GoBot
             this.tabPanda.Text = "LattePanda";
             this.tabPanda.UseVisualStyleBackColor = true;
             // 
+            // btnNextPage
+            // 
+            this.btnNextPage.Image = global::GoBot.Properties.Resources.NextPage48;
+            this.btnNextPage.Location = new System.Drawing.Point(953, 547);
+            this.btnNextPage.Name = "btnNextPage";
+            this.btnNextPage.Size = new System.Drawing.Size(80, 80);
+            this.btnNextPage.TabIndex = 1;
+            this.btnNextPage.UseVisualStyleBackColor = true;
+            this.btnNextPage.Click += new System.EventHandler(this.btnNextPage_Click);
+            // 
             // tabControlPanda
             // 
             this.tabControlPanda.Controls.Add(this.tabPandaMatch);
@@ -769,16 +779,6 @@ namespace GoBot
             this.pnlPandaMove.Name = "pnlPandaMove";
             this.pnlPandaMove.Size = new System.Drawing.Size(1024, 600);
             this.pnlPandaMove.TabIndex = 0;
-            // 
-            // btnNextPage
-            // 
-            this.btnNextPage.Image = global::GoBot.Properties.Resources.NextPage48;
-            this.btnNextPage.Location = new System.Drawing.Point(953, 474);
-            this.btnNextPage.Name = "btnNextPage";
-            this.btnNextPage.Size = new System.Drawing.Size(80, 80);
-            this.btnNextPage.TabIndex = 1;
-            this.btnNextPage.UseVisualStyleBackColor = true;
-            this.btnNextPage.Click += new System.EventHandler(this.btnNextPage_Click);
             // 
             // tabControl6
             // 

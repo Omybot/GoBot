@@ -80,6 +80,7 @@ namespace GoBot.Communications.CAN
 
         public override void StartReception()
         {
+            Connections.UDPBoardConnection[_board].StartReception();
             Connections.UDPBoardConnection[_board].FrameReceived += board_FrameReceived;
         }
 
