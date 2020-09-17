@@ -256,24 +256,23 @@ namespace GoBot.IHM
 
             try
             {
-                numPosition.Value = _servo.ReadPosition();
-
                 numPositionMin.Value = _servo.ReadPositionMin();
                 numPositionMax.Value = _servo.ReadPositionMax();
+                numPosition.Value = _servo.ReadPosition();
                 numAccel.Value = _servo.ReadAcceleration();
                 numSpeedMax.Value = _servo.ReadSpeedMax();
                 numTorqueMax.Value = _servo.ReadTorqueMax();
 
-                trkPosition.SetValue(_servo.LastPosition, false);
                 trkPosition.Min = _servo.LastPositionMin;
                 trkPosition.Max = _servo.LastPositionMax;
+                trkPosition.SetValue(_servo.LastPosition, false);
 
                 //trkTrajectoryTarget.Min = _servo.LastPositionMin;
                 //trkTrajectoryTarget.Max = _servo.LastPositionMax;
                 //trkTrajectoryTarget.SetValue(_servo.LastPosition);
                 //trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
                 //trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
-
+                
                 gphMonitoringTorque.MinLimit = 0;
                 gphMonitoringTorque.MaxLimit = _servo.LastTorqueMax * 1.5;
 
