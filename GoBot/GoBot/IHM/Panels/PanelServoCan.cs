@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
+using System.Collections.Generic;
+
 using GoBot.Threading;
 using GoBot.Devices.CAN;
-using System.Drawing.Drawing2D;
 using GoBot.Devices;
-using System.Threading;
+using System.Linq;
 
 namespace GoBot.IHM
 {
@@ -18,12 +15,12 @@ namespace GoBot.IHM
     {
         private ThreadLink _linkPolling, _linkDrawing;
         private CanServo _servo;
-        private bool _loaded;
 
         public PanelServoCan()
         {
             InitializeComponent();
-            _loaded = false;
+
+            numID.Maximum = Enum.GetValues(typeof(ServomoteurID)).Cast<int>().Max();
         }
 
         public void SetServo(ServomoteurID servo)
@@ -252,8 +249,6 @@ namespace GoBot.IHM
 
         private void ReadValues()
         {
-            _loaded = false;
-
             try
             {
                 numPositionMin.Value = _servo.ReadPositionMin();
@@ -302,8 +297,6 @@ namespace GoBot.IHM
                 grpSettings.Enabled = false;
                 grpPositions.Enabled = false;
             }
-
-            _loaded = true;
         }
     }
 }
