@@ -58,10 +58,10 @@ namespace GoBot.IHM.Pages
                 byteBinaryGraphA1.SetNames(new List<String>() { "Moteur 4 I", "Moteur 2 I", "OSC", "A3 (Free)", "Ethernet reset", "-", "-", "Capt. couleur S3" });
                 byteBinaryGraphA2.SetNames(new List<String>() { "Capt. couleur led", "Ethernet CS", "Capt. couleur S2", "-", "-", "-", "-", "-" });
 
-                byteBinaryGraphB1.SetNames(new List<String>() { "Moteur 1 I", "Moteur 3 I", "Tension bat.", "Centrale inertielle", "Capt. couleur Out", "PGD - JTAG", "PGJ - JTAG", "Ethernet INT" });
+                byteBinaryGraphB1.SetNames(new List<String>() { "Moteur 1 I", "Moteur 3 I", "Tension bat.", "Vacuostat 2", "Capt. couleur Out", "PGD - JTAG", "PGJ - JTAG", "Ethernet INT" });
                 byteBinaryGraphB2.SetNames(new List<String>() { "Codeur 1B", "Codeur 1A", "Moteur 2 H", "Moteur 2 L", "Moteur 3 H", "Moteur 3 L", "Moteur 4 H", "Moteur 4 L" });
 
-                byteBinaryGraphC1.SetNames(new List<String>() { "Centrale inertielle", "Vacuostat 1", "Vacuostat 2", "Ethernet SCK", "Ethernet MOSI", "Ethernet MISO", "Moteur 1 H", "Moteur 1 L" });
+                byteBinaryGraphC1.SetNames(new List<String>() { "Vacuostat 1", "-", "-", "Ethernet SCK", "Ethernet MOSI", "Ethernet MISO", "Moteur 1 H", "Moteur 1 L" });
                 byteBinaryGraphC2.SetNames(new List<String>() { "Codeur 2 A", "Codeur 2 B", "-", "-", "-", "-", "-", "-" });
             }
             else if (board == Board.RecMove)
