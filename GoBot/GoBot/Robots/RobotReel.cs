@@ -626,7 +626,7 @@ namespace GoBot
             ActuatorOnOffState[actuator] = on;
 
             Frame frame = UdpFrameFactory.ActionneurOnOff(_boardActuatorOnOff[actuator], actuator, on);
-            Connections.ConnectionIO.SendMessage(frame);
+            Connections.UDPBoardConnection[_boardActuatorOnOff[actuator]].SendMessage(frame);
 
             Historique.AjouterAction(new ActionOnOff(this, actuator, on));
         }
