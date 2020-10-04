@@ -26,7 +26,7 @@
         Unused02 = 2,
         Unused03 = 3,
 
-        Unused04 = 4,
+        PushArmRight = 4,
         FlagRight = 5,
         Unused06 = 6,
         Unused07 = 7,
@@ -39,7 +39,7 @@
         Unused12 = 12,
         Unused13 = 13,
         FlagLeft = 14,
-        Unused15 = 15,
+        PushArmLeft = 15,
 
         Unused16 = 16,
         Unused17 = 17,

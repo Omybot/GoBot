@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
 using GoBot.Threading;
+using GoBot.Actionneurs;
 
 namespace GoBot.IHM.Panels
 {
@@ -179,17 +180,19 @@ namespace GoBot.IHM.Panels
 
             if (!_isOnLeft)
             {
+                Actionneur.ElevatorRight.DoPositionInside();
                 btnLateral.Image = Properties.Resources.BigArrow;
             }
             else
             {
+                Actionneur.ElevatorRight.DoPositionOutside();
                 Bitmap bmp = new Bitmap(Properties.Resources.BigArrow);
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipX);
                 btnLateral.Image = bmp;
             }
 
             _linkAnimation = ThreadManager.CreateThread(link => ThreadLateral(!_isOnLeft ? -4 : 4));
-            _linkAnimation.StartInfiniteLoop(10);
+            _linkAnimation.StartInfiniteLoop(15);
 
             picStorage.Focus();
         }

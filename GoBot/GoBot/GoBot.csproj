@@ -69,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
+    <Compile Include="Actionneurs\ElevatorRight.cs" />
+    <Compile Include="Actionneurs\FingerLeft.cs" />
+    <Compile Include="Actionneurs\FingerRight.cs" />
     <Compile Include="Actionneurs\Flags.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />

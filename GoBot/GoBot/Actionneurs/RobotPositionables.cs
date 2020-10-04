@@ -13,6 +13,9 @@ namespace GoBot
 
         public ServoFlagLeft ServoFlagLeft { get; set; } = new ServoFlagLeft();
         public ServoFlagRight ServoFlagRight { get; set; } = new ServoFlagRight();
+
+        public ServoPushArmRight ServoPushArmRight { get; set; } = new ServoPushArmRight();
+        public ServoPushArmLeft ServoPushArmLeft { get; set; } = new ServoPushArmLeft();
     }
 }
 
@@ -34,6 +37,22 @@ namespace GoBot.Actionneurs
     public class ServoFlagRight : ServoFlag
     {
         public override ServomoteurID ID => ServomoteurID.FlagRight;
+    }
+
+    public abstract class ServoPushArm : PositionableServo
+    {
+        public int PositionOpen { get; set; }
+        public int PositionClose { get; set; }
+    }
+
+    public class ServoPushArmLeft : ServoPushArm
+    {
+        public override ServomoteurID ID => ServomoteurID.PushArmLeft;
+    }
+
+    public class ServoPushArmRight : ServoPushArm
+    {
+        public override ServomoteurID ID => ServomoteurID.PushArmRight;
     }
 
     #endregion
