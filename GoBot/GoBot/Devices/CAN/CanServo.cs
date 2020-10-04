@@ -29,7 +29,7 @@ namespace GoBot.Devices.CAN
         private iCanSpeakable _communication;
 
         private ThreadLink _nextDisable;
-        
+
         public delegate void TorqueAlertDelegate();
         public event TorqueAlertDelegate TorqueAlert;
 
@@ -105,12 +105,12 @@ namespace GoBot.Devices.CAN
 
         public void SearchMax()
         {
-            int initial = _position;
+            int initial = ReadPosition() / 100 * 100;
             int max = initial;
-            int targetTorque = 100;
             int tempo = 500;
+            int targetTorque = ReadTorqueMax();
 
-            SetPositionMin(0);
+            SetPositionMax(60000);
 
             while (ReadTorqueCurrent() < targetTorque)
             {
@@ -119,7 +119,7 @@ namespace GoBot.Devices.CAN
                 Thread.Sleep(tempo);
             }
 
-            max += 500;
+            max -= 500;
             SetPosition(max);
             Thread.Sleep(tempo);
 
@@ -130,18 +130,17 @@ namespace GoBot.Devices.CAN
                 Thread.Sleep(tempo);
             }
 
-            max += 100;
+            max -= 100;
 
             SetPositionMax(max);
-            SetPosition(initial);
         }
 
         public void SearchMin()
         {
-            int initial = _position;
+            int initial = ReadPosition() / 100 * 100; ;
             int min = initial;
-            int targetTorque = 100;
             int tempo = 500;
+            int targetTorque = ReadTorqueMax();
 
             SetPositionMin(0);
 
@@ -212,14 +211,14 @@ namespace GoBot.Devices.CAN
 
         public void DisableOutput(int delayMs = 0)
         {
-            if(delayMs > 0)
+            if (delayMs > 0)
             {
                 CancelDisable();
 
                 ThreadManager.CreateThread(link =>
                 {
                     _nextDisable = link;
-                    if(!link.Cancelled)
+                    if (!link.Cancelled)
                         _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_id));
                 }).StartDelayedThread(delayMs);
             }
@@ -281,7 +280,7 @@ namespace GoBot.Devices.CAN
 
         private void CancelDisable()
         {
-            if(_nextDisable != null)
+            if (_nextDisable != null)
             {
                 _nextDisable.Cancel();
                 _nextDisable = null;

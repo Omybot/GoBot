@@ -66,6 +66,8 @@
             this.numPosition = new System.Windows.Forms.NumericUpDown();
             this.numAccel = new System.Windows.Forms.NumericUpDown();
             this.grpControl = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.switchButton2 = new Composants.SwitchButton();
             this.btnAutoMax = new System.Windows.Forms.Button();
             this.btnAutoMin = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
@@ -78,10 +80,8 @@
             this.lblSpeedUnit = new System.Windows.Forms.Label();
             this.lblAccelUnit = new System.Windows.Forms.Label();
             this.grpPositions = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.btnSauvegarderPosition = new System.Windows.Forms.Button();
-            this.switchButton2 = new Composants.SwitchButton();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnSavePosition = new System.Windows.Forms.Button();
+            this.cboPositions = new System.Windows.Forms.ComboBox();
             this.grpMonitoring.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTorqueMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
@@ -505,7 +505,7 @@
             // numSpeedMax
             // 
             this.numSpeedMax.Increment = new decimal(new int[] {
-            100,
+            5000,
             0,
             0,
             0});
@@ -543,7 +543,7 @@
             // numAccel
             // 
             this.numAccel.Increment = new decimal(new int[] {
-            100,
+            5000,
             0,
             0,
             0});
@@ -579,6 +579,28 @@
             this.grpControl.TabIndex = 38;
             this.grpControl.TabStop = false;
             this.grpControl.Text = "Contrôle";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(49, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 13);
+            this.label3.TabIndex = 43;
+            this.label3.Text = "Contrôle par codeur";
+            // 
+            // switchButton2
+            // 
+            this.switchButton2.AutoSize = true;
+            this.switchButton2.BackColor = System.Drawing.Color.Transparent;
+            this.switchButton2.Location = new System.Drawing.Point(11, 25);
+            this.switchButton2.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchButton2.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchButton2.Mirrored = true;
+            this.switchButton2.Name = "switchButton2";
+            this.switchButton2.Size = new System.Drawing.Size(35, 15);
+            this.switchButton2.TabIndex = 43;
+            this.switchButton2.Value = false;
             // 
             // btnAutoMax
             // 
@@ -698,8 +720,8 @@
             // 
             // grpPositions
             // 
-            this.grpPositions.Controls.Add(this.btnSauvegarderPosition);
-            this.grpPositions.Controls.Add(this.comboBox1);
+            this.grpPositions.Controls.Add(this.btnSavePosition);
+            this.grpPositions.Controls.Add(this.cboPositions);
             this.grpPositions.Location = new System.Drawing.Point(3, 142);
             this.grpPositions.Name = "grpPositions";
             this.grpPositions.Size = new System.Drawing.Size(295, 52);
@@ -707,48 +729,28 @@
             this.grpPositions.TabStop = false;
             this.grpPositions.Text = "Positions";
             // 
-            // comboBox1
+            // btnSavePosition
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 19);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(184, 21);
-            this.comboBox1.TabIndex = 0;
+            this.btnSavePosition.Image = global::GoBot.Properties.Resources.Save16;
+            this.btnSavePosition.Location = new System.Drawing.Point(196, 18);
+            this.btnSavePosition.Name = "btnSavePosition";
+            this.btnSavePosition.Size = new System.Drawing.Size(93, 23);
+            this.btnSavePosition.TabIndex = 40;
+            this.btnSavePosition.Text = "Sauvegarder";
+            this.btnSavePosition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSavePosition.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSavePosition.UseVisualStyleBackColor = true;
+            this.btnSavePosition.Click += new System.EventHandler(this.btnSauvegarderPosition_Click);
             // 
-            // btnSauvegarderPosition
+            // cboPositions
             // 
-            this.btnSauvegarderPosition.Image = global::GoBot.Properties.Resources.Save16;
-            this.btnSauvegarderPosition.Location = new System.Drawing.Point(196, 18);
-            this.btnSauvegarderPosition.Name = "btnSauvegarderPosition";
-            this.btnSauvegarderPosition.Size = new System.Drawing.Size(93, 23);
-            this.btnSauvegarderPosition.TabIndex = 40;
-            this.btnSauvegarderPosition.Text = "Sauvegarder";
-            this.btnSauvegarderPosition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSauvegarderPosition.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSauvegarderPosition.UseVisualStyleBackColor = true;
-            // 
-            // switchButton2
-            // 
-            this.switchButton2.AutoSize = true;
-            this.switchButton2.BackColor = System.Drawing.Color.Transparent;
-            this.switchButton2.Location = new System.Drawing.Point(11, 25);
-            this.switchButton2.MaximumSize = new System.Drawing.Size(35, 15);
-            this.switchButton2.MinimumSize = new System.Drawing.Size(35, 15);
-            this.switchButton2.Mirrored = true;
-            this.switchButton2.Name = "switchButton2";
-            this.switchButton2.Size = new System.Drawing.Size(35, 15);
-            this.switchButton2.TabIndex = 43;
-            this.switchButton2.Value = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(49, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 13);
-            this.label3.TabIndex = 43;
-            this.label3.Text = "Contrôle par codeur";
+            this.cboPositions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPositions.FormattingEnabled = true;
+            this.cboPositions.Location = new System.Drawing.Point(6, 19);
+            this.cboPositions.Name = "cboPositions";
+            this.cboPositions.Size = new System.Drawing.Size(184, 21);
+            this.cboPositions.TabIndex = 0;
+            this.cboPositions.SelectedIndexChanged += new System.EventHandler(this.cboPositions_SelectedIndexChanged);
             // 
             // PanelServoCan
             // 
@@ -839,8 +841,8 @@
         private Composants.SwitchButton switchButton1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox grpPositions;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button btnSauvegarderPosition;
+        private System.Windows.Forms.ComboBox cboPositions;
+        private System.Windows.Forms.Button btnSavePosition;
         private System.Windows.Forms.Label label3;
         private Composants.SwitchButton switchButton2;
     }

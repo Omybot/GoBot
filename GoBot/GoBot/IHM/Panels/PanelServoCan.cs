@@ -8,6 +8,8 @@ using GoBot.Threading;
 using GoBot.Devices.CAN;
 using GoBot.Devices;
 using System.Linq;
+using System.Reflection;
+using GoBot.Actionneurs;
 
 namespace GoBot.IHM
 {
@@ -15,6 +17,9 @@ namespace GoBot.IHM
     {
         private ThreadLink _linkPolling, _linkDrawing;
         private CanServo _servo;
+        private PositionableServo _currentPositionable;
+
+        public Dictionary<String, PropertyInfo> _positionsProp;
 
         public PanelServoCan()
         {
@@ -32,7 +37,40 @@ namespace GoBot.IHM
                 picConnection.Visible = false;
                 lblName.Text = "";
                 ReadValues();
+
+                _currentPositionable = FindPositionnableFromServo(servo);
+                SetPositions(_currentPositionable);
             }
+        }
+
+        private PositionableServo FindPositionnableFromServo(ServomoteurID servo)
+        {
+            PropertyInfo[] properties = Config.CurrentConfig.GetType().GetProperties();
+
+            List<PositionableServo> positionnables = properties.Where(o => typeof(PositionableServo).IsAssignableFrom(o.PropertyType)).Select(o => o.GetValue(Config.CurrentConfig, null)).Cast<PositionableServo>().ToList();
+
+            return positionnables.Where(o => o.ID == servo).First();
+        }
+
+        private void SetPositions(Positionable pos)
+        {
+            PropertyInfo[] properties = pos.GetType().GetProperties();
+
+            List<String> noms = new List<string>();
+            _positionsProp = new Dictionary<string, PropertyInfo>();
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (property.Name != "ID")
+                {
+                    noms.Add(Config.PropertyNameToScreen(property) + " : " + property.GetValue(pos, null));
+                    _positionsProp.Add(noms[noms.Count - 1], property);
+                }
+            }
+
+            cboPositions.Items.Clear();
+            cboPositions.Items.AddRange(noms.ToArray());
+            btnSavePosition.Enabled = false;
         }
 
         private void DrawTimeArrow()
@@ -105,10 +143,7 @@ namespace GoBot.IHM
 
         private void numPosition_ValueChanged(object sender, EventArgs e)
         {
-            if (_servo.LastPosition != numPosition.Value)
-            {
-                _servo.SetPosition((int)numPosition.Value);
-            }
+            _servo.SetPosition((int)numPosition.Value);
         }
 
         private void numPositionMin_ValueChanged(object sender, EventArgs e)
@@ -217,9 +252,9 @@ namespace GoBot.IHM
                 {
                     link.Name = "Recherche servo max";
                     _servo.SearchMax();
-                    ReadValues();
+                    this.InvokeAuto(() => ReadValues());
                     btnAutoMin.InvokeAuto(() => btnAutoMax.Enabled = true);
-                });
+                }).StartThread();
             }
         }
 
@@ -232,9 +267,9 @@ namespace GoBot.IHM
                 {
                     link.Name = "Recherche servo min";
                     _servo.SearchMin();
-                    ReadValues();
+                    this.InvokeAuto(() => ReadValues());
                     btnAutoMin.InvokeAuto(() => btnAutoMin.Enabled = true);
-                });
+                }).StartThread();
             }
         }
 
@@ -245,6 +280,23 @@ namespace GoBot.IHM
                 gphMonitoringTorque.ScaleMode = Composants.GraphPanel.ScaleType.FixedIfEnough;
                 gphMonitoringPos.ScaleMode = Composants.GraphPanel.ScaleType.FixedIfEnough;
             }
+        }
+
+        private void btnSauvegarderPosition_Click(object sender, EventArgs e)
+        {
+            int index = cboPositions.SelectedIndex;
+
+            _positionsProp[(String)cboPositions.SelectedItem].SetValue(_currentPositionable, _servo.ReadPosition(), null);
+
+            SetPositions(_currentPositionable);
+            cboPositions.SelectedIndex = index;
+
+            Config.Save();
+        }
+
+        private void cboPositions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSavePosition.Enabled = true;
         }
 
         private void ReadValues()
@@ -267,7 +319,7 @@ namespace GoBot.IHM
                 //trkTrajectoryTarget.SetValue(_servo.LastPosition);
                 //trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
                 //trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
-                
+
                 gphMonitoringTorque.MinLimit = 0;
                 gphMonitoringTorque.MaxLimit = _servo.LastTorqueMax * 1.5;
 
