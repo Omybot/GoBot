@@ -27,7 +27,7 @@
         Unused03 = 3,
 
         FingerFront = 4,
-        Unused05 = 5,
+        FlagRight = 5,
         Unused06 = 6,
         FingerBack = 7,
 
@@ -38,7 +38,7 @@
 
         GoldClampRight = 12,
         GoldElevationRight = 13,
-        WiperRight = 14,
+        FlagLeft = 14,
         Unused15 = 15,
 
         ClampRight = 16,
@@ -48,7 +48,7 @@
 
         GoldClampLeft = 20,
         GoldElevationLeft = 21,
-        WiperLeft = 22,
+        Unused22 = 22,
         Unused23 = 23,
     }
 

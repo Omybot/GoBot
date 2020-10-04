@@ -33,8 +33,10 @@ namespace GoBot
 
         public ServoUnloader ServoUnloader { get; set; } = new ServoUnloader();
 
-        public ServoWiperLeft ServoWiperLeft { get; set; } = new ServoWiperLeft();
-        public ServoWiperRight ServoWiperRight { get; set; } = new ServoWiperRight();
+        //2020
+
+        public ServoFlagLeft ServoFlagLeft { get; set; } = new ServoFlagLeft();
+        public ServoFlagRight ServoFlagRight { get; set; } = new ServoFlagRight();
     }
 }
 
@@ -56,6 +58,22 @@ namespace GoBot.Actionneurs
         public int PositionClose { get; set; }
         public int PositionFree { get; set; }
         public int PositionPush { get; set; }
+    }
+
+    public abstract class ServoFlag : PositionableServo
+    {
+        public int PositionOpen { get; set; }
+        public int PositionClose { get; set; }
+    }
+
+    public class ServoFlagLeft : ServoFlag
+    {
+        public override ServomoteurID ID => ServomoteurID.FlagLeft;
+    }
+
+    public class ServoFlagRight : ServoFlag
+    {
+        public override ServomoteurID ID => ServomoteurID.FlagRight;
     }
 
     public abstract class ServoClampAtom : ServoClamp
@@ -183,22 +201,6 @@ namespace GoBot.Actionneurs
     public class ServoExitLauncherRight : ServoExitLauncher
     {
         public override ServomoteurID ID => ServomoteurID.ExitLauncherRight;
-    }
-
-    public abstract class ServoWiper : PositionableServo
-    {
-        public int PositionStore { get; set; }
-        public int PositionSide { get; set; }
-    }
-
-    public class ServoWiperLeft : ServoWiper
-    {
-        public override ServomoteurID ID => ServomoteurID.WiperLeft;
-    }
-
-    public class ServoWiperRight : ServoWiper
-    {
-        public override ServomoteurID ID => ServomoteurID.WiperRight;
     }
 
 

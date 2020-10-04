@@ -5,17 +5,16 @@ namespace GoBot.Actionneurs
 {
     static class Actionneur
     {
-        //*private static AtomHandler _atomHandler;
-        
+        private static Flags _flags;
+
         public static void Init()
         {
-            //*_atomHandler = new AtomHandler();
+            _flags = new Flags();
         }
 
-        //*public static AtomHandler AtomHandler
-        //*{
-        //*    get { return _atomHandler; }
-        //*    set { _atomHandler = value; }
-        //*}
+        public static Flags Flags
+        {
+            get { return _flags; }
+        }
     }
 }
