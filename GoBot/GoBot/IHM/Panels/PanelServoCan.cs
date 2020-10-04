@@ -49,28 +49,37 @@ namespace GoBot.IHM
 
             List<PositionableServo> positionnables = properties.Where(o => typeof(PositionableServo).IsAssignableFrom(o.PropertyType)).Select(o => o.GetValue(Config.CurrentConfig, null)).Cast<PositionableServo>().ToList();
 
-            return positionnables.Where(o => o.ID == servo).First();
+            return positionnables.Where(o => o.ID == servo).FirstOrDefault();
         }
 
         private void SetPositions(Positionable pos)
         {
-            PropertyInfo[] properties = pos.GetType().GetProperties();
-
-            List<String> noms = new List<string>();
-            _positionsProp = new Dictionary<string, PropertyInfo>();
-
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.Name != "ID")
-                {
-                    noms.Add(Config.PropertyNameToScreen(property) + " : " + property.GetValue(pos, null));
-                    _positionsProp.Add(noms[noms.Count - 1], property);
-                }
-            }
-
             cboPositions.Items.Clear();
-            cboPositions.Items.AddRange(noms.ToArray());
             btnSavePosition.Enabled = false;
+
+            if (pos != null)
+            {
+                PropertyInfo[] properties = pos.GetType().GetProperties();
+
+                List<String> noms = new List<string>();
+                _positionsProp = new Dictionary<string, PropertyInfo>();
+
+                foreach (PropertyInfo property in properties)
+                {
+                    if (property.Name != "ID")
+                    {
+                        noms.Add(Config.PropertyNameToScreen(property) + " : " + property.GetValue(pos, null));
+                        _positionsProp.Add(noms[noms.Count - 1], property);
+                    }
+                }
+
+                cboPositions.Enabled = true;
+                cboPositions.Items.AddRange(noms.ToArray());
+            }
+            else
+            {
+                cboPositions.Enabled = false;
+            }
         }
 
         private void DrawTimeArrow()

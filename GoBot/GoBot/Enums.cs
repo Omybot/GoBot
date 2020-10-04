@@ -21,33 +21,33 @@
 
     public enum ServomoteurID
     {
-        ExitLauncherRight = 0,
-        LauncherRight = 1,
-        CalibrationRight = 2,
+        Unused00 = 0,
+        Unused01 = 1,
+        Unused02 = 2,
         Unused03 = 3,
 
-        FingerFront = 4,
+        Unused04 = 4,
         FlagRight = 5,
         Unused06 = 6,
-        FingerBack = 7,
+        Unused07 = 7,
 
-        CalibrationLeft= 8,
-        LauncherLeft = 9,
-        ExitLauncherLeft = 10,
-        Unloader = 11,
+        Unused08 = 8,
+        Unused09 = 9,
+        Unused10 = 10,
+        Unused11 = 11,
 
-        GoldClampRight = 12,
-        GoldElevationRight = 13,
+        Unused12 = 12,
+        Unused13 = 13,
         FlagLeft = 14,
         Unused15 = 15,
 
-        ClampRight = 16,
+        Unused16 = 16,
         Unused17 = 17,
-        Elevation = 18,
-        ClampLeft = 19,
+        Unused18 = 18,
+        Unused19 = 19,
 
-        GoldClampLeft = 20,
-        GoldElevationLeft = 21,
+        Unused20 = 20,
+        Unused21 = 21,
         Unused22 = 22,
         Unused23 = 23,
     }
