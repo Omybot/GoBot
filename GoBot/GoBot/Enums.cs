@@ -22,8 +22,8 @@
     public enum ServomoteurID
     {
         Unused00 = 0,
-        Unused01 = 1,
-        Unused02 = 2,
+        LockerRight = 1,
+        LockerLeft = 2,
         Unused03 = 3,
 
         PushArmRight = 4,
@@ -46,10 +46,10 @@
         Unused18 = 18,
         Unused19 = 19,
 
-        Unused20 = 20,
-        Unused21 = 21,
-        Unused22 = 22,
-        Unused23 = 23,
+        GrabberLeft = 20,
+        FingerRight = 21,
+        FingerLeft = 22,
+        GrabberRight = 23,
     }
 
     public enum MotorID
