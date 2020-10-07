@@ -113,6 +113,12 @@
     <Compile Include="IHM\Elements\PanelBoardCanServos.Designer.cs">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaActuators.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaActuators.Designer.cs">
+      <DependentUpon>PagePandaActuators.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PagesPanda\PagePandaMove.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -433,6 +439,9 @@
     <EmbeddedResource Include="IHM\Elements\PanelSensorOnOff.resx">
       <DependentUpon>PanelSensorOnOff.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PagesPanda\PagePandaActuators.resx">
+      <DependentUpon>PagePandaActuators.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaMove.resx">
       <DependentUpon>PagePandaMove.cs</DependentUpon>
     </EmbeddedResource>
@@ -659,6 +668,8 @@
     <None Include="Images\Up124.png" />
     <None Include="Images\LidarGroup.png" />
     <None Include="Images\LidarGroupDisable.png" />
+    <None Include="Images\Finger.png" />
+    <None Include="Images\FingerLeft.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

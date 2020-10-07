@@ -48,7 +48,7 @@
             // btnCalibration
             // 
             this.btnCalibration.Image = global::GoBot.Properties.Resources.Calibration124;
-            this.btnCalibration.Location = new System.Drawing.Point(159, 445);
+            this.btnCalibration.Location = new System.Drawing.Point(161, 445);
             this.btnCalibration.Name = "btnCalibration";
             this.btnCalibration.Size = new System.Drawing.Size(150, 150);
             this.btnCalibration.TabIndex = 7;
@@ -58,7 +58,7 @@
             // btnAsserv
             // 
             this.btnAsserv.Image = global::GoBot.Properties.Resources.GearsOn124;
-            this.btnAsserv.Location = new System.Drawing.Point(3, 445);
+            this.btnAsserv.Location = new System.Drawing.Point(5, 445);
             this.btnAsserv.Name = "btnAsserv";
             this.btnAsserv.Size = new System.Drawing.Size(150, 150);
             this.btnAsserv.TabIndex = 6;
