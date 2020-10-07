@@ -1,30 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GoBot.Actionneurs
+﻿namespace GoBot.Actionneurs
 {
-    class FingerLeft
+    class FingerLeft : Finger
     {
-        public void DoGoInside()
-        {
-        }
-
-        public void DoGoOutside()
-        {
-        }
-
-        public void DoLock()
+        public override void DoAirLock()
         {
             Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.MakeVacuumLeftBack, true);
             Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.OpenVacuumLeftBack, false);
         }
 
-        public void DoUnlock()
+        public override void DoAirUnlock()
         {
             Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.MakeVacuumLeftBack, false);
             Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.OpenVacuumLeftBack, true);
+        }
+
+        public override void DoPositionHide()
+        {
+            Config.CurrentConfig.ServoFingerLeft.SendPosition(Config.CurrentConfig.ServoFingerLeft.PositionHide);
+        }
+
+        public override void DoPositionKeep()
+        {
+            Config.CurrentConfig.ServoFingerLeft.SendPosition(Config.CurrentConfig.ServoFingerLeft.PositionKeep);
+        }
+
+        public override void DoPositionGrab()
+        {
+            Config.CurrentConfig.ServoFingerLeft.SendPosition(Config.CurrentConfig.ServoFingerLeft.PositionGrab);
+        }
+
+        public override bool HasSomething()
+        {
+            return Robots.MainRobot.ReadSensorOnOff(SensorOnOffID.PressureSensorLeftBack);
         }
     }
 }

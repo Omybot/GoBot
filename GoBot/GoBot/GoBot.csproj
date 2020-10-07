@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
     <Compile Include="Actionneurs\ElevatorRight.cs" />
+    <Compile Include="Actionneurs\Finger.cs" />
     <Compile Include="Actionneurs\FingerLeft.cs" />
     <Compile Include="Actionneurs\FingerRight.cs" />
     <Compile Include="Actionneurs\Flags.cs" />

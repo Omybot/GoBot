@@ -16,6 +16,9 @@ namespace GoBot
 
         public ServoPushArmRight ServoPushArmRight { get; set; } = new ServoPushArmRight();
         public ServoPushArmLeft ServoPushArmLeft { get; set; } = new ServoPushArmLeft();
+
+        public ServoFingerRight ServoFingerRight { get; set; } = new ServoFingerRight();
+        public ServoFingerLeft ServoFingerLeft { get; set; } = new ServoFingerLeft();
     }
 }
 
@@ -53,6 +56,23 @@ namespace GoBot.Actionneurs
     public class ServoPushArmRight : ServoPushArm
     {
         public override ServomoteurID ID => ServomoteurID.PushArmRight;
+    }
+
+    public abstract class ServoFinger : PositionableServo
+    {
+        public int PositionHide { get; set; }
+        public int PositionKeep { get; set; }
+        public int PositionGrab { get; set; }
+    }
+
+    public class ServoFingerLeft : ServoFinger
+    {
+        public override ServomoteurID ID => ServomoteurID.FingerLeft;
+    }
+
+    public class ServoFingerRight : ServoFinger
+    {
+        public override ServomoteurID ID => ServomoteurID.FingerRight;
     }
 
     #endregion
