@@ -150,7 +150,7 @@ namespace GoBot
             if (this == Robots.MainRobot)
                 Connections.ConnectionIO.FrameReceived += ReceptionUdpMessage;
 
-            Connections.ConnectionsCan[CanBoard.CanAlim].FrameReceived += ReceptionCanMessage;
+            //Connections.ConnectionsCan[CanBoard.CanAlim].FrameReceived += ReceptionCanMessage;
 
             if (this == Robots.MainRobot)
             {

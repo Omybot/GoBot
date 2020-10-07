@@ -72,7 +72,7 @@ namespace GoBot.Communications
             _connectionsCan.Add(CanBoard.CanServo4, new CanSubConnection(ConnectionCan, CanBoard.CanServo4));
             _connectionsCan.Add(CanBoard.CanServo5, new CanSubConnection(ConnectionCan, CanBoard.CanServo5));
             _connectionsCan.Add(CanBoard.CanServo6, new CanSubConnection(ConnectionCan, CanBoard.CanServo6));
-            _connectionsCan.Add(CanBoard.CanAlim, new CanSubConnection(ConnectionCan, CanBoard.CanAlim));
+            //_connectionsCan.Add(CanBoard.CanAlim, new CanSubConnection(ConnectionCan, CanBoard.CanAlim));
 
             _connectionsCan.Values.ToList().ForEach(o => AllConnections.Add(o));
 

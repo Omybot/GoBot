@@ -44,6 +44,6 @@
         CanServo4 = 0x04,
         CanServo5 = 0x05,
         CanServo6 = 0x06,
-        CanAlim = 0x10
+        //CanAlim = 0x10
     }
 }

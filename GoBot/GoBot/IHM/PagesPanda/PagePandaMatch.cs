@@ -42,7 +42,7 @@ namespace GoBot.IHM.Pages
                 SetPicImage(picServo4, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo4].ConnectionChecker.Connected);
                 SetPicImage(picServo5, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo5].ConnectionChecker.Connected);
                 SetPicImage(picServo6, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo6].ConnectionChecker.Connected);
-                SetPicImage(picServo6, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim].ConnectionChecker.Connected);
+                //SetPicImage(picAlim, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim].ConnectionChecker.Connected);
 
                 bool jack = Robots.MainRobot.ReadStartTrigger();
                 SetPicImage(picJack, jack);
@@ -80,8 +80,8 @@ namespace GoBot.IHM.Pages
                 SetPicImage(picServo5, connected);
             else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo6])
                 SetPicImage(picServo6, connected);
-            else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim])
-                SetPicImage(picAlim, connected);
+            //else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim])
+            //    SetPicImage(picAlim, connected);
         }
 
         private void MainRobot_SensorOnOffChanged(SensorOnOffID capteur, bool etat)
