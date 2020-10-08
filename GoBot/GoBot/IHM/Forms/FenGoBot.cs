@@ -12,6 +12,7 @@ using GoBot.BoardContext;
 using System.Diagnostics;
 using Geometry.Shapes;
 using GoBot.Communications.UDP;
+using GoBot.IHM.Forms;
 
 namespace GoBot
 {
@@ -307,6 +308,12 @@ namespace GoBot
         private void btnNextPage_Click(object sender, EventArgs e)
         {
             tabControlPanda.SelectedIndex = (tabControlPanda.SelectedIndex + 1) % tabControlPanda.TabCount;
+        }
+
+        private void btnDebug_Click(object sender, EventArgs e)
+        {
+            DebugLidar fen = new DebugLidar();
+            fen.ShowDialog();
         }
     }
 }

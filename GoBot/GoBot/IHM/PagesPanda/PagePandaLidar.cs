@@ -243,7 +243,6 @@ namespace GoBot.IHM.Pages
             if (_selectedLidar != null && !lidarEnable && _running)
             {
                 _selectedLidar.NewMeasure -= lidar_NewMeasure;
-                _selectedLidar.StopLoopMeasure();
                 _running = false;
             }
 
@@ -259,7 +258,8 @@ namespace GoBot.IHM.Pages
                 if (_selectedLidar != null)
                 {
                     _selectedLidar.NewMeasure += lidar_NewMeasure;
-                    _selectedLidar.StartLoopMeasure();
+                    if (!_selectedLidar.Activated)
+                        _selectedLidar.StartLoopMeasure();
                     _running = true;
                 }
             }

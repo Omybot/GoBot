@@ -180,12 +180,12 @@ namespace GoBot.IHM.Panels
 
             if (!_isOnLeft)
             {
-                Actionneur.ElevatorRight.DoPositionInside();
+                Actionneur.ElevatorRight.DoPositionPushInside();
                 btnLateral.Image = Properties.Resources.BigArrow;
             }
             else
             {
-                Actionneur.ElevatorRight.DoPositionOutside();
+                Actionneur.ElevatorRight.DoPositionPushOutside();
                 Bitmap bmp = new Bitmap(Properties.Resources.BigArrow);
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipX);
                 btnLateral.Image = bmp;

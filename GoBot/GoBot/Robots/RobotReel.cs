@@ -86,6 +86,8 @@ namespace GoBot
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightFront, Board.RecIO);
 
             _boardMotor = new Dictionary<MotorID, Board>();
+            _boardMotor.Add(MotorID.ElevatorLeft, Board.RecIO);
+            _boardMotor.Add(MotorID.ElevatorRight, Board.RecIO);
 
             SpeedConfig.ParamChange += SpeedConfig_ParamChange;
         }
@@ -659,23 +661,15 @@ namespace GoBot
             Frame frame = UdpFrameFactory.MoteurOrigin(_boardMotor[motor], motor);
             Connections.UDPBoardConnection[_boardMotor[motor]].SendMessage(frame);
 
-            if (wait) _lockMotor[motor].WaitOne(5000);
+            if (wait) _lockMotor[motor].WaitOne(30000);
         }
 
         public override void SetMotorSpeed(MotorID motor, SensGD sens, int speed)
         {
             base.SetMotorSpeed(motor, sens, speed);
 
-            if (motor == MotorID.AvailableOnRecMove12 || motor == MotorID.Gulp)
-            {
-                Frame frame = UdpFrameFactory.MoteurVitesse(Board.RecMove, motor, sens, speed);
-                Connections.ConnectionMove.SendMessage(frame);
-            }
-            else
-            {
-                Frame frame = UdpFrameFactory.MoteurVitesse(Board.RecIO, motor, sens, speed);
-                Connections.ConnectionIO.SendMessage(frame);
-            }
+            Frame trame = UdpFrameFactory.MoteurVitesse(_boardMotor[motor], sens, speed);
+            Connections.UDPBoardConnection[_boardMotor[motor]].SendMessage(trame);
         }
 
         public override void SetMotorAcceleration(MotorID motor, int acceleration)

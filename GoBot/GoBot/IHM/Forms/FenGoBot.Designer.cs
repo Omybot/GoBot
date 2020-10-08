@@ -105,6 +105,7 @@ namespace GoBot
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
             this.potarControl1 = new GoBot.IHM.PotarControl();
             this.panelAlimentation1 = new GoBot.IHM.Pages.PagePower();
+            this.btnDebug = new System.Windows.Forms.Button();
             this.tabAlimentation.SuspendLayout();
             this.tabConnexions.SuspendLayout();
             this.tabLogs.SuspendLayout();
@@ -637,6 +638,7 @@ namespace GoBot
             // 
             // tabLidar
             // 
+            this.tabLidar.Controls.Add(this.btnDebug);
             this.tabLidar.Controls.Add(this.pageLidar);
             this.tabLidar.Location = new System.Drawing.Point(4, 22);
             this.tabLidar.Name = "tabLidar";
@@ -910,6 +912,16 @@ namespace GoBot
             this.panelAlimentation1.Size = new System.Drawing.Size(1025, 501);
             this.panelAlimentation1.TabIndex = 0;
             // 
+            // btnDebug
+            // 
+            this.btnDebug.Location = new System.Drawing.Point(8, 260);
+            this.btnDebug.Name = "btnDebug";
+            this.btnDebug.Size = new System.Drawing.Size(95, 23);
+            this.btnDebug.TabIndex = 2;
+            this.btnDebug.Text = "Debug LIDAR";
+            this.btnDebug.UseVisualStyleBackColor = true;
+            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1052,6 +1064,7 @@ namespace GoBot
         private System.Windows.Forms.Button btnNextPage;
         private System.Windows.Forms.TabPage tabPandaActuators;
         private IHM.Pages.PagePandaActuators pagePandaActuators1;
+        private System.Windows.Forms.Button btnDebug;
     }
 }
 

@@ -17,8 +17,11 @@ namespace GoBot
         public ServoFingerRight ServoFingerRight { get; set; } = new ServoFingerRight();
         public ServoFingerLeft ServoFingerLeft { get; set; } = new ServoFingerLeft();
 
-        public MotorElevatorRight MotorFingerBack { get; set; } = new MotorElevatorRight();
-        public MotorElevatorLeft MotorFingerFront { get; set; } = new MotorElevatorLeft();
+        public ServoLockerRight ServoLockerRight { get; set; } = new ServoLockerRight();
+        public ServoLockerLeft ServoLockerLeft { get; set; } = new ServoLockerLeft();
+
+        public MotorElevatorRight MotorElevatorRight { get; set; } = new MotorElevatorRight();
+        public MotorElevatorLeft MotorElevatorLeft { get; set; } = new MotorElevatorLeft();
     }
 }
 
@@ -92,6 +95,23 @@ namespace GoBot.Actionneurs
         public override ServomoteurID ID => ServomoteurID.GrabberLeft;
     }
 
+    public abstract class ServoLocker : PositionableServo
+    {
+        public int PositionEngage { get; set; }
+        public int PositionDisengage { get; set; }
+        public int PositionMaintain { get; set; }
+    }
+
+    public class ServoLockerRight : ServoLocker
+    {
+        public override ServomoteurID ID => ServomoteurID.LockerRight;
+    }
+
+    public class ServoLockerLeft : ServoLocker
+    {
+        public override ServomoteurID ID => ServomoteurID.LockerLeft;
+    }
+
     #endregion
 
     #region PositionableMotorSpeed
@@ -102,10 +122,10 @@ namespace GoBot.Actionneurs
 
     public abstract class MotorElevator : PositionableMotorPosition
     {
-        public int PositionBottom { get; set; }
-        public int PositionStage1 { get; set; }
-        public int PositionStage2 { get; set; }
-        public int PositionStage3 { get; set; }
+        public int PositionFloor0 { get; set; }
+        public int PositionFloor1 { get; set; }
+        public int PositionFloor2 { get; set; }
+        public int PositionFloor3 { get; set; }
     }
 
     public class MotorElevatorRight : MotorElevator

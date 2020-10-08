@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
+    <Compile Include="Actionneurs\Elevator.cs" />
     <Compile Include="Actionneurs\ElevatorRight.cs" />
     <Compile Include="Actionneurs\Finger.cs" />
     <Compile Include="Actionneurs\FingerLeft.cs" />
@@ -112,6 +113,12 @@
     </Compile>
     <Compile Include="IHM\Elements\PanelBoardCanServos.Designer.cs">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\Forms\DebugLidar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IHM\Forms\DebugLidar.Designer.cs">
+      <DependentUpon>DebugLidar.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PagesPanda\PagePandaActuators.cs">
       <SubType>UserControl</SubType>
@@ -438,6 +445,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Elements\PanelSensorOnOff.resx">
       <DependentUpon>PanelSensorOnOff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Forms\DebugLidar.resx">
+      <DependentUpon>DebugLidar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaActuators.resx">
       <DependentUpon>PagePandaActuators.cs</DependentUpon>
