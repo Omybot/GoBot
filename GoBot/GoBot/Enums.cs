@@ -54,13 +54,13 @@
 
     public enum MotorID
     {
-        FingerFront = 0x00, // RecIO
-        FingerBack = 0x01, // RecIO
-        AvailableOnRecIO2 = 0x02, // RecIO
-        AvailableOnRecIO3 = 0x03, // RecIO
+        ElevatorLeft = 0x00,
+        ElevatorRight = 0x01,
+        AvailableOnRecIO2 = 0x02,
+        AvailableOnRecIO3 = 0x03,
 
-        Gulp = 0x11, // RecMove
-        AvailableOnRecMove12 = 0x12 // RecMove
+        AvailableOnRecMove11 = 0x11,
+        AvailableOnRecMove12 = 0x12
     }
 
     public enum ActuatorOnOffID

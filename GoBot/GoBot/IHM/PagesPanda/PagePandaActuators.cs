@@ -20,12 +20,12 @@ namespace GoBot.IHM.Pages
 
         private void btnFingerRight_Click(object sender, EventArgs e)
         {
-            Threading.ThreadManager.CreateThread(link => Actionneurs.Actionneur.FingerRight.DoDemoGrab());
+            Threading.ThreadManager.CreateThread(link => Actionneurs.Actionneur.FingerRight.DoDemoGrab()).StartThread();
         }
 
         private void btnFingerLeft_Click(object sender, EventArgs e)
         {
-            Threading.ThreadManager.CreateThread(link => Actionneurs.Actionneur.FingerLeft.DoDemoGrab());
+            Threading.ThreadManager.CreateThread(link => Actionneurs.Actionneur.FingerLeft.DoDemoGrab()).StartThread();
         }
     }
 }
