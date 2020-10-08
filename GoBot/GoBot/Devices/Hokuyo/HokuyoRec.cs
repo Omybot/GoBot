@@ -44,5 +44,10 @@ namespace GoBot.Devices
 
             return mesure;
         }
+
+        public string ReadMessage()
+        {
+            return GetResponse();
+        }
     }
 }

@@ -52,6 +52,8 @@ namespace GoBot.Devices
 
         public AngleDelta DeadAngle { get { return new AngleDelta(360 - _scanRange); } }
 
+        public override bool Activated => _linkMeasures != null && _linkMeasures.Running;
+
         public int PointsCount { get { return _romTotalMeasures; } }
 
         public List<RealPoint> LastMeasure { get { return _lastMeasure; } }

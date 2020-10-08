@@ -17,6 +17,8 @@ namespace GoBot.Devices
         private double _noise;
         private Random _rand;
 
+        public override bool Activated => _link != null && _link.Running;
+
         public LidarSimu() : base()
         {
             _distances = Enumerable.Repeat(1500d, 360 * 3).ToList();

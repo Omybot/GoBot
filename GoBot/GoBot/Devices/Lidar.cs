@@ -35,6 +35,8 @@ namespace GoBot.Devices
 
         public ConnectionChecker ConnectionChecker { get { return _checker; } }
 
+        public abstract bool Activated { get; }
+
         public void StartLoopMeasure()
         {
             if (!_started)
