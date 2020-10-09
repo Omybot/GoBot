@@ -40,7 +40,5 @@ namespace GoBot.IHM
                 }
             }
         }
-
-
     }
 }

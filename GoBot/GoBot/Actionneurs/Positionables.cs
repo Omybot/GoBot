@@ -8,14 +8,31 @@ namespace GoBot.Actionneurs
     {
         private int? _lastPosition;
 
-        public List<String> PositionsName()
+        public List<String> GetPositionsName()
         {
             PropertyInfo[] properties = this.GetType().GetProperties();
             List<String> propertiesName = new List<string>();
             foreach (PropertyInfo p in properties)
-                propertiesName.Add(p.Name);
+            {
+                if (p.Name.StartsWith("Position"))
+                    propertiesName.Add(p.Name);
+            }
 
             return propertiesName;
+        }
+
+        public Dictionary<String, int> GetPositions()
+        {
+            PropertyInfo[] properties = this.GetType().GetProperties();
+            Dictionary<String, int> positions = new Dictionary<String, int>();
+
+            foreach (PropertyInfo p in properties)
+            {
+                if (p.Name.StartsWith("Position"))
+                    positions.Add(p.Name, (int)p.GetValue(this, null));
+            }
+
+            return positions;
         }
 
         public int GetLastPosition()
@@ -53,7 +70,7 @@ namespace GoBot.Actionneurs
         public int Minimum { get; set; }
         public int Maximum { get; set; }
     }
-    
+
     public abstract class PositionableServo : Positionable
     {
         public abstract ServomoteurID ID { get; }
@@ -71,6 +88,19 @@ namespace GoBot.Actionneurs
         protected override void SendPositionSpecific(int position)
         {
             Robots.MainRobot.SetMotorAtPosition(ID, position);
+        }
+
+        public void Stop(StopMode mode)
+        {
+            Robots.MainRobot.SetMotorStop(ID, mode);
+        }
+
+        public void OriginInit()
+        {
+            Stop(StopMode.Abrupt);
+            Robots.MainRobot.SetMotorAtOrigin(ID, true);
+            Robots.MainRobot.SetMotorReset(ID);
+            Stop(StopMode.Abrupt);
         }
     }
 

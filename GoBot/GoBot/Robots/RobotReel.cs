@@ -668,7 +668,23 @@ namespace GoBot
         {
             base.SetMotorSpeed(motor, sens, speed);
 
-            Frame trame = UdpFrameFactory.MoteurVitesse(_boardMotor[motor], sens, speed);
+            Frame trame = UdpFrameFactory.MoteurVitesse(_boardMotor[motor], motor, sens, speed);
+            Connections.UDPBoardConnection[_boardMotor[motor]].SendMessage(trame);
+        }
+
+        public override void SetMotorReset(MotorID motor)
+        {
+            base.SetMotorReset(motor);
+
+            Frame trame = UdpFrameFactory.MoteurResetPosition(_boardMotor[motor], motor);
+            Connections.UDPBoardConnection[_boardMotor[motor]].SendMessage(trame);
+        }
+
+        public override void SetMotorStop(MotorID motor, StopMode mode)
+        {
+            base.SetMotorStop(motor, mode);
+
+            Frame trame = UdpFrameFactory.MoteurStop(_boardMotor[motor], motor, mode);
             Connections.UDPBoardConnection[_boardMotor[motor]].SendMessage(trame);
         }
 
@@ -683,6 +699,7 @@ namespace GoBot
         public override void EnablePower(bool on)
         {
             // TODOEACHYEAR : couper tout manuellement
+
             Stop(StopMode.Freely);
         }
 

@@ -444,6 +444,14 @@ namespace GoBot
             Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
         }
 
+        public virtual void SetMotorReset(MotorID moteur)
+        {
+        }
+
+        public virtual void SetMotorStop(MotorID moteur, StopMode mode)
+        {
+        }
+
         public virtual void SetMotorAcceleration(MotorID moteur, int acceleration)
         {
             Historique.AjouterAction(new ActionMoteur(this, acceleration, moteur));
