@@ -361,6 +361,7 @@
             // 
             // picColor
             // 
+            this.picColor.Image = global::GoBot.Properties.Resources.Circle96;
             this.picColor.Location = new System.Drawing.Point(304, 146);
             this.picColor.Name = "picColor";
             this.picColor.Size = new System.Drawing.Size(96, 96);

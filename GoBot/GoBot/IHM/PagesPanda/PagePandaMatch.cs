@@ -103,18 +103,16 @@ namespace GoBot.IHM.Pages
 
         private void GameBoard_MyColorChange(object sender, EventArgs e)
         {
-            Rectangle r = new Rectangle(8, 8, 84, 84);
+            Rectangle r = new Rectangle(8, 8, 78, 78);
 
             Bitmap img = new Bitmap(picColor.Width, picColor.Height);
             Graphics g = Graphics.FromImage(img);
             Brush brush = new LinearGradientBrush(r, ColorPlus.GetIntense(GameBoard.MyColor), ColorPlus.GetPastel(GameBoard.MyColor), 24);
-            Pen pen = new Pen(ColorPlus.GetDark(GameBoard.MyColor), 1);
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.FillEllipse(brush, r);
-            g.DrawEllipse(pen, r);
+            g.DrawImage(Properties.Resources.Circle96, 0, 0, 96, 96);
 
-            pen.Dispose();
             brush.Dispose();
             g.Dispose();
 

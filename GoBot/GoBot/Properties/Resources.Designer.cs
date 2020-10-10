@@ -143,6 +143,16 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Circle96 {
+            get {
+                object obj = ResourceManager.GetObject("Circle96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Close16 {
             get {
                 object obj = ResourceManager.GetObject("Close16", resourceCulture);
@@ -206,6 +216,26 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap FingerLeft {
             get {
                 object obj = ResourceManager.GetObject("FingerLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagO {
+            get {
+                object obj = ResourceManager.GetObject("FlagO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagT {
+            get {
+                object obj = ResourceManager.GetObject("FlagT", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

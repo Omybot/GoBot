@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,11 @@ namespace GoBot.IHM.Forms
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnAsk_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = ((HokuyoRec)AllDevices.LidarGround).ReadMessage();
+            Stopwatch sw = Stopwatch.StartNew();
+            txtMessage.Text = ((HokuyoRec)AllDevices.LidarGround).ReadMessage();
+            lblTime.Text = sw.ElapsedMilliseconds.ToString() + "ms";
         }
     }
 }

@@ -121,6 +121,12 @@
   <data name="TeleportFront16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TeleportFront16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FingerLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\FingerLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\FlagT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Robot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Robot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -130,14 +136,8 @@
   <data name="LidarGroup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\LidarGroup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Webcam" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Webcam.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ZoomPlus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ZoomPlus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Finger" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Finger.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ValidOk96" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ValidOk96.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -145,8 +145,11 @@
   <data name="TablePlan" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TablePlan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TurnRight124" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\TurnRight124.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="GearsOn124" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\GearsOn124.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LidarBoardOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\LidarBoardOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ConnectionOk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ConnectionOk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -193,8 +196,8 @@
   <data name="BottomToLeft16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\BottomToLeft16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Pacman" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Pacman.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TurnRight124" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TurnRight124.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DownGreen16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\DownGreen16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -208,8 +211,8 @@
   <data name="Pause16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Pause16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LidarBoardOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\LidarBoardOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BottomLine16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\BottomLine16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Play16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Play16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -220,8 +223,8 @@
   <data name="RigthArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\RigthArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ReglagePivot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\ReglagePivot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Finger" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Finger.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Rabbit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Rabbit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -247,11 +250,17 @@
   <data name="RobotMiniClose" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\RobotMiniClose.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Circle96" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Circle96.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="GlassPause48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\GlassPause48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GlassStart48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\GlassStart48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckAll16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CheckAll16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PathFront16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\PathFront16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -261,9 +270,6 @@
   </data>
   <data name="ValidNok48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ValidNok48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BottomLine16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\BottomLine16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LidarLines" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\LidarLines.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -277,9 +283,6 @@
   <data name="TopToLeft16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TopToLeft16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GearsOn124" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\GearsOn124.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ValidOk48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ValidOk48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -289,14 +292,20 @@
   <data name="TurnLeft124" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TurnLeft124.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CheckAll16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\CheckAll16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Save16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Save16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Webcam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Webcam.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PathCenter16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\PathCenter16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BigArrowUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\BigArrowUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pacman" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Pacman.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UpGreen16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\UpGreen16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -319,8 +328,8 @@
   <data name="Down124" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Down124.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Save16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Save16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ReglagePivot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ReglagePivot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ZoomReset" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ZoomReset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -331,7 +340,7 @@
   <data name="LeftArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\LeftArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FingerLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\FingerLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FlagO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\FlagO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

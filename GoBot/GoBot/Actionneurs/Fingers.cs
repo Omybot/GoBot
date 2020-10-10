@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using GoBot.Threading;
+using System.Diagnostics;
 using System.Threading;
 
 namespace GoBot.Actionneurs
@@ -31,12 +32,12 @@ namespace GoBot.Actionneurs
         protected SensorOnOffID _pressure;
         protected ServoFinger _finger;
 
-        public void DoDemoGrab()
+        public void DoDemoGrab(ThreadLink link = null)
         {
             Stopwatch swMain = Stopwatch.StartNew();
             bool ok;
 
-            while (swMain.Elapsed.TotalMinutes < 1)
+            while ((link != null && !link.Cancelled) || (link == null && swMain.Elapsed.TotalMinutes < 1))
             {
                 while (!HasSomething())
                 {
@@ -66,37 +67,38 @@ namespace GoBot.Actionneurs
             DoPositionHide();
             DoAirUnlock();
         }
-
-        public void DoAirLock()
-        {
-            Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, true);
-            Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, false);
-        }
-
-        public void DoAirUnlock()
-        {
-            Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, false);
-            Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, true);
-        }
-
-        public void DoPositionHide()
-        {
-            _finger.SendPosition(_finger.PositionHide);
-        }
-
-        public void DoPositionKeep()
-        {
-            _finger.SendPosition(_finger.PositionKeep);
-        }
-
-        public void DoPositionGrab()
-        {
-            _finger.SendPosition(_finger.PositionGrab);
-        }
-
-        public bool HasSomething()
-        {
-            return Robots.MainRobot.ReadSensorOnOff(_pressure);
-        }
     }
+
+    public void DoAirLock()
+    {
+        Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, true);
+        Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, false);
+    }
+
+    public void DoAirUnlock()
+    {
+        Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, false);
+        Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, true);
+    }
+
+    public void DoPositionHide()
+    {
+        _finger.SendPosition(_finger.PositionHide);
+    }
+
+    public void DoPositionKeep()
+    {
+        _finger.SendPosition(_finger.PositionKeep);
+    }
+
+    public void DoPositionGrab()
+    {
+        _finger.SendPosition(_finger.PositionGrab);
+    }
+
+    public bool HasSomething()
+    {
+        return Robots.MainRobot.ReadSensorOnOff(_pressure);
+    }
+}
 }

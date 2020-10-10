@@ -677,6 +677,9 @@
     <None Include="Images\LidarGroupDisable.png" />
     <None Include="Images\Finger.png" />
     <None Include="Images\FingerLeft.png" />
+    <None Include="Images\Circle96.png" />
+    <None Include="Images\FlagT.png" />
+    <None Include="Images\FlagO.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

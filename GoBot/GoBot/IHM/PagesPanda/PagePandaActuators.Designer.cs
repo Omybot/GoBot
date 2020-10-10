@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.btnTrap = new System.Windows.Forms.Button();
+            this.btnFlagRight = new System.Windows.Forms.Button();
+            this.btnFLagLeft = new System.Windows.Forms.Button();
             this.btnFingerLeft = new System.Windows.Forms.Button();
             this.btnFingerRight = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -40,6 +42,26 @@
             this.btnTrap.Size = new System.Drawing.Size(5, 5);
             this.btnTrap.TabIndex = 5;
             this.btnTrap.UseVisualStyleBackColor = true;
+            // 
+            // btnFlagRight
+            // 
+            this.btnFlagRight.Image = global::GoBot.Properties.Resources.FlagO;
+            this.btnFlagRight.Location = new System.Drawing.Point(869, 6);
+            this.btnFlagRight.Name = "btnFlagRight";
+            this.btnFlagRight.Size = new System.Drawing.Size(150, 150);
+            this.btnFlagRight.TabIndex = 7;
+            this.btnFlagRight.UseVisualStyleBackColor = true;
+            this.btnFlagRight.Click += new System.EventHandler(this.btnFlagRight_Click);
+            // 
+            // btnFLagLeft
+            // 
+            this.btnFLagLeft.Image = global::GoBot.Properties.Resources.FlagT;
+            this.btnFLagLeft.Location = new System.Drawing.Point(5, 6);
+            this.btnFLagLeft.Name = "btnFLagLeft";
+            this.btnFLagLeft.Size = new System.Drawing.Size(150, 150);
+            this.btnFLagLeft.TabIndex = 6;
+            this.btnFLagLeft.UseVisualStyleBackColor = true;
+            this.btnFLagLeft.Click += new System.EventHandler(this.btnFlagLeft_Click);
             // 
             // btnFingerLeft
             // 
@@ -66,6 +88,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.btnFlagRight);
+            this.Controls.Add(this.btnFLagLeft);
             this.Controls.Add(this.btnTrap);
             this.Controls.Add(this.btnFingerLeft);
             this.Controls.Add(this.btnFingerRight);
@@ -81,5 +105,7 @@
         private System.Windows.Forms.Button btnFingerRight;
         private System.Windows.Forms.Button btnFingerLeft;
         private System.Windows.Forms.Button btnTrap;
+        private System.Windows.Forms.Button btnFLagLeft;
+        private System.Windows.Forms.Button btnFlagRight;
     }
 }

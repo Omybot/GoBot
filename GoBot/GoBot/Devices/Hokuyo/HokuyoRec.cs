@@ -37,10 +37,12 @@ namespace GoBot.Devices
         protected override String GetResponse(int timeout = 5000)
         {
             Position robotPos;
+
             String mesure = Robots.MainRobot.ReadLidarMeasure(ID, timeout, out robotPos);
 
-            // TODO2019 régler cet offset de 18° écrit là juste pour que ça marche
-            _position = new Position(robotPos.Angle + 18, new RealPoint(robotPos.Coordinates.X + _deltaX, robotPos.Coordinates.Y + _deltaY).Rotation(new AngleDelta(robotPos.Angle), robotPos.Coordinates));
+            if (robotPos != null)
+                // TODO2019 régler cet offset de 18° écrit là juste pour que ça marche
+                _position = new Position(robotPos.Angle + 18, new RealPoint(robotPos.Coordinates.X + _deltaX, robotPos.Coordinates.Y + _deltaY).Rotation(new AngleDelta(robotPos.Angle), robotPos.Coordinates));
 
             return mesure;
         }

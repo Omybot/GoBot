@@ -462,7 +462,6 @@ namespace GoBot
             Robots.MainRobot.SetAsservOffset(new Position(0, new RealPoint(1500, 1000)));
 
             // TODOEACHYEAR Lister les actionneurs à ranger pour préparer un match
-
         }
 
         public void ActuatorsDeploy()
