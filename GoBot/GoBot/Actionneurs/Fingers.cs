@@ -35,70 +35,65 @@ namespace GoBot.Actionneurs
         public void DoDemoGrab(ThreadLink link = null)
         {
             Stopwatch swMain = Stopwatch.StartNew();
-            bool ok;
+            bool ok = false;
+
+            DoAirLock();
 
             while ((link != null && !link.Cancelled) || (link == null && swMain.Elapsed.TotalMinutes < 1))
             {
-                while (!HasSomething())
+                ok = false;
+                Thread.Sleep(1000);
+
+                DoPositionGrab();
+
+                Stopwatch sw = Stopwatch.StartNew();
+
+                while (sw.ElapsedMilliseconds < 1000 && !ok)
                 {
-                    ok = false;
-                    DoAirLock();
-                    DoPositionGrab();
-
-                    Stopwatch sw = Stopwatch.StartNew();
-
-                    while (sw.ElapsedMilliseconds < 1000 && !ok)
-                    {
-                        Thread.Sleep(50);
-                        ok = HasSomething();
-                    }
-
-                    if (ok)
-                        DoPositionKeep();
-                    else
-                        DoPositionHide();
-
-                    Thread.Sleep(1000);
+                    Thread.Sleep(50);
+                    ok = HasSomething();
                 }
 
-                Thread.Sleep(50);
+                if (ok)
+                    DoPositionKeep();
+                else
+                    DoPositionHide();
             }
 
             DoPositionHide();
             DoAirUnlock();
         }
-    }
 
-    public void DoAirLock()
-    {
-        Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, true);
-        Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, false);
-    }
+        public void DoAirLock()
+        {
+            Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, true);
+            Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, false);
+        }
 
-    public void DoAirUnlock()
-    {
-        Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, false);
-        Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, true);
-    }
+        public void DoAirUnlock()
+        {
+            Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, false);
+            Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, true);
+        }
 
-    public void DoPositionHide()
-    {
-        _finger.SendPosition(_finger.PositionHide);
-    }
+        public void DoPositionHide()
+        {
+            _finger.SendPosition(_finger.PositionHide);
+        }
 
-    public void DoPositionKeep()
-    {
-        _finger.SendPosition(_finger.PositionKeep);
-    }
+        public void DoPositionKeep()
+        {
+            _finger.SendPosition(_finger.PositionKeep);
+        }
 
-    public void DoPositionGrab()
-    {
-        _finger.SendPosition(_finger.PositionGrab);
-    }
+        public void DoPositionGrab()
+        {
+            _finger.SendPosition(_finger.PositionGrab);
+        }
 
-    public bool HasSomething()
-    {
-        return Robots.MainRobot.ReadSensorOnOff(_pressure);
+        public bool HasSomething()
+        {
+            return Robots.MainRobot.ReadSensorOnOff(_pressure);
+        }
     }
-}
 }

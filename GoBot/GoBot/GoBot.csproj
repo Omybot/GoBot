@@ -74,6 +74,7 @@
     <Compile Include="Actionneurs\Flags.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
+    <Compile Include="Actionneurs\Lifter.cs" />
     <Compile Include="Communications\CAN\CanConnection.cs" />
     <Compile Include="Communications\CAN\CanFrameDecoder.cs" />
     <Compile Include="Communications\CAN\CanSubConnection.cs" />

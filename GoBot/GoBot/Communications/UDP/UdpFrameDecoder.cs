@@ -24,6 +24,17 @@ namespace GoBot.Communications.UDP
 
             switch (function)
             {
+                case UdpFrameFunction.DemandeTension:
+                    output = "Demande tension";
+                    break;
+                case UdpFrameFunction.RetourTension:
+                    output = "Retour tension {0-1}V";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, (parameters[0] / 100f).ToString("0.00"));
+                    }
+
+                    break;
                 case UdpFrameFunction.DemandeLidar:
                     output = "Demande LIDAR";
                     break;

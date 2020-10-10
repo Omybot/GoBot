@@ -17,20 +17,19 @@ namespace GoBot.Actionneurs
             _elevator = Config.CurrentConfig.MotorElevatorRight;
         }
     }
-
     class ElevatorLeft : Elevator
     {
         public ElevatorLeft()
         {
-            _servoPush = Config.CurrentConfig.ServoPushArmRight;
-            _servoLocker = Config.CurrentConfig.ServoLockerRight;
+            _servoPush = Config.CurrentConfig.ServoPushArmLeft;
+            _servoLocker = Config.CurrentConfig.ServoLockerLeft;
 
-            _makeVacuum = ActuatorOnOffID.MakeVacuumRightFront;
-            _openVacuum = ActuatorOnOffID.OpenVacuumRightFront;
+            _makeVacuum = ActuatorOnOffID.MakeVacuumLeftFront;
+            _openVacuum = ActuatorOnOffID.OpenVacuumLeftFront;
 
-            _pressure = SensorOnOffID.PressureSensorRightFront;
+            _pressure = SensorOnOffID.PressureSensorLeftFront;
 
-            _elevator = Config.CurrentConfig.MotorElevatorRight;
+            _elevator = Config.CurrentConfig.MotorElevatorLeft;
         }
     }
 

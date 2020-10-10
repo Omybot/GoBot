@@ -4,6 +4,8 @@
     {
         Debug = 0xEE,
         TestConnexion = 0xF0,
+        DemandeTension = 0xF1,
+        RetourTension = 0xF2,
 
         DemandeCapteurOnOff = 0x74,
         RetourCapteurOnOff = 0x75,

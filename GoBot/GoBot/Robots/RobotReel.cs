@@ -78,12 +78,12 @@ namespace GoBot
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumLeftBack, Board.RecMove);
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumLeftFront, Board.RecMove);
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumLeftBack, Board.RecMove);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumLeftFront, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumLeftFront, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyRight, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumRightBack, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumRightFront, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightBack, Board.RecIO);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightFront, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightFront, Board.RecMove);
 
             _boardMotor = new Dictionary<MotorID, Board>();
             _boardMotor.Add(MotorID.ElevatorLeft, Board.RecIO);
@@ -232,6 +232,9 @@ namespace GoBot
 
             switch ((UdpFrameFunction)frame[1])
             {
+                case UdpFrameFunction.RetourTension:
+                    BatterieVoltage = (frame[2] * 256 + frame[3]) / 100f;
+                    break;
                 case UdpFrameFunction.MoteurFin:
                     _lockMotor[(MotorID)frame[2]]?.Release();
                     break;

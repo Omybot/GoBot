@@ -101,6 +101,7 @@ namespace GoBot.Actionneurs
             Robots.MainRobot.SetMotorAtOrigin(ID, true);
             Robots.MainRobot.SetMotorReset(ID);
             Stop(StopMode.Abrupt);
+            Robots.MainRobot.SetMotorAtPosition(ID, 30);
         }
     }
 

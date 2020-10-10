@@ -57,6 +57,15 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
+        static public Frame DemandeTensionBatterie(Board board)
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)board;
+            tab[1] = (byte)UdpFrameFunction.DemandeTension;
+
+            return new Frame(tab);
+        }
+
         static public Frame DemandeCapteurCouleur(Board board, SensorColorID capteur)
         {
             byte[] tab = new byte[3];

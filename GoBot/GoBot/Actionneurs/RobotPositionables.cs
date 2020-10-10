@@ -22,6 +22,12 @@ namespace GoBot
 
         public MotorElevatorRight MotorElevatorRight { get; set; } = new MotorElevatorRight();
         public MotorElevatorLeft MotorElevatorLeft { get; set; } = new MotorElevatorLeft();
+
+        public ServoClamp1 ServoClamp1 { get; set; } = new ServoClamp1();
+        public ServoClamp2 ServoClamp2 { get; set; } = new ServoClamp2();
+        public ServoClamp3 ServoClamp3 { get; set; } = new ServoClamp3();
+        public ServoClamp4 ServoClamp4 { get; set; } = new ServoClamp4();
+        public ServoClamp5 ServoClamp5 { get; set; } = new ServoClamp5();
     }
 }
 
@@ -110,6 +116,39 @@ namespace GoBot.Actionneurs
     public class ServoLockerLeft : ServoLocker
     {
         public override ServomoteurID ID => ServomoteurID.LockerLeft;
+    }
+
+    public abstract class ServoClamp : PositionableServo
+    {
+        public int PositionOpen { get; set; }
+        public int PositionMaintain { get; set; }
+        public int PositionClose { get; set; }
+        public int PositionStore { get; set; }
+    }
+
+    public class ServoClamp1 : ServoClamp
+    {
+        public override ServomoteurID ID => ServomoteurID.Clamp1;
+    }
+
+    public class ServoClamp2 : ServoClamp
+    {
+        public override ServomoteurID ID => ServomoteurID.Clamp2;
+    }
+
+    public class ServoClamp3 : ServoClamp
+    {
+        public override ServomoteurID ID => ServomoteurID.Clamp3;
+    }
+
+    public class ServoClamp4 : ServoClamp
+    {
+        public override ServomoteurID ID => ServomoteurID.Clamp4;
+    }
+
+    public class ServoClamp5 : ServoClamp
+    {
+        public override ServomoteurID ID => ServomoteurID.Clamp5;
     }
 
     #endregion

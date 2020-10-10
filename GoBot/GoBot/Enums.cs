@@ -31,20 +31,20 @@
         Unused06 = 6,
         Unused07 = 7,
 
-        Unused08 = 8,
-        Unused09 = 9,
-        Unused10 = 10,
-        Unused11 = 11,
+        Clamp1 = 8,
+        Clamp2 = 9,
+        Lifter = 10,
+        Tilter = 11,
 
         Unused12 = 12,
         Unused13 = 13,
         FlagLeft = 14,
         PushArmLeft = 15,
 
-        Unused16 = 16,
+        Clamp3 = 16,
         Unused17 = 17,
-        Unused18 = 18,
-        Unused19 = 19,
+        Clamp4 = 18,
+        Clamp5 = 19,
 
         GrabberLeft = 20,
         FingerRight = 21,
@@ -71,8 +71,8 @@
         MakeVacuumLeftFront = 0x12,
         MakeVacuumRightBack = 0x13,
         MakeVacuumLeftBack = 0x14,
-        OpenVacuumRightFront = 0x20,
-        OpenVacuumLeftFront = 0x21,
+        OpenVacuumRightFront = 0x21,
+        OpenVacuumLeftFront = 0x20,
         OpenVacuumRightBack = 0x22,
         OpenVacuumLeftBack = 0x23
     }

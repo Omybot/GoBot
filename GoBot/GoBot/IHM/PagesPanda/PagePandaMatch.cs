@@ -66,7 +66,7 @@ namespace GoBot.IHM.Pages
                 SetPicImage(picIO, connected);
             else if (sender == Connections.ConnectionMove)
                 SetPicImage(picMove, connected);
-            else if (sender == Connections.ConnectionCan)
+            else if (sender == Connections.ConnectionCanBridge)
                 SetPicImage(picCAN, connected);
             else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo1])
                 SetPicImage(picServo1, connected);

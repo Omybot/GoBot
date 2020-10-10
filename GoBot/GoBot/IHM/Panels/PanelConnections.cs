@@ -27,7 +27,7 @@ namespace GoBot.IHM
                 {
                     batteryPack.Enabled = true;
                     batteryPack.CurrentVoltage = Robots.MainRobot.BatterieVoltage;
-                    lblVoltage.Text = Robots.MainRobot.BatterieVoltage.ToString() + "V";
+                    lblVoltage.Text = Robots.MainRobot.BatterieVoltage.ToString("0.00") + "V";
                 }
                 else
                 {
