@@ -12,11 +12,11 @@ namespace GoBot.IHM.Pages
             InitializeComponent();
         }
 
-        private void PagePandaMove_Load(object sender, System.EventArgs e)
+        private void PagePandaMove_Load(object sender, EventArgs e)
         {
             if (!Execution.DesignMode)
             {
-                
+                btnTrap.Focus();
             }
         }
 

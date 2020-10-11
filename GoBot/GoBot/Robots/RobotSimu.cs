@@ -54,6 +54,8 @@ namespace GoBot
             _inRecalibration = false;
             _asserChrono = null;
             _currentPolarPoint = -1;
+
+            BatterieVoltage = 25;
         }
 
         public override void Init()

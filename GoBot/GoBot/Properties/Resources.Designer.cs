@@ -63,6 +63,56 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BatteryCritical96 {
+            get {
+                object obj = ResourceManager.GetObject("BatteryCritical96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BatteryFull96 {
+            get {
+                object obj = ResourceManager.GetObject("BatteryFull96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BatteryLow96 {
+            get {
+                object obj = ResourceManager.GetObject("BatteryLow96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BatteryMid96 {
+            get {
+                object obj = ResourceManager.GetObject("BatteryMid96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BatteryUnknow96 {
+            get {
+                object obj = ResourceManager.GetObject("BatteryUnknow96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BigArrow {
             get {
                 object obj = ResourceManager.GetObject("BigArrow", resourceCulture);
@@ -163,6 +213,16 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Close96 {
+            get {
+                object obj = ResourceManager.GetObject("Close96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ConnectionNok {
             get {
                 object obj = ResourceManager.GetObject("ConnectionNok", resourceCulture);
@@ -196,6 +256,16 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap DownGreen16 {
             get {
                 object obj = ResourceManager.GetObject("DownGreen16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Exit96 {
+            get {
+                object obj = ResourceManager.GetObject("Exit96", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -383,6 +453,16 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap NextPage96 {
+            get {
+                object obj = ResourceManager.GetObject("NextPage96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Pacman {
             get {
                 object obj = ResourceManager.GetObject("Pacman", resourceCulture);
@@ -516,6 +596,16 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap Splash {
             get {
                 object obj = ResourceManager.GetObject("Splash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Stay96 {
+            get {
+                object obj = ResourceManager.GetObject("Stay96", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -686,6 +776,16 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap UpLine16 {
             get {
                 object obj = ResourceManager.GetObject("UpLine16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ValidNok32 {
+            get {
+                object obj = ResourceManager.GetObject("ValidNok32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

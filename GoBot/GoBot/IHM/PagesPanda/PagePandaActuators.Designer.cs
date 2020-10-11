@@ -37,19 +37,20 @@
             // 
             // btnTrap
             // 
-            this.btnTrap.Location = new System.Drawing.Point(-10, -10);
+            this.btnTrap.Location = new System.Drawing.Point(-25, -25);
             this.btnTrap.Name = "btnTrap";
-            this.btnTrap.Size = new System.Drawing.Size(5, 5);
-            this.btnTrap.TabIndex = 5;
+            this.btnTrap.Size = new System.Drawing.Size(23, 23);
+            this.btnTrap.TabIndex = 0;
             this.btnTrap.UseVisualStyleBackColor = true;
             // 
             // btnFlagRight
             // 
+            this.btnFlagRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFlagRight.Image = global::GoBot.Properties.Resources.FlagO;
-            this.btnFlagRight.Location = new System.Drawing.Point(869, 6);
+            this.btnFlagRight.Location = new System.Drawing.Point(761, 6);
             this.btnFlagRight.Name = "btnFlagRight";
             this.btnFlagRight.Size = new System.Drawing.Size(150, 150);
-            this.btnFlagRight.TabIndex = 7;
+            this.btnFlagRight.TabIndex = 2;
             this.btnFlagRight.UseVisualStyleBackColor = true;
             this.btnFlagRight.Click += new System.EventHandler(this.btnFlagRight_Click);
             // 
@@ -59,7 +60,7 @@
             this.btnFLagLeft.Location = new System.Drawing.Point(5, 6);
             this.btnFLagLeft.Name = "btnFLagLeft";
             this.btnFLagLeft.Size = new System.Drawing.Size(150, 150);
-            this.btnFLagLeft.TabIndex = 6;
+            this.btnFLagLeft.TabIndex = 1;
             this.btnFLagLeft.UseVisualStyleBackColor = true;
             this.btnFLagLeft.Click += new System.EventHandler(this.btnFlagLeft_Click);
             // 
@@ -69,17 +70,18 @@
             this.btnFingerLeft.Location = new System.Drawing.Point(5, 445);
             this.btnFingerLeft.Name = "btnFingerLeft";
             this.btnFingerLeft.Size = new System.Drawing.Size(150, 150);
-            this.btnFingerLeft.TabIndex = 4;
+            this.btnFingerLeft.TabIndex = 3;
             this.btnFingerLeft.UseVisualStyleBackColor = true;
             this.btnFingerLeft.Click += new System.EventHandler(this.btnFingerLeft_Click);
             // 
             // btnFingerRight
             // 
+            this.btnFingerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFingerRight.Image = global::GoBot.Properties.Resources.Finger;
-            this.btnFingerRight.Location = new System.Drawing.Point(869, 445);
+            this.btnFingerRight.Location = new System.Drawing.Point(761, 445);
             this.btnFingerRight.Name = "btnFingerRight";
             this.btnFingerRight.Size = new System.Drawing.Size(150, 150);
-            this.btnFingerRight.TabIndex = 3;
+            this.btnFingerRight.TabIndex = 4;
             this.btnFingerRight.UseVisualStyleBackColor = true;
             this.btnFingerRight.Click += new System.EventHandler(this.btnFingerRight_Click);
             // 
@@ -95,7 +97,7 @@
             this.Controls.Add(this.btnFingerRight);
             this.DoubleBuffered = true;
             this.Name = "PagePandaActuators";
-            this.Size = new System.Drawing.Size(1024, 600);
+            this.Size = new System.Drawing.Size(916, 600);
             this.Load += new System.EventHandler(this.PagePandaActuators_Load);
             this.ResumeLayout(false);
 

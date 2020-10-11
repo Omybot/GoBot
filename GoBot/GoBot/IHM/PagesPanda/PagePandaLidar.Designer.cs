@@ -46,7 +46,7 @@
             // 
             this.cboLidar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLidar.FormattingEnabled = true;
-            this.cboLidar.Location = new System.Drawing.Point(5, 3);
+            this.cboLidar.Location = new System.Drawing.Point(8, 28);
             this.cboLidar.Name = "cboLidar";
             this.cboLidar.Size = new System.Drawing.Size(96, 21);
             this.cboLidar.TabIndex = 18;
@@ -54,10 +54,10 @@
             // 
             // btnTrap
             // 
-            this.btnTrap.Location = new System.Drawing.Point(0, -29);
+            this.btnTrap.Location = new System.Drawing.Point(-25, -25);
             this.btnTrap.Name = "btnTrap";
             this.btnTrap.Size = new System.Drawing.Size(23, 23);
-            this.btnTrap.TabIndex = 24;
+            this.btnTrap.TabIndex = 0;
             this.btnTrap.UseVisualStyleBackColor = true;
             // 
             // btnGroup
@@ -68,7 +68,7 @@
             this.btnGroup.Location = new System.Drawing.Point(19, 240);
             this.btnGroup.Name = "btnGroup";
             this.btnGroup.Size = new System.Drawing.Size(75, 75);
-            this.btnGroup.TabIndex = 26;
+            this.btnGroup.TabIndex = 3;
             this.btnGroup.UseVisualStyleBackColor = false;
             this.btnGroup.Click += new System.EventHandler(this.btnGroup_Click);
             // 
@@ -80,7 +80,7 @@
             this.btnEnableBoard.Location = new System.Drawing.Point(19, 78);
             this.btnEnableBoard.Name = "btnEnableBoard";
             this.btnEnableBoard.Size = new System.Drawing.Size(75, 75);
-            this.btnEnableBoard.TabIndex = 25;
+            this.btnEnableBoard.TabIndex = 1;
             this.btnEnableBoard.UseVisualStyleBackColor = false;
             this.btnEnableBoard.Click += new System.EventHandler(this.btnEnableBoard_Click);
             // 
@@ -92,7 +92,7 @@
             this.btnPoints.Location = new System.Drawing.Point(19, 159);
             this.btnPoints.Name = "btnPoints";
             this.btnPoints.Size = new System.Drawing.Size(75, 75);
-            this.btnPoints.TabIndex = 23;
+            this.btnPoints.TabIndex = 2;
             this.btnPoints.UseVisualStyleBackColor = false;
             this.btnPoints.Click += new System.EventHandler(this.btnPoints_Click);
             // 
@@ -103,7 +103,7 @@
             this.btnZoomReset.Location = new System.Drawing.Point(19, 507);
             this.btnZoomReset.Name = "btnZoomReset";
             this.btnZoomReset.Size = new System.Drawing.Size(75, 75);
-            this.btnZoomReset.TabIndex = 21;
+            this.btnZoomReset.TabIndex = 6;
             this.btnZoomReset.UseVisualStyleBackColor = true;
             this.btnZoomReset.Click += new System.EventHandler(this.btnZoomReset_Click);
             // 
@@ -114,7 +114,7 @@
             this.btnZoomMinus.Location = new System.Drawing.Point(19, 426);
             this.btnZoomMinus.Name = "btnZoomMinus";
             this.btnZoomMinus.Size = new System.Drawing.Size(75, 75);
-            this.btnZoomMinus.TabIndex = 20;
+            this.btnZoomMinus.TabIndex = 5;
             this.btnZoomMinus.UseVisualStyleBackColor = true;
             this.btnZoomMinus.Click += new System.EventHandler(this.btnZoomMinus_Click);
             // 
@@ -125,7 +125,7 @@
             this.btnZoomPlus.Location = new System.Drawing.Point(19, 345);
             this.btnZoomPlus.Name = "btnZoomPlus";
             this.btnZoomPlus.Size = new System.Drawing.Size(75, 75);
-            this.btnZoomPlus.TabIndex = 19;
+            this.btnZoomPlus.TabIndex = 4;
             this.btnZoomPlus.UseVisualStyleBackColor = true;
             this.btnZoomPlus.Click += new System.EventHandler(this.btnZoomPlus_Click);
             // 
@@ -136,7 +136,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picWorld.Location = new System.Drawing.Point(110, 16);
             this.picWorld.Name = "picWorld";
-            this.picWorld.Size = new System.Drawing.Size(900, 568);
+            this.picWorld.Size = new System.Drawing.Size(792, 568);
             this.picWorld.TabIndex = 11;
             this.picWorld.TabStop = false;
             this.picWorld.WorldChange += new GoBot.IHM.WorldPanel.WorldChangeDelegate(this.picWorld_WorldChange);
@@ -157,7 +157,7 @@
             this.Controls.Add(this.picWorld);
             this.Controls.Add(this.cboLidar);
             this.Name = "PagePandaLidar";
-            this.Size = new System.Drawing.Size(1024, 600);
+            this.Size = new System.Drawing.Size(916, 600);
             this.Load += new System.EventHandler(this.PanelLidar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
             this.ResumeLayout(false);

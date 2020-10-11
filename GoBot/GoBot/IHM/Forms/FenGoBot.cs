@@ -38,7 +38,7 @@ namespace GoBot
         public FenGoBot(string[] args)
         {
             InitializeComponent();
-            timerSauvegarde = new System.Windows.Forms.Timer();
+            timerSauvegarde = new Timer();
             timerSauvegarde.Interval = 10000;
             timerSauvegarde.Tick += timerSauvegarde_Tick;
             timerSauvegarde.Start();
@@ -51,29 +51,19 @@ namespace GoBot
                 {
                     WindowState = FormWindowState.Maximized;
                     FormBorderStyle = FormBorderStyle.None;
-                    tabControl.SelectedTab = tabPanda;
+                    tabControl.SelectedTab = tabPandaNew;
                     tabControl.Location = new Point(-14, -50);
                     tabControl.Width += 100;
                     tabControl.Height += 100;
-                    this.BackColor = Color.FromArgb(32, 32, 32);
                     panelConnexions.Visible = false;
                     lblSimulation.Visible = false;
                     switchBoutonSimu.Visible = false;
-                    btnFenetre.Width = 50;
-                    btnFenetre.Height = 50;
-                    btnClose.Width = 50;
-                    btnClose.Height = 50;
-                    btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-                    btnClose.Location = new Point(1024 - 52, 600 - 52);
-                    btnClose.BringToFront();
-                    tabControlPanda.Height = 675;
+                    btnFenetre.Visible = false;
                 }
                 else
                 {
                     WindowState = FormWindowState.Normal;
                     FormBorderStyle = FormBorderStyle.FixedSingle;
-                    btnFenetre.Location = btnClose.Location;
-                    btnClose.Visible = false;
                 }
 
                 switchBoutonSimu.Value = Robots.Simulation;
@@ -199,11 +189,6 @@ namespace GoBot
             Robots.MainRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/ActionsGros.elog");
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void FenGoBot_Load(object sender, EventArgs e)
         {
             this.Activate();
@@ -224,23 +209,14 @@ namespace GoBot
 
         private void buttonFenetre_Click(object sender, EventArgs e)
         {
-            if (Screen.PrimaryScreen.Bounds.Width == 1024)
-            {
-                tabControlPanda.SelectedIndex = (tabControlPanda.SelectedIndex + 1) % tabControlPanda.TabCount;
-            }
-            else
-            {
-                TabControl tab = new TabControl();
-                tab.Height = tabControl.Height;
-                tab.Width = tabControl.Width;
-                _pagesInWindow.Add(tabControl.SelectedTab);
-                tab.TabPages.Add(tabControl.SelectedTab);
-                Fenetre fen = new Fenetre(tab);
-                fen.Show();
-                fen.FormClosing += fen_FormClosing;
-
-                EnableTabControl();
-            }
+            TabControl tab = new TabControl();
+            tab.Height = tabControl.Height;
+            tab.Width = tabControl.Width;
+            _pagesInWindow.Add(tabControl.SelectedTab);
+            tab.TabPages.Add(tabControl.SelectedTab);
+            Fenetre fen = new Fenetre(tab);
+            fen.Show();
+            fen.FormClosing += fen_FormClosing;
         }
 
         private Dictionary<TabPage, TabPage> tabPrecedent;
@@ -276,38 +252,6 @@ namespace GoBot
                         tabControl.TabPages.Insert(0, page);
                 }
             }
-
-            EnableTabControl();
-        }
-
-        private void tabControlPanda_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            EnableTabControl();
-        }
-
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            EnableTabControl();
-        }
-
-        private void EnableTabControl()
-        {
-            bool lidarEnable = false;
-
-            if (tabControl.SelectedTab == tabPanda || _pagesInWindow.Contains(tabPanda))
-            {
-                if (tabControlPanda.SelectedTab == tabPandaLidar)
-                {
-                    lidarEnable = true;
-                }
-            }
-
-            pagePandaLidar.LidarEnable(lidarEnable);
-        }
-
-        private void btnNextPage_Click(object sender, EventArgs e)
-        {
-            tabControlPanda.SelectedIndex = (tabControlPanda.SelectedIndex + 1) % tabControlPanda.TabCount;
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

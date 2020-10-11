@@ -37,11 +37,6 @@ namespace GoBot.IHM
             }
         }
 
-        private void SetLed(ConnectionIndicator led, bool on)
-        {
-            led.SetConnectionState(on, true);
-        }
-
         private void PanelConnexions_Load(object sender, EventArgs e)
         {
             if (!Execution.DesignMode)
@@ -69,11 +64,6 @@ namespace GoBot.IHM
                 _timerBatteries.Tick += new EventHandler(timerBatteries_Tick);
                 _timerBatteries.Start();
             }
-        }
-
-        public void SetPandaMode()
-        {
-            this.BackColor = Color.FromArgb(32, 32, 32);
         }
     }
 }

@@ -16,7 +16,6 @@ namespace GoBot.IHM.Pages
             InitializeComponent();
 
             GameBoard.MyColorChange += GameBoard_MyColorChange;
-
             btnColorLeft.BackColor = GameBoard.ColorLeftBlue;
             btnColorRight.BackColor = GameBoard.ColorRightYellow;
         }
@@ -25,14 +24,16 @@ namespace GoBot.IHM.Pages
         {
             if (!Execution.DesignMode)
             {
+                btnTrap.Focus();
+
                 Dessinateur.TableDessinee += Dessinateur_TableDessinee;
                 Robots.MainRobot.SensorOnOffChanged += MainRobot_SensorOnOffChanged;
                 Connections.AllConnections.ForEach(c => c.ConnectionChecker.ConnectionStatusChange += ConnectionChecker_ConnectionStatusChange);
                 Devices.AllDevices.LidarAvoid.ConnectionChecker.ConnectionStatusChange += LidarAvoid_ConnectionStatusChange;
                 Devices.AllDevices.LidarGround.ConnectionChecker.ConnectionStatusChange += LidarGround_ConnectionStatusChange;
 
-                SetPicImage(picLidar1, Devices.AllDevices.LidarAvoid.ConnectionChecker.Connected);
-                SetPicImage(picLidar2, Devices.AllDevices.LidarGround.ConnectionChecker.Connected);
+                SetPicImage(picLidar, Devices.AllDevices.LidarAvoid.ConnectionChecker.Connected);
+                //SetPicImage(picLidar2, Devices.AllDevices.LidarGround.ConnectionChecker.Connected);
                 SetPicImage(picIO, Connections.ConnectionIO.ConnectionChecker.Connected);
                 SetPicImage(picMove, Connections.ConnectionMove.ConnectionChecker.Connected);
                 SetPicImage(picCAN, Connections.ConnectionCanBridge.ConnectionChecker.Connected);
@@ -45,19 +46,19 @@ namespace GoBot.IHM.Pages
                 //SetPicImage(picAlim, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim].ConnectionChecker.Connected);
 
                 bool jack = Robots.MainRobot.ReadStartTrigger();
-                SetPicImage(picJack, jack);
+                SetPicImage(picStartTrigger, jack);
                 btnCalib.Enabled = jack;
             }
         }
 
         private void LidarAvoid_ConnectionStatusChange(Connection sender, bool connected)
         {
-            SetPicImage(picLidar1, connected);
+            SetPicImage(picLidar, connected);
         }
 
         private void LidarGround_ConnectionStatusChange(Connection sender, bool connected)
         {
-            SetPicImage(picLidar2, connected);
+            //SetPicImage(picLidar2, connected);
         }
 
         private void ConnectionChecker_ConnectionStatusChange(Connection sender, bool connected)
@@ -88,7 +89,7 @@ namespace GoBot.IHM.Pages
         {
             if (capteur == SensorOnOffID.StartTrigger)
             {
-                SetPicImage(picJack, etat);
+                SetPicImage(picStartTrigger, etat);
                 picCalibration.InvokeAuto(() => picCalibration.Enabled = etat);
             }
         }

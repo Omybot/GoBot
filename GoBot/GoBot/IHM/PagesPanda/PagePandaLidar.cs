@@ -84,6 +84,8 @@ namespace GoBot.IHM.Pages
         {
             if (!Execution.DesignMode)
             {
+                btnTrap.Focus();
+
                 cboLidar.Items.Add("Ground");
                 cboLidar.Items.Add("Avoid");
 
@@ -103,7 +105,7 @@ namespace GoBot.IHM.Pages
 
             if (picWorld.Width > 0 && picWorld.Height > 0)
             {
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 PolygonRectangle bounds = new PolygonRectangle(picWorld.Dimensions.WorldRect);
 

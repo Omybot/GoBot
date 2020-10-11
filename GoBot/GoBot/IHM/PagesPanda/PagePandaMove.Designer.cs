@@ -39,10 +39,10 @@
             // 
             // btnTrap
             // 
-            this.btnTrap.Location = new System.Drawing.Point(-10, -10);
+            this.btnTrap.Location = new System.Drawing.Point(-25, -25);
             this.btnTrap.Name = "btnTrap";
-            this.btnTrap.Size = new System.Drawing.Size(5, 5);
-            this.btnTrap.TabIndex = 5;
+            this.btnTrap.Size = new System.Drawing.Size(23, 23);
+            this.btnTrap.TabIndex = 0;
             this.btnTrap.UseVisualStyleBackColor = true;
             // 
             // btnCalibration
@@ -51,7 +51,7 @@
             this.btnCalibration.Location = new System.Drawing.Point(161, 445);
             this.btnCalibration.Name = "btnCalibration";
             this.btnCalibration.Size = new System.Drawing.Size(150, 150);
-            this.btnCalibration.TabIndex = 7;
+            this.btnCalibration.TabIndex = 6;
             this.btnCalibration.UseVisualStyleBackColor = true;
             this.btnCalibration.Click += new System.EventHandler(this.btnCalibration_Click);
             // 
@@ -61,7 +61,7 @@
             this.btnAsserv.Location = new System.Drawing.Point(5, 445);
             this.btnAsserv.Name = "btnAsserv";
             this.btnAsserv.Size = new System.Drawing.Size(150, 150);
-            this.btnAsserv.TabIndex = 6;
+            this.btnAsserv.TabIndex = 5;
             this.btnAsserv.UseVisualStyleBackColor = true;
             this.btnAsserv.Click += new System.EventHandler(this.btnAsserv_Click);
             // 
@@ -81,7 +81,7 @@
             this.btnLeft.Location = new System.Drawing.Point(646, 211);
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(150, 150);
-            this.btnLeft.TabIndex = 3;
+            this.btnLeft.TabIndex = 2;
             this.btnLeft.UseVisualStyleBackColor = true;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
@@ -91,7 +91,7 @@
             this.btnDown.Location = new System.Drawing.Point(490, 371);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(150, 150);
-            this.btnDown.TabIndex = 2;
+            this.btnDown.TabIndex = 3;
             this.btnDown.UseVisualStyleBackColor = true;
             this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
@@ -119,7 +119,7 @@
             this.Controls.Add(this.btnUp);
             this.DoubleBuffered = true;
             this.Name = "PagePandaMove";
-            this.Size = new System.Drawing.Size(1024, 600);
+            this.Size = new System.Drawing.Size(916, 600);
             this.Load += new System.EventHandler(this.PagePandaMove_Load);
             this.ResumeLayout(false);
 

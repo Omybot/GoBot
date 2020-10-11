@@ -28,23 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagePandaMatch));
             this.btnTrap = new System.Windows.Forms.Button();
             this.btnColorRight = new System.Windows.Forms.Button();
             this.btnColorLeft = new System.Windows.Forms.Button();
             this.btnCalib = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.lblStartTrigger = new System.Windows.Forms.Label();
+            this.lblLidar = new System.Windows.Forms.Label();
+            this.lblMove = new System.Windows.Forms.Label();
+            this.lblCAN = new System.Windows.Forms.Label();
+            this.lblServo1 = new System.Windows.Forms.Label();
+            this.lblServo2 = new System.Windows.Forms.Label();
+            this.lblServo3 = new System.Windows.Forms.Label();
+            this.lblServo4 = new System.Windows.Forms.Label();
+            this.lblServo5 = new System.Windows.Forms.Label();
+            this.lblServo6 = new System.Windows.Forms.Label();
+            this.lblIO = new System.Windows.Forms.Label();
             this.picServo6 = new System.Windows.Forms.PictureBox();
             this.picServo2 = new System.Windows.Forms.PictureBox();
             this.picCAN = new System.Windows.Forms.PictureBox();
@@ -54,11 +52,10 @@
             this.picServo5 = new System.Windows.Forms.PictureBox();
             this.picIO = new System.Windows.Forms.PictureBox();
             this.picMove = new System.Windows.Forms.PictureBox();
-            this.picLidar2 = new System.Windows.Forms.PictureBox();
-            this.picLidar1 = new System.Windows.Forms.PictureBox();
+            this.picLidar = new System.Windows.Forms.PictureBox();
             this.picColor = new System.Windows.Forms.PictureBox();
             this.picCalibration = new System.Windows.Forms.PictureBox();
-            this.picJack = new System.Windows.Forms.PictureBox();
+            this.picStartTrigger = new System.Windows.Forms.PictureBox();
             this.picTable = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).BeginInit();
@@ -69,30 +66,28 @@
             ((System.ComponentModel.ISupportInitialize)(this.picServo5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picIO)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picMove)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLidar2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLidar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLidar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCalibration)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picJack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picStartTrigger)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTable)).BeginInit();
             this.SuspendLayout();
             // 
             // btnTrap
             // 
-            this.btnTrap.Location = new System.Drawing.Point(314, 610);
+            this.btnTrap.Location = new System.Drawing.Point(-25, -25);
             this.btnTrap.Name = "btnTrap";
-            this.btnTrap.Size = new System.Drawing.Size(75, 23);
+            this.btnTrap.Size = new System.Drawing.Size(23, 23);
             this.btnTrap.TabIndex = 81;
-            this.btnTrap.Text = "Trap";
             this.btnTrap.UseVisualStyleBackColor = true;
             // 
             // btnColorRight
             // 
             this.btnColorRight.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
-            this.btnColorRight.Location = new System.Drawing.Point(158, 144);
-            this.btnColorRight.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.btnColorRight.Location = new System.Drawing.Point(136, 169);
+            this.btnColorRight.Margin = new System.Windows.Forms.Padding(5);
             this.btnColorRight.Name = "btnColorRight";
-            this.btnColorRight.Size = new System.Drawing.Size(140, 100);
+            this.btnColorRight.Size = new System.Drawing.Size(130, 100);
             this.btnColorRight.TabIndex = 82;
             this.btnColorRight.Text = "leur";
             this.btnColorRight.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -103,10 +98,10 @@
             // 
             this.btnColorLeft.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
             this.btnColorLeft.ForeColor = System.Drawing.Color.White;
-            this.btnColorLeft.Location = new System.Drawing.Point(19, 144);
-            this.btnColorLeft.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.btnColorLeft.Location = new System.Drawing.Point(5, 169);
+            this.btnColorLeft.Margin = new System.Windows.Forms.Padding(5);
             this.btnColorLeft.Name = "btnColorLeft";
-            this.btnColorLeft.Size = new System.Drawing.Size(140, 100);
+            this.btnColorLeft.Size = new System.Drawing.Size(130, 100);
             this.btnColorLeft.TabIndex = 83;
             this.btnColorLeft.Text = "Cou";
             this.btnColorLeft.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -118,251 +113,253 @@
             this.btnCalib.BackColor = System.Drawing.Color.Transparent;
             this.btnCalib.Enabled = false;
             this.btnCalib.Font = new System.Drawing.Font("Eras Demi ITC", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCalib.ForeColor = System.Drawing.Color.LimeGreen;
-            this.btnCalib.Location = new System.Drawing.Point(19, 429);
+            this.btnCalib.ForeColor = System.Drawing.Color.Black;
+            this.btnCalib.Location = new System.Drawing.Point(5, 453);
+            this.btnCalib.Margin = new System.Windows.Forms.Padding(5);
             this.btnCalib.Name = "btnCalib";
-            this.btnCalib.Size = new System.Drawing.Size(280, 100);
+            this.btnCalib.Size = new System.Drawing.Size(261, 100);
             this.btnCalib.TabIndex = 85;
             this.btnCalib.Text = "Recalage";
             this.btnCalib.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCalib.UseVisualStyleBackColor = false;
             this.btnCalib.Click += new System.EventHandler(this.btnCalib_Click);
             // 
-            // label1
+            // lblStartTrigger
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
-            this.label1.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label1.Location = new System.Drawing.Point(66, 309);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(174, 55);
-            this.label1.TabIndex = 98;
-            this.label1.Text = "Tirette";
+            this.lblStartTrigger.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
+            this.lblStartTrigger.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblStartTrigger.Location = new System.Drawing.Point(5, 334);
+            this.lblStartTrigger.Margin = new System.Windows.Forms.Padding(5);
+            this.lblStartTrigger.Name = "lblStartTrigger";
+            this.lblStartTrigger.Size = new System.Drawing.Size(259, 55);
+            this.lblStartTrigger.TabIndex = 98;
+            this.lblStartTrigger.Text = "Tirette";
+            this.lblStartTrigger.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // lblLidar
             // 
-            this.label2.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label2.Location = new System.Drawing.Point(8, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 18);
-            this.label2.TabIndex = 102;
-            this.label2.Text = "Lidar Adv.";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblLidar.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLidar.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblLidar.Location = new System.Drawing.Point(79, 33);
+            this.lblLidar.Name = "lblLidar";
+            this.lblLidar.Size = new System.Drawing.Size(90, 18);
+            this.lblLidar.TabIndex = 102;
+            this.lblLidar.Text = "Lidar Adv.";
+            this.lblLidar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label3
+            // lblMove
             // 
-            this.label3.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label3.Location = new System.Drawing.Point(90, 8);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 18);
-            this.label3.TabIndex = 103;
-            this.label3.Text = "Lidar Sol";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblMove.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMove.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblMove.Location = new System.Drawing.Point(79, 87);
+            this.lblMove.Name = "lblMove";
+            this.lblMove.Size = new System.Drawing.Size(90, 18);
+            this.lblMove.TabIndex = 104;
+            this.lblMove.Text = "Move";
+            this.lblMove.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label4
+            // lblCAN
             // 
-            this.label4.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label4.Location = new System.Drawing.Point(172, 8);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 18);
-            this.label4.TabIndex = 104;
-            this.label4.Text = "Move";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblCAN.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCAN.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblCAN.Location = new System.Drawing.Point(255, 85);
+            this.lblCAN.Name = "lblCAN";
+            this.lblCAN.Size = new System.Drawing.Size(90, 18);
+            this.lblCAN.TabIndex = 105;
+            this.lblCAN.Text = "CAN";
+            this.lblCAN.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label5
+            // lblServo1
             // 
-            this.label5.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label5.Location = new System.Drawing.Point(336, 8);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 18);
-            this.label5.TabIndex = 105;
-            this.label5.Text = "CAN";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblServo1.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServo1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblServo1.Location = new System.Drawing.Point(431, 33);
+            this.lblServo1.Name = "lblServo1";
+            this.lblServo1.Size = new System.Drawing.Size(90, 18);
+            this.lblServo1.TabIndex = 106;
+            this.lblServo1.Text = "Servo 1";
+            this.lblServo1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label6
+            // lblServo2
             // 
-            this.label6.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label6.Location = new System.Drawing.Point(418, 8);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(73, 18);
-            this.label6.TabIndex = 106;
-            this.label6.Text = "Servo 1";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblServo2.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServo2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblServo2.Location = new System.Drawing.Point(431, 85);
+            this.lblServo2.Name = "lblServo2";
+            this.lblServo2.Size = new System.Drawing.Size(90, 18);
+            this.lblServo2.TabIndex = 107;
+            this.lblServo2.Text = "Servo 2";
+            this.lblServo2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label7
+            // lblServo3
             // 
-            this.label7.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label7.Location = new System.Drawing.Point(500, 8);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(73, 18);
-            this.label7.TabIndex = 107;
-            this.label7.Text = "Servo 2";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblServo3.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServo3.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblServo3.Location = new System.Drawing.Point(607, 33);
+            this.lblServo3.Name = "lblServo3";
+            this.lblServo3.Size = new System.Drawing.Size(90, 18);
+            this.lblServo3.TabIndex = 108;
+            this.lblServo3.Text = "Servo 3";
+            this.lblServo3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label8
+            // lblServo4
             // 
-            this.label8.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label8.Location = new System.Drawing.Point(582, 8);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 18);
-            this.label8.TabIndex = 108;
-            this.label8.Text = "Servo 3";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblServo4.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServo4.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblServo4.Location = new System.Drawing.Point(607, 85);
+            this.lblServo4.Name = "lblServo4";
+            this.lblServo4.Size = new System.Drawing.Size(90, 18);
+            this.lblServo4.TabIndex = 109;
+            this.lblServo4.Text = "Servo 4";
+            this.lblServo4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label9
+            // lblServo5
             // 
-            this.label9.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label9.Location = new System.Drawing.Point(664, 8);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(73, 18);
-            this.label9.TabIndex = 109;
-            this.label9.Text = "Servo 4";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblServo5.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServo5.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblServo5.Location = new System.Drawing.Point(783, 33);
+            this.lblServo5.Name = "lblServo5";
+            this.lblServo5.Size = new System.Drawing.Size(90, 18);
+            this.lblServo5.TabIndex = 110;
+            this.lblServo5.Text = "Servo 5";
+            this.lblServo5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label10
+            // lblServo6
             // 
-            this.label10.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label10.Location = new System.Drawing.Point(746, 8);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(73, 18);
-            this.label10.TabIndex = 110;
-            this.label10.Text = "Servo 5";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblServo6.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServo6.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblServo6.Location = new System.Drawing.Point(783, 87);
+            this.lblServo6.Name = "lblServo6";
+            this.lblServo6.Size = new System.Drawing.Size(90, 18);
+            this.lblServo6.TabIndex = 111;
+            this.lblServo6.Text = "Servo 6";
+            this.lblServo6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label11
+            // lblIO
             // 
-            this.label11.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label11.Location = new System.Drawing.Point(828, 8);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(73, 18);
-            this.label11.TabIndex = 111;
-            this.label11.Text = "Servo 6";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label12
-            // 
-            this.label12.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label12.Location = new System.Drawing.Point(254, 8);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(73, 18);
-            this.label12.TabIndex = 112;
-            this.label12.Text = "IO";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblIO.Font = new System.Drawing.Font("Eras Bold ITC", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIO.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblIO.Location = new System.Drawing.Point(255, 33);
+            this.lblIO.Name = "lblIO";
+            this.lblIO.Size = new System.Drawing.Size(90, 18);
+            this.lblIO.TabIndex = 112;
+            this.lblIO.Text = "IO";
+            this.lblIO.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // picServo6
             // 
-            this.picServo6.Image = ((System.Drawing.Image)(resources.GetObject("picServo6.Image")));
-            this.picServo6.Location = new System.Drawing.Point(840, 29);
+            this.picServo6.Image = global::GoBot.Properties.Resources.ValidNok48;
+            this.picServo6.ImageLocation = "";
+            this.picServo6.Location = new System.Drawing.Point(729, 70);
             this.picServo6.Name = "picServo6";
             this.picServo6.Size = new System.Drawing.Size(48, 48);
+            this.picServo6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picServo6.TabIndex = 124;
             this.picServo6.TabStop = false;
             // 
             // picServo2
             // 
             this.picServo2.Image = global::GoBot.Properties.Resources.ValidNok48;
-            this.picServo2.Location = new System.Drawing.Point(512, 29);
+            this.picServo2.ImageLocation = "";
+            this.picServo2.Location = new System.Drawing.Point(377, 70);
             this.picServo2.Name = "picServo2";
             this.picServo2.Size = new System.Drawing.Size(48, 48);
+            this.picServo2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picServo2.TabIndex = 123;
             this.picServo2.TabStop = false;
             // 
             // picCAN
             // 
             this.picCAN.Image = global::GoBot.Properties.Resources.ValidNok48;
-            this.picCAN.Location = new System.Drawing.Point(348, 29);
+            this.picCAN.ImageLocation = "";
+            this.picCAN.Location = new System.Drawing.Point(201, 73);
             this.picCAN.Name = "picCAN";
             this.picCAN.Size = new System.Drawing.Size(48, 48);
+            this.picCAN.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picCAN.TabIndex = 122;
             this.picCAN.TabStop = false;
             // 
             // picServo4
             // 
-            this.picServo4.Image = ((System.Drawing.Image)(resources.GetObject("picServo4.Image")));
-            this.picServo4.Location = new System.Drawing.Point(676, 29);
+            this.picServo4.Image = global::GoBot.Properties.Resources.ValidNok48;
+            this.picServo4.ImageLocation = "";
+            this.picServo4.Location = new System.Drawing.Point(553, 70);
             this.picServo4.Name = "picServo4";
             this.picServo4.Size = new System.Drawing.Size(48, 48);
+            this.picServo4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picServo4.TabIndex = 121;
             this.picServo4.TabStop = false;
             // 
             // picServo3
             // 
-            this.picServo3.Image = ((System.Drawing.Image)(resources.GetObject("picServo3.Image")));
-            this.picServo3.Location = new System.Drawing.Point(594, 29);
+            this.picServo3.Image = global::GoBot.Properties.Resources.ValidNok48;
+            this.picServo3.ImageLocation = "";
+            this.picServo3.Location = new System.Drawing.Point(553, 19);
             this.picServo3.Name = "picServo3";
             this.picServo3.Size = new System.Drawing.Size(48, 48);
+            this.picServo3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picServo3.TabIndex = 120;
             this.picServo3.TabStop = false;
             // 
             // picServo1
             // 
-            this.picServo1.Image = ((System.Drawing.Image)(resources.GetObject("picServo1.Image")));
-            this.picServo1.Location = new System.Drawing.Point(430, 29);
+            this.picServo1.Image = global::GoBot.Properties.Resources.ValidNok48;
+            this.picServo1.ImageLocation = "";
+            this.picServo1.Location = new System.Drawing.Point(377, 19);
             this.picServo1.Name = "picServo1";
             this.picServo1.Size = new System.Drawing.Size(48, 48);
+            this.picServo1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picServo1.TabIndex = 119;
             this.picServo1.TabStop = false;
             // 
             // picServo5
             // 
-            this.picServo5.Image = ((System.Drawing.Image)(resources.GetObject("picServo5.Image")));
-            this.picServo5.Location = new System.Drawing.Point(758, 29);
+            this.picServo5.Image = global::GoBot.Properties.Resources.ValidNok48;
+            this.picServo5.ImageLocation = "";
+            this.picServo5.Location = new System.Drawing.Point(729, 19);
             this.picServo5.Name = "picServo5";
             this.picServo5.Size = new System.Drawing.Size(48, 48);
+            this.picServo5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picServo5.TabIndex = 118;
             this.picServo5.TabStop = false;
             // 
             // picIO
             // 
-            this.picIO.Image = ((System.Drawing.Image)(resources.GetObject("picIO.Image")));
-            this.picIO.Location = new System.Drawing.Point(266, 29);
+            this.picIO.Image = global::GoBot.Properties.Resources.ValidNok48;
+            this.picIO.ImageLocation = "";
+            this.picIO.Location = new System.Drawing.Point(201, 19);
             this.picIO.Name = "picIO";
             this.picIO.Size = new System.Drawing.Size(48, 48);
+            this.picIO.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picIO.TabIndex = 117;
             this.picIO.TabStop = false;
             // 
             // picMove
             // 
-            this.picMove.Image = ((System.Drawing.Image)(resources.GetObject("picMove.Image")));
-            this.picMove.Location = new System.Drawing.Point(184, 29);
+            this.picMove.Image = global::GoBot.Properties.Resources.ValidNok48;
+            this.picMove.ImageLocation = "";
+            this.picMove.Location = new System.Drawing.Point(25, 73);
             this.picMove.Name = "picMove";
             this.picMove.Size = new System.Drawing.Size(48, 48);
+            this.picMove.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picMove.TabIndex = 116;
             this.picMove.TabStop = false;
             // 
-            // picLidar2
+            // picLidar
             // 
-            this.picLidar2.Image = ((System.Drawing.Image)(resources.GetObject("picLidar2.Image")));
-            this.picLidar2.Location = new System.Drawing.Point(102, 29);
-            this.picLidar2.Name = "picLidar2";
-            this.picLidar2.Size = new System.Drawing.Size(48, 48);
-            this.picLidar2.TabIndex = 115;
-            this.picLidar2.TabStop = false;
-            // 
-            // picLidar1
-            // 
-            this.picLidar1.Image = ((System.Drawing.Image)(resources.GetObject("picLidar1.Image")));
-            this.picLidar1.Location = new System.Drawing.Point(20, 29);
-            this.picLidar1.Name = "picLidar1";
-            this.picLidar1.Size = new System.Drawing.Size(48, 48);
-            this.picLidar1.TabIndex = 114;
-            this.picLidar1.TabStop = false;
+            this.picLidar.Image = global::GoBot.Properties.Resources.ValidNok48;
+            this.picLidar.ImageLocation = "";
+            this.picLidar.Location = new System.Drawing.Point(25, 19);
+            this.picLidar.Name = "picLidar";
+            this.picLidar.Size = new System.Drawing.Size(48, 48);
+            this.picLidar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picLidar.TabIndex = 114;
+            this.picLidar.TabStop = false;
             // 
             // picColor
             // 
             this.picColor.Image = global::GoBot.Properties.Resources.Circle96;
-            this.picColor.Location = new System.Drawing.Point(304, 146);
+            this.picColor.Location = new System.Drawing.Point(269, 170);
             this.picColor.Name = "picColor";
             this.picColor.Size = new System.Drawing.Size(96, 96);
             this.picColor.TabIndex = 101;
@@ -371,27 +368,27 @@
             // picCalibration
             // 
             this.picCalibration.Image = global::GoBot.Properties.Resources.ValidNok96;
-            this.picCalibration.Location = new System.Drawing.Point(304, 428);
+            this.picCalibration.Location = new System.Drawing.Point(269, 456);
             this.picCalibration.Name = "picCalibration";
             this.picCalibration.Size = new System.Drawing.Size(96, 96);
             this.picCalibration.TabIndex = 100;
             this.picCalibration.TabStop = false;
             // 
-            // picJack
+            // picStartTrigger
             // 
-            this.picJack.Image = global::GoBot.Properties.Resources.ValidNok96;
-            this.picJack.Location = new System.Drawing.Point(304, 287);
-            this.picJack.Name = "picJack";
-            this.picJack.Size = new System.Drawing.Size(96, 96);
-            this.picJack.TabIndex = 99;
-            this.picJack.TabStop = false;
+            this.picStartTrigger.Image = global::GoBot.Properties.Resources.ValidNok96;
+            this.picStartTrigger.Location = new System.Drawing.Point(269, 314);
+            this.picStartTrigger.Name = "picStartTrigger";
+            this.picStartTrigger.Size = new System.Drawing.Size(96, 96);
+            this.picStartTrigger.TabIndex = 99;
+            this.picStartTrigger.TabStop = false;
             // 
             // picTable
             // 
             this.picTable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.picTable.Location = new System.Drawing.Point(404, 134);
+            this.picTable.Location = new System.Drawing.Point(366, 134);
             this.picTable.Name = "picTable";
-            this.picTable.Size = new System.Drawing.Size(612, 410);
+            this.picTable.Size = new System.Drawing.Size(547, 463);
             this.picTable.TabIndex = 0;
             this.picTable.TabStop = false;
             // 
@@ -409,23 +406,21 @@
             this.Controls.Add(this.picServo5);
             this.Controls.Add(this.picIO);
             this.Controls.Add(this.picMove);
-            this.Controls.Add(this.picLidar2);
-            this.Controls.Add(this.picLidar1);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.picLidar);
+            this.Controls.Add(this.lblIO);
+            this.Controls.Add(this.lblServo6);
+            this.Controls.Add(this.lblServo5);
+            this.Controls.Add(this.lblServo4);
+            this.Controls.Add(this.lblServo3);
+            this.Controls.Add(this.lblServo2);
+            this.Controls.Add(this.lblServo1);
+            this.Controls.Add(this.lblCAN);
+            this.Controls.Add(this.lblMove);
+            this.Controls.Add(this.lblLidar);
             this.Controls.Add(this.picColor);
             this.Controls.Add(this.picCalibration);
-            this.Controls.Add(this.picJack);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.picStartTrigger);
+            this.Controls.Add(this.lblStartTrigger);
             this.Controls.Add(this.btnColorRight);
             this.Controls.Add(this.btnColorLeft);
             this.Controls.Add(this.btnCalib);
@@ -433,7 +428,7 @@
             this.Controls.Add(this.picTable);
             this.DoubleBuffered = true;
             this.Name = "PagePandaMatch";
-            this.Size = new System.Drawing.Size(1024, 600);
+            this.Size = new System.Drawing.Size(916, 600);
             this.Load += new System.EventHandler(this.PageMatch_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).EndInit();
@@ -444,14 +439,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.picServo5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picIO)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picMove)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLidar2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLidar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLidar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCalibration)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picJack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picStartTrigger)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTable)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -462,23 +455,21 @@
         private System.Windows.Forms.Button btnColorRight;
         private System.Windows.Forms.Button btnColorLeft;
         private System.Windows.Forms.Button btnCalib;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox picJack;
+        private System.Windows.Forms.Label lblStartTrigger;
+        private System.Windows.Forms.PictureBox picStartTrigger;
         private System.Windows.Forms.PictureBox picCalibration;
         private System.Windows.Forms.PictureBox picColor;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.PictureBox picLidar1;
-        private System.Windows.Forms.PictureBox picLidar2;
+        private System.Windows.Forms.Label lblLidar;
+        private System.Windows.Forms.Label lblMove;
+        private System.Windows.Forms.Label lblCAN;
+        private System.Windows.Forms.Label lblServo1;
+        private System.Windows.Forms.Label lblServo2;
+        private System.Windows.Forms.Label lblServo3;
+        private System.Windows.Forms.Label lblServo4;
+        private System.Windows.Forms.Label lblServo5;
+        private System.Windows.Forms.Label lblServo6;
+        private System.Windows.Forms.Label lblIO;
+        private System.Windows.Forms.PictureBox picLidar;
         private System.Windows.Forms.PictureBox picMove;
         private System.Windows.Forms.PictureBox picIO;
         private System.Windows.Forms.PictureBox picServo5;

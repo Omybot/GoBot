@@ -19,7 +19,7 @@ namespace GoBot.IHM.Pages
         {
             if (!Execution.DesignMode)
             {
-
+                btnTrap.Focus();
             }
         }
 

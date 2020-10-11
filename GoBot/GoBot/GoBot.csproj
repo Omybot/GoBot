@@ -118,6 +118,12 @@
     <Compile Include="IHM\Forms\DebugLidar.Designer.cs">
       <DependentUpon>DebugLidar.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\Forms\FormConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IHM\Forms\FormConfirm.Designer.cs">
+      <DependentUpon>FormConfirm.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PagesPanda\PagePandaActuators.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -141,6 +147,12 @@
     </Compile>
     <Compile Include="IHM\PagesPanda\PagePandaMatch.Designer.cs">
       <DependentUpon>PagePandaMatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\Pages\PagePanda.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Pages\PagePanda.Designer.cs">
+      <DependentUpon>PagePanda.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Pages\PagePepperl.cs">
       <SubType>UserControl</SubType>
@@ -447,6 +459,9 @@
     <EmbeddedResource Include="IHM\Forms\DebugLidar.resx">
       <DependentUpon>DebugLidar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Forms\FormConfirm.resx">
+      <DependentUpon>FormConfirm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaActuators.resx">
       <DependentUpon>PagePandaActuators.cs</DependentUpon>
     </EmbeddedResource>
@@ -458,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaMatch.resx">
       <DependentUpon>PagePandaMatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Pages\PagePanda.resx">
+      <DependentUpon>PagePanda.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PagePepperl.resx">
       <DependentUpon>PagePepperl.cs</DependentUpon>
@@ -681,6 +699,16 @@
     <None Include="Images\Circle96.png" />
     <None Include="Images\FlagT.png" />
     <None Include="Images\FlagO.png" />
+    <None Include="Images\Close96.png" />
+    <None Include="Images\BatteryCritical96.png" />
+    <None Include="Images\BatteryFull96.png" />
+    <None Include="Images\BatteryLow96.png" />
+    <None Include="Images\BatteryMid96.png" />
+    <None Include="Images\ValidNok32.png" />
+    <None Include="Images\NextPage96.png" />
+    <None Include="Images\Stay96.png" />
+    <None Include="Images\Exit96.png" />
+    <None Include="Images\BatteryUnknow96.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>
