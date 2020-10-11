@@ -27,9 +27,9 @@ namespace GoBot
 
         private static void CreateRobots()
         {
-            Graph graphGros = null;
-            if (Robots.MainRobot != null && Robots.MainRobot.Graph != null)
-                graphGros = Robots.MainRobot.Graph;
+            Graph graphBackup = null;
+
+            if (Robots.MainRobot != null) graphBackup = Robots.MainRobot.Graph;
 
             Robots.MainRobot?.DeInit();
 
@@ -54,9 +54,7 @@ namespace GoBot
             DicRobots.Add(IDRobot.GrosRobot, MainRobot);
 
             MainRobot.Init();
-            if (graphGros != null)
-                Robots.MainRobot.Graph = graphGros;
-
+            if (graphBackup != null) Robots.MainRobot.Graph = graphBackup;
             MainRobot.SetSpeedFast();
         }
 

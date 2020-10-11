@@ -31,7 +31,7 @@ namespace GoBot.Devices
 
         public Position Position { get { return _position; } set { _position = new Position(value); } }
         
-        public AngleDelta DeadAngle { get { return 0; } } //TODO
+        public abstract AngleDelta DeadAngle { get; }
 
         public ConnectionChecker ConnectionChecker { get { return _checker; } }
 

@@ -50,7 +50,7 @@ namespace GoBot.Devices
 
         public AngleDelta ScanRange { get { return _scanRange; } }
 
-        public AngleDelta DeadAngle { get { return new AngleDelta(360 - _scanRange); } }
+        public override AngleDelta DeadAngle { get { return new AngleDelta(360 - _scanRange); } }
 
         public override bool Activated => _linkMeasures != null && _linkMeasures.Running;
 

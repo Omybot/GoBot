@@ -10,8 +10,6 @@ namespace GoBot.Strategies
 {
     class StrategyTest : Strategy
     {
-        List<Movement> mouvements;
-
         public override bool AvoidElements => false;
 
         protected override void SequenceBegin()
@@ -24,7 +22,7 @@ namespace GoBot.Strategies
 
         protected override void SequenceCore()
         {
-            foreach (Movement move in mouvements)
+            foreach (Movement move in Movements)
             {
                 for (int i = 0; i < move.Positions.Count; i++)
                 {

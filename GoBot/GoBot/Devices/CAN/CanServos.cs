@@ -51,7 +51,7 @@ namespace GoBot.Devices.CAN
             }
             catch (Exception e)
             {
-
+                Console.WriteLine("ERREUR CAN : " + frame.ToString() + " - " + e.Message);
             }
         }
 

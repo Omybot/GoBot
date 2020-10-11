@@ -103,8 +103,9 @@ namespace GoBot.Devices
                     rep = reader.ReadToEnd();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                Console.WriteLine("ERROR Lidar Pepperl envoi " + message + " - " + e.Message);
                 rep = "";
             }
 

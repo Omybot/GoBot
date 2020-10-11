@@ -43,6 +43,8 @@ namespace GoBot.Devices
                 }
             }
         }
+        public override AngleDelta DeadAngle => 0;
+
         public override bool Activated => _feedLink != null && _feedLink.Running;
 
         public int PointsPerScan { get { return _freq.SamplesPerScan() / (_filter == PepperlFilter.None ? 1 : _filterWidth); } }

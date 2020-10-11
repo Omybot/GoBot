@@ -132,7 +132,7 @@ namespace GoBot.GameElements
         {
             // TODOEACHYEAR Mettre à jour ICI les éléments en fonction de la position des adversaires
 
-            int opponentRadius = 150;
+            // int opponentRadius = 150;
         }
     }
 }

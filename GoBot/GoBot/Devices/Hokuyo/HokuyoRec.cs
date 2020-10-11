@@ -32,8 +32,6 @@ namespace GoBot.Devices
             // non...
         }
 
-        int offset = 0;
-
         protected override String GetResponse(int timeout = 5000)
         {
             Position robotPos;

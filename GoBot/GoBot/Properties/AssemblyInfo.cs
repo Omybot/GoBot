@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("GoBot")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Omybot")]
+[assembly: AssemblyCompany("Trognon & Co")]
 [assembly: AssemblyProduct("GoBot")]
 [assembly: AssemblyCopyright("Copyright ©  2009-2020")]
 [assembly: AssemblyTrademark("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut 
 // en utilisant '*', comme indiqué ci-dessous :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.20.1.0")]
-[assembly: AssemblyFileVersion("1.20.1.0")]
+[assembly: AssemblyVersion("1.20.2.0")]
+[assembly: AssemblyFileVersion("1.20.2.0")]

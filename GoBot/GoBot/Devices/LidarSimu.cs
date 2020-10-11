@@ -4,6 +4,7 @@ using GoBot.BoardContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 
 namespace GoBot.Devices
@@ -27,6 +28,8 @@ namespace GoBot.Devices
             _noise = 5;
             _rand = new Random();
         }
+
+        public override AngleDelta DeadAngle => 0;
 
         protected override bool StartLoop()
         {

@@ -45,8 +45,11 @@ namespace GoBot
                 }
             }
 
-            //if (error && Debugger.IsAttached) MessageBox.Show(errors.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+            if (error && Debugger.IsAttached)
+            {
+                Console.WriteLine(errors.ToString());
+                //MessageBox.Show(errors.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
