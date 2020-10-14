@@ -428,6 +428,7 @@ namespace GoBot
                     break;
                 case UdpFrameFunction.RetourCouleurEquipe:
                     GameBoard.MyColor = frame[2] == 0 ? GameBoard.ColorLeftBlue : GameBoard.ColorRightYellow;
+                    if(Config.CurrentConfig.IsMiniRobot) StartTriggerEnable = true;
                     break;
             }
         }
