@@ -89,6 +89,7 @@ namespace GoBot.Actionneurs
         public int PositionOpen { get; set; }
         public int PositionClose { get; set; }
         public int PositionHide { get; set; }
+        public int PositionRelease { get; set; }
     }
 
     public class ServoGrabberRight : ServoGrabber

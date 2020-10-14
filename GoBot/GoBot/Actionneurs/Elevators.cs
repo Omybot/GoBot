@@ -1,4 +1,7 @@
-﻿using System.Threading;
+﻿using GoBot.Threading;
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Threading;
 
 namespace GoBot.Actionneurs
 {
@@ -8,6 +11,7 @@ namespace GoBot.Actionneurs
         {
             _servoPush = Config.CurrentConfig.ServoPushArmRight;
             _servoLocker = Config.CurrentConfig.ServoLockerRight;
+            _servoGraber = Config.CurrentConfig.ServoGrabberRight;
 
             _makeVacuum = ActuatorOnOffID.MakeVacuumRightFront;
             _openVacuum = ActuatorOnOffID.OpenVacuumRightFront;
@@ -23,6 +27,7 @@ namespace GoBot.Actionneurs
         {
             _servoPush = Config.CurrentConfig.ServoPushArmLeft;
             _servoLocker = Config.CurrentConfig.ServoLockerLeft;
+            _servoGraber = Config.CurrentConfig.ServoGrabberLeft;
 
             _makeVacuum = ActuatorOnOffID.MakeVacuumLeftFront;
             _openVacuum = ActuatorOnOffID.OpenVacuumLeftFront;
@@ -37,9 +42,44 @@ namespace GoBot.Actionneurs
     {
         protected ServoPushArm _servoPush;
         protected ServoLocker _servoLocker;
+        protected ServoGrabber _servoGraber;
         protected ActuatorOnOffID _makeVacuum, _openVacuum;
         protected SensorOnOffID _pressure;
         protected MotorElevator _elevator;
+
+        protected int _buoysCountInside = 0;
+        protected int _buoysCountOutside = 0;
+
+        public void DoGrabOpen()
+        {
+            _servoGraber.SendPosition(_servoGraber.PositionOpen);
+        }
+        public void DoGrabRelease()
+        {
+            _servoGraber.SendPosition(_servoGraber.PositionRelease);
+        }
+        public void DoGrabClose()
+        {
+            _servoGraber.SendPosition(_servoGraber.PositionClose);
+        }
+        public void DoGrabHide()
+        {
+            _servoGraber.SendPosition(_servoGraber.PositionHide);
+        }
+        public void DoLockerEngage()
+        {
+            _servoLocker.SendPosition(_servoLocker.PositionEngage);
+        }
+
+        public void DoLockerDisengage()
+        {
+            _servoLocker.SendPosition(_servoLocker.PositionDisengage);
+        }
+
+        public void DoLockerMaintain()
+        {
+            _servoLocker.SendPosition(_servoLocker.PositionMaintain);
+        }
 
         public void DoPositionPushInside()
         {
@@ -63,32 +103,7 @@ namespace GoBot.Actionneurs
             Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, false);
             Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, true);
             _servoLocker.SendPosition(_servoLocker.PositionDisengage);
-        }
-
-        public void DoSequence()
-        {
-            DoPositionElevatorFloor0();
-            DoLockAir();
-            Thread.Sleep(250);
-            DoPositionElevatorFloor3();
-            DoUnlockAir();
-            Thread.Sleep(250);
-
-            DoPositionElevatorFloor0();
-            DoLockAir();
-            Thread.Sleep(250);
-            DoPositionElevatorFloor2();
-            DoUnlockAir();
-            Thread.Sleep(250);
-
-            DoPositionElevatorFloor0();
-            DoLockAir();
-            Thread.Sleep(250);
-            DoPositionElevatorFloor1();
-            DoUnlockAir();
-            Thread.Sleep(250);
-
-            DoPositionElevatorFloor0();
+            Thread.Sleep(50);
         }
 
         public void DoInitElevator()
@@ -124,6 +139,88 @@ namespace GoBot.Actionneurs
         public void DoPositionElevatorFloor3()
         {
             _elevator.SendPosition(_elevator.PositionFloor3);
+        }
+
+        public void DoSequenceOverkill()
+        {
+            ThreadLink left, right;
+
+            while (_buoysCountOutside < 3)
+            {
+                Robots.MainRobot.Move(60);
+                Actionneur.ElevatorLeft.DoPositionElevatorFloor0();
+                Actionneur.ElevatorRight.DoPositionElevatorFloor0();
+                left = ThreadManager.CreateThread(link => Actionneur.ElevatorLeft.DoSequenceStore());
+                right = ThreadManager.CreateThread(link => Actionneur.ElevatorRight.DoSequenceStore());
+                left.StartThread();
+                right.StartThread();
+                left.WaitEnd();
+                right.WaitEnd();
+            }
+        }
+
+        public void DoSequenceStore()
+        {
+            DoLockerEngage();
+            DoLockAir();
+            DoGrabClose();
+
+            if (WaitSomething())
+            {
+                BuoyAdd();
+                DoStoreCurrent();
+            }
+        }
+
+        private void BuoyAdd()
+        {
+            if (_servoPush.GetLastPosition() == _servoPush.PositionOpen)
+                _buoysCountInside++;
+            else
+                _buoysCountOutside++;
+        }
+
+        private int BuoyCount()
+        {
+            if (_servoPush.GetLastPosition() == _servoPush.PositionOpen)
+                return _buoysCountInside;
+            else
+                return _buoysCountOutside;
+        }
+
+        public void DoStoreCurrent()
+        {
+            DoGrabRelease();
+
+            if (BuoyCount() == 1)
+                DoPositionElevatorFloor3();
+            else if (BuoyCount() == 2)
+                DoPositionElevatorFloor2();
+            else if (BuoyCount() == 3)
+                DoPositionElevatorFloor1();
+
+            DoGrabOpen();
+            DoUnlockAir();
+            Robots.MainRobot.SetMotorAtPosition(_elevator.ID, _elevator.PositionFloor0);
+            //DoPositionElevatorFloor0();
+        }
+
+        public void DoStorageReset()
+        {
+            _buoysCountInside = 0;
+            _buoysCountOutside = 0;
+        }
+
+        public bool WaitSomething(int timeout = 500)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+
+            while (sw.ElapsedMilliseconds < 500 && !HasSomething())
+            {
+                Thread.Sleep(50);
+            }
+
+            return HasSomething();
         }
     }
 }

@@ -87,7 +87,7 @@ namespace GoBot.Actionneurs
 
         protected override void SendPositionSpecific(int position)
         {
-            Robots.MainRobot.SetMotorAtPosition(ID, position);
+            Robots.MainRobot.SetMotorAtPosition(ID, position, true);
         }
 
         public void Stop(StopMode mode)
