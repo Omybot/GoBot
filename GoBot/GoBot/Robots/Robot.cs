@@ -1,9 +1,11 @@
 ﻿using AStarFolder;
 using Geometry;
 using Geometry.Shapes;
+using GoBot.Actionneurs;
 using GoBot.Actions;
 using GoBot.BoardContext;
 using GoBot.PathFinding;
+using GoBot.Threading;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -132,12 +134,12 @@ namespace GoBot
                 AsserStats.BackwardMoves.Add(-distance);
         }
 
-        public virtual void Move(int distance, bool waitEnd = true)
+        public void Move(int distance, bool waitEnd = true)
         {
             if (distance > 0)
-                AsserStats.ForwardMoves.Add(distance);
+                MoveForward(distance);
             else
-                AsserStats.BackwardMoves.Add(-distance);
+                MoveBackward(-distance);
         }
 
         public virtual void PivotLeft(AngleDelta angle, bool waitEnd = true)
@@ -462,6 +464,26 @@ namespace GoBot
             Robots.MainRobot.SetAsservOffset(new Position(0, new RealPoint(1500, 1000)));
 
             // TODOEACHYEAR Lister les actionneurs à ranger pour préparer un match
+
+            ThreadManager.CreateThread(link =>
+            {
+                Actionneur.ElevatorLeft.DoLockerEngage();
+                Actionneur.ElevatorLeft.DoInitElevator();
+                Actionneur.ElevatorLeft.DoLockerDisengage();
+            }).StartThread();
+
+            ThreadManager.CreateThread(link =>
+            {
+                Actionneur.ElevatorRight.DoLockerEngage();
+                Actionneur.ElevatorRight.DoInitElevator();
+                Actionneur.ElevatorRight.DoLockerDisengage();
+            }).StartThread(); ;
+
+            Actionneur.ElevatorLeft.DoGrabHide();
+            Actionneur.ElevatorRight.DoGrabHide();
+
+            Actionneur.Flags.DoCloseLeft();
+            Actionneur.Flags.DoCloseRight();
         }
 
         public void ActuatorsDeploy()
