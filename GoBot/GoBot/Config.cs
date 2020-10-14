@@ -85,9 +85,9 @@ namespace GoBot
         public SpeedConfig ConfigRapide { get; set; }
         public SpeedConfig ConfigLent { get; set; }
 
-        public int GRCoeffP { get; set; }
-        public int GRCoeffI { get; set; }
-        public int GRCoeffD { get; set; }
+        public int GRCoeffP { get; set; } = 60;
+        public int GRCoeffI { get; set; } = 0;
+        public int GRCoeffD { get; set; } = 400;
 
         // Offset balises
 
