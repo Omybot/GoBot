@@ -19,8 +19,11 @@ namespace GoBot.GameElements
 
         public override void Paint(Graphics g, WorldScale scale)
         {
-            Circle c = new Circle(_position, _hoverRadius);
-            c.Paint(g, _isHover ? Color.White : Color.Black, 1, _color, scale);
+            if (_isAvailable)
+            {
+                Circle c = new Circle(_position, _hoverRadius);
+                c.Paint(g, _isHover ? Color.White : Color.Black, 1, _color, scale);
+            }
         }
     }
 }

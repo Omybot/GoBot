@@ -132,7 +132,13 @@ namespace GoBot.GameElements
         {
             // TODOEACHYEAR Mettre à jour ICI les éléments en fonction de la position des adversaires
 
-            // int opponentRadius = 150;
+            int opponentRadius = 150;
+
+            foreach (Buoy b in _buoys)
+            {
+                if (positions.Exists(p => p.Distance(b.Position) < opponentRadius))
+                    b.IsAvailable = false;
+            }
         }
     }
 }
