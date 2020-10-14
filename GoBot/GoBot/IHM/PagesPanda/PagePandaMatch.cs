@@ -147,5 +147,12 @@ namespace GoBot.IHM.Pages
             GameBoard.MyColor = GameBoard.ColorRightYellow;
             btnTrap.Focus();
         }
+
+        private void btnInit_Click(object sender, EventArgs e)
+        {
+            btnTrap.Focus();
+            Robots.MainRobot.ActuatorsStore();
+            SetPicImage(picInit, true);
+        }
     }
 }

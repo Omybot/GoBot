@@ -57,6 +57,8 @@
             this.picCalibration = new System.Windows.Forms.PictureBox();
             this.picStartTrigger = new System.Windows.Forms.PictureBox();
             this.picTable = new System.Windows.Forms.PictureBox();
+            this.btnInit = new System.Windows.Forms.Button();
+            this.picInit = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).BeginInit();
@@ -71,6 +73,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCalibration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStartTrigger)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picInit)).BeginInit();
             this.SuspendLayout();
             // 
             // btnTrap
@@ -84,7 +87,7 @@
             // btnColorRight
             // 
             this.btnColorRight.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
-            this.btnColorRight.Location = new System.Drawing.Point(136, 169);
+            this.btnColorRight.Location = new System.Drawing.Point(136, 265);
             this.btnColorRight.Margin = new System.Windows.Forms.Padding(5);
             this.btnColorRight.Name = "btnColorRight";
             this.btnColorRight.Size = new System.Drawing.Size(130, 100);
@@ -98,7 +101,7 @@
             // 
             this.btnColorLeft.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
             this.btnColorLeft.ForeColor = System.Drawing.Color.White;
-            this.btnColorLeft.Location = new System.Drawing.Point(5, 169);
+            this.btnColorLeft.Location = new System.Drawing.Point(5, 265);
             this.btnColorLeft.Margin = new System.Windows.Forms.Padding(5);
             this.btnColorLeft.Name = "btnColorLeft";
             this.btnColorLeft.Size = new System.Drawing.Size(130, 100);
@@ -114,7 +117,7 @@
             this.btnCalib.Enabled = false;
             this.btnCalib.Font = new System.Drawing.Font("Eras Demi ITC", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCalib.ForeColor = System.Drawing.Color.Black;
-            this.btnCalib.Location = new System.Drawing.Point(5, 453);
+            this.btnCalib.Location = new System.Drawing.Point(5, 495);
             this.btnCalib.Margin = new System.Windows.Forms.Padding(5);
             this.btnCalib.Name = "btnCalib";
             this.btnCalib.Size = new System.Drawing.Size(261, 100);
@@ -128,7 +131,7 @@
             // 
             this.lblStartTrigger.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
             this.lblStartTrigger.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblStartTrigger.Location = new System.Drawing.Point(5, 334);
+            this.lblStartTrigger.Location = new System.Drawing.Point(5, 402);
             this.lblStartTrigger.Margin = new System.Windows.Forms.Padding(5);
             this.lblStartTrigger.Name = "lblStartTrigger";
             this.lblStartTrigger.Size = new System.Drawing.Size(259, 55);
@@ -359,7 +362,7 @@
             // picColor
             // 
             this.picColor.Image = global::GoBot.Properties.Resources.Circle96;
-            this.picColor.Location = new System.Drawing.Point(269, 170);
+            this.picColor.Location = new System.Drawing.Point(269, 266);
             this.picColor.Name = "picColor";
             this.picColor.Size = new System.Drawing.Size(96, 96);
             this.picColor.TabIndex = 101;
@@ -368,7 +371,7 @@
             // picCalibration
             // 
             this.picCalibration.Image = global::GoBot.Properties.Resources.ValidNok96;
-            this.picCalibration.Location = new System.Drawing.Point(269, 456);
+            this.picCalibration.Location = new System.Drawing.Point(269, 498);
             this.picCalibration.Name = "picCalibration";
             this.picCalibration.Size = new System.Drawing.Size(96, 96);
             this.picCalibration.TabIndex = 100;
@@ -377,7 +380,7 @@
             // picStartTrigger
             // 
             this.picStartTrigger.Image = global::GoBot.Properties.Resources.ValidNok96;
-            this.picStartTrigger.Location = new System.Drawing.Point(269, 314);
+            this.picStartTrigger.Location = new System.Drawing.Point(269, 382);
             this.picStartTrigger.Name = "picStartTrigger";
             this.picStartTrigger.Size = new System.Drawing.Size(96, 96);
             this.picStartTrigger.TabIndex = 99;
@@ -392,11 +395,33 @@
             this.picTable.TabIndex = 0;
             this.picTable.TabStop = false;
             // 
+            // btnInit
+            // 
+            this.btnInit.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
+            this.btnInit.Location = new System.Drawing.Point(5, 146);
+            this.btnInit.Name = "btnInit";
+            this.btnInit.Size = new System.Drawing.Size(261, 100);
+            this.btnInit.TabIndex = 125;
+            this.btnInit.Text = "Init";
+            this.btnInit.UseVisualStyleBackColor = true;
+            this.btnInit.Click += new System.EventHandler(this.btnInit_Click);
+            // 
+            // picInit
+            // 
+            this.picInit.Image = global::GoBot.Properties.Resources.ValidNok96;
+            this.picInit.Location = new System.Drawing.Point(269, 146);
+            this.picInit.Name = "picInit";
+            this.picInit.Size = new System.Drawing.Size(96, 96);
+            this.picInit.TabIndex = 126;
+            this.picInit.TabStop = false;
+            // 
             // PagePandaMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.picInit);
+            this.Controls.Add(this.btnInit);
             this.Controls.Add(this.picServo6);
             this.Controls.Add(this.picServo2);
             this.Controls.Add(this.picCAN);
@@ -444,6 +469,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCalibration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStartTrigger)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picInit)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -479,5 +505,7 @@
         private System.Windows.Forms.PictureBox picCAN;
         private System.Windows.Forms.PictureBox picServo2;
         private System.Windows.Forms.PictureBox picServo6;
+        private System.Windows.Forms.Button btnInit;
+        private System.Windows.Forms.PictureBox picInit;
     }
 }
