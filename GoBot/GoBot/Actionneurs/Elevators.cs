@@ -81,24 +81,24 @@ namespace GoBot.Actionneurs
             _servoLocker.SendPosition(_servoLocker.PositionMaintain);
         }
 
-        public void DoPositionPushInside()
+        public void DoPushInside()
         {
             _servoPush.SendPosition(_servoPush.PositionClose);
         }
 
-        public void DoPositionPushOutside()
+        public void DoPushOutside()
         {
             _servoPush.SendPosition(_servoPush.PositionOpen);
         }
 
-        public void DoLockAir()
+        public void DoAirLock()
         {
             Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, true);
             Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, false);
             _servoLocker.SendPosition(_servoLocker.PositionEngage);
         }
 
-        public void DoUnlockAir()
+        public void DoAirUnlock()
         {
             Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, false);
             Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, true);
@@ -106,7 +106,7 @@ namespace GoBot.Actionneurs
             Thread.Sleep(50);
         }
 
-        public void DoInitElevator()
+        public void DoElevatorInit()
         {
             _elevator.OriginInit();
         }
@@ -116,27 +116,27 @@ namespace GoBot.Actionneurs
             return Robots.MainRobot.ReadSensorOnOff(_pressure);
         }
 
-        public void DoStopElevator()
+        public void DoElevatorStop()
         {
             _elevator.Stop(StopMode.Abrupt);
         }
 
-        public void DoPositionElevatorFloor0()
+        public void DoElevatorFloor0()
         {
             _elevator.SendPosition(_elevator.PositionFloor0);
         }
 
-        public void DoPositionElevatorFloor1()
+        public void DoElevatorFloor1()
         {
             _elevator.SendPosition(_elevator.PositionFloor1);
         }
 
-        public void DoPositionElevatorFloor2()
+        public void DoElevatorFloor2()
         {
             _elevator.SendPosition(_elevator.PositionFloor2);
         }
 
-        public void DoPositionElevatorFloor3()
+        public void DoElevatorFloor3()
         {
             _elevator.SendPosition(_elevator.PositionFloor3);
         }
@@ -148,8 +148,8 @@ namespace GoBot.Actionneurs
             while (_buoysCountOutside < 3)
             {
                 Robots.MainRobot.Move(60);
-                Actionneur.ElevatorLeft.DoPositionElevatorFloor0();
-                Actionneur.ElevatorRight.DoPositionElevatorFloor0();
+                Actionneur.ElevatorLeft.DoElevatorFloor0();
+                Actionneur.ElevatorRight.DoElevatorFloor0();
                 left = ThreadManager.CreateThread(link => Actionneur.ElevatorLeft.DoSequenceStore());
                 right = ThreadManager.CreateThread(link => Actionneur.ElevatorRight.DoSequenceStore());
                 left.StartThread();
@@ -162,7 +162,7 @@ namespace GoBot.Actionneurs
         public void DoSequenceStore()
         {
             DoLockerEngage();
-            DoLockAir();
+            DoAirLock();
             DoGrabClose();
 
             if (WaitSomething())
@@ -193,14 +193,14 @@ namespace GoBot.Actionneurs
             DoGrabRelease();
 
             if (BuoyCount() == 1)
-                DoPositionElevatorFloor3();
+                DoElevatorFloor3();
             else if (BuoyCount() == 2)
-                DoPositionElevatorFloor2();
+                DoElevatorFloor2();
             else if (BuoyCount() == 3)
-                DoPositionElevatorFloor1();
+                DoElevatorFloor1();
 
             DoGrabOpen();
-            DoUnlockAir();
+            DoAirUnlock();
             Robots.MainRobot.SetMotorAtPosition(_elevator.ID, _elevator.PositionFloor0);
             //DoPositionElevatorFloor0();
         }
@@ -216,9 +216,7 @@ namespace GoBot.Actionneurs
             Stopwatch sw = Stopwatch.StartNew();
 
             while (sw.ElapsedMilliseconds < 500 && !HasSomething())
-            {
                 Thread.Sleep(50);
-            }
 
             return HasSomething();
         }

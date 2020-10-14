@@ -468,14 +468,14 @@ namespace GoBot
             ThreadManager.CreateThread(link =>
             {
                 Actionneur.ElevatorLeft.DoLockerEngage();
-                Actionneur.ElevatorLeft.DoInitElevator();
+                Actionneur.ElevatorLeft.DoElevatorInit();
                 Actionneur.ElevatorLeft.DoLockerDisengage();
             }).StartThread();
 
             ThreadManager.CreateThread(link =>
             {
                 Actionneur.ElevatorRight.DoLockerEngage();
-                Actionneur.ElevatorRight.DoInitElevator();
+                Actionneur.ElevatorRight.DoElevatorInit();
                 Actionneur.ElevatorRight.DoLockerDisengage();
             }).StartThread(); ;
 
