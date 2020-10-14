@@ -299,7 +299,7 @@
             // 
             // picLimit
             // 
-            this.picLimit.BackColor = System.Drawing.Color.Silver;
+            this.picLimit.BackColor = System.Drawing.Color.DimGray;
             this.picLimit.Location = new System.Drawing.Point(0, 0);
             this.picLimit.Name = "picLimit";
             this.picLimit.Size = new System.Drawing.Size(1, 600);

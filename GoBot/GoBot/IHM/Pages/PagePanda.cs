@@ -101,7 +101,7 @@ namespace GoBot.IHM.Pages
 
         private static void SetPicImage(PictureBox pic, bool ok)
         {
-            pic.Image = !ok ? Properties.Resources.ValidOk48 : Properties.Resources.ValidNok48;
+            pic.Image = ok ? Properties.Resources.ValidOk48 : Properties.Resources.ValidNok48;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
