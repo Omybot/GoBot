@@ -1,5 +1,11 @@
-﻿using GoBot.Threading;
+﻿using Geometry;
+using Geometry.Shapes;
+using GoBot.Devices;
+using GoBot.Threading;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 
@@ -20,6 +26,16 @@ namespace GoBot.Actionneurs
 
             _elevator = Config.CurrentConfig.MotorElevatorRight;
         }
+
+        protected override RealPoint GetEntryFrontPoint()
+        {
+            return new RealPoint(Robots.MainRobot.Position.Coordinates.X + 100, Robots.MainRobot.Position.Coordinates.Y + 90).Rotation(new AngleDelta(Robots.MainRobot.Position.Angle), Robots.MainRobot.Position.Coordinates);
+        }
+
+        protected override RealPoint GetEntryBackPoint()
+        {
+            return new RealPoint(Robots.MainRobot.Position.Coordinates.X - 100, Robots.MainRobot.Position.Coordinates.Y + 90).Rotation(new AngleDelta(Robots.MainRobot.Position.Angle), Robots.MainRobot.Position.Coordinates);
+        }
     }
     class ElevatorLeft : Elevator
     {
@@ -36,10 +52,22 @@ namespace GoBot.Actionneurs
 
             _elevator = Config.CurrentConfig.MotorElevatorLeft;
         }
+
+        protected override RealPoint GetEntryFrontPoint()
+        {
+            return new RealPoint(Robots.MainRobot.Position.Coordinates.X + 100, Robots.MainRobot.Position.Coordinates.Y - 90).Rotation(new AngleDelta(Robots.MainRobot.Position.Angle), Robots.MainRobot.Position.Coordinates);
+        }
+
+        protected override RealPoint GetEntryBackPoint()
+        {
+            return new RealPoint(Robots.MainRobot.Position.Coordinates.X - 100, Robots.MainRobot.Position.Coordinates.Y - 90).Rotation(new AngleDelta(Robots.MainRobot.Position.Angle), Robots.MainRobot.Position.Coordinates);
+        }
     }
 
     abstract class Elevator
     {
+        protected bool _isInitialized;
+
         protected ServoPushArm _servoPush;
         protected ServoLocker _servoLocker;
         protected ServoGrabber _servoGraber;
@@ -50,10 +78,16 @@ namespace GoBot.Actionneurs
         protected int _buoysCountInside = 0;
         protected int _buoysCountOutside = 0;
 
+        public Elevator()
+        {
+            _isInitialized = false;
+        }
+
         public void DoGrabOpen()
         {
             _servoGraber.SendPosition(_servoGraber.PositionOpen);
         }
+
         public void DoGrabRelease()
         {
             _servoGraber.SendPosition(_servoGraber.PositionRelease);
@@ -109,6 +143,7 @@ namespace GoBot.Actionneurs
         public void DoElevatorInit()
         {
             _elevator.OriginInit();
+            _isInitialized = true;
         }
 
         public bool HasSomething()
@@ -123,21 +158,25 @@ namespace GoBot.Actionneurs
 
         public void DoElevatorFloor0()
         {
+            if (!_isInitialized) DoElevatorInit();
             _elevator.SendPosition(_elevator.PositionFloor0);
         }
 
         public void DoElevatorFloor1()
         {
+            if (!_isInitialized) DoElevatorInit();
             _elevator.SendPosition(_elevator.PositionFloor1);
         }
 
         public void DoElevatorFloor2()
         {
+            if (!_isInitialized) DoElevatorInit();
             _elevator.SendPosition(_elevator.PositionFloor2);
         }
 
         public void DoElevatorFloor3()
         {
+            if (!_isInitialized) DoElevatorInit();
             _elevator.SendPosition(_elevator.PositionFloor3);
         }
 
@@ -169,6 +208,10 @@ namespace GoBot.Actionneurs
             {
                 BuoyAdd();
                 DoStoreCurrent();
+            }
+            else
+            {
+                DoAirUnlock();
             }
         }
 
@@ -220,5 +263,78 @@ namespace GoBot.Actionneurs
 
             return HasSomething();
         }
+
+        public void DoSearchBuoy()
+        {
+            List<RealPoint> pts = ((Hokuyo)(AllDevices.LidarGround)).GetPoints();
+
+            List<List<RealPoint>> groups = pts.GroupByDistance(80, -1);
+            List<Circle> circles = new List<Circle>();
+            
+            //for (int i = 0; i < groups.Count; i++)
+            //{
+            //    Circle circle = groups[i].FitCircle();
+            //    if (circle.Radius < 100 && groups[i].Count > 4)
+            //    {
+            //        circles.Add(circle);
+            //    }
+            //}
+
+            for (int i = 0; i < groups.Count; i++)
+            {
+                if (groups[i].Count > 4)
+                {
+                    RealPoint center = groups[i].GetBarycenter();
+                    double var = groups[i].Average(p => p.Distance(center) * p.Distance(center));
+                    circles.Add(new Circle(center, var));
+                }
+            }
+
+            if (circles.Count > 0)
+            {
+                Circle nearest = circles.OrderBy(c => c.Distance(Robots.MainRobot.Position.Coordinates)).First();
+
+                Console.WriteLine(nearest.Center);
+
+                RealPoint entryFrontPoint = GetEntryFrontPoint();
+                RealPoint entryBackPoint = GetEntryBackPoint();
+
+                AngleDelta bestAngle = 0;
+                double bestError = int.MaxValue;
+
+                for (AngleDelta i = 0; i < 360; i++)
+                {
+                    Segment inter = new Segment(entryBackPoint.Rotation(i, Robots.MainRobot.Position.Coordinates), nearest.Center);
+                    double error = inter.Distance(entryFrontPoint.Rotation(i, Robots.MainRobot.Position.Coordinates));
+                    if (error < bestError)
+                    {
+                        bestError = error;
+                        bestAngle = i;
+                    }
+                }
+
+                bestAngle = -bestAngle.Modulo();
+
+                if (bestAngle < 0)
+                    Robots.MainRobot.PivotRight(-bestAngle);
+                else
+                    Robots.MainRobot.PivotLeft(bestAngle);
+
+                DoGrabOpen();
+
+                int dist = (int)GetEntryFrontPoint().Distance(nearest.Center) + 50;
+                Robots.MainRobot.Move(dist);
+
+                DoSequenceStore();
+
+                DoGrabClose();
+                Robots.MainRobot.Move(-dist);
+
+                //DoSearchBuoy();
+            }
+        }
+
+        protected abstract RealPoint GetEntryFrontPoint();
+        protected abstract RealPoint GetEntryBackPoint();
     }
 }

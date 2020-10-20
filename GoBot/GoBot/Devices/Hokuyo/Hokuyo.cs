@@ -135,19 +135,19 @@ namespace GoBot.Devices
 
         public List<RealPoint> GetPoints()
         {
-            return GetPoints(_position);
+            return GetPoints(true);
         }
 
         public List<RealPoint> GetRawPoints()
         {
-            return GetPoints(new Position());
+            return GetPoints(false);
         }
 
         #endregion
 
         #region Fonctionnement interne
 
-        private List<RealPoint> GetPoints(Position reference)
+        private List<RealPoint> GetPoints(bool useReference)
         {
             List<RealPoint> points = new List<RealPoint>();
 
@@ -160,7 +160,7 @@ namespace GoBot.Devices
                 if (reponse != "")
                 {
                     List<int> mesures = DecodeMessage(reponse);
-                    points = ValuesToPositions(mesures, false, _distanceMinLimit, _distanceMaxLimit, reference);
+                    points = ValuesToPositions(mesures, false, _distanceMinLimit, _distanceMaxLimit, (useReference ? _position : new Position())) ;
                 }
             }
             catch (Exception) { }
@@ -264,6 +264,7 @@ namespace GoBot.Devices
                     RealPoint pos = new RealPoint(refPosition.Coordinates.X - anglePoint.Sin * measures[i], refPosition.Coordinates.Y - anglePoint.Cos * measures[i]);
 
                     int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
+
                     if (!limitOnTable || (pos.X > -marge && pos.X < GameBoard.Width + marge && pos.Y > -marge && pos.Y < GameBoard.Height + marge))
                         positions.Add(pos);
                 }
