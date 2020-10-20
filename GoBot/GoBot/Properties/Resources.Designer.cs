@@ -593,9 +593,49 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Splash {
+        internal static System.Drawing.Bitmap Splash1 {
             get {
-                object obj = ResourceManager.GetObject("Splash", resourceCulture);
+                object obj = ResourceManager.GetObject("Splash1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Splash2 {
+            get {
+                object obj = ResourceManager.GetObject("Splash2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Splash3 {
+            get {
+                object obj = ResourceManager.GetObject("Splash3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Splash4 {
+            get {
+                object obj = ResourceManager.GetObject("Splash4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Splash5 {
+            get {
+                object obj = ResourceManager.GetObject("Splash5", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

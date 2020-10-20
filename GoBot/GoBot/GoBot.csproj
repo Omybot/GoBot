@@ -709,6 +709,11 @@
     <None Include="Images\Stay96.png" />
     <None Include="Images\Exit96.png" />
     <None Include="Images\BatteryUnknow96.png" />
+    <None Include="Images\Splash1.png" />
+    <None Include="Images\Splash2.png" />
+    <None Include="Images\Splash3.png" />
+    <None Include="Images\Splash4.png" />
+    <None Include="Images\Splash5.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

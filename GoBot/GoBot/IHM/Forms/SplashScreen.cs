@@ -42,8 +42,19 @@ namespace GoBot.IHM
         /// <param name="speed">L'image disparait par fondu en perdant une opacité équivalente au paramètre speed à chaque itération.</param>
         public static void CloseSplash(int speed = 10)
         {
-            _form.Speed = -speed;
-            _form.StartTimer();
+            if (speed == -1)
+                _form.InvokeAuto(() => _form.Close());
+            else
+            {
+                _form.Speed = -speed;
+                _form.StartTimer();
+            }
+        }
+
+        public static void SetImage(Image img)
+        {
+            _form.SetImage(img);
+            Thread.Sleep(500);
         }
 
         /// <summary>
@@ -69,8 +80,11 @@ namespace GoBot.IHM
             private int _speed;
             private int _oppacity;
 
-            private Bitmap _currentBitmap;
-            private Bitmap _originalBitmap;
+            private Image _currentBitmap;
+            private Image _originalBitmap;
+
+            private string _text;
+            private Color _textColor;
 
             private Rectangle _messageRect;
 
@@ -104,10 +118,13 @@ namespace GoBot.IHM
             {
                 InitializeComponent(img.Size);
 
-                img = WriteVersion(img);
+                //img = WriteVersion(img);
 
                 _oppacity = 0;
                 _originalBitmap = img;
+
+                _text = "";
+                _textColor = Color.Black;
 
                 _currentBitmap = new Bitmap(_originalBitmap);
 
@@ -118,22 +135,33 @@ namespace GoBot.IHM
                 this.StartTimer();
             }
 
-            public void SetText(String text, Color color)
+            public void SetImage(Image img)
             {
-                Bitmap newBitmap = new Bitmap(_originalBitmap);
-                Graphics g = Graphics.FromImage(newBitmap);
-                StringFormat fmt = new StringFormat();
-                fmt.LineAlignment = StringAlignment.Center;
+                _originalBitmap = new Bitmap(img);
 
-                g.DrawString(text, new Font("Jokerman", 16, FontStyle.Bold), new SolidBrush(color), _messageRect, fmt);
-                g.Dispose();
+                Image lastImage;
 
-                Bitmap lastImage;
-
-                lock (_originalBitmap)
+                lock (_form)
                 {
                     _currentBitmap.Dispose();
-                    _currentBitmap = newBitmap;
+                    _currentBitmap = GenerateImage();
+                    lastImage = _currentBitmap;
+                }
+
+                this.ShowBitmap(lastImage, (byte)_oppacity);
+            }
+
+            public void SetText(String text, Color color)
+            {
+                _text = text;
+                _textColor = color;
+
+                Image lastImage;
+
+                lock (_form)
+                {
+                    _currentBitmap.Dispose();
+                    _currentBitmap = GenerateImage();
                     lastImage = _currentBitmap;
                 }
 
@@ -143,6 +171,20 @@ namespace GoBot.IHM
             public void StartTimer()
             {
                 _timerOpacity.Start();
+            }
+
+            private Image GenerateImage()
+            {
+                Bitmap newBitmap = new Bitmap(_originalBitmap);
+                Graphics g = Graphics.FromImage(newBitmap);
+                StringFormat fmt = new StringFormat();
+                fmt.LineAlignment = StringAlignment.Center;
+                fmt.Alignment = StringAlignment.Center;
+
+                g.DrawString(_text, new Font("Ink free", 22, FontStyle.Bold), new SolidBrush(_textColor), _messageRect, fmt);
+                g.Dispose();
+
+                return newBitmap;
             }
 
             private void InitializeComponent(Size sz)
@@ -158,7 +200,7 @@ namespace GoBot.IHM
 
             private void _timerOpacity_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
-                Bitmap lastImg;
+                Image lastImg;
 
                 _oppacity += _speed;
 
@@ -173,14 +215,14 @@ namespace GoBot.IHM
                     _timerOpacity.Stop();
                     _oppacity = 255;
 
-                    lock (_originalBitmap)
+                    lock (_form)
                         lastImg = _currentBitmap;
 
                     this.ShowBitmap(lastImg, (byte)(_oppacity));
                 }
                 else
                 {
-                    lock (_originalBitmap)
+                    lock (_form)
                         lastImg = _currentBitmap;
 
                     this.ShowBitmap(lastImg, (byte)(_oppacity));
@@ -195,7 +237,7 @@ namespace GoBot.IHM
                 return img;
             }
 
-            private void ShowBitmap(Bitmap bitmap, byte opacity)
+            private void ShowBitmap(Image bitmap, byte opacity)
             {
                 Bitmap copyBmp;
 
@@ -207,7 +249,7 @@ namespace GoBot.IHM
                 try
                 {
 
-                    lock (_originalBitmap)
+                    lock (_form)
                     {
                         // On copie l'image parce qu'avec l'invocation on sait pas trop quand ça va être executé et l'image aura peut être été détruite.
                         copyBmp = new Bitmap(bitmap);

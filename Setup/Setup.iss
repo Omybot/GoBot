@@ -41,7 +41,7 @@ Source: "..\GoBot\GoBot\bin\Release\Composants.dll"; DestDir: "{app}"; Flags: ig
 Source: "..\GoBot\GoBot\bin\Release\Geometry.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeTlog.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeElog.ico"; DestDir: "{app}"; Flags: ignoreversion    
-Source: "./Jokerman.TTF"; DestDir: "{fonts}"; FontInstall: "Jokerman"; Flags: onlyifdoesntexist uninsneveruninstall  
+Source: "./Inkfree.TTF"; DestDir: "{fonts}"; FontInstall: "Ink Free"; Flags: onlyifdoesntexist uninsneveruninstall  
 Source: "C:\Users\Kryss\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion  
         
 [Registry]  
@@ -59,7 +59,7 @@ Root: HKCU; Subkey: "Software\GoBot"; ValueType: string; ValueName: "Path"; Valu
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+;Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall

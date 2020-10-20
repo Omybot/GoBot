@@ -116,8 +116,7 @@ namespace GoBot
 
             Connections.StartConnections();
 
-            SplashScreen.SetMessage("Youhou !", Color.Green);
-            SplashScreen.CloseSplash();
+            SplashScreen.CloseSplash(-1);
 
             pnlPower.StartGraph();
 

@@ -30,37 +30,42 @@ namespace GoBot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            SplashScreen.ShowSplash(Properties.Resources.Splash, new Rectangle(230, 30, 255, 75));
+            SplashScreen.ShowSplash(Properties.Resources.Splash1, new Rectangle(495, 115, 275, 80));
             
             CheckAlreadyLaunched();
             DebugChecks();
             Update();
             CheckIP();
 
-            SplashScreen.SetMessage("Initialisation :\nConnexions...", Color.Black);
+            SplashScreen.SetMessage("Initialisation\nConnexions...", Color.Black);
+            SplashScreen.SetImage(Properties.Resources.Splash1);
             ThreadManager.Init();
             Connections.Init();
 
-            SplashScreen.SetMessage("Initialisation :\nConfig...", Color.Black);
+            SplashScreen.SetMessage("Initialisation\nConfig...", Color.Black);
+            SplashScreen.SetImage(Properties.Resources.Splash2);
             Config.Load();
 
-            SplashScreen.SetMessage("Initialisation :\nDevices...", Color.Black);
+            SplashScreen.SetMessage("Initialisation\nDevices...", Color.Black);
+            SplashScreen.SetImage(Properties.Resources.Splash3);
             AllDevices.Init();
             Actionneur.Init();
             SuiviBalise.Init();
 
-            SplashScreen.SetMessage("Initialisation :\nRobot...", Color.Black);
+            SplashScreen.SetMessage("Initialisation\nRobot...", Color.Black);
             Robots.Init();
             Recalibration.Init();
 
-            SplashScreen.SetMessage("Initialisation :\nPlateau...", Color.Black);
+            SplashScreen.SetMessage("Initialisation\nPlateau...", Color.Black);
             Dessinateur.Init();
             GameBoard.Init();
 
-            SplashScreen.SetMessage("Initialisation :\nLogs...", Color.Black);
+            SplashScreen.SetMessage("Initialisation\nLogs...", Color.Black);
+            SplashScreen.SetImage(Properties.Resources.Splash4);
             Logs.Logs.Init();
 
-            SplashScreen.SetMessage("Initialisation :\nInterface...", Color.Black);
+            SplashScreen.SetMessage("Initialisation\nInterface...", Color.Black);
+            SplashScreen.SetImage(Properties.Resources.Splash5);
 
             Application.Run(new FenGoBot(args));
         }
