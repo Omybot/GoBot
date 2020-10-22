@@ -45,6 +45,40 @@ namespace GoBot
         {
             switch (servo)
             {
+                case ServomoteurID.Clamp1:
+                    return "crochet gauche";
+                case ServomoteurID.Clamp2:
+                    return "crochet milieu gauche";
+                case ServomoteurID.Clamp3:
+                    return "crochet milieu";
+                case ServomoteurID.Clamp4:
+                    return "crochet milieu droite";
+                case ServomoteurID.Clamp5:
+                    return "crochet droite";
+                case ServomoteurID.FingerLeft:
+                    return "doigt gauche";
+                case ServomoteurID.FingerRight:
+                    return "doigt droite";
+                case ServomoteurID.FlagLeft:
+                    return "drapeau gauche";
+                case ServomoteurID.FlagRight:
+                    return "drapeau droite";
+                case ServomoteurID.GrabberLeft:
+                    return "rabatteur gauche";
+                case ServomoteurID.GrabberRight:
+                    return "rabatteur droite";
+                case ServomoteurID.Lifter:
+                    return "monteur crochets";
+                case ServomoteurID.LockerLeft:
+                    return "verrouilleur gauche";
+                case ServomoteurID.LockerRight:
+                    return "verrouilleur droite";
+                case ServomoteurID.PushArmLeft:
+                    return "bras sortie gauche";
+                case ServomoteurID.PushArmRight:
+                    return "bras sortie droite";
+                case ServomoteurID.Tilter:
+                    return "rotationneur crochets";
                 default:
                         return servo.ToString();
             }
@@ -169,6 +203,18 @@ namespace GoBot
         {
             switch (motor)
             {
+                case MotorID.ElevatorLeft:
+                    return "ascenseur gauche";
+                case MotorID.ElevatorRight:
+                    return "ascenseur droite";
+                case MotorID.AvailableOnRecIO2:
+                    return "RecIO 2";
+                case MotorID.AvailableOnRecIO3:
+                    return "RecIO 3";
+                case MotorID.AvailableOnRecMove11:
+                    return "RecMove 1";
+                case MotorID.AvailableOnRecMove12:
+                    return "RecMove 2";
                 default:
                     return motor.ToString();
             }
@@ -183,10 +229,10 @@ namespace GoBot
         {
             switch (actuator)
             {
-                case ActuatorOnOffID.PowerSensorColorBuoyLeft:
-                    return "alimentation capteur couleur bouée gauche";
                 case ActuatorOnOffID.PowerSensorColorBuoyRight:
                     return "alimentation capteur couleur bouée droite";
+                case ActuatorOnOffID.PowerSensorColorBuoyLeft:
+                    return "alimentation capteur couleur bouée gauche";
                 case ActuatorOnOffID.MakeVacuumLeftBack:
                     return "aspiration arrière gauche";
                 case ActuatorOnOffID.MakeVacuumRightBack:
@@ -217,10 +263,10 @@ namespace GoBot
         {
             switch (sensor)
             {
-                case SensorColorID.BuoyLeft:
-                    return "bouée gauche";
                 case SensorColorID.BuoyRight:
                     return "bouée droite";
+                case SensorColorID.BuoyLeft:
+                    return "bouée gauche";
                 default:
                     return sensor.ToString();
             }
@@ -253,6 +299,8 @@ namespace GoBot
             {
                 case LidarID.Ground:
                     return "scan sol";
+                case LidarID.Avoid:
+                    return "évitement";
                 default:
                     return lidar.ToString();
             }
