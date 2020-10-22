@@ -253,6 +253,16 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Down64 {
+            get {
+                object obj = ResourceManager.GetObject("Down64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DownGreen16 {
             get {
                 object obj = ResourceManager.GetObject("DownGreen16", resourceCulture);
@@ -786,6 +796,16 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap Up124 {
             get {
                 object obj = ResourceManager.GetObject("Up124", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Up64 {
+            get {
+                object obj = ResourceManager.GetObject("Up64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -85,11 +85,8 @@ namespace GoBot.IHM.Pages
             if (!Execution.DesignMode)
             {
                 btnTrap.Focus();
-
-                cboLidar.Items.Add("Ground");
-                cboLidar.Items.Add("Avoid");
-
-                cboLidar.SelectedIndex = 1;
+                _running = false;
+                _selectedLidar = null;
             }
         }
 
@@ -221,12 +218,22 @@ namespace GoBot.IHM.Pages
                         //points = points.Where(o => GameBoard.IsInside(o)).ToList();
                         List<List<RealPoint>> groups = pointsObjects.GroupByDistance(80, -1);
 
+                        //for (int i = 0; i < groups.Count; i++)
+                        //{
+                        //    Circle circle = groups[i].FitCircle();
+                        //    if (circle.Radius < 100 && groups[i].Count > 4)
+                        //    {
+                        //        circle.Paint(g, Color.White, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                        //    }
+                        //}
+
                         for (int i = 0; i < groups.Count; i++)
                         {
-                            Circle circle = groups[i].FitCircle();
-                            if (circle.Radius < 100 && groups[i].Count > 4)
+                            if (groups[i].Count > 4)
                             {
-                                circle.Paint(g, Color.White, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                                RealPoint center = groups[i].GetBarycenter();
+                                double var = Math.Sqrt(groups[i].Average(p => p.Distance(center) * p.Distance(center))) * 2;
+                                new Circle(center, var).Paint(g, var > 35 ? Color.Lime : Color.Red, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                             }
                         }
 
@@ -250,13 +257,6 @@ namespace GoBot.IHM.Pages
 
             if (lidarEnable && !_running)
             {
-                if ((String)cboLidar.Text == "Ground")
-                    _selectedLidar = AllDevices.LidarGround;
-                else if ((String)cboLidar.Text == "Avoid")
-                    _selectedLidar = AllDevices.LidarAvoid;
-                else
-                    _selectedLidar = null;
-
                 if (_selectedLidar != null)
                 {
                     _selectedLidar.NewMeasure += lidar_NewMeasure;
@@ -300,25 +300,29 @@ namespace GoBot.IHM.Pages
             btnTrap.Focus();
         }
 
-        private void cboLidar_SelectedIndexChanged(object sender, EventArgs e)
+        private void SetLidar(Lidar lidar)
         {
-            if (_selectedLidar != null)
+            if (_selectedLidar != lidar)
             {
-                _selectedLidar.NewMeasure -= lidar_NewMeasure;
-                _selectedLidar.StopLoopMeasure();
-            }
+                if (_selectedLidar != null)
+                {
+                    _selectedLidar.NewMeasure -= lidar_NewMeasure;
+                    if (_selectedLidar == AllDevices.LidarGround)
+                        _selectedLidar.StopLoopMeasure();
+                }
 
-            if ((String)cboLidar.Text == "Ground")
-                _selectedLidar = AllDevices.LidarGround;
-            else if ((String)cboLidar.Text == "Avoid")
-                _selectedLidar = AllDevices.LidarAvoid;
-            else
-                _selectedLidar = null;
+                _selectedLidar = lidar;
 
-            if (_selectedLidar != null)
-            {
-                _selectedLidar.NewMeasure += lidar_NewMeasure;
-                _selectedLidar.StartLoopMeasure();
+                if (_selectedLidar != null)
+                {
+                    _selectedLidar.NewMeasure += lidar_NewMeasure;
+                    if (_selectedLidar == AllDevices.LidarGround)
+                        _selectedLidar.StartLoopMeasure();
+                }
+
+                _measureObjects = null;
+                _measureBoard = null;
+                picWorld.Invalidate();
             }
         }
 
@@ -327,7 +331,17 @@ namespace GoBot.IHM.Pages
             _enableGroup = !_enableGroup;
             btnGroup.Image = _enableGroup ? Properties.Resources.LidarGroup : Properties.Resources.LidarGroupDisable;
         }
-        
+
+        private void btnLidarAvoid_Click(object sender, EventArgs e)
+        {
+            SetLidar(AllDevices.LidarAvoid);
+        }
+
+        private void btnLidarGround_Click(object sender, EventArgs e)
+        {
+            SetLidar(AllDevices.LidarGround);
+        }
+
         private void btnEnableBoard_Click(object sender, EventArgs e)
         {
             _enableBoard = !_enableBoard;

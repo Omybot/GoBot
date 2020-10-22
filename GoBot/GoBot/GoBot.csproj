@@ -714,6 +714,8 @@
     <None Include="Images\Splash3.png" />
     <None Include="Images\Splash4.png" />
     <None Include="Images\Splash5.png" />
+    <None Include="Images\Up64.png" />
+    <None Include="Images\Down64.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>
