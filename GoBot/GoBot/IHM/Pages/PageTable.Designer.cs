@@ -33,13 +33,24 @@
             this.lblScore = new System.Windows.Forms.Label();
             this.btnGo = new System.Windows.Forms.Button();
             this.lblSecondes = new System.Windows.Forms.Label();
-            this.lblMilli = new System.Windows.Forms.Label();
             this.btnAleatoire = new System.Windows.Forms.Button();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
             this.groupBox = new System.Windows.Forms.GroupBox();
+            this.lblScoreTxt = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnStratTest = new System.Windows.Forms.Button();
             this.btnStratNul = new System.Windows.Forms.Button();
             this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
+            this.lblPosTheta = new System.Windows.Forms.Label();
+            this.lblPosY = new System.Windows.Forms.Label();
+            this.lblPosX = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnTestAsser = new System.Windows.Forms.Button();
+            this.lblPositionTxt = new Composants.LabelPlus();
+            this.labelPlus3 = new Composants.LabelPlus();
+            this.labelPlus2 = new Composants.LabelPlus();
             this.numNbPoints = new System.Windows.Forms.NumericUpDown();
             this.btnTrajLancer = new System.Windows.Forms.Button();
             this.labelPlus1 = new Composants.LabelPlus();
@@ -50,7 +61,6 @@
             this.btnTeleportRPCentre = new System.Windows.Forms.Button();
             this.btnTeleportRPFace = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnTestAsser = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAffichage = new System.Windows.Forms.Button();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
@@ -59,23 +69,12 @@
             this.btnColorRight = new System.Windows.Forms.Button();
             this.btnColorLeft = new System.Windows.Forms.Button();
             this.grpPrepare = new System.Windows.Forms.GroupBox();
-            this.picColor = new System.Windows.Forms.PictureBox();
             this.btnCalib = new System.Windows.Forms.Button();
+            this.picColor = new System.Windows.Forms.PictureBox();
             this.lblX = new System.Windows.Forms.Label();
             this.lblY = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.grpDisplay = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblScoreTxt = new System.Windows.Forms.Label();
-            this.labelPlus2 = new Composants.LabelPlus();
-            this.labelPlus3 = new Composants.LabelPlus();
-            this.lblPositionTxt = new Composants.LabelPlus();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblPosX = new System.Windows.Forms.Label();
-            this.lblPosY = new System.Windows.Forms.Label();
-            this.lblPosTheta = new System.Windows.Forms.Label();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
@@ -98,7 +97,7 @@
             // lblScore
             // 
             this.lblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScore.Location = new System.Drawing.Point(86, 123);
+            this.lblScore.Location = new System.Drawing.Point(92, 123);
             this.lblScore.Name = "lblScore";
             this.lblScore.Size = new System.Drawing.Size(88, 38);
             this.lblScore.TabIndex = 13;
@@ -118,23 +117,13 @@
             // lblSecondes
             // 
             this.lblSecondes.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F);
-            this.lblSecondes.Location = new System.Drawing.Point(86, 84);
+            this.lblSecondes.Location = new System.Drawing.Point(92, 84);
             this.lblSecondes.Margin = new System.Windows.Forms.Padding(0);
             this.lblSecondes.Name = "lblSecondes";
             this.lblSecondes.Size = new System.Drawing.Size(88, 38);
             this.lblSecondes.TabIndex = 34;
             this.lblSecondes.Text = "90";
             this.lblSecondes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblMilli
-            // 
-            this.lblMilli.AutoSize = true;
-            this.lblMilli.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.lblMilli.Location = new System.Drawing.Point(164, 102);
-            this.lblMilli.Name = "lblMilli";
-            this.lblMilli.Size = new System.Drawing.Size(32, 17);
-            this.lblMilli.TabIndex = 35;
-            this.lblMilli.Text = "000";
             // 
             // btnAleatoire
             // 
@@ -168,7 +157,6 @@
             // 
             // groupBox
             // 
-            this.groupBox.Controls.Add(this.lblMilli);
             this.groupBox.Controls.Add(this.lblScoreTxt);
             this.groupBox.Controls.Add(this.label1);
             this.groupBox.Controls.Add(this.btnStratTest);
@@ -183,6 +171,26 @@
             this.groupBox.TabIndex = 66;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Match";
+            // 
+            // lblScoreTxt
+            // 
+            this.lblScoreTxt.AutoSize = true;
+            this.lblScoreTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.lblScoreTxt.Location = new System.Drawing.Point(6, 129);
+            this.lblScoreTxt.Name = "lblScoreTxt";
+            this.lblScoreTxt.Size = new System.Drawing.Size(100, 31);
+            this.lblScoreTxt.TabIndex = 52;
+            this.lblScoreTxt.Text = "Score :";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.label1.Location = new System.Drawing.Point(6, 90);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(98, 31);
+            this.label1.TabIndex = 51;
+            this.label1.Text = "Timer :";
             // 
             // btnStratTest
             // 
@@ -231,6 +239,97 @@
             this.groupBoxDeplacements.TabIndex = 67;
             this.groupBoxDeplacements.TabStop = false;
             this.groupBoxDeplacements.Text = "Déplacements";
+            // 
+            // lblPosTheta
+            // 
+            this.lblPosTheta.Location = new System.Drawing.Point(108, 53);
+            this.lblPosTheta.Name = "lblPosTheta";
+            this.lblPosTheta.Size = new System.Drawing.Size(54, 13);
+            this.lblPosTheta.TabIndex = 84;
+            this.lblPosTheta.Text = "90.00°";
+            this.lblPosTheta.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblPosY
+            // 
+            this.lblPosY.Location = new System.Drawing.Point(104, 40);
+            this.lblPosY.Name = "lblPosY";
+            this.lblPosY.Size = new System.Drawing.Size(54, 13);
+            this.lblPosY.TabIndex = 83;
+            this.lblPosY.Text = "1000.00";
+            this.lblPosY.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblPosX
+            // 
+            this.lblPosX.Location = new System.Drawing.Point(104, 27);
+            this.lblPosX.Name = "lblPosX";
+            this.lblPosX.Size = new System.Drawing.Size(54, 13);
+            this.lblPosX.TabIndex = 82;
+            this.lblPosX.Text = "1000.00";
+            this.lblPosX.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(91, 53);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(13, 13);
+            this.label4.TabIndex = 81;
+            this.label4.Text = "θ";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(90, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(14, 13);
+            this.label3.TabIndex = 80;
+            this.label3.Text = "Y";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(90, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(14, 13);
+            this.label2.TabIndex = 79;
+            this.label2.Text = "X";
+            // 
+            // btnTestAsser
+            // 
+            this.btnTestAsser.Location = new System.Drawing.Point(50, 228);
+            this.btnTestAsser.Name = "btnTestAsser";
+            this.btnTestAsser.Size = new System.Drawing.Size(98, 25);
+            this.btnTestAsser.TabIndex = 70;
+            this.btnTestAsser.Text = "Test asser";
+            this.btnTestAsser.UseVisualStyleBackColor = true;
+            this.btnTestAsser.Click += new System.EventHandler(this.btnTestAsser_Click);
+            // 
+            // lblPositionTxt
+            // 
+            this.lblPositionTxt.AutoSize = true;
+            this.lblPositionTxt.Location = new System.Drawing.Point(9, 27);
+            this.lblPositionTxt.Name = "lblPositionTxt";
+            this.lblPositionTxt.Size = new System.Drawing.Size(44, 13);
+            this.lblPositionTxt.TabIndex = 78;
+            this.lblPositionTxt.Text = "Position";
+            // 
+            // labelPlus3
+            // 
+            this.labelPlus3.AutoSize = true;
+            this.labelPlus3.Location = new System.Drawing.Point(150, 144);
+            this.labelPlus3.Name = "labelPlus3";
+            this.labelPlus3.Size = new System.Drawing.Size(35, 13);
+            this.labelPlus3.TabIndex = 77;
+            this.labelPlus3.Text = "points";
+            // 
+            // labelPlus2
+            // 
+            this.labelPlus2.AutoSize = true;
+            this.labelPlus2.Location = new System.Drawing.Point(9, 113);
+            this.labelPlus2.Name = "labelPlus2";
+            this.labelPlus2.Size = new System.Drawing.Size(69, 13);
+            this.labelPlus2.TabIndex = 76;
+            this.labelPlus2.Text = "Téléportation";
             // 
             // numNbPoints
             // 
@@ -327,16 +426,6 @@
             this.btnTeleportRPFace.UseVisualStyleBackColor = true;
             this.btnTeleportRPFace.Click += new System.EventHandler(this.btnTeleportRPFace_Click);
             // 
-            // btnTestAsser
-            // 
-            this.btnTestAsser.Location = new System.Drawing.Point(50, 228);
-            this.btnTestAsser.Name = "btnTestAsser";
-            this.btnTestAsser.Size = new System.Drawing.Size(98, 25);
-            this.btnTestAsser.TabIndex = 70;
-            this.btnTestAsser.Text = "Test asser";
-            this.btnTestAsser.UseVisualStyleBackColor = true;
-            this.btnTestAsser.Click += new System.EventHandler(this.btnTestAsser_Click);
-            // 
             // btnReset
             // 
             this.btnReset.Image = global::GoBot.Properties.Resources.Refresh16;
@@ -432,15 +521,6 @@
             this.grpPrepare.TabStop = false;
             this.grpPrepare.Text = "Préparation";
             // 
-            // picColor
-            // 
-            this.picColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picColor.Location = new System.Drawing.Point(52, 23);
-            this.picColor.Name = "picColor";
-            this.picColor.Size = new System.Drawing.Size(96, 36);
-            this.picColor.TabIndex = 79;
-            this.picColor.TabStop = false;
-            // 
             // btnCalib
             // 
             this.btnCalib.Location = new System.Drawing.Point(52, 65);
@@ -450,6 +530,15 @@
             this.btnCalib.Text = "Recalage";
             this.btnCalib.UseVisualStyleBackColor = true;
             this.btnCalib.Click += new System.EventHandler(this.btnCalib_Click);
+            // 
+            // picColor
+            // 
+            this.picColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picColor.Location = new System.Drawing.Point(52, 23);
+            this.picColor.Name = "picColor";
+            this.picColor.Size = new System.Drawing.Size(96, 36);
+            this.picColor.TabIndex = 79;
+            this.picColor.TabStop = false;
             // 
             // lblX
             // 
@@ -491,107 +580,6 @@
             this.grpDisplay.TabIndex = 83;
             this.grpDisplay.TabStop = false;
             this.grpDisplay.Text = "Affichage";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.label1.Location = new System.Drawing.Point(6, 90);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 31);
-            this.label1.TabIndex = 51;
-            this.label1.Text = "Timer :";
-            // 
-            // lblScoreTxt
-            // 
-            this.lblScoreTxt.AutoSize = true;
-            this.lblScoreTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.lblScoreTxt.Location = new System.Drawing.Point(6, 129);
-            this.lblScoreTxt.Name = "lblScoreTxt";
-            this.lblScoreTxt.Size = new System.Drawing.Size(100, 31);
-            this.lblScoreTxt.TabIndex = 52;
-            this.lblScoreTxt.Text = "Score :";
-            // 
-            // labelPlus2
-            // 
-            this.labelPlus2.AutoSize = true;
-            this.labelPlus2.Location = new System.Drawing.Point(9, 113);
-            this.labelPlus2.Name = "labelPlus2";
-            this.labelPlus2.Size = new System.Drawing.Size(69, 13);
-            this.labelPlus2.TabIndex = 76;
-            this.labelPlus2.Text = "Téléportation";
-            // 
-            // labelPlus3
-            // 
-            this.labelPlus3.AutoSize = true;
-            this.labelPlus3.Location = new System.Drawing.Point(150, 144);
-            this.labelPlus3.Name = "labelPlus3";
-            this.labelPlus3.Size = new System.Drawing.Size(35, 13);
-            this.labelPlus3.TabIndex = 77;
-            this.labelPlus3.Text = "points";
-            // 
-            // lblPositionTxt
-            // 
-            this.lblPositionTxt.AutoSize = true;
-            this.lblPositionTxt.Location = new System.Drawing.Point(9, 27);
-            this.lblPositionTxt.Name = "lblPositionTxt";
-            this.lblPositionTxt.Size = new System.Drawing.Size(44, 13);
-            this.lblPositionTxt.TabIndex = 78;
-            this.lblPositionTxt.Text = "Position";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(90, 27);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(14, 13);
-            this.label2.TabIndex = 79;
-            this.label2.Text = "X";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(90, 40);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(14, 13);
-            this.label3.TabIndex = 80;
-            this.label3.Text = "Y";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(91, 53);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(13, 13);
-            this.label4.TabIndex = 81;
-            this.label4.Text = "θ";
-            // 
-            // lblPosX
-            // 
-            this.lblPosX.Location = new System.Drawing.Point(104, 27);
-            this.lblPosX.Name = "lblPosX";
-            this.lblPosX.Size = new System.Drawing.Size(54, 13);
-            this.lblPosX.TabIndex = 82;
-            this.lblPosX.Text = "1000.00";
-            this.lblPosX.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // lblPosY
-            // 
-            this.lblPosY.Location = new System.Drawing.Point(104, 40);
-            this.lblPosY.Name = "lblPosY";
-            this.lblPosY.Size = new System.Drawing.Size(54, 13);
-            this.lblPosY.TabIndex = 83;
-            this.lblPosY.Text = "1000.00";
-            this.lblPosY.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // lblPosTheta
-            // 
-            this.lblPosTheta.Location = new System.Drawing.Point(108, 53);
-            this.lblPosTheta.Name = "lblPosTheta";
-            this.lblPosTheta.Size = new System.Drawing.Size(54, 13);
-            this.lblPosTheta.TabIndex = 84;
-            this.lblPosTheta.Text = "90.00°";
-            this.lblPosTheta.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // PageTable
             // 
@@ -635,7 +623,6 @@
         private System.Windows.Forms.Label lblScore;
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.Label lblSecondes;
-        private System.Windows.Forms.Label lblMilli;
         private System.Windows.Forms.Button btnAleatoire;
         private System.Windows.Forms.Button btnPathRPCentre;
         private System.Windows.Forms.Button btnPathRPFace;

@@ -141,6 +141,7 @@ namespace GoBot.Actionneurs
         {
             DoAirUnlock();
             DoPositionHide();
+            _load = Color.Transparent;
         }
 
         public void DoAirLock()

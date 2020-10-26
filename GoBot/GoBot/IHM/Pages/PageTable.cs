@@ -81,10 +81,7 @@ namespace GoBot.IHM.Pages
                 this.InvokeAuto(() =>
                 {
                     lblSecondes.Text = tempsRestant.TotalSeconds.ToString("0");
-                    lblMilli.Text = tempsRestant.Milliseconds.ToString("000");
-
                     lblSecondes.ForeColor = couleur;
-                    lblMilli.ForeColor = couleur;
                 });
             }
         }

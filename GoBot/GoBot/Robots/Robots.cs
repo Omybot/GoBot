@@ -38,14 +38,14 @@ namespace GoBot
             else
                 MainRobot = new RobotSimu(IDRobot.GrosRobot);
 
-            if (!Config.CurrentConfig.IsMiniRobot)
+            if (Config.CurrentConfig.IsMiniRobot)
             {
-                // Position LIDAR : 18.27cm à gauche du centre
-                MainRobot.SetDimensions(335, 271, 295, 390);
+                MainRobot.SetDimensions(220, 320, 143.8, 346);
             }
             else
             {
-                MainRobot.SetDimensions(220, 320, 143.8, 346);
+                // Position LIDAR : 18.27cm à gauche du centre
+                MainRobot.SetDimensions(335, 271, 295, 390);
             }
 
             MainRobot.PositionChanged += MainRobot_PositionChanged;

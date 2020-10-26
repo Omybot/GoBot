@@ -550,6 +550,8 @@ namespace GoBot
 
         #region Shape
 
+        // Avant : 135, arrière 130.5, coté : 157.44
+
         public double Lenght { get; private set; }
         public double Width { get; private set; }
         public double Radius { get { return Maths.Hypothenuse(Lenght, Width) / 2; } }
