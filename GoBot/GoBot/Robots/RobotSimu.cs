@@ -388,7 +388,7 @@ namespace GoBot
             OnPositionChanged(Position);
         }
 
-        public override void Recalibration(SensAR sens, bool wait = true)
+        public override void Recalibration(SensAR sens, bool wait = true, bool sendOffset = false)
         {
             _inRecalibration = true;
 
@@ -398,6 +398,8 @@ namespace GoBot
                 RecalProcedure(sens);
             else
                 ThreadManager.CreateThread(link => RecalProcedure(sens)).StartThread();
+
+            base.Recalibration(sens, wait, sendOffset);
         }
 
         private void RecalProcedure(SensAR sens)
@@ -413,8 +415,8 @@ namespace GoBot
             while (Position.Coordinates.X - Lenght / 2 > 0 &&
                 Position.Coordinates.X + Lenght / 2 < GameBoard.Width &&
                 Position.Coordinates.Y - Lenght / 2 > 0 &&
-                Position.Coordinates.Y + Lenght / 2 < GameBoard.Height &&
-                !GameBoard.ObstaclesAll.ToList().Exists(o => o.Cross(contact)))
+                Position.Coordinates.Y + Lenght / 2 < GameBoard.Height)// &&
+                //!GameBoard.ObstaclesAll.ToList().Exists(o => o.Cross(contact))) // TODO ça marche pas on dirait le test de recallage sur les obstacles
             {
                 if (sens == SensAR.Arriere)
                     MoveBackward(1);

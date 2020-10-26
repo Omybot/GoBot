@@ -212,7 +212,7 @@ namespace GoBot.IHM.Pages
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            if(Config.CurrentConfig.IsMiniRobot)
+            if (Config.CurrentConfig.IsMiniRobot)
                 GameBoard.Strategy = new StrategyMini();
             else
                 GameBoard.Strategy = new StrategyMatch();
@@ -501,8 +501,7 @@ namespace GoBot.IHM.Pages
             ThreadManager.CreateThread(link =>
             {
                 link.Name = "GoToCalibration";
-                Recalibration.GoToCalibration();
-                Recalibration.Calibration();
+                if (Recalibration.GoToCalibration()) Recalibration.Calibration();
             }).StartThread();
         }
 

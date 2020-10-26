@@ -6,6 +6,8 @@ using GoBot.Movements;
 using GoBot.BoardContext;
 using Geometry;
 using Geometry.Shapes;
+using GoBot.Actionneurs;
+using GoBot.GameElements;
 
 namespace GoBot.Strategies
 {
@@ -19,16 +21,39 @@ namespace GoBot.Strategies
         {
             // TODOEACHYEAR Actions fixes au lancement du match
 
+            Robot robot = Robots.MainRobot;
+
             fixedMovements = new List<Movement>();
 
             // Ajouter les points fixes au score (non forfait, elements posés etc)
-            GameBoard.Score = 42;
+            int initScore = 0;
+            initScore += 7; // Non forfait + phare posé
+            initScore += 15; // 2 manches à air
+            initScore += (3 + 10); // Phare appuyé + déployé
+            GameBoard.Score = initScore;
 
             // Sortir ICI de la zonde de départ
-            Robots.MainRobot.UpdateGraph(GameBoard.ObstaclesAll);
-            Robots.MainRobot.MoveForward(500);
-            Robots.MainRobot.GoToPosition(new Position(50, new RealPoint(1800, 1800)));
-            
+            robot.UpdateGraph(GameBoard.ObstaclesAll);
+            robot.MoveForward((int)(850 - 120 - 130.5));
+
+            robot.GoToAngle(-90);
+            robot.SetSpeedSlow();
+            Actionneur.ElevatorLeft.DoGrabOpen();
+            Actionneur.ElevatorRight.DoGrabOpen();
+            robot.MoveForward(500);
+
+            Threading.ThreadManager.CreateThread(link => { Actionneur.ElevatorLeft.DoSequencePickupColor(Buoy.Red); }).StartThread();
+            Threading.ThreadManager.CreateThread(link => { Actionneur.ElevatorRight.DoSequencePickupColor(Buoy.Green); }).StartThread();
+
+            List<Buoy> taken = GameBoard.Elements.Buoys.Where(b => b.Position.X < robot.Position.Coordinates.X + 200 && b.Position.X > robot.Position.Coordinates.X - 200 && b.Position.Y < 1000 && b.Position.Y > 0).ToList();
+            taken.ForEach(b => b.IsAvailable = false);
+
+            Thread.Sleep(500);
+
+            robot.MoveBackward(35);
+            robot.SetSpeedFast();
+            robot.Pivot(180);
+
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
             if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
@@ -42,7 +67,7 @@ namespace GoBot.Strategies
                 //*fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
             }
         }
-        
+
         protected override void SequenceCore()
         {
             Movement bestMovement;
@@ -64,7 +89,11 @@ namespace GoBot.Strategies
 
                     if (bestMovement.GlobalCost != double.MaxValue && bestMovement.Value != 0)
                     {
-                        if (!bestMovement.Execute())
+                        int score = bestMovement.Score;
+
+                        if (bestMovement.Execute())
+                            GameBoard.Score += score;
+                        else
                             bestMovement.Deactivate(new TimeSpan(0, 0, 1));
                     }
                     else

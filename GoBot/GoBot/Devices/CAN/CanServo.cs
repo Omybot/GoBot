@@ -266,6 +266,7 @@ namespace GoBot.Devices.CAN
                         break;
                     case CanFrameFunction.TorqueAlert:
                         //AllDevices.RecGoBot.Buzz(".-.");
+                        AllDevices.Buzzer.Buzz(2000, 250);
                         if (_enableAutoCut)
                             _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_id));
                         TorqueAlert?.Invoke();

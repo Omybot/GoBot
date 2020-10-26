@@ -33,8 +33,8 @@
 
         Clamp1 = 8,
         Clamp2 = 9,
-        Lifter = 10,
-        Tilter = 11,
+        Tilter = 10,
+        Lifter = 11,
 
         Unused12 = 12,
         Unused13 = 13,
@@ -65,8 +65,8 @@
 
     public enum ActuatorOnOffID
     {
-        PowerSensorColorBuoyLeft = 0x00,
-        PowerSensorColorBuoyRight = 0x01,
+        PowerSensorColorBuoyRight = 0x00,
+        PowerSensorColorBuoyLeft = 0x01,
         MakeVacuumRightFront = 0x11,
         MakeVacuumLeftFront = 0x12,
         MakeVacuumRightBack = 0x13,
@@ -88,8 +88,8 @@
 
     public enum SensorColorID
     {
-        BuoyLeft = 0,
-        BuoyRight = 1
+        BuoyRight = 0,
+        BuoyLeft = 1
     }
 
     public enum CodeurID

@@ -79,6 +79,11 @@ namespace GoBot.Actionneurs
         {
             Devices.AllDevices.CanServos[ID].SetPosition(position);
         }
+
+        public void DisableTorque()
+        {
+            Devices.AllDevices.CanServos[ID].DisableOutput();
+        }
     }
 
     public abstract class PositionableMotorPosition : Positionable

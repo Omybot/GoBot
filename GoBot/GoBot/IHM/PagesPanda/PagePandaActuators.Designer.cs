@@ -28,7 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagePandaActuators));
             this.btnTrap = new System.Windows.Forms.Button();
+            this.btnClamp5 = new System.Windows.Forms.Button();
+            this.btnClamp4 = new System.Windows.Forms.Button();
+            this.btnClamp3 = new System.Windows.Forms.Button();
+            this.btnClamp2 = new System.Windows.Forms.Button();
+            this.btnClamp1 = new System.Windows.Forms.Button();
             this.btnFlagRight = new System.Windows.Forms.Button();
             this.btnFLagLeft = new System.Windows.Forms.Button();
             this.btnFingerLeft = new System.Windows.Forms.Button();
@@ -42,6 +48,56 @@
             this.btnTrap.Size = new System.Drawing.Size(23, 23);
             this.btnTrap.TabIndex = 0;
             this.btnTrap.UseVisualStyleBackColor = true;
+            // 
+            // btnClamp5
+            // 
+            this.btnClamp5.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp5.Image")));
+            this.btnClamp5.Location = new System.Drawing.Point(565, 531);
+            this.btnClamp5.Name = "btnClamp5";
+            this.btnClamp5.Size = new System.Drawing.Size(64, 64);
+            this.btnClamp5.TabIndex = 9;
+            this.btnClamp5.UseVisualStyleBackColor = true;
+            this.btnClamp5.Click += new System.EventHandler(this.btnClamp5_Click);
+            // 
+            // btnClamp4
+            // 
+            this.btnClamp4.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp4.Image")));
+            this.btnClamp4.Location = new System.Drawing.Point(495, 531);
+            this.btnClamp4.Name = "btnClamp4";
+            this.btnClamp4.Size = new System.Drawing.Size(64, 64);
+            this.btnClamp4.TabIndex = 8;
+            this.btnClamp4.UseVisualStyleBackColor = true;
+            this.btnClamp4.Click += new System.EventHandler(this.btnClamp4_Click);
+            // 
+            // btnClamp3
+            // 
+            this.btnClamp3.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp3.Image")));
+            this.btnClamp3.Location = new System.Drawing.Point(425, 531);
+            this.btnClamp3.Name = "btnClamp3";
+            this.btnClamp3.Size = new System.Drawing.Size(64, 64);
+            this.btnClamp3.TabIndex = 7;
+            this.btnClamp3.UseVisualStyleBackColor = true;
+            this.btnClamp3.Click += new System.EventHandler(this.btnClamp3_Click);
+            // 
+            // btnClamp2
+            // 
+            this.btnClamp2.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp2.Image")));
+            this.btnClamp2.Location = new System.Drawing.Point(355, 531);
+            this.btnClamp2.Name = "btnClamp2";
+            this.btnClamp2.Size = new System.Drawing.Size(64, 64);
+            this.btnClamp2.TabIndex = 6;
+            this.btnClamp2.UseVisualStyleBackColor = true;
+            this.btnClamp2.Click += new System.EventHandler(this.btnClamp2_Click);
+            // 
+            // btnClamp1
+            // 
+            this.btnClamp1.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp1.Image")));
+            this.btnClamp1.Location = new System.Drawing.Point(285, 531);
+            this.btnClamp1.Name = "btnClamp1";
+            this.btnClamp1.Size = new System.Drawing.Size(64, 64);
+            this.btnClamp1.TabIndex = 5;
+            this.btnClamp1.UseVisualStyleBackColor = true;
+            this.btnClamp1.Click += new System.EventHandler(this.btnClamp1_Click);
             // 
             // btnFlagRight
             // 
@@ -90,6 +146,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.btnClamp5);
+            this.Controls.Add(this.btnClamp4);
+            this.Controls.Add(this.btnClamp3);
+            this.Controls.Add(this.btnClamp2);
+            this.Controls.Add(this.btnClamp1);
             this.Controls.Add(this.btnFlagRight);
             this.Controls.Add(this.btnFLagLeft);
             this.Controls.Add(this.btnTrap);
@@ -109,5 +170,10 @@
         private System.Windows.Forms.Button btnTrap;
         private System.Windows.Forms.Button btnFLagLeft;
         private System.Windows.Forms.Button btnFlagRight;
+        private System.Windows.Forms.Button btnClamp1;
+        private System.Windows.Forms.Button btnClamp2;
+        private System.Windows.Forms.Button btnClamp3;
+        private System.Windows.Forms.Button btnClamp4;
+        private System.Windows.Forms.Button btnClamp5;
     }
 }

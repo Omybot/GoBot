@@ -37,7 +37,7 @@ namespace GoBot.GameElements
             pWhite.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             pWhiteBold.Width = 3;
 
-            Rectangle rect = new Rectangle(scale.RealToScreenPosition(Position.Translation(-HoverRadius, -HoverRadius)), scale.RealToScreenSize(new SizeF(HoverRadius*2, HoverRadius*2)));
+            Rectangle rect = new Rectangle(scale.RealToScreenPosition(Position.Translation(-HoverRadius, -HoverRadius)), scale.RealToScreenSize(new SizeF(HoverRadius * 2, HoverRadius * 2)));
 
             if (IsHover)
             {
@@ -45,8 +45,8 @@ namespace GoBot.GameElements
             }
             else
             {
-                g.DrawEllipse(pBlack, rect);
-                g.DrawEllipse(pWhite, rect);
+                //g.DrawEllipse(pBlack, rect);
+                //g.DrawEllipse(pWhite, rect);
             }
 
             pBlack.Dispose();

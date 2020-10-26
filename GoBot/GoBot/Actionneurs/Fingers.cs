@@ -1,5 +1,7 @@
-﻿using GoBot.Threading;
+﻿using GoBot.GameElements;
+using GoBot.Threading;
 using System.Diagnostics;
+using System.Drawing;
 using System.Threading;
 
 namespace GoBot.Actionneurs
@@ -32,36 +34,113 @@ namespace GoBot.Actionneurs
         protected SensorOnOffID _pressure;
         protected ServoFinger _finger;
 
+        protected Color _load;
+
+        public bool Loaded => _load != Color.Transparent;
+        public Color Load => _load;
+
+        public Finger()
+        {
+            _load = Color.Transparent;
+        }
+
         public void DoDemoGrab(ThreadLink link = null)
         {
             Stopwatch swMain = Stopwatch.StartNew();
-            bool ok = false;
+            bool ok;
 
             DoAirLock();
 
-            while ((link != null && !link.Cancelled) || (link == null && swMain.Elapsed.TotalMinutes < 1))
+            while (!link.Cancelled && swMain.Elapsed.TotalMinutes < 1)
             {
                 ok = false;
                 Thread.Sleep(1000);
 
-                DoPositionGrab();
-
-                Stopwatch sw = Stopwatch.StartNew();
-
-                while (sw.ElapsedMilliseconds < 1000 && !ok)
+                if (!HasSomething())
                 {
-                    Thread.Sleep(50);
-                    ok = HasSomething();
-                }
+                    DoPositionGrab();
 
-                if (ok)
-                    DoPositionKeep();
-                else
-                    DoPositionHide();
+                    Stopwatch sw = Stopwatch.StartNew();
+
+                    while (sw.ElapsedMilliseconds < 1000 && !ok)
+                    {
+                        Thread.Sleep(50);
+                        ok = HasSomething();
+                    }
+
+                    if (ok)
+                        DoPositionKeep();
+                    else
+                        DoPositionHide();
+                }
             }
 
             DoPositionHide();
             DoAirUnlock();
+        }
+
+        public bool DoGrabGreen()
+        {
+            bool ok = false;
+
+            DoAirLock();
+            DoPositionGrab();
+
+            Stopwatch sw = Stopwatch.StartNew();
+
+            while (sw.ElapsedMilliseconds < 750 && !ok)
+            {
+                Thread.Sleep(50);
+                ok = HasSomething();
+            }
+
+            if (ok)
+            {
+                _load = Buoy.Green;
+                DoPositionKeep();
+            }
+            else
+            {
+                DoAirUnlock();
+                DoPositionHide();
+            }
+
+            return ok;
+        }
+
+        public bool DoGrabColor(Color c)
+        {
+            bool ok = false;
+
+            DoAirLock();
+            DoPositionGrab();
+
+            Stopwatch sw = Stopwatch.StartNew();
+
+            while (sw.ElapsedMilliseconds < 750 && !ok)
+            {
+                Thread.Sleep(50);
+                ok = HasSomething();
+            }
+
+            if (ok)
+            {
+                _load = c;
+                DoPositionKeep();
+            }
+            else
+            {
+                DoAirUnlock();
+                DoPositionHide();
+            }
+
+            return ok;
+        }
+
+        public void DoRelease()
+        {
+            DoAirUnlock();
+            DoPositionHide();
         }
 
         public void DoAirLock()

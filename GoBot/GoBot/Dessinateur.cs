@@ -14,6 +14,7 @@ using System.Diagnostics;
 using GoBot.Threading;
 using GoBot.Devices;
 using GoBot.BoardContext;
+using GoBot.Actionneurs;
 
 namespace GoBot
 {
@@ -346,6 +347,7 @@ namespace GoBot
 
         private static void DessineRobot(Robot robot, Graphics g)
         {
+            List<Color> load;
             Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordinates);
 
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -354,6 +356,13 @@ namespace GoBot
             g.TranslateTransform(-positionRobot.X, -positionRobot.Y);
 
             Rectangle robotRect = new Rectangle(positionRobot.X - Scale.RealToScreenDistance(robot.Lenght / 2), positionRobot.Y - Scale.RealToScreenDistance(robot.Width / 2), Scale.RealToScreenDistance(robot.Lenght), Scale.RealToScreenDistance(robot.Width));
+
+            if (Actionneur.Lifter.Loaded)
+            {
+                load = Actionneur.Lifter.Load;
+                for (int j = 0; j < load.Count; j++)
+                    PaintRobotBuoy(g, robot, new RealPoint(-160, (j-2)*75), load[j]);
+            }
 
             if (Config.CurrentConfig.IsMiniRobot)
                 g.DrawImage(Properties.Resources.RobotMiniClose, robotRect);
@@ -368,7 +377,31 @@ namespace GoBot
 
             // TODOEACHYEAR Dessiner ici les actionneurs pour qu'ils prennent l'inclinaison du robot
 
+            load = Actionneur.ElevatorLeft.LoadFirst;
+            for (int i = load.Count - 1; i >= 0; i--)
+                PaintRobotBuoy(g, robot, new RealPoint(+30 + i * 22, -110), load[i]);
+
+            load = Actionneur.ElevatorLeft.LoadSecond;
+            for (int i = load.Count - 1; i >= 0; i--)
+                PaintRobotBuoy(g, robot, new RealPoint(-85 + i * 22, -110), load[i]);
+
+            load = Actionneur.ElevatorRight.LoadFirst;
+            for (int i = load.Count - 1; i >= 0; i--)
+                PaintRobotBuoy(g, robot, new RealPoint(+30 + i * 22, 110), load[i]);
+
+            load = Actionneur.ElevatorRight.LoadSecond;
+            for (int i = load.Count - 1; i >= 0; i--)
+                PaintRobotBuoy(g, robot, new RealPoint(-85 + i * 22, 110), load[i]);
+
+            PaintRobotBuoy(g, robot, new RealPoint(-86.5, -193.5), Actionneur.FingerLeft.Load);
+            PaintRobotBuoy(g, robot, new RealPoint(-86.5, 193.5), Actionneur.FingerRight.Load);
+
             g.ResetTransform();
+        }
+
+        private static void PaintRobotBuoy(Graphics g, Robot robot, RealPoint center, Color c)
+        {
+            if (c != Color.Transparent) new Circle(new RealPoint(robot.Position.Coordinates.X + center.X, robot.Position.Coordinates.Y + center.Y), 36).Paint(g, Color.Black, 1, c, Scale);
         }
 
         private static void DessineObstacles(Graphics g)

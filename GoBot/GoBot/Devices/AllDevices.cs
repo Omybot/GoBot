@@ -14,12 +14,15 @@ namespace GoBot.Devices
     {
         private static CanServos _canServos;
         private static Lidar _lidarGround, _lidarAvoid;
+        private static Buzzer _buzzer;
 
         public static void Init()
         {
+            _canServos = new CanServos(Connections.ConnectionCan);
+            _buzzer = new Buzzer(Connections.ConnectionCan);
+
             try
             {
-                _canServos = new CanServos(Connections.ConnectionCan);
                 _lidarGround = new HokuyoRec(LidarID.Ground);
 
                 if (Config.CurrentConfig.IsMiniRobot)
@@ -60,6 +63,8 @@ namespace GoBot.Devices
             }
         }
 
+        public static Buzzer Buzzer => _buzzer;
+
         public static Lidar LidarGround
         {
             get { return _lidarGround; }
@@ -97,7 +102,7 @@ namespace GoBot.Devices
             else
             {
                 if (_lidarAvoid != null)
-                    _lidarAvoid.Position = new Position(pos.Angle - new AngleDelta(90), pos.Coordinates);
+                    _lidarAvoid.Position = new Position(pos.Angle - new AngleDelta(180), pos.Coordinates);
                 if (_lidarGround != null)
                 {
                     _lidarGround.Position.Coordinates = new Geometry.Shapes.RealPoint(pos.Coordinates.X + Math.Cos(pos.Angle) * 109, pos.Coordinates.Y + Math.Sin(pos.Angle) * 109);

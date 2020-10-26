@@ -210,7 +210,7 @@ namespace GoBot.IHM
         }
 
         #endregion
-        
+
         #region Vitesse pivot
 
         private void trkPivotSpeed_TickValueChanged(object sender, double value)
@@ -293,7 +293,7 @@ namespace GoBot.IHM
             {
                 btnCalibration.InvokeAuto(() => btnCalibration.Enabled = false);
                 Robot.MoveForward(10);
-                Robot.SetSpeedLow();
+                Robot.SetSpeedSlow();
                 Robot.Recalibration(SensAR.Arriere);
                 Robot.SetSpeedFast();
                 btnCalibration.InvokeAuto(() => btnCalibration.Enabled = true);
@@ -304,7 +304,7 @@ namespace GoBot.IHM
         {
             ThreadManager.CreateThread(link => ThreadGoTo(link)).StartThread();
         }
-        
+
         private void ThreadGoTo(ThreadLink link)
         {
             link.RegisterName();
@@ -313,7 +313,7 @@ namespace GoBot.IHM
 
         private void btnLow_Click(object sender, EventArgs e)
         {
-            Robot.SetSpeedLow();
+            Robot.SetSpeedSlow();
             trkLineSpeed.SetValue(Robot.SpeedConfig.LineSpeed, false);
             trkLineAccel.SetValue(Robot.SpeedConfig.LineAcceleration, false);
             trkLineDecel.SetValue(Robot.SpeedConfig.LineDeceleration, false);
@@ -327,8 +327,8 @@ namespace GoBot.IHM
             trkLineSpeed.SetValue(Robot.SpeedConfig.LineSpeed, false);
             trkLineAccel.SetValue(Robot.SpeedConfig.LineAcceleration, false);
             trkLineDecel.SetValue(Robot.SpeedConfig.LineDeceleration, false);
-            trkPivotSpeed.SetValue(Robot.SpeedConfig.LineSpeed, false);
-            trkPivotAccel.SetValue(Robot.SpeedConfig.LineSpeed, false);
+            trkPivotSpeed.SetValue(Robot.SpeedConfig.PivotSpeed, false);
+            trkPivotAccel.SetValue(Robot.SpeedConfig.PivotAcceleration, false);
         }
 
         private void numCoeffPID_ValueChanged(object sender, EventArgs e)
@@ -359,6 +359,19 @@ namespace GoBot.IHM
             }
 
             btnPIDXY.Enabled = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //    Robot.Move(800);
+            //    Robot.PivotLeft(360);
+            //    Robot.Move(-800);
+            //    Console.WriteLine(Robot.Position.Angle);
+            //    Robot.Pivot(new AngleDelta(Robot.Position.Angle));
+            for (int i = 0; i < 10; i++)
+            {
+                Robot.PivotRight(360);
+            }
         }
     }
 }

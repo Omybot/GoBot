@@ -1,5 +1,8 @@
 ﻿using GoBot.Devices;
+using GoBot.GameElements;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace GoBot.Actionneurs
 {
@@ -20,6 +23,11 @@ namespace GoBot.Actionneurs
             _elevatorRight = new ElevatorRight();
             _elevatorLeft = new ElevatorLeft();
             _lifter = new Lifter();
+
+            //_elevatorLeft.FillWith(Buoy.Red);
+            //_elevatorRight.FillWith(Buoy.Green);
+
+            //_lifter.Load = new List<Color>(){ Buoy.Red, Buoy.Green, Buoy.Red, Buoy.Green, Buoy.Red};
         }
 
         public static FingerLeft FingerLeft { get => _fingerLeft; }

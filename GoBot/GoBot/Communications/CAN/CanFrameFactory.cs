@@ -246,6 +246,21 @@ namespace GoBot.Communications.CAN
             return new Frame(tab);
         }
 
+        public static Frame BuildBeep(CanBoard board, int freqHz, int durationMs)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = 0x00;
+            tab[1] = (byte)board;
+            tab[2] = (byte)CanFrameFunction.Buzzer;
+            tab[3] = ByteDivide(freqHz, true);
+            tab[4] = ByteDivide(freqHz, false);
+            tab[5] = ByteDivide(durationMs, true);
+            tab[6] = ByteDivide(durationMs, false);
+
+            return new Frame(tab);
+        }
+
         public static Frame BuildDebug(CanBoard board)
         {
             byte[] tab = new byte[10];

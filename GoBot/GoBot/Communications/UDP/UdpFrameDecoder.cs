@@ -325,10 +325,9 @@ namespace GoBot.Communications.UDP
                     }
                     break;
                 case UdpFrameFunction.AsserAccelerationPivot:
-                    output = "Accélération pivot : {0-1}mm/s² au début, {2-3}mm/s² à la fin";
+                    output = "Accélération pivot : {0-1}mm/s²";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, parameters[0].ToString());
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;

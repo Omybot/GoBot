@@ -28,6 +28,9 @@ namespace GoBot
         public ServoClamp3 ServoClamp3 { get; set; } = new ServoClamp3();
         public ServoClamp4 ServoClamp4 { get; set; } = new ServoClamp4();
         public ServoClamp5 ServoClamp5 { get; set; } = new ServoClamp5();
+
+        public ServoLifter ServoLifter { get; set; } = new ServoLifter();
+        public ServoTilter ServoTilter { get; set; } = new ServoTilter();
     }
 }
 
@@ -150,6 +153,24 @@ namespace GoBot.Actionneurs
     public class ServoClamp5 : ServoClamp
     {
         public override ServomoteurID ID => ServomoteurID.Clamp5;
+    }
+
+    public class ServoLifter : PositionableServo
+    {
+        public override ServomoteurID ID => ServomoteurID.Lifter;
+
+        public int PositionStore { get; set; }
+        public int PositionExtract { get; set; }
+    }
+
+    public class ServoTilter : PositionableServo
+    {
+        public override ServomoteurID ID => ServomoteurID.Tilter;
+
+        public int PositionStore { get; set; }
+        public int PositionPickup { get; set; }
+        public int PositionExtract { get; set; }
+        public int PositionDropoff { get; set; }
     }
 
     #endregion

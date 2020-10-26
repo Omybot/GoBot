@@ -52,7 +52,7 @@ namespace GoBot.IHM.Pages
             _boardColor.Add(CanBoard.CanServo4, Color.FromArgb(160, 255, 220));
             _boardColor.Add(CanBoard.CanServo5, Color.FromArgb(190, 255, 220));
             _boardColor.Add(CanBoard.CanServo6, Color.FromArgb(220, 255, 220));
-            //_boardColor.Add(CanBoard.CanAlim, Color.FromArgb(250, 255, 220));
+            _boardColor.Add(CanBoard.CanAlim, Color.FromArgb(250, 255, 220));
 
             _boxLists = new List<CheckedListBox>();
             _boxLists.Add(lstSender);
@@ -135,7 +135,7 @@ namespace GoBot.IHM.Pages
                         dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[sender];
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 dgvLog.Rows.Add(_counter, time, "?", "?", "Inconnu !", tFrame.Frame.ToString());
                 dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Red;

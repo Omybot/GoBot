@@ -90,7 +90,7 @@ namespace GoBot.IHM.Pages
             if (capteur == SensorOnOffID.StartTrigger)
             {
                 SetPicImage(picStartTrigger, etat);
-                picCalibration.InvokeAuto(() => picCalibration.Enabled = etat);
+                btnCalib.InvokeAuto(() => btnCalib.Enabled = true);
             }
         }
 
@@ -153,6 +153,7 @@ namespace GoBot.IHM.Pages
             btnTrap.Focus();
             Robots.MainRobot.ActuatorsStore();
             SetPicImage(picInit, true);
+            btnInit.Enabled = false;
         }
     }
 }

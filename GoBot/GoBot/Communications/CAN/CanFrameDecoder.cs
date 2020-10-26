@@ -24,13 +24,6 @@ namespace GoBot.Communications.CAN
 
             switch (function)
             {
-                case CanFrameFunction.BatterieVoltage:
-                    output = "Tension batteries = {0-1}V";
-                    if (parameters != null)
-                    {
-                        output = ReplaceParam(output, (parameters[0] / 100.0).ToString("0.00"));
-                    }
-                    break;
                 case CanFrameFunction.PositionAsk:
                     output = "Demande de position servo {ServoID}";
                     if (parameters != null)
@@ -228,6 +221,22 @@ namespace GoBot.Communications.CAN
                     break;
                 case CanFrameFunction.TestConnection:
                     output = "Test connexion";
+                    break;
+                case CanFrameFunction.BatterieVoltage:
+                    output = "Retour alimentation : {3-4}V {5-6}A";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, (parameters[0] / 1000.0).ToString("0.00"));
+                        output = ReplaceParam(output, (parameters[1] / 1000.0).ToString("0.00"));
+                    }
+                    break;
+                case CanFrameFunction.Buzzer:
+                    output = "Buzzer : {3-4}Hz {5-6}mS";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, parameters[0].ToString("0"));
+                        output = ReplaceParam(output, parameters[1].ToString("0"));
+                    }
                     break;
                 default:
                     output = "Inconnu";

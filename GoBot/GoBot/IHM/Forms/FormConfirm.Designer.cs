@@ -95,8 +95,9 @@
             this.Controls.Add(this.lblMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormConfirm";
-            this.Text = "FormConfirm";
+            this.Text = "Confirmation";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.FormConfirm_Load);
             this.Shown += new System.EventHandler(this.FormConfirm_Shown);
             this.ResumeLayout(false);
 

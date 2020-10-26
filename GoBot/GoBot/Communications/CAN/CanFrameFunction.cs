@@ -32,7 +32,8 @@
         DebugAsk = 0xF1,
         DebugResponse = 0xF2,
         Buffer = 0xF3, // TODO2020
-        BatterieVoltage = 0xF5 // TODO2020
+        BatterieVoltage = 0xF5,
+        Buzzer = 0xF6
     }
 
     public enum CanBoard
@@ -44,6 +45,6 @@
         CanServo4 = 0x04,
         CanServo5 = 0x05,
         CanServo6 = 0x06,
-        //CanAlim = 0x10
+        CanAlim = 0x0A
     }
 }

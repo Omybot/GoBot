@@ -1,13 +1,16 @@
-﻿using Geometry;
-using Geometry.Shapes;
-using GoBot.Devices;
-using GoBot.Threading;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading;
+
+using Geometry;
+using Geometry.Shapes;
+
+using GoBot.Devices;
+using GoBot.GameElements;
+using GoBot.Threading;
 
 namespace GoBot.Actionneurs
 {
@@ -37,6 +40,7 @@ namespace GoBot.Actionneurs
             return new RealPoint(Robots.MainRobot.Position.Coordinates.X - 100, Robots.MainRobot.Position.Coordinates.Y + 90).Rotation(new AngleDelta(Robots.MainRobot.Position.Angle), Robots.MainRobot.Position.Coordinates);
         }
     }
+
     class ElevatorLeft : Elevator
     {
         public ElevatorLeft()
@@ -75,13 +79,70 @@ namespace GoBot.Actionneurs
         protected SensorOnOffID _pressure;
         protected MotorElevator _elevator;
 
-        protected int _buoysCountInside = 0;
-        protected int _buoysCountOutside = 0;
+        protected List<Color> _buoysSecond; // 0 = en haut...1...2 = étages inférieurs
+        protected List<Color> _buoysFirst; // 0 = en haut...1...2...3 = En bas, non monté
+
+        private List<Tuple<PositionLoad, PositionFloor>> _pickupOrder;
+        private List<Tuple<PositionLoad, PositionFloor>> _dropoffOrder;
+
+        private enum PositionLoad
+        {
+            First,
+            Second
+        }
+        private enum PositionFloor
+        {
+            Floor3 = 0,
+            Floor2,
+            Floor1,
+            Ground
+        }
 
         public Elevator()
         {
             _isInitialized = false;
+            _buoysSecond = Enumerable.Repeat(Color.Transparent, 3).ToList();
+            _buoysFirst = Enumerable.Repeat(Color.Transparent, 4).ToList();
+
+            _pickupOrder = new List<Tuple<PositionLoad, PositionFloor>>();
+            _pickupOrder.Add(Tuple.Create(PositionLoad.First, PositionFloor.Floor3));
+            _pickupOrder.Add(Tuple.Create(PositionLoad.First, PositionFloor.Floor2));
+            _pickupOrder.Add(Tuple.Create(PositionLoad.First, PositionFloor.Floor1));
+            _pickupOrder.Add(Tuple.Create(PositionLoad.Second, PositionFloor.Floor3));
+            _pickupOrder.Add(Tuple.Create(PositionLoad.Second, PositionFloor.Floor2));
+            _pickupOrder.Add(Tuple.Create(PositionLoad.Second, PositionFloor.Floor1));
+            _pickupOrder.Add(Tuple.Create(PositionLoad.First, PositionFloor.Ground));
+
+            _dropoffOrder = new List<Tuple<PositionLoad, PositionFloor>>();
+            _dropoffOrder.Add(Tuple.Create(PositionLoad.First, PositionFloor.Ground));
+            _dropoffOrder.Add(Tuple.Create(PositionLoad.First, PositionFloor.Floor1));
+            _dropoffOrder.Add(Tuple.Create(PositionLoad.First, PositionFloor.Floor2));
+            _dropoffOrder.Add(Tuple.Create(PositionLoad.First, PositionFloor.Floor3));
+            _dropoffOrder.Add(Tuple.Create(PositionLoad.Second, PositionFloor.Floor1));
+            _dropoffOrder.Add(Tuple.Create(PositionLoad.Second, PositionFloor.Floor2));
+            _dropoffOrder.Add(Tuple.Create(PositionLoad.Second, PositionFloor.Floor3));
         }
+
+        public List<Color> LoadFirst => _buoysFirst;
+        public List<Color> LoadSecond => _buoysSecond;
+
+        public void FillWith(Color c)
+        {
+            _buoysFirst[(int)PositionFloor.Floor3] = c;
+            _buoysFirst[(int)PositionFloor.Floor2] = c;
+            _buoysFirst[(int)PositionFloor.Floor1] = c;
+            _buoysFirst[(int)PositionFloor.Ground] = c;
+
+            _buoysSecond[(int)PositionFloor.Floor3] = c;
+            _buoysSecond[(int)PositionFloor.Floor2] = c;
+            _buoysSecond[(int)PositionFloor.Floor1] = c;
+        }
+
+        public int CountTotal => _buoysSecond.Concat(_buoysFirst).Where(b => b != Color.Transparent).Count();
+        public int CountSecond => _buoysSecond.Where(b => b != Color.Transparent).Count();
+        public int CountFirst => _buoysFirst.Where(b => b != Color.Transparent).Count();
+        public int CountRed => _buoysFirst.Where(b => b == Buoy.Red).Count();
+        public int CountGreen => _buoysFirst.Where(b => b == Buoy.Green).Count();
 
         public void DoGrabOpen()
         {
@@ -92,10 +153,12 @@ namespace GoBot.Actionneurs
         {
             _servoGraber.SendPosition(_servoGraber.PositionRelease);
         }
+
         public void DoGrabClose()
         {
             _servoGraber.SendPosition(_servoGraber.PositionClose);
         }
+
         public void DoGrabHide()
         {
             _servoGraber.SendPosition(_servoGraber.PositionHide);
@@ -103,6 +166,15 @@ namespace GoBot.Actionneurs
         public void DoLockerEngage()
         {
             _servoLocker.SendPosition(_servoLocker.PositionEngage);
+        }
+
+        public void DoStoreActuators()
+        {
+            DoLockerEngage();
+            DoElevatorInit();
+            DoElevatorGround();
+            DoLockerDisengage();
+            DoPushInside();
         }
 
         public void DoLockerDisengage()
@@ -118,11 +190,13 @@ namespace GoBot.Actionneurs
         public void DoPushInside()
         {
             _servoPush.SendPosition(_servoPush.PositionClose);
+            Thread.Sleep(750); // TODO régler la tempo
         }
 
         public void DoPushOutside()
         {
             _servoPush.SendPosition(_servoPush.PositionOpen);
+            Thread.Sleep(750); // TODO régler la tempo
         }
 
         public void DoAirLock()
@@ -137,7 +211,6 @@ namespace GoBot.Actionneurs
             Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, false);
             Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, true);
             _servoLocker.SendPosition(_servoLocker.PositionDisengage);
-            Thread.Sleep(50);
         }
 
         public void DoElevatorInit()
@@ -156,7 +229,12 @@ namespace GoBot.Actionneurs
             _elevator.Stop(StopMode.Abrupt);
         }
 
-        public void DoElevatorFloor0()
+        public void DoElevatorFree()
+        {
+            _elevator.Stop(StopMode.Freely);
+        }
+
+        public void DoElevatorGround()
         {
             if (!_isInitialized) DoElevatorInit();
             _elevator.SendPosition(_elevator.PositionFloor0);
@@ -180,34 +258,37 @@ namespace GoBot.Actionneurs
             _elevator.SendPosition(_elevator.PositionFloor3);
         }
 
-        public void DoSequenceOverkill()
+        public void DoDemoLoad3()
         {
             ThreadLink left, right;
 
-            while (_buoysCountOutside < 3)
+            Robots.MainRobot.SetSpeedSlow();
+
+            while (CountFirst < 3)
             {
-                Robots.MainRobot.Move(60);
-                Actionneur.ElevatorLeft.DoElevatorFloor0();
-                Actionneur.ElevatorRight.DoElevatorFloor0();
-                left = ThreadManager.CreateThread(link => Actionneur.ElevatorLeft.DoSequenceStore());
-                right = ThreadManager.CreateThread(link => Actionneur.ElevatorRight.DoSequenceStore());
+                Robots.MainRobot.Move(85);
+                Actionneur.ElevatorLeft.DoElevatorGround();
+                Actionneur.ElevatorRight.DoElevatorGround();
+                left = ThreadManager.CreateThread(link => Actionneur.ElevatorLeft.DoSequencePickup());
+                right = ThreadManager.CreateThread(link => Actionneur.ElevatorRight.DoSequencePickup());
                 left.StartThread();
                 right.StartThread();
                 left.WaitEnd();
                 right.WaitEnd();
             }
+
+            Robots.MainRobot.SetSpeedFast();
         }
 
-        public void DoSequenceStore()
+        public void DoSequencePickupColor(Color c)
         {
-            DoLockerEngage();
             DoAirLock();
             DoGrabClose();
 
             if (WaitSomething())
             {
-                BuoyAdd();
-                DoStoreCurrent();
+                DoStoreColor(c);
+                DoGrabClose();
             }
             else
             {
@@ -215,50 +296,71 @@ namespace GoBot.Actionneurs
             }
         }
 
-        private void BuoyAdd()
+        public void DoSequencePickup()
         {
-            if (_servoPush.GetLastPosition() == _servoPush.PositionOpen)
-                _buoysCountInside++;
+            DoAirLock();
+            DoGrabClose();
+
+            if (WaitSomething())
+            {
+                DoStoreColor(Buoy.Red); // TODO détecter la couleur avec le capteur de couleur
+            }
             else
-                _buoysCountOutside++;
+            {
+                DoAirUnlock();
+            }
+
+            DoGrabClose();
         }
 
-        private int BuoyCount()
+        private void BuoySet(Tuple<PositionLoad, PositionFloor> place, Color c)
         {
-            if (_servoPush.GetLastPosition() == _servoPush.PositionOpen)
-                return _buoysCountInside;
+            if (place.Item1 == PositionLoad.First)
+                _buoysFirst[(int)place.Item2] = c;
             else
-                return _buoysCountOutside;
+                _buoysSecond[(int)place.Item2] = c;
         }
 
-        public void DoStoreCurrent()
+        private void BuoyRemove(Tuple<PositionLoad, PositionFloor> place)
         {
+            if (place.Item1 == PositionLoad.First)
+                _buoysFirst[(int)place.Item2] = Color.Transparent;
+            else
+                _buoysSecond[(int)place.Item2] = Color.Transparent;
+        }
+
+        private bool IsPositionLoadSecond()
+        {
+            return _servoPush.GetLastPosition() == _servoPush.PositionOpen;
+        }
+
+        public void DoStoreColor(Color c)
+        {
+            DoElevatorStop();
             DoGrabRelease();
 
-            if (BuoyCount() == 1)
-                DoElevatorFloor3();
-            else if (BuoyCount() == 2)
-                DoElevatorFloor2();
-            else if (BuoyCount() == 3)
-                DoElevatorFloor1();
+            Tuple<PositionLoad, PositionFloor> place = PlaceToPickup();
 
-            DoGrabOpen();
+            DoPlaceLoad(place.Item1, true);
+            DoPlaceFloor(place.Item2);
+
             DoAirUnlock();
+            BuoySet(place, c);
+
             Robots.MainRobot.SetMotorAtPosition(_elevator.ID, _elevator.PositionFloor0);
-            //DoPositionElevatorFloor0();
         }
 
         public void DoStorageReset()
         {
-            _buoysCountInside = 0;
-            _buoysCountOutside = 0;
+            _buoysSecond = Enumerable.Repeat(Color.Transparent, 3).ToList();
+            _buoysFirst = Enumerable.Repeat(Color.Transparent, 4).ToList();
         }
 
         public bool WaitSomething(int timeout = 500)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-            while (sw.ElapsedMilliseconds < 500 && !HasSomething())
+            while (sw.ElapsedMilliseconds < timeout && !HasSomething())
                 Thread.Sleep(50);
 
             return HasSomething();
@@ -270,7 +372,7 @@ namespace GoBot.Actionneurs
 
             List<List<RealPoint>> groups = pts.GroupByDistance(80, -1);
             List<Circle> circles = new List<Circle>();
-            
+
             //for (int i = 0; i < groups.Count; i++)
             //{
             //    Circle circle = groups[i].FitCircle();
@@ -325,7 +427,8 @@ namespace GoBot.Actionneurs
                 int dist = (int)GetEntryFrontPoint().Distance(nearest.Center) + 50;
                 Robots.MainRobot.Move(dist);
 
-                DoSequenceStore();
+                DoSequencePickupColor(Buoy.Red); // TODO Détecter la couleur au lidar ?
+                //DoSequencePickup();// ... ou pas...
 
                 DoGrabClose();
                 Robots.MainRobot.Move(-dist);
@@ -336,5 +439,100 @@ namespace GoBot.Actionneurs
 
         protected abstract RealPoint GetEntryFrontPoint();
         protected abstract RealPoint GetEntryBackPoint();
+
+        public Color DoSequenceDropOff()
+        {
+            DoElevatorStop();
+            DoGrabRelease();
+
+            Tuple<PositionLoad, PositionFloor> place = PlaceToDropoff();
+            Color c = GetColor(place);
+
+            DoPlaceLoad(place.Item1, true);
+            DoPlaceFloor(place.Item2);
+
+            if (place.Item2 != PositionFloor.Ground)
+            {
+                DoAirLock();
+                Thread.Sleep(100);
+                Robots.MainRobot.SetMotorAtPosition(_elevator.ID, _elevator.PositionFloor0, true);
+            }
+
+            DoAirUnlock();
+            BuoyRemove(place);
+
+            return c;
+        }
+
+        private void DoPlaceLoad(PositionLoad load, bool wait)
+        {
+            if (IsPositionLoadSecond())
+            {
+                if (load == PositionLoad.First)
+                {
+                    DoElevatorGround();
+                    DoPushInside();
+                    if (wait) Thread.Sleep(750); // TODO régler la tempo
+                }
+            }
+            else
+            {
+                if (load == PositionLoad.Second)
+                {
+                    DoElevatorGround();
+                    DoPushOutside();
+                    if (wait) Thread.Sleep(750); // TODO régler la tempo
+                }
+            }
+        }
+
+        private void DoPlaceFloor(PositionFloor floor)
+        {
+            switch (floor)
+            {
+                case PositionFloor.Ground:
+                    DoElevatorGround();
+                    break;
+                case PositionFloor.Floor1:
+                    DoElevatorFloor1();
+                    break;
+                case PositionFloor.Floor2:
+                    DoElevatorFloor2();
+                    break;
+                case PositionFloor.Floor3:
+                    DoElevatorFloor3();
+                    break;
+            }
+        }
+
+        public void DoSequenceDropOff3()
+        {
+            Robots.MainRobot.SetSpeedSlow();
+            DoSequenceDropOff();
+            Robots.MainRobot.Move(-85, false);
+            DoSequenceDropOff();
+            Robots.MainRobot.Move(-85, false);
+            DoSequenceDropOff();
+            Robots.MainRobot.Move(-85, false);
+            Robots.MainRobot.SetSpeedFast();
+        }
+
+        private Tuple<PositionLoad, PositionFloor> PlaceToPickup()
+        {
+            return _pickupOrder.Find(o => (o.Item1 == PositionLoad.First ? _buoysFirst[(int)o.Item2] : _buoysSecond[(int)o.Item2]) == Color.Transparent);
+        }
+
+        private Tuple<PositionLoad, PositionFloor> PlaceToDropoff()
+        {
+            return _dropoffOrder.Find(o => (o.Item1 == PositionLoad.First ? _buoysFirst[(int)o.Item2] : _buoysSecond[(int)o.Item2]) != Color.Transparent);
+        }
+
+        private Color GetColor(Tuple<PositionLoad, PositionFloor> place)
+        {
+            if (place.Item1 == PositionLoad.First)
+                return _buoysFirst[(int)place.Item2];
+            else
+                return _buoysSecond[(int)place.Item2];
+        }
     }
 }

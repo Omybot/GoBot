@@ -63,8 +63,8 @@ namespace GoBot
                 _lockSensorColor.Add(o, new Semaphore(0, int.MaxValue));
 
             _boardSensorColor = new Dictionary<SensorColorID, Board>();
-            _boardSensorColor.Add(SensorColorID.BuoyLeft, Board.RecMove);
-            _boardSensorColor.Add(SensorColorID.BuoyRight, Board.RecIO);
+            _boardSensorColor.Add(SensorColorID.BuoyRight, Board.RecMove);
+            _boardSensorColor.Add(SensorColorID.BuoyLeft, Board.RecIO);
 
             _boardSensorOnOff = new Dictionary<SensorOnOffID, Board>();
             _boardSensorOnOff.Add(SensorOnOffID.StartTrigger, Board.RecMove);
@@ -74,12 +74,12 @@ namespace GoBot
             _boardSensorOnOff.Add(SensorOnOffID.PressureSensorRightFront, Board.RecIO);
 
             _boardActuatorOnOff = new Dictionary<ActuatorOnOffID, Board>();
-            _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyRight, Board.RecMove);
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumLeftBack, Board.RecMove);
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumLeftFront, Board.RecMove);
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumLeftBack, Board.RecMove);
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumLeftFront, Board.RecIO);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyRight, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyLeft, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumRightBack, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumRightFront, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightBack, Board.RecIO);
@@ -95,6 +95,13 @@ namespace GoBot
         public override void DeInit()
         {
 
+        }
+
+        public override void ShowMessage(string message1, String message2)
+        {
+            Pepperl display = ((Pepperl)AllDevices.LidarAvoid);
+            display.ShowMessage(message1, message2);
+            display.SetFrequency(PepperlFreq.Hz50);
         }
 
         private void SpeedConfig_ParamChange(bool lineAccelChange, bool lineDecelChange, bool lineSpeedChange, bool pivotAccelChange, bool pivotDecelChange, bool pivotSpeedChange)
@@ -172,7 +179,7 @@ namespace GoBot
             PositionTarget = null; //TODO2018 Init commun à la simu
 
             PositionsHistorical = new List<Position>();
-            _asserConnection.SendMessage(UdpFrameFactory.DemandePositionContinue(100, this));
+            _asserConnection.SendMessage(UdpFrameFactory.DemandePositionContinue(50, this));
         }
 
         public override Color ReadSensorColor(SensorColorID sensor, bool wait = true)
@@ -563,7 +570,7 @@ namespace GoBot
             if (wait) _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
         }
 
-        public override void Recalibration(SensAR sens, bool wait = true)
+        public override void Recalibration(SensAR sens, bool wait = true, bool sendOffset = false)
         {
             if (wait) _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
@@ -573,6 +580,8 @@ namespace GoBot
             Historique.AjouterAction(new ActionRecallage(this, sens));
 
             if (wait) _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
+
+            base.Recalibration(sens, wait, sendOffset);
         }
 
         #endregion

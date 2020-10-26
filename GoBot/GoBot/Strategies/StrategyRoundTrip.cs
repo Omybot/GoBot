@@ -1,5 +1,6 @@
 ﻿using Geometry;
 using Geometry.Shapes;
+using GoBot.Actionneurs;
 using GoBot.BoardContext;
 
 namespace GoBot.Strategies

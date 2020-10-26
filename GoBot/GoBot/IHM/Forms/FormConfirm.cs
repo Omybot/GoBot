@@ -17,6 +17,7 @@ namespace GoBot.IHM.Forms
 
         private void btnStay_Click(object sender, EventArgs e)
         {
+            _link.Cancel();
             DialogResult = DialogResult.No;
             Close();
         }
@@ -34,23 +35,37 @@ namespace GoBot.IHM.Forms
             _countdown = 3;
             btnStay.Text = "Rester (" + _countdown + ")";
             _link = ThreadManager.CreateThread(link => Countdown());
-            _link.StartLoop(1000, _countdown+2);
+            _link.StartLoop(1000, _countdown + 2);
         }
 
         private void Countdown()
         {
-            if (_countdown < 0)
+            if (!_link.Cancelled)
             {
-                _link.Cancel();
-                btnStay.InvokeAuto(() => btnStay.PerformClick());
+                if (_countdown < 0)
+                {
+                    _link.Cancel();
+                    btnStay.InvokeAuto(() => btnStay.PerformClick());
+                }
+                else
+                {
+                    btnStay.InvokeAuto(() => btnStay.Text = "Rester (" + _countdown + ")");
+                }
+
+                _countdown -= 1;
             }
-            else
+        }
+
+        private void FormConfirm_Load(object sender, EventArgs e)
+        {
+            if (!Execution.DesignMode)
             {
-                btnStay.InvokeAuto(() => btnStay.Text = "Rester (" + _countdown + ")");
+                if (Screen.PrimaryScreen.Bounds.Width > 1024)
+                {
+                    this.FormBorderStyle = FormBorderStyle.FixedSingle;
+                    this.WindowState = FormWindowState.Normal;
+                }
             }
-
-            _countdown -= 1;
-
         }
     }
 }

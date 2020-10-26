@@ -79,40 +79,66 @@ namespace GoBot.Movements
             startTime = DateTime.Now;
 
             Position position = BestPosition;
+            Trajectory traj = null;
             bool ok = true;
 
             if (position != null)
             {
-                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, new Position(Robot.Position), position, Robot.RadiusOptimized, Robot.Width / 2);
+                bool alreadyOnPosition = (position.Coordinates.Distance(Robot.Position.Coordinates) < 10 && (position.Angle - Robot.Position.Angle) < 2);
 
-                if (traj != null)
+                if (!alreadyOnPosition)
+                     traj = PathFinder.ChercheTrajectoire(Robot.Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, new Position(Robot.Position), position, Robot.RadiusOptimized, Robot.Width / 2);
+
+                if (alreadyOnPosition || traj != null)
                 {
                     MovementBegin();
 
-                    if (Robot.RunTrajectory(traj))
-                    {
-                        MovementCore();
-                        Robots.MainRobot.Historique.Log("Fin " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
+                    if (alreadyOnPosition)
                         ok = true;
+                    else
+                    {
+                        ok = Robot.RunTrajectory(traj);
+                    }
+
+                    if (ok)
+                    {
+                        ok = MovementCore();
+                        if (ok)
+                            Robots.MainRobot.Historique.Log("Fin réussie " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
+                        else
+                            Robots.MainRobot.Historique.Log("Fin ratée " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
                     }
                     else
                     {
                         Robots.MainRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire échouée");
                         ok = false;
                     }
+
+                    MovementEnd();
                 }
                 else
                 {
+                    Robots.MainRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire introuvable");
                     ok = false;
                 }
             }
             else
             {
-                Robots.MainRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire non trouvée");
+                Robots.MainRobot.Historique.Log("Annulation " + this.ToString() + ", aucune position trouvée");
                 ok = false;
             }
 
             Robots.MainRobot.UpdateGraph(GameBoard.ObstaclesAll);
+            return ok;
+        }
+
+        public bool ExecuteHere()
+        {
+            bool ok;
+            MovementBegin();
+            ok = MovementCore();
+            MovementEnd();
+
             return ok;
         }
 
@@ -124,7 +150,7 @@ namespace GoBot.Movements
         /// <summary>
         /// Représente les actions à effectuer une fois arrivé à la position d'approche du mouvement
         /// </summary>
-        protected abstract void MovementCore();
+        protected abstract bool MovementCore();
 
         /// <summary>
         /// Représente les actions à effectuer à la fin du mouvement, qu'il soit réussi ou non

@@ -77,14 +77,14 @@ namespace GoBot
 
         public void AjouterAction(IAction action)
         {
-            Actions.Add(action);
+            /*Actions.Add(action);
             Log(action.ToString(), TypeLog.Action);
 
             while (Actions.Count > NBACTIONSMAX)
                 Actions.RemoveAt(0);
 
             if (NouvelleAction != null)
-                NouvelleAction(action);
+                NouvelleAction(action);*/
         }
 
         public void Log(String message, TypeLog type = TypeLog.Strat)

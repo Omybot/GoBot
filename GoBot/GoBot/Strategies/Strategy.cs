@@ -9,6 +9,7 @@ using GoBot.Threading;
 using System.Diagnostics;
 using GoBot.BoardContext;
 using GoBot.Devices;
+using GoBot.Actionneurs;
 
 namespace GoBot.Strategies
 {
@@ -16,14 +17,14 @@ namespace GoBot.Strategies
     {
         private System.Timers.Timer endMatchTimer;
         private ThreadLink _linkMatch;
-        
+
         public abstract bool AvoidElements { get; }
 
         /// <summary>
         /// Obtient ou définit la durée d'un match
         /// </summary>
         public TimeSpan MatchDuration { get; set; }
-        
+
         /// <summary>
         /// Retourne vrai si le match est en cours d'execution
         /// </summary>
@@ -69,21 +70,25 @@ namespace GoBot.Strategies
             {
                 MatchDuration = new TimeSpan(0, 0, 100);
             }
-            
+
             Movements = new List<Movement>();
 
             // TODOEACHYEAR Charger ICI dans Movements les mouvements possibles
 
-            //for (int i = 0; i < Plateau.Elements.ConstructionZones.Count; i++)
-            //{
-            //    Movements.Add(new MovementBuilding(Plateau.Elements.ConstructionZones[i]));
-            //}
-            
+            for (int i = 0; i < GameBoard.Elements.GroundedZones.Count; i++)
+                Movements.Add(new MovementGroundedZone(GameBoard.Elements.GroundedZones[i]));
+
+            for (int i = 0; i < GameBoard.Elements.RandomDropoffs.Count; i++)
+                Movements.Add(new MovementRandomDropoff(GameBoard.Elements.RandomDropoffs[i]));
+
+            for (int i = 0; i < GameBoard.Elements.ColorDropoffs.Count; i++)
+                Movements.Add(new MovementColorDropoff(GameBoard.Elements.ColorDropoffs[i]));
+
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {
-                for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
+                for (int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
                 {
-                    if(!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates),
+                    if (!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates),
                         GameBoard.ObstaclesAll,
                         Movements[iMov].Robot.RadiusOptimized))
                     {
@@ -127,7 +132,7 @@ namespace GoBot.Strategies
         private void endMatchTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Robots.MainRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
-            
+
             endMatchTimer.Stop();
             _linkMatch.Kill();
 
@@ -160,14 +165,22 @@ namespace GoBot.Strategies
             // TODOEACHYEAR Couper ICI tous les actionneurs à la fin du match et lancer la Funny Action / afficher le score
 
             Robots.MainRobot.Stop(StopMode.Freely);
-            //Plateau.Balise.VitesseRotation(0);
 
-            Devices.AllDevices.CanServos.DisableAll();
+            Actionneur.ElevatorLeft.DoElevatorFree();
+            Actionneur.ElevatorRight.DoElevatorFree();
+
+            MovementFlags moveFlags = new MovementFlags();
+            if (moveFlags.ExecuteHere())
+                GameBoard.Score += moveFlags.Score;
+
+            System.Threading.Thread.Sleep(1000);
+
+            AllDevices.CanServos.DisableAll();
 
             // On renvoie le score au cas où histoire d'assurer le truc...
 
             if (!Config.CurrentConfig.IsMiniRobot)
-                ((Pepperl)AllDevices.LidarAvoid).ShowMessage("Estimation :", ((int)(GameBoard.Score * 0.9)).ToString()); // Sous estimation pour essaye de se rapprocher su score réel
+                Robots.MainRobot.ShowMessage("Estimation :", GameBoard.Score.ToString() + " points");
         }
     }
 }

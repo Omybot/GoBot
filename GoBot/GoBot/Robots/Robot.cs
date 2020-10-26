@@ -4,12 +4,14 @@ using Geometry.Shapes;
 using GoBot.Actionneurs;
 using GoBot.Actions;
 using GoBot.BoardContext;
+using GoBot.Devices.CAN;
 using GoBot.PathFinding;
 using GoBot.Threading;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 
 namespace GoBot
 {
@@ -70,6 +72,11 @@ namespace GoBot
             TrajectoryFailed = false;
             TrajectoryCutOff = false;
             TrajectoryRunning = null;
+        }
+
+        public virtual void ShowMessage(String message1, String message2)
+        {
+
         }
 
         public override string ToString()
@@ -137,9 +144,9 @@ namespace GoBot
         public void Move(int distance, bool waitEnd = true)
         {
             if (distance > 0)
-                MoveForward(distance);
+                MoveForward(distance, waitEnd);
             else
-                MoveBackward(-distance);
+                MoveBackward(-distance, waitEnd);
         }
 
         public virtual void PivotLeft(AngleDelta angle, bool waitEnd = true)
@@ -147,14 +154,36 @@ namespace GoBot
             AsserStats.LeftRotations.Add(angle);
         }
 
+        public virtual void Pivot(AngleDelta angle, bool waitEnd = true)
+        {
+            if (angle > 0)
+                PivotLeft(angle, waitEnd);
+            else
+                PivotRight(-angle, waitEnd);
+        }
+
         public virtual void PivotRight(AngleDelta angle, bool waitEnd = true)
         {
             AsserStats.RightsRotations.Add(angle);
         }
 
-        public void SetSpeedLow()
+        public void SetSpeedSlow()
         {
             SpeedConfig.SetParams(Config.CurrentConfig.ConfigLent);
+
+            IsSpeedAdvAdaptable = false;
+        }
+
+        public void SetSpeedVerySlow()
+        {
+            SpeedConfig.SetParams(100, 500, 500, 100, 500, 500);
+
+            IsSpeedAdvAdaptable = false;
+        }
+
+        public void SetSpeedVeryFast()
+        {
+            SpeedConfig.SetParams(800, 2500, 2500, 800, 2500, 2500);
 
             IsSpeedAdvAdaptable = false;
         }
@@ -196,7 +225,32 @@ namespace GoBot
         public abstract void Stop(StopMode mode = StopMode.Smooth);
         public abstract void Turn(SensAR sensAr, SensGD sensGd, int radius, AngleDelta angle, bool waitEnd = true);
         public abstract void SetAsservOffset(Position newPosition);
-        public abstract void Recalibration(SensAR sens, bool waitEnd = true);
+        public virtual void Recalibration(SensAR sens, bool waitEnd = true, bool sendOffset = false)
+        {
+            int angle = 0;
+            double dist = sens == SensAR.Avant ? 135 : 130.5;
+
+            if (waitEnd && sendOffset)
+            {
+                if (Position.Angle.IsOnArc(0 - 20, 0 + 20))
+                    angle = 0;
+                else if (Position.Angle.IsOnArc(90 - 20, 90 + 20))
+                    angle = 90;
+                else if (Position.Angle.IsOnArc(180 - 20, 180 + 20))
+                    angle = 180;
+                else if (Position.Angle.IsOnArc(270 - 20, 270 + 20))
+                    angle = 270;
+
+                if (Position.Coordinates.X < Robots.MainRobot.Lenght)
+                    Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(dist, Robots.MainRobot.Position.Coordinates.Y)));
+                else if (Robots.MainRobot.Position.Coordinates.X > 3000 - Robots.MainRobot.Lenght)
+                    Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(3000 - dist, Robots.MainRobot.Position.Coordinates.Y)));
+                else if (Robots.MainRobot.Position.Coordinates.Y < Robots.MainRobot.Lenght)
+                    Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(Robots.MainRobot.Position.Coordinates.X, dist)));
+                else if (Robots.MainRobot.Position.Coordinates.Y > 2000 - Robots.MainRobot.Lenght)
+                    Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(Robots.MainRobot.Position.Coordinates.X, 2000 - dist)));
+            }
+        }
         public abstract void SendPID(int p, int i, int d);
         public abstract void SendPIDCap(int p, int i, int d);
         public abstract void SendPIDSpeed(int p, int i, int d);
@@ -426,7 +480,7 @@ namespace GoBot
 
         public virtual void SetMotorAtPosition(MotorID motor, int position, bool waitEnd = false)
         {
-            Historique.AjouterAction(new ActionMoteur(this, position, motor));
+            //Historique.AjouterAction(new ActionMoteur(this, position, motor));
         }
 
         public virtual void SetMotorAtOrigin(MotorID motor, bool waitEnd = false)
@@ -465,25 +519,26 @@ namespace GoBot
 
             // TODOEACHYEAR Lister les actionneurs à ranger pour préparer un match
 
-            ThreadManager.CreateThread(link =>
-            {
-                Actionneur.ElevatorLeft.DoLockerEngage();
-                Actionneur.ElevatorLeft.DoElevatorInit();
-                Actionneur.ElevatorLeft.DoLockerDisengage();
-            }).StartThread();
+            ThreadManager.CreateThread(link => { Actionneur.ElevatorLeft.DoStoreActuators(); }).StartThread();
+            ThreadManager.CreateThread(link => { Actionneur.ElevatorRight.DoStoreActuators(); }).StartThread();
 
-            ThreadManager.CreateThread(link =>
-            {
-                Actionneur.ElevatorRight.DoLockerEngage();
-                Actionneur.ElevatorRight.DoElevatorInit();
-                Actionneur.ElevatorRight.DoLockerDisengage();
-            }).StartThread(); ;
+            Actionneur.FingerLeft.DoPositionHide();
+            Actionneur.FingerRight.DoPositionHide();
 
             Actionneur.ElevatorLeft.DoGrabHide();
             Actionneur.ElevatorRight.DoGrabHide();
 
             Actionneur.Flags.DoCloseLeft();
             Actionneur.Flags.DoCloseRight();
+
+            Actionneur.Lifter.DoStoreAll();
+            Actionneur.Lifter.DoLifterPositionStore();
+            Thread.Sleep(150);
+            Actionneur.Lifter.DoTilterPositionStore();
+
+            Thread.Sleep(1000);
+
+            Devices.AllDevices.CanServos.DisableAll();
         }
 
         public void ActuatorsDeploy()

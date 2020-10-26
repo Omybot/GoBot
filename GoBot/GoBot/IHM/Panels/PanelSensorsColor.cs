@@ -75,11 +75,11 @@ namespace GoBot.IHM
             {
                 switch (sensor)
                 {
-                    case SensorColorID.BuoyLeft:
-                        picColorLeft.SetColor(color);
-                        break;
                     case SensorColorID.BuoyRight:
                         picColorRight.SetColor(color);
+                        break;
+                    case SensorColorID.BuoyLeft:
+                        picColorLeft.SetColor(color);
                         break;
                 }
             });

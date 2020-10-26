@@ -80,6 +80,7 @@
     <Compile Include="Communications\CAN\CanSubConnection.cs" />
     <Compile Include="Communications\CAN\CanFrameFactory.cs" />
     <Compile Include="Communications\CAN\CanFrameFunction.cs" />
+    <Compile Include="Devices\Buzzer.cs" />
     <Compile Include="Devices\CAN\CanServo.cs" />
     <Compile Include="Devices\Hokuyo\HokuyoRec.cs" />
     <Compile Include="Devices\CAN\CanServos.cs" />
@@ -100,6 +101,9 @@
     <Compile Include="Devices\Pepperl\PepperlManager.cs" />
     <Compile Include="BoardContext\Obstacles.cs" />
     <Compile Include="GameElements\Buoy.cs" />
+    <Compile Include="GameElements\GroundedZone.cs" />
+    <Compile Include="GameElements\ColorDropOff.cs" />
+    <Compile Include="GameElements\RandomDropOff.cs" />
     <Compile Include="IHM\Elements\PanelSensorOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -203,6 +207,10 @@
     <Compile Include="IHM\Panels\PanelStorage.Designer.cs">
       <DependentUpon>PanelStorage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Movements\MovementColorDropoff.cs" />
+    <Compile Include="Movements\MovementFlags.cs" />
+    <Compile Include="Movements\MovementGroundedZone.cs" />
+    <Compile Include="Movements\MovementRandomDropoff.cs" />
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
@@ -716,6 +724,8 @@
     <None Include="Images\Splash5.png" />
     <None Include="Images\Up64.png" />
     <None Include="Images\Down64.png" />
+    <None Include="Images\Lock64.png" />
+    <None Include="Images\Unlock64.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>
