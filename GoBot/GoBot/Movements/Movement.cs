@@ -87,7 +87,7 @@ namespace GoBot.Movements
                 bool alreadyOnPosition = (position.Coordinates.Distance(Robot.Position.Coordinates) < 10 && (position.Angle - Robot.Position.Angle) < 2);
 
                 if (!alreadyOnPosition)
-                     traj = PathFinder.ChercheTrajectoire(Robot.Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, new Position(Robot.Position), position, Robot.RadiusOptimized, Robot.Width / 2);
+                     traj = PathFinder.ChercheTrajectoire(Robot.Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, new Position(Robot.Position), position, Robot.Radius, Robot.Width / 2);
 
                 if (alreadyOnPosition || traj != null)
                 {

@@ -45,7 +45,7 @@ namespace GoBot
             else
             {
                 // Position LIDAR : 18.27cm à gauche du centre
-                MainRobot.SetDimensions(335, 271, 295, 390);
+                MainRobot.SetDimensions(335, 271, 295, 420);
             }
 
             MainRobot.PositionChanged += MainRobot_PositionChanged;

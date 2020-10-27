@@ -457,7 +457,7 @@ namespace GoBot.PathFinding
             Trajectory output = traj;
             TimeSpan currentDuration = output.GetDuration(Robots.MainRobot);
 
-            //Console.WriteLine("Avant : " + currentDuration.ToString());
+            Console.WriteLine("Avant : " + currentDuration.ToString());
 
             int iSeg = 1;
 
@@ -494,7 +494,8 @@ namespace GoBot.PathFinding
             CheminEnCoursNoeuds = null;
             CheminEnCoursNoeudsSimplifyed = null;
 
-            //Console.WriteLine("Après : " + currentDuration.ToString());
+
+            Console.WriteLine("Après : " + currentDuration.ToString());
 
             return output;
         }

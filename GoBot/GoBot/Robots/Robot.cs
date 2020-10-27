@@ -211,7 +211,7 @@ namespace GoBot
         {
             Historique.Log("Lancement pathfinding pour aller en " + dest.ToString(), TypeLog.PathFinding);
 
-            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, Position, dest, RadiusOptimized, Robots.MainRobot.Width / 2);
+            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, Position, dest, Radius, Robots.MainRobot.Width / 2);
 
             if (traj == null)
                 return false;
@@ -272,9 +272,9 @@ namespace GoBot
 
             if (typeForme1.IsAssignableFrom(typeof(Segment)))
                 if (typeForme2.IsAssignableFrom(typeof(Segment)))
-                    can = ((Segment)target).Distance((Segment)toAvoid) > RadiusOptimized + margin;
+                    can = ((Segment)target).Distance((Segment)toAvoid) > Radius + margin;
                 else
-                    can = ((Segment)target).Distance(toAvoid) > RadiusOptimized + margin;
+                    can = ((Segment)target).Distance(toAvoid) > Radius + margin;
             else if (typeForme1.IsAssignableFrom(typeof(Circle)) && typeForme1.IsAssignableFrom(typeof(RealPoint)))
             {
                 // très opportuniste
@@ -286,7 +286,7 @@ namespace GoBot
                 can = dx * dx + dy * dy > margin * margin;
             }
             else
-                can = target.Distance(toAvoid) > RadiusOptimized + margin;
+                can = target.Distance(toAvoid) > Radius + margin;
 
             return can;
         }
@@ -554,8 +554,7 @@ namespace GoBot
 
         public double Lenght { get; private set; }
         public double Width { get; private set; }
-        public double Radius { get { return Maths.Hypothenuse(Lenght, Width) / 2; } }
-        public double RadiusOptimized { get; private set; }
+        public double Radius { get; private set; }
         public double WheelSpacing { get; private set; }// Distance entre les deux roues en mm
         public double MaxWidth { get { return Math.Max(Lenght, Width); } }
 
@@ -564,7 +563,7 @@ namespace GoBot
             Width = width;
             Lenght = lenght;
             WheelSpacing = wheelSpacing;
-            RadiusOptimized = diameter / 2;
+            Radius = diameter / 2;
         }
 
         public IShape GetBounds()

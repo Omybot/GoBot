@@ -202,7 +202,7 @@ namespace GoBot
                             DessineHistoriqueTrajectoire(Robots.MainRobot, g);
 
                         if (AfficheObstacles)
-                            DessineObstacles(g);
+                            DessineObstacles(g, Robots.MainRobot);
 
                         if (AfficheElementsJeu)
                             DessineElementsJeu(g, GameBoard.Elements);
@@ -404,12 +404,14 @@ namespace GoBot
             if (c != Color.Transparent) new Circle(new RealPoint(robot.Position.Coordinates.X + center.X, robot.Position.Coordinates.Y + center.Y), 36).Paint(g, Color.Black, 1, c, Scale);
         }
 
-        private static void DessineObstacles(Graphics g)
+        private static void DessineObstacles(Graphics g, Robot robot)
         {
             g.SetClip(Scale.RealToScreenRect(new RectangleF(-GameBoard.BorderSize, -GameBoard.BorderSize, GameBoard.Width + GameBoard.BorderSize * 2, GameBoard.Height + GameBoard.BorderSize * 2)));
 
             foreach (IShape forme in GameBoard.ObstaclesAll)
                 forme.Paint(g, Color.Red, 5, Color.Transparent, Scale);
+
+            new Circle(robot.Position.Coordinates, robot.Radius).Paint(g, Color.LimeGreen, 2, Color.Transparent, Scale);
 
             DessineZoneMorte(g);
 

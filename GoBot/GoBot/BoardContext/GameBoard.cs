@@ -337,7 +337,7 @@ namespace GoBot.BoardContext
             // Création des noeuds
             for (int x = resolution / 2; x < Width; x += resolution)
                 for (int y = resolution / 2; y < Height; y += resolution)
-                    Robots.MainRobot.Graph.AddNode(new Node(x, y), _obstacles.FromBoard, Robots.MainRobot.RadiusOptimized, true);
+                    Robots.MainRobot.Graph.AddNode(new Node(x, y), _obstacles.FromBoard, Robots.MainRobot.Radius, true);
         }
 
         /// <summary>
