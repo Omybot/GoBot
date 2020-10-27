@@ -228,15 +228,20 @@ namespace GoBot
                         {
                             Point positionFin = positionCurseur;
 
-                            Bitmap bmpGrosRobot = new Bitmap(Scale.RealToScreenDistance(Robots.MainRobot.MaxWidth * 3), Scale.RealToScreenDistance(Robots.MainRobot.MaxWidth * 3));
+                            Bitmap bmpGrosRobot = new Bitmap(Scale.RealToScreenDistance(Robots.MainRobot.Diameter * 3), Scale.RealToScreenDistance(Robots.MainRobot.Diameter * 3));
                             Graphics gGros = Graphics.FromImage(bmpGrosRobot);
-                            gGros.FillRectangle(Brushes.Transparent, 0, 0, Scale.RealToScreenDistance(Robots.MainRobot.MaxWidth * 2), Scale.RealToScreenDistance(Robots.MainRobot.MaxWidth * 2));
+                            gGros.Clear(Color.Transparent);
 
                             Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
 
-                            gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Lenght / 2), Scale.RealToScreenDistance(Robots.MainRobot.Width), Scale.RealToScreenDistance(Robots.MainRobot.Lenght));
-                            gGros.DrawRectangle(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Lenght / 2), Scale.RealToScreenDistance(Robots.MainRobot.Width), Scale.RealToScreenDistance(Robots.MainRobot.Lenght));
-                            gGros.DrawLine(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Lenght / 2));
+                            Rectangle r = new Rectangle(bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2), 
+                                                        bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.LenghtFront), 
+                                                        Scale.RealToScreenDistance(Robots.MainRobot.Width), 
+                                                        Scale.RealToScreenDistance(Robots.MainRobot.LenghtTotal));
+
+                            gGros.FillRectangle(brushNoirTresTransparent, r);
+                            gGros.DrawRectangle(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, r);
+                            gGros.DrawLine(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.LenghtFront));
 
                             Point pointOrigine = Scale.RealToScreenPosition(positionDepart);
                             g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.InDegrees + 90), pointOrigine.X - bmpGrosRobot.Width / 2, pointOrigine.Y - bmpGrosRobot.Height / 2);
@@ -248,19 +253,24 @@ namespace GoBot
                         {
                             Point positionFin = positionCurseur;
 
-                            Bitmap bmpGrosRobot = new Bitmap(Scale.RealToScreenDistance(Robots.MainRobot.MaxWidth * 3), Scale.RealToScreenDistance(Robots.MainRobot.MaxWidth * 3));
+                            Bitmap bmpGrosRobot = new Bitmap(Scale.RealToScreenDistance(Robots.MainRobot.Diameter * 3), Scale.RealToScreenDistance(Robots.MainRobot.Diameter * 3));
                             Graphics gGros = Graphics.FromImage(bmpGrosRobot);
-                            gGros.FillRectangle(Brushes.Transparent, 0, 0, Scale.RealToScreenDistance(Robots.MainRobot.MaxWidth * 2), Scale.RealToScreenDistance(Robots.MainRobot.MaxWidth * 2));
+                            gGros.Clear(Color.Transparent);
 
                             Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
 
                             Point pointOrigine = Scale.RealToScreenPosition(positionDepart);
                             Position departRecule = new Position(-traj.angle, pointOrigine);
-                            departRecule.Move(Scale.RealToScreenDistance(-Robots.MainRobot.Lenght / 2));
+                            departRecule.Move(Scale.RealToScreenDistance(-Robots.MainRobot.LenghtFront));
 
-                            gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Lenght / 2), Scale.RealToScreenDistance(Robots.MainRobot.Width), Scale.RealToScreenDistance(Robots.MainRobot.Lenght));
-                            gGros.DrawRectangle(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Lenght / 2), Scale.RealToScreenDistance(Robots.MainRobot.Width), Scale.RealToScreenDistance(Robots.MainRobot.Lenght));
-                            gGros.DrawLine(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Lenght / 2));
+                            Rectangle r = new Rectangle(bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2), 
+                                                        bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.LenghtFront), 
+                                                        Scale.RealToScreenDistance(Robots.MainRobot.Width), 
+                                                        Scale.RealToScreenDistance(Robots.MainRobot.LenghtTotal));
+
+                            gGros.FillRectangle(brushNoirTresTransparent, r);
+                            gGros.DrawRectangle(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, r);
+                            gGros.DrawLine(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.LenghtFront));
 
                             g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.InDegrees + 90), (int)(departRecule.Coordinates.X) - bmpGrosRobot.Width / 2, (int)(departRecule.Coordinates.Y) - bmpGrosRobot.Height / 2);
 
@@ -355,13 +365,13 @@ namespace GoBot
             g.RotateTransform((float)(robot.Position.Angle.InDegrees));
             g.TranslateTransform(-positionRobot.X, -positionRobot.Y);
 
-            Rectangle robotRect = new Rectangle(positionRobot.X - Scale.RealToScreenDistance(robot.Lenght / 2), positionRobot.Y - Scale.RealToScreenDistance(robot.Width / 2), Scale.RealToScreenDistance(robot.Lenght), Scale.RealToScreenDistance(robot.Width));
+            Rectangle robotRect = new Rectangle(positionRobot.X - Scale.RealToScreenDistance(robot.LenghtBack), positionRobot.Y - Scale.RealToScreenDistance(robot.Width / 2), Scale.RealToScreenDistance(robot.LenghtBack + robot.LenghtFront), Scale.RealToScreenDistance(robot.Width));
 
             if (Actionneur.Lifter.Loaded)
             {
                 load = Actionneur.Lifter.Load;
                 for (int j = 0; j < load.Count; j++)
-                    PaintRobotBuoy(g, robot, new RealPoint(-160, (j-2)*75), load[j]);
+                    PaintRobotBuoy(g, robot, new RealPoint(-160, (j - 2) * 75), load[j]);
             }
 
             if (Config.CurrentConfig.IsMiniRobot)

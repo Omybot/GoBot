@@ -412,10 +412,12 @@ namespace GoBot
 
             IShape contact = GetBounds();
 
-            while (Position.Coordinates.X - Lenght / 2 > 0 &&
-                Position.Coordinates.X + Lenght / 2 < GameBoard.Width &&
-                Position.Coordinates.Y - Lenght / 2 > 0 &&
-                Position.Coordinates.Y + Lenght / 2 < GameBoard.Height)// &&
+            double lenght = sens == SensAR.Arriere ? LenghtBack : LenghtFront;
+
+            while (Position.Coordinates.X - lenght > 0 &&
+                Position.Coordinates.X + lenght < GameBoard.Width &&
+                Position.Coordinates.Y - lenght > 0 &&
+                Position.Coordinates.Y + lenght < GameBoard.Height)// &&
                 //!GameBoard.ObstaclesAll.ToList().Exists(o => o.Cross(contact))) // TODO ça marche pas on dirait le test de recallage sur les obstacles
             {
                 if (sens == SensAR.Arriere)

@@ -81,7 +81,7 @@
             this.lblPivotSpeed = new System.Windows.Forms.Label();
             this.lblPivotAccel = new System.Windows.Forms.Label();
             this.grpDisplacement = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCalibrationForward = new System.Windows.Forms.Button();
             this.contextMenuStop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numLineDecel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTeta)).BeginInit();
@@ -745,7 +745,7 @@
             // 
             // grpDisplacement
             // 
-            this.grpDisplacement.Controls.Add(this.button1);
+            this.grpDisplacement.Controls.Add(this.btnCalibrationForward);
             this.grpDisplacement.Controls.Add(this.btnStop);
             this.grpDisplacement.Controls.Add(this.btnPIDVit);
             this.grpDisplacement.Controls.Add(this.lblPivotAccel);
@@ -800,15 +800,15 @@
             this.grpDisplacement.TabStop = false;
             this.grpDisplacement.Text = "Déplacement";
             // 
-            // button1
+            // btnCalibrationForward
             // 
-            this.button1.Location = new System.Drawing.Point(289, 43);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 30);
-            this.button1.TabIndex = 124;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnCalibrationForward.Image = global::GoBot.Properties.Resources.UpLine16;
+            this.btnCalibrationForward.Location = new System.Drawing.Point(285, 24);
+            this.btnCalibrationForward.Name = "btnCalibrationForward";
+            this.btnCalibrationForward.Size = new System.Drawing.Size(30, 23);
+            this.btnCalibrationForward.TabIndex = 124;
+            this.btnCalibrationForward.UseVisualStyleBackColor = true;
+            this.btnCalibrationForward.Click += new System.EventHandler(this.btnCalibrationForward_Click);
             // 
             // PanelDisplacement
             // 
@@ -891,6 +891,6 @@
         private System.Windows.Forms.Button btnPIDPol;
         private System.Windows.Forms.Button btnPIDVit;
         private System.Windows.Forms.GroupBox grpDisplacement;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCalibrationForward;
     }
 }

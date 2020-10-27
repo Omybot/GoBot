@@ -280,7 +280,7 @@ namespace GoBot.IHM.Pages
 
                 Point pointOrigine = Dessinateur.positionDepart;
                 Position departRecule = new Position(new AnglePosition(-traj.angle), pointOrigine);
-                departRecule.Move(-Robots.MainRobot.Lenght / 2);
+                departRecule.Move(-Robots.MainRobot.LenghtFront);
                 departRecule = new Position(new AnglePosition(-traj.angle), new RealPoint(departRecule.Coordinates.X, departRecule.Coordinates.Y));
                 positionArrivee = departRecule;
 

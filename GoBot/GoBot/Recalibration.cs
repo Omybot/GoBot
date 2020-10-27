@@ -23,12 +23,12 @@ namespace GoBot
         {
             if (Config.CurrentConfig.IsMiniRobot)
             {
-                PositionLeft = new Position(0, new RealPoint(Robots.MainRobot.Lenght / 2, Robots.MainRobot.Width / 2 + 530 + 10 + 250));
+                PositionLeft = new Position(0, new RealPoint(Robots.MainRobot.LenghtTotal / 2, Robots.MainRobot.Width / 2 + 530 + 10 + 250));
                 PositionRight = new Position(180, new RealPoint(3000 - PositionLeft.Coordinates.X, PositionLeft.Coordinates.Y + 250));
             }
             else
             {
-                PositionLeft = new Position(0, new RealPoint(130.5 + 120, 150 + 530 + 10));
+                PositionLeft = new Position(0, new RealPoint(250, 690));
                 PositionRight = new Position(180, new RealPoint(3000 - PositionLeft.Coordinates.X, PositionLeft.Coordinates.Y));
             }
         }
@@ -63,9 +63,9 @@ namespace GoBot
                 Robots.MainRobot.Recalibration(SensAR.Arriere);
                 Robots.MainRobot.SetSpeedFast();
                 Robots.MainRobot.SetAsservOffset(new Position(Math.Round(Robots.MainRobot.Position.Angle.InPositiveDegrees / 90) * 90,
-                    new RealPoint(Robots.MainRobot.Position.Coordinates.X, 130.5)));
+                    new RealPoint(Robots.MainRobot.Position.Coordinates.X, Robots.MainRobot.LenghtBack)));
 
-                Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.Y - 130.5));
+                Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.Y - Robots.MainRobot.LenghtBack));
 
                 if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
                     Robots.MainRobot.PivotRight(90);
@@ -83,17 +83,17 @@ namespace GoBot
             }
             else
             {
+                Robots.MainRobot.SetAsservOffset(new Position(95, new RealPoint(GameBoard.MyColor == GameBoard.ColorLeftBlue ? 500 : 2500, 500)));
+
                 Robots.MainRobot.SendPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
                 Robots.MainRobot.Stop();
 
                 Robots.MainRobot.SetSpeedVerySlow();
                 Robots.MainRobot.MoveForward(10);
-                Robots.MainRobot.Recalibration(SensAR.Arriere);
-                Robots.MainRobot.SetSpeedSlow();
-                Robots.MainRobot.SetAsservOffset(new Position(Math.Round(Robots.MainRobot.Position.Angle.InPositiveDegrees / 90) * 90,
-                    new RealPoint(Robots.MainRobot.Position.Coordinates.X, 130.5)));
+                Robots.MainRobot.Recalibration(SensAR.Arriere, true, true);
 
-                Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.Y - 130.5));
+                Robots.MainRobot.SetSpeedSlow();
+                Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.Y - Robots.MainRobot.Position.Coordinates.Y));
 
                 if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
                     Robots.MainRobot.PivotLeft(90);
@@ -101,10 +101,9 @@ namespace GoBot
                     Robots.MainRobot.PivotRight(90);
 
                 Robots.MainRobot.SetSpeedVerySlow();
-                Robots.MainRobot.Recalibration(SensAR.Arriere);
+                Robots.MainRobot.Recalibration(SensAR.Arriere, true, true);
 
-                Robots.MainRobot.MoveForward(120);
-                Robots.MainRobot.SetAsservOffset(StartPosition);
+                Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.X - Robots.MainRobot.Position.Coordinates.X));
 
                 Robots.MainRobot.EnableStartTrigger();
                 Robots.MainRobot.SetSpeedFast();

@@ -1,17 +1,19 @@
-﻿using AStarFolder;
-using Geometry;
-using Geometry.Shapes;
-using GoBot.Actionneurs;
-using GoBot.Actions;
-using GoBot.BoardContext;
-using GoBot.Devices.CAN;
-using GoBot.PathFinding;
-using GoBot.Threading;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
+
+using AStarFolder;
+
+using Geometry;
+using Geometry.Shapes;
+
+using GoBot.Actionneurs;
+using GoBot.Actions;
+using GoBot.BoardContext;
+using GoBot.PathFinding;
+using GoBot.Threading;
 
 namespace GoBot
 {
@@ -228,7 +230,7 @@ namespace GoBot
         public virtual void Recalibration(SensAR sens, bool waitEnd = true, bool sendOffset = false)
         {
             int angle = 0;
-            double dist = sens == SensAR.Avant ? 135 : 130.5;
+            double dist = sens == SensAR.Avant ? Robots.MainRobot.LenghtFront : Robots.MainRobot.LenghtBack;
 
             if (waitEnd && sendOffset)
             {
@@ -241,13 +243,13 @@ namespace GoBot
                 else if (Position.Angle.IsOnArc(270 - 20, 270 + 20))
                     angle = 270;
 
-                if (Position.Coordinates.X < Robots.MainRobot.Lenght)
+                if (Position.Coordinates.X < Robots.MainRobot.LenghtSquare)
                     Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(dist, Robots.MainRobot.Position.Coordinates.Y)));
-                else if (Robots.MainRobot.Position.Coordinates.X > 3000 - Robots.MainRobot.Lenght)
+                else if (Robots.MainRobot.Position.Coordinates.X > 3000 - Robots.MainRobot.LenghtSquare)
                     Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(3000 - dist, Robots.MainRobot.Position.Coordinates.Y)));
-                else if (Robots.MainRobot.Position.Coordinates.Y < Robots.MainRobot.Lenght)
+                else if (Robots.MainRobot.Position.Coordinates.Y < Robots.MainRobot.LenghtSquare)
                     Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(Robots.MainRobot.Position.Coordinates.X, dist)));
-                else if (Robots.MainRobot.Position.Coordinates.Y > 2000 - Robots.MainRobot.Lenght)
+                else if (Robots.MainRobot.Position.Coordinates.Y > 2000 - Robots.MainRobot.LenghtSquare)
                     Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(Robots.MainRobot.Position.Coordinates.X, 2000 - dist)));
             }
         }
@@ -550,25 +552,27 @@ namespace GoBot
 
         #region Shape
 
-        // Avant : 135, arrière 130.5, coté : 157.44
-
-        public double Lenght { get; private set; }
+        public double LenghtFront { get; private set; }
+        public double LenghtBack { get; private set; }
+        public double LenghtTotal => LenghtBack + LenghtFront;
+        public double LenghtSquare => Math.Max(LenghtBack, LenghtFront) * 2;
         public double Width { get; private set; }
         public double Radius { get; private set; }
-        public double WheelSpacing { get; private set; }// Distance entre les deux roues en mm
-        public double MaxWidth { get { return Math.Max(Lenght, Width); } }
+        public double Diameter => Radius * 2;
+        public double WheelSpacing { get; private set; }
 
-        public void SetDimensions(double width, double lenght, double wheelSpacing, double diameter)
+        public void SetDimensions(double width, double lenghtFront, double lenghtBack, double wheelSpacing, double diameter)
         {
+            LenghtFront = lenghtFront;
+            LenghtBack = lenghtBack;
             Width = width;
-            Lenght = lenght;
             WheelSpacing = wheelSpacing;
             Radius = diameter / 2;
         }
 
         public IShape GetBounds()
         {
-            IShape contact = new PolygonRectangle(new RealPoint(Position.Coordinates.X - Lenght / 2, Position.Coordinates.Y - Width / 2), Lenght, Width);
+            IShape contact = new PolygonRectangle(new RealPoint(Position.Coordinates.X - LenghtBack / 2, Position.Coordinates.Y - Width / 2), LenghtBack + LenghtFront, Width);
             contact = contact.Rotation(new AngleDelta(Position.Angle));
 
             return contact;

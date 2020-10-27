@@ -294,7 +294,20 @@ namespace GoBot.IHM
                 btnCalibration.InvokeAuto(() => btnCalibration.Enabled = false);
                 Robot.MoveForward(10);
                 Robot.SetSpeedSlow();
-                Robot.Recalibration(SensAR.Arriere);
+                Robot.Recalibration(SensAR.Arriere, true, true);
+                Robot.SetSpeedFast();
+                btnCalibration.InvokeAuto(() => btnCalibration.Enabled = true);
+            }).StartThread();
+        }
+
+        private void btnCalibrationForward_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(link =>
+            {
+                btnCalibration.InvokeAuto(() => btnCalibration.Enabled = false);
+                Robot.MoveBackward(10);
+                Robot.SetSpeedSlow();
+                Robot.Recalibration(SensAR.Avant, true, true);
                 Robot.SetSpeedFast();
                 btnCalibration.InvokeAuto(() => btnCalibration.Enabled = true);
             }).StartThread();
@@ -359,19 +372,6 @@ namespace GoBot.IHM
             }
 
             btnPIDXY.Enabled = false;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //    Robot.Move(800);
-            //    Robot.PivotLeft(360);
-            //    Robot.Move(-800);
-            //    Console.WriteLine(Robot.Position.Angle);
-            //    Robot.Pivot(new AngleDelta(Robot.Position.Angle));
-            for (int i = 0; i < 10; i++)
-            {
-                Robot.PivotRight(360);
-            }
         }
     }
 }
