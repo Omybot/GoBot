@@ -56,10 +56,9 @@ namespace GoBot.Movements
             Actionneur.Lifter.DoOpenAll();
             Thread.Sleep(100);
             Actionneur.Lifter.DoTilterPositionStore();
-            Thread.Sleep(150);
-
             _dropoff.AddLoad(Actionneur.Lifter.Load);
             Actionneur.Lifter.Load = null;
+            Thread.Sleep(150);
 
             Actionneur.Lifter.DoStoreAll();
             Robots.MainRobot.Move(200);

@@ -30,7 +30,7 @@ namespace GoBot.GameElements
 
             for (int i = 0; i < _loads.Count; i++)
                 for (int j = 0; j < _loads[i].Count; j++)
-                    new Circle(new RealPoint(x + dx * i, _position.Y + (j - 2) * 75), 36).Paint(g, Color.Black, 1, _loads[i][j], scale);
+                    new Circle(new RealPoint(x + dx * i, _position.Y - (j - 2) * 75), 36).Paint(g, Color.Black, 1, _loads[i][j], scale);
 
             x = _position.X + (Owner == GameBoard.ColorLeftBlue ? -100 : 100);
             dx = (Owner == GameBoard.ColorLeftBlue ? 85 : -85);

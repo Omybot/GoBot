@@ -195,9 +195,6 @@ namespace GoBot
                         if (AfficheGraph || AfficheGraphArretes)
                             DessineGraph(Robots.MainRobot, g, AfficheGraph, AfficheGraphArretes);
 
-                        if (Robots.MainRobot != null)
-                            DessineRobot(Robots.MainRobot, g);
-
                         if (AfficheHistoriqueCoordonnees && Robots.MainRobot.PositionsHistorical != null)
                             DessineHistoriqueTrajectoire(Robots.MainRobot, g);
 
@@ -206,6 +203,9 @@ namespace GoBot
 
                         if (AfficheElementsJeu)
                             DessineElementsJeu(g, GameBoard.Elements);
+
+                        if (Robots.MainRobot != null)
+                            DessineRobot(Robots.MainRobot, g);
 
                         DessinePathFinding(g);
 
@@ -370,18 +370,20 @@ namespace GoBot
             if (Actionneur.Lifter.Loaded)
             {
                 load = Actionneur.Lifter.Load;
+                int offset = Actionneur.Lifter.Opened ? -55 : 0;
+
                 for (int j = 0; j < load.Count; j++)
-                    PaintRobotBuoy(g, robot, new RealPoint(-160, (j - 2) * 75), load[j]);
+                    PaintRobotBuoy(g, robot, new RealPoint(offset - 160, (j - 2) * 75), load[j]);
             }
 
-            Rectangle extendedRect = robotRect;
-            extendedRect.Height = (int)((double)robotRect.Height / Properties.Resources.Robot.Height * Properties.Resources.GrabberLeft.Height);
-            extendedRect.Y -= (extendedRect.Height - robotRect.Height) / 2;
+            Rectangle grabberRect = robotRect;
+            grabberRect.Height = (int)((double)robotRect.Height / Properties.Resources.Robot.Height * Properties.Resources.GrabberLeft.Height);
+            grabberRect.Y -= (grabberRect.Height - robotRect.Height) / 2;
 
             if (Actionneur.ElevatorLeft.GrabberOpened)
-                g.DrawImage(Properties.Resources.GrabberLeft, extendedRect);
+                g.DrawImage(Properties.Resources.GrabberLeft, grabberRect);
             if (Actionneur.ElevatorRight.GrabberOpened)
-                g.DrawImage(Properties.Resources.GrabberRight, extendedRect);
+                g.DrawImage(Properties.Resources.GrabberRight, grabberRect);
 
             if (Config.CurrentConfig.IsMiniRobot)
                 g.DrawImage(Properties.Resources.RobotMiniClose, robotRect);
@@ -417,13 +419,29 @@ namespace GoBot
 
             if (Actionneur.Flags.LeftOpened)
             {
-                RectangleF flagRect = new RectangleF((float)robot.Position.Coordinates.X - 80, (float)robot.Position.Coordinates.Y - 20, 70, 53);
-                g.DrawImage(Properties.Resources.FlagT2, Scale.RealToScreenRect(flagRect));
+                RectangleF flagRect = new RectangleF((float)robot.Position.Coordinates.X - 20, (float)robot.Position.Coordinates.Y - 140, 53, 70);
+
+                Bitmap img = new Bitmap(Properties.Resources.FlagT2);
+                img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                g.DrawImage(img, Scale.RealToScreenRect(flagRect));
+                img.Dispose();
             }
             if (Actionneur.Flags.RightOpened)
             {
-                RectangleF flagRect = new RectangleF((float)robot.Position.Coordinates.X - 80, (float)robot.Position.Coordinates.Y + 20, 70, 53);
+                RectangleF flagRect = new RectangleF((float)robot.Position.Coordinates.X - 20, (float)robot.Position.Coordinates.Y + 140 - 70, 53, 70);
                 g.DrawImage(Properties.Resources.FlagO2, Scale.RealToScreenRect(flagRect));
+
+                Bitmap img = new Bitmap(Properties.Resources.FlagO2);
+                img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                g.DrawImage(img, Scale.RealToScreenRect(flagRect));
+                img.Dispose();
+            }
+            if (Actionneur.Lifter.Opened)
+            {
+                Rectangle lifterRect = robotRect;
+                lifterRect.Width = (int)((double)robotRect.Width / Properties.Resources.Robot.Width * Properties.Resources.Lifter.Width);
+                lifterRect.X -= (lifterRect.Width - robotRect.Width) / 2;
+                g.DrawImage(Properties.Resources.Lifter, lifterRect);
             }
 
             g.ResetTransform();

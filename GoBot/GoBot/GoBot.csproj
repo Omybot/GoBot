@@ -645,7 +645,6 @@
     <None Include="Images\BottomToRigth16.png" />
     <None Include="Images\Webcam.jpg" />
     <None Include="Images\Vumetre.png" />
-    <None Include="Images\Splash.png" />
     <None Include="Images\TablePlan.png" />
     <None Include="Images\Turtle.png" />
     <None Include="Images\Rabbit.png" />
@@ -730,6 +729,7 @@
     <None Include="Images\GrabberRight.png" />
     <None Include="Images\FlagO2.png" />
     <None Include="Images\FlagT2.png" />
+    <None Include="Images\Lifter.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

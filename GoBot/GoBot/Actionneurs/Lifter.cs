@@ -19,14 +19,20 @@ namespace GoBot.Actionneurs
 
         private List<Color> _load;
 
+        private bool _tilterStored, _lifterStored;
+
         public Lifter()
         {
             _clamps = new List<ServoClamp> { Config.CurrentConfig.ServoClamp1, Config.CurrentConfig.ServoClamp2, Config.CurrentConfig.ServoClamp3, Config.CurrentConfig.ServoClamp4, Config.CurrentConfig.ServoClamp5 };
             _lifter = Config.CurrentConfig.ServoLifter;
             _tilter = Config.CurrentConfig.ServoTilter;
+
+            _tilterStored = true;
+            _lifterStored = true;
         }
 
         public bool Loaded => _load != null;
+        public bool Opened => !_tilterStored || !_lifterStored;
 
         public List<Color> Load
         {
@@ -79,31 +85,37 @@ namespace GoBot.Actionneurs
 
         public void DoLifterPositionExtract()
         {
+            _lifterStored = false;
             _lifter.SendPosition(_lifter.PositionExtract);
         }
 
         public void DoLifterPositionStore()
         {
+            _lifterStored = true;
             _lifter.SendPosition(_lifter.PositionStore);
         }
 
         public void DoTilterPositionStore()
         {
+            _tilterStored = true;
             _tilter.SendPosition(_tilter.PositionStore);
         }
 
         public void DoTilterPositionPickup()
         {
+            _tilterStored = false;
             _tilter.SendPosition(_tilter.PositionPickup);
         }
 
         public void DoTilterPositionExtract()
         {
+            _tilterStored = false;
             _tilter.SendPosition(_tilter.PositionExtract);
         }
 
         public void DoTilterPositionDropoff()
         {
+            _tilterStored = false;
             _tilter.SendPosition(_tilter.PositionDropoff);
         }
 
