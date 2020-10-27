@@ -313,9 +313,29 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FlagO2 {
+            get {
+                object obj = ResourceManager.GetObject("FlagO2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FlagT {
             get {
                 object obj = ResourceManager.GetObject("FlagT", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagT2 {
+            get {
+                object obj = ResourceManager.GetObject("FlagT2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

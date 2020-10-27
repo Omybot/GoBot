@@ -234,9 +234,9 @@ namespace GoBot
 
                             Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
 
-                            Rectangle r = new Rectangle(bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2), 
-                                                        bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.LenghtFront), 
-                                                        Scale.RealToScreenDistance(Robots.MainRobot.Width), 
+                            Rectangle r = new Rectangle(bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2),
+                                                        bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.LenghtFront),
+                                                        Scale.RealToScreenDistance(Robots.MainRobot.Width),
                                                         Scale.RealToScreenDistance(Robots.MainRobot.LenghtTotal));
 
                             gGros.FillRectangle(brushNoirTresTransparent, r);
@@ -263,9 +263,9 @@ namespace GoBot
                             Position departRecule = new Position(-traj.angle, pointOrigine);
                             departRecule.Move(Scale.RealToScreenDistance(-Robots.MainRobot.LenghtFront));
 
-                            Rectangle r = new Rectangle(bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2), 
-                                                        bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.LenghtFront), 
-                                                        Scale.RealToScreenDistance(Robots.MainRobot.Width), 
+                            Rectangle r = new Rectangle(bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.MainRobot.Width / 2),
+                                                        bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.MainRobot.LenghtFront),
+                                                        Scale.RealToScreenDistance(Robots.MainRobot.Width),
                                                         Scale.RealToScreenDistance(Robots.MainRobot.LenghtTotal));
 
                             gGros.FillRectangle(brushNoirTresTransparent, r);
@@ -414,6 +414,17 @@ namespace GoBot
 
             PaintRobotBuoy(g, robot, new RealPoint(-86.5, -193.5), Actionneur.FingerLeft.Load);
             PaintRobotBuoy(g, robot, new RealPoint(-86.5, 193.5), Actionneur.FingerRight.Load);
+
+            if (Actionneur.Flags.LeftOpened)
+            {
+                RectangleF flagRect = new RectangleF((float)robot.Position.Coordinates.X - 80, (float)robot.Position.Coordinates.Y - 20, 70, 53);
+                g.DrawImage(Properties.Resources.FlagT2, Scale.RealToScreenRect(flagRect));
+            }
+            if (Actionneur.Flags.RightOpened)
+            {
+                RectangleF flagRect = new RectangleF((float)robot.Position.Coordinates.X - 80, (float)robot.Position.Coordinates.Y + 20, 70, 53);
+                g.DrawImage(Properties.Resources.FlagO2, Scale.RealToScreenRect(flagRect));
+            }
 
             g.ResetTransform();
         }

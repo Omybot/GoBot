@@ -728,6 +728,8 @@
     <None Include="Images\Unlock64.png" />
     <None Include="Images\GrabberLeft.png" />
     <None Include="Images\GrabberRight.png" />
+    <None Include="Images\FlagO2.png" />
+    <None Include="Images\FlagT2.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>
