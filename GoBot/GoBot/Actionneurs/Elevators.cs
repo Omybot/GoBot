@@ -85,6 +85,8 @@ namespace GoBot.Actionneurs
         private List<Tuple<PositionLoad, PositionFloor>> _pickupOrder;
         private List<Tuple<PositionLoad, PositionFloor>> _dropoffOrder;
 
+        private bool _grabberOpened;
+
         private enum PositionLoad
         {
             First,
@@ -101,6 +103,8 @@ namespace GoBot.Actionneurs
         public Elevator()
         {
             _isInitialized = false;
+            _grabberOpened = false;
+
             _buoysSecond = Enumerable.Repeat(Color.Transparent, 3).ToList();
             _buoysFirst = Enumerable.Repeat(Color.Transparent, 4).ToList();
 
@@ -125,6 +129,7 @@ namespace GoBot.Actionneurs
 
         public List<Color> LoadFirst => _buoysFirst;
         public List<Color> LoadSecond => _buoysSecond;
+        public bool GrabberOpened => _grabberOpened;
 
         public void FillWith(Color c)
         {
@@ -147,21 +152,25 @@ namespace GoBot.Actionneurs
         public void DoGrabOpen()
         {
             _servoGraber.SendPosition(_servoGraber.PositionOpen);
+            _grabberOpened = true;
         }
 
         public void DoGrabRelease()
         {
             _servoGraber.SendPosition(_servoGraber.PositionRelease);
+            _grabberOpened = false;
         }
 
         public void DoGrabClose()
         {
             _servoGraber.SendPosition(_servoGraber.PositionClose);
+            _grabberOpened = false;
         }
 
         public void DoGrabHide()
         {
             _servoGraber.SendPosition(_servoGraber.PositionHide);
+            _grabberOpened = false;
         }
         public void DoLockerEngage()
         {

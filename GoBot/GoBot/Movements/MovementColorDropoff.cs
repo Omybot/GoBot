@@ -104,6 +104,7 @@ namespace GoBot.Movements
 
                 Robot.MoveBackward(250);
                 Actionneur.ElevatorLeft.DoGrabOpen();
+                Actionneur.ElevatorRight.DoGrabOpen();
                 Robot.MoveForward(250 - 85);
 
                 int score = 0;
@@ -128,6 +129,9 @@ namespace GoBot.Movements
             }
 
             Robot.Move((int)(Positions[0].Coordinates.Y - Robot.Position.Coordinates.Y) - 100); // TODO tester la présence d'un adversaire ptet ?
+
+            Actionneur.ElevatorLeft.DoGrabClose();
+            Actionneur.ElevatorRight.DoGrabClose();
 
             Robot.SetSpeedFast();
 

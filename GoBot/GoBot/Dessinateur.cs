@@ -374,6 +374,15 @@ namespace GoBot
                     PaintRobotBuoy(g, robot, new RealPoint(-160, (j - 2) * 75), load[j]);
             }
 
+            Rectangle extendedRect = robotRect;
+            extendedRect.Height = (int)((double)robotRect.Height / Properties.Resources.Robot.Height * Properties.Resources.GrabberLeft.Height);
+            extendedRect.Y -= (extendedRect.Height - robotRect.Height) / 2;
+
+            if (Actionneur.ElevatorLeft.GrabberOpened)
+                g.DrawImage(Properties.Resources.GrabberLeft, extendedRect);
+            if (Actionneur.ElevatorRight.GrabberOpened)
+                g.DrawImage(Properties.Resources.GrabberRight, extendedRect);
+
             if (Config.CurrentConfig.IsMiniRobot)
                 g.DrawImage(Properties.Resources.RobotMiniClose, robotRect);
             else
