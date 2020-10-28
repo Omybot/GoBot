@@ -462,7 +462,12 @@ namespace GoBot
 
             IsInLineMove = true;
 
-            Frame frame = UdpFrameFactory.Deplacer(SensAR.Avant, distance, this);
+            Frame frame;
+            if (distance < 0)
+                frame = UdpFrameFactory.Deplacer(SensAR.Arriere, -distance, this);
+            else
+                frame = UdpFrameFactory.Deplacer(SensAR.Avant, distance, this);
+
             _asserConnection.SendMessage(frame);
 
             Historique.AjouterAction(new ActionAvance(this, distance));
@@ -483,7 +488,12 @@ namespace GoBot
 
             IsInLineMove = true;
 
-            Frame frame = UdpFrameFactory.Deplacer(SensAR.Arriere, distance, this);
+            Frame frame;
+            if (distance < 0)
+                frame = UdpFrameFactory.Deplacer(SensAR.Avant, -distance, this);
+            else
+                frame = UdpFrameFactory.Deplacer(SensAR.Arriere, distance, this);
+
             _asserConnection.SendMessage(frame);
 
             Historique.AjouterAction(new ActionRecule(this, distance));

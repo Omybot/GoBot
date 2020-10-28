@@ -202,6 +202,11 @@ namespace GoBot.Actionneurs
             Thread.Sleep(750); // TODO régler la tempo
         }
 
+        public void DoPushInsideFast()
+        {
+            _servoPush.SendPosition(_servoPush.PositionClose);
+        }
+
         public void DoPushOutside()
         {
             _servoPush.SendPosition(_servoPush.PositionOpen);

@@ -38,8 +38,9 @@ namespace GoBot.Devices
                 // On est censés être connectés mais en fait non, donc on essaie de relancer
                 lock (this)
                 {
-                    StopLoop();
-                    StartLoop();
+                    // TODO : ou pas... ça déconne on dirait
+                    //StopLoop();
+                    //StartLoop();
                 }
             }
         }

@@ -106,7 +106,7 @@ namespace GoBot.Devices
             _comm.SendCommand(PepperlCmd.ScanStop,
                                 PepperlConst.ParamUdpHandle, _handle);
 
-            _udp.Close();
+            _udp?.Close();
             _udp = null;
 
             _handle = null;

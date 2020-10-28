@@ -34,6 +34,7 @@ namespace GoBot.Strategies
 
             // Sortir ICI de la zonde de départ
             robot.UpdateGraph(GameBoard.ObstaclesAll);
+
             robot.MoveForward((int)(850 - 120 - Robots.MainRobot.LenghtBack)); // Pour s'aligner sur le centre de l'écueil
 
             robot.GoToAngle(-90);

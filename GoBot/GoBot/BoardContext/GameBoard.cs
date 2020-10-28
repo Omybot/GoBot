@@ -50,15 +50,6 @@ namespace GoBot.BoardContext
                 _bounds = new PolygonRectangle(new RealPoint(0, 0), 3000, 2000);
 
                 StartDetection();
-
-                if (Config.CurrentConfig.IsMiniRobot)
-                {
-                    _currentStrategy = new StrategyMini();
-                }
-                else
-                {
-                    _currentStrategy = new StrategyMatch();
-                }
             }
         }
 
@@ -309,7 +300,7 @@ namespace GoBot.BoardContext
                 }
             }
 
-            if (obstacles.Count > 0) SetOpponents(obstacles);
+            SetOpponents(obstacles);
         }
 
         /// <summary>

@@ -19,8 +19,8 @@ namespace GoBot.GameElements
         {
             _loads = new List<List<Color>>();
 
-            _loadOnTop = new List<Color>() { Buoy.Green, Buoy.Red, Buoy.Red, Buoy.Red, Buoy.Red };
-            _loadOnBottom = new List<Color>() { Buoy.Red, Buoy.Green, Buoy.Green, Buoy.Green, Buoy.Green };
+            _loadOnTop = null;
+            _loadOnBottom = null;
         }
 
         public int LoadsCount => _loads.Count;

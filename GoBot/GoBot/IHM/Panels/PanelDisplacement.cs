@@ -294,7 +294,7 @@ namespace GoBot.IHM
                 btnCalibration.InvokeAuto(() => btnCalibration.Enabled = false);
                 Robot.MoveForward(10);
                 Robot.SetSpeedSlow();
-                Robot.Recalibration(SensAR.Arriere, true, true);
+                Robot.Recalibration(SensAR.Arriere, true, false);
                 Robot.SetSpeedFast();
                 btnCalibration.InvokeAuto(() => btnCalibration.Enabled = true);
             }).StartThread();

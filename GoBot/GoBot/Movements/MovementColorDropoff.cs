@@ -33,7 +33,7 @@ namespace GoBot.Movements
 
         public override int Score => 0; // On va compter les points de ménière plus précise
 
-        public override double Value => Actionneur.ElevatorLeft.CountTotal + Actionneur.ElevatorLeft.CountTotal;
+        public override double Value => (Actionneur.ElevatorLeft.CountTotal + Actionneur.ElevatorLeft.CountTotal) / 1000f;
 
         public override GameElement Element => _zone;
 
@@ -97,15 +97,14 @@ namespace GoBot.Movements
                 Color cLeft = Actionneur.FingerLeft.Load;
                 Color cRight = Actionneur.FingerRight.Load;
 
-                _zone.SetPendingLeft(cLeft, new RealPoint(Robot.Position.Coordinates.X + 193.5, Robot.Position.Coordinates.Y - 86.5));
-                Actionneur.FingerLeft.DoRelease();
-                _zone.SetPendingRight(cRight, new RealPoint(Robot.Position.Coordinates.X - 193.5, Robot.Position.Coordinates.Y - 86.5));
+                Robot.MoveBackward(90);
+                Robot.PivotLeft(82);
+                _zone.SetPendingRight(cRight, new RealPoint(Robot.Position.Coordinates.X + 193.5, Robot.Position.Coordinates.Y + 86.5).Rotation(Robot.Position.Angle.InPositiveDegrees + 90, Robot.Position.Coordinates));
                 Actionneur.FingerRight.DoRelease();
-
-                Robot.MoveBackward(250);
-                Actionneur.ElevatorLeft.DoGrabOpen();
-                Actionneur.ElevatorRight.DoGrabOpen();
-                Robot.MoveForward(250 - 85);
+                Robot.PivotRight(164);
+                _zone.SetPendingLeft(cLeft, new RealPoint(Robot.Position.Coordinates.X - 193.5, Robot.Position.Coordinates.Y + 86.5).Rotation(Robot.Position.Angle.InPositiveDegrees + 90, Robot.Position.Coordinates));
+                Actionneur.FingerLeft.DoRelease();
+                Robot.PivotLeft(82);
 
                 int score = 0;
                 int level = _zone.GetAvailableLevel();
@@ -128,7 +127,7 @@ namespace GoBot.Movements
                 GameBoard.Score += score;
             }
 
-            Robot.Move((int)(Positions[0].Coordinates.Y - Robot.Position.Coordinates.Y) - 100); // TODO tester la présence d'un adversaire ptet ?
+            //Robot.Move((int)(Positions[0].Coordinates.Y - Robot.Position.Coordinates.Y) - 100); // TODO tester la présence d'un adversaire ptet ?
 
             Actionneur.ElevatorLeft.DoGrabClose();
             Actionneur.ElevatorRight.DoGrabClose();
@@ -197,8 +196,8 @@ namespace GoBot.Movements
             }
 
             // Pour ranger à la fin :
-            Actionneur.ElevatorLeft.DoPushInside();
-            Actionneur.ElevatorRight.DoPushInside();
+            Actionneur.ElevatorLeft.DoPushInsideFast();
+            Actionneur.ElevatorRight.DoPushInsideFast();
         }
 
         protected override void MovementEnd()

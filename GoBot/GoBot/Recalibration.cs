@@ -83,7 +83,7 @@ namespace GoBot
             }
             else
             {
-                Robots.MainRobot.SetAsservOffset(new Position(95, new RealPoint(GameBoard.MyColor == GameBoard.ColorLeftBlue ? 500 : 2500, 500)));
+                Robots.MainRobot.SetAsservOffset(new Position(92, new RealPoint(GameBoard.MyColor == GameBoard.ColorLeftBlue ? 500 : 2500, 500)));
 
                 Robots.MainRobot.SendPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
                 Robots.MainRobot.Stop();
@@ -93,7 +93,7 @@ namespace GoBot
                 Robots.MainRobot.Recalibration(SensAR.Arriere, true, true);
 
                 Robots.MainRobot.SetSpeedSlow();
-                Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.Y - Robots.MainRobot.Position.Coordinates.Y));
+                Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.Y - Robots.MainRobot.LenghtBack));
 
                 if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
                     Robots.MainRobot.PivotLeft(90);
@@ -103,8 +103,12 @@ namespace GoBot
                 Robots.MainRobot.SetSpeedVerySlow();
                 Robots.MainRobot.Recalibration(SensAR.Arriere, true, true);
 
-                Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.X - Robots.MainRobot.Position.Coordinates.X));
+                if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
+                    Robots.MainRobot.Move((int)Math.Abs(StartPosition.Coordinates.X - Robots.MainRobot.LenghtBack));
+                else
+                    Robots.MainRobot.Move((int)Math.Abs((3000 - StartPosition.Coordinates.X) - Robots.MainRobot.LenghtBack));
 
+                Robots.MainRobot.SetAsservOffset(StartPosition);
                 Robots.MainRobot.EnableStartTrigger();
                 Robots.MainRobot.SetSpeedFast();
             }
