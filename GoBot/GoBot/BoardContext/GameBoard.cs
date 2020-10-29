@@ -50,6 +50,15 @@ namespace GoBot.BoardContext
                 _bounds = new PolygonRectangle(new RealPoint(0, 0), 3000, 2000);
 
                 StartDetection();
+
+                if (Config.CurrentConfig.IsMiniRobot)
+                {
+                    _currentStrategy = new StrategyMini();
+                }
+                else
+                {
+                    _currentStrategy = new StrategyMatch();
+                }
             }
         }
 
@@ -81,6 +90,16 @@ namespace GoBot.BoardContext
                     _myColor = value;
                     MyColorChange?.Invoke(null, null);
                     if (_obstacles != null) Robots.MainRobot.UpdateGraph(_obstacles.FromAllExceptBoard);
+
+
+                    if (Config.CurrentConfig.IsMiniRobot)
+                    {
+                        _currentStrategy = new StrategyMini();
+                    }
+                    else
+                    {
+                        _currentStrategy = new StrategyMatch();
+                    }
                 }
             }
         }
@@ -251,12 +270,7 @@ namespace GoBot.BoardContext
                             return new Circle(p, _currentOpponentRadius);
                     }
 
-                    else if (_obstacles.BalanceYellow.Contains(p) && _myColor == ColorRightYellow)
-                        return new Circle(p, _currentOpponentRadius / 3);
-                    else if (_obstacles.BalanceViolet.Contains(p) && _myColor == ColorLeftBlue)
-                        return new Circle(p, _currentOpponentRadius / 3);
-                    else
-                        return new Circle(p, _currentOpponentRadius);
+                    return new Circle(p, _currentOpponentRadius);
 
                 }).ToList());
 

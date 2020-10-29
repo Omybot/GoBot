@@ -1,4 +1,5 @@
-﻿using GoBot.Devices;
+﻿using GoBot.BoardContext;
+using GoBot.Devices;
 using GoBot.GameElements;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace GoBot.Actionneurs
         private static FingerRight _fingerRight;
         private static ElevatorRight _elevatorRight;
         private static ElevatorLeft _elevatorLeft;
+
         private static Lifter _lifter;
 
         public static void Init()
@@ -36,5 +38,14 @@ namespace GoBot.Actionneurs
         public static ElevatorRight ElevatorRight { get => _elevatorRight; }
         public static ElevatorLeft ElevatorLeft { get => _elevatorLeft; }
         public static Lifter Lifter { get => _lifter; }
+
+        public static Elevator FindElevator(Color color)
+        {
+            if (color == Buoy.Red)
+                return _elevatorLeft;
+            else
+                return _elevatorRight;
+        }
+
     }
 }

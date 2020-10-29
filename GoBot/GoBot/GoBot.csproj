@@ -103,6 +103,7 @@
     <Compile Include="GameElements\Buoy.cs" />
     <Compile Include="GameElements\GroundedZone.cs" />
     <Compile Include="GameElements\ColorDropOff.cs" />
+    <Compile Include="GameElements\LightHouse.cs" />
     <Compile Include="GameElements\RandomDropOff.cs" />
     <Compile Include="IHM\Elements\PanelSensorOnOff.cs">
       <SubType>UserControl</SubType>
@@ -133,6 +134,12 @@
     </Compile>
     <Compile Include="IHM\PagesPanda\PagePandaActuators.Designer.cs">
       <DependentUpon>PagePandaActuators.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaTable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaTable.Designer.cs">
+      <DependentUpon>PagePandaTable.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PagesPanda\PagePandaMove.cs">
       <SubType>UserControl</SubType>
@@ -207,9 +214,11 @@
     <Compile Include="IHM\Panels\PanelStorage.Designer.cs">
       <DependentUpon>PanelStorage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Movements\MovementBuoy.cs" />
     <Compile Include="Movements\MovementColorDropoff.cs" />
     <Compile Include="Movements\MovementFlags.cs" />
     <Compile Include="Movements\MovementGroundedZone.cs" />
+    <Compile Include="Movements\MovementLightHouse.cs" />
     <Compile Include="Movements\MovementRandomDropoff.cs" />
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
@@ -473,6 +482,9 @@
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaActuators.resx">
       <DependentUpon>PagePandaActuators.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PagesPanda\PagePandaTable.resx">
+      <DependentUpon>PagePandaTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaMove.resx">
       <DependentUpon>PagePandaMove.cs</DependentUpon>
     </EmbeddedResource>
@@ -730,6 +742,7 @@
     <None Include="Images\FlagO2.png" />
     <None Include="Images\FlagT2.png" />
     <None Include="Images\Lifter.png" />
+    <None Include="Images\Skull.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -230,27 +230,31 @@ namespace GoBot
         public virtual void Recalibration(SensAR sens, bool waitEnd = true, bool sendOffset = false)
         {
             int angle = 0;
-            double dist = sens == SensAR.Avant ? Robots.MainRobot.LenghtFront : Robots.MainRobot.LenghtBack;
+
+            double toleranceXY = 30;
+            double toleranceTheta = 3;
+
+            double dist = (sens == SensAR.Avant ? Robots.MainRobot.LenghtFront : Robots.MainRobot.LenghtBack);
 
             if (waitEnd && sendOffset)
             {
-                if (Position.Angle.IsOnArc(0 - 20, 0 + 20))
+                if (Position.Angle.IsOnArc(0 - toleranceTheta, 0 + toleranceTheta))
                     angle = 0;
-                else if (Position.Angle.IsOnArc(90 - 20, 90 + 20))
+                else if (Position.Angle.IsOnArc(90 - toleranceTheta, 90 + toleranceTheta))
                     angle = 90;
-                else if (Position.Angle.IsOnArc(180 - 20, 180 + 20))
+                else if (Position.Angle.IsOnArc(180 - toleranceTheta, 180 + toleranceTheta))
                     angle = 180;
-                else if (Position.Angle.IsOnArc(270 - 20, 270 + 20))
+                else if (Position.Angle.IsOnArc(270 - toleranceTheta, 270 + toleranceTheta))
                     angle = 270;
 
-                if (Position.Coordinates.X < Robots.MainRobot.LenghtSquare)
-                    Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(dist, Robots.MainRobot.Position.Coordinates.Y)));
-                else if (Robots.MainRobot.Position.Coordinates.X > 3000 - Robots.MainRobot.LenghtSquare)
-                    Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(3000 - dist, Robots.MainRobot.Position.Coordinates.Y)));
-                else if (Robots.MainRobot.Position.Coordinates.Y < Robots.MainRobot.LenghtSquare)
-                    Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(Robots.MainRobot.Position.Coordinates.X, dist)));
-                else if (Robots.MainRobot.Position.Coordinates.Y > 2000 - Robots.MainRobot.LenghtSquare)
-                    Robots.MainRobot.SetAsservOffset(new Position(angle, new RealPoint(Robots.MainRobot.Position.Coordinates.X, 2000 - dist)));
+                if (Position.Coordinates.X < dist + toleranceXY && Position.Coordinates.X > dist - toleranceTheta)
+                    SetAsservOffset(new Position(angle, new RealPoint(dist, Position.Coordinates.Y)));
+                else if (Position.Coordinates.X > 3000 - dist)
+                    SetAsservOffset(new Position(angle, new RealPoint(3000 - dist, Position.Coordinates.Y)));
+                else if (Position.Coordinates.Y < dist)
+                    SetAsservOffset(new Position(angle, new RealPoint(Position.Coordinates.X, dist)));
+                else if (Position.Coordinates.Y > 2000 - dist)
+                    SetAsservOffset(new Position(angle, new RealPoint(Position.Coordinates.X, 2000 - dist)));
             }
         }
         public abstract void SendPID(int p, int i, int d);

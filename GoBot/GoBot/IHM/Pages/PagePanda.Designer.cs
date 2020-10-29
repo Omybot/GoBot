@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagePanda));
             this.tabControlPanda = new System.Windows.Forms.TabControl();
             this.tabPandaMatch = new System.Windows.Forms.TabPage();
-            this.pnlMatch = new GoBot.IHM.Pages.PagePandaMatch();
+            this.pagePandaMatch = new GoBot.IHM.Pages.PagePandaMatch();
             this.tabPandaMove = new System.Windows.Forms.TabPage();
             this.pnlPandaMove = new GoBot.IHM.Pages.PagePandaMove();
             this.tabPandaActuators = new System.Windows.Forms.TabPage();
@@ -56,6 +56,8 @@
             this.picServo4 = new System.Windows.Forms.PictureBox();
             this.picCAN = new System.Windows.Forms.PictureBox();
             this.picServo2 = new System.Windows.Forms.PictureBox();
+            this.tabPandaTable = new System.Windows.Forms.TabPage();
+            this.pagePandaTable = new GoBot.IHM.Pages.PagePandaTable();
             this.tabControlPanda.SuspendLayout();
             this.tabPandaMatch.SuspendLayout();
             this.tabPandaMove.SuspendLayout();
@@ -76,11 +78,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.picServo4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).BeginInit();
+            this.tabPandaTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlPanda
             // 
             this.tabControlPanda.Controls.Add(this.tabPandaMatch);
+            this.tabControlPanda.Controls.Add(this.tabPandaTable);
             this.tabControlPanda.Controls.Add(this.tabPandaMove);
             this.tabControlPanda.Controls.Add(this.tabPandaActuators);
             this.tabControlPanda.Controls.Add(this.tabPandaLidar);
@@ -94,7 +98,7 @@
             // 
             // tabPandaMatch
             // 
-            this.tabPandaMatch.Controls.Add(this.pnlMatch);
+            this.tabPandaMatch.Controls.Add(this.pagePandaMatch);
             this.tabPandaMatch.Location = new System.Drawing.Point(4, 22);
             this.tabPandaMatch.Name = "tabPandaMatch";
             this.tabPandaMatch.Padding = new System.Windows.Forms.Padding(3);
@@ -104,11 +108,11 @@
             // 
             // pnlMatch
             // 
-            this.pnlMatch.BackColor = System.Drawing.Color.Black;
-            this.pnlMatch.Location = new System.Drawing.Point(6, 6);
-            this.pnlMatch.Name = "pnlMatch";
-            this.pnlMatch.Size = new System.Drawing.Size(920, 600);
-            this.pnlMatch.TabIndex = 0;
+            this.pagePandaMatch.BackColor = System.Drawing.Color.Black;
+            this.pagePandaMatch.Location = new System.Drawing.Point(6, 6);
+            this.pagePandaMatch.Name = "pnlMatch";
+            this.pagePandaMatch.Size = new System.Drawing.Size(920, 600);
+            this.pagePandaMatch.TabIndex = 0;
             // 
             // tabPandaMove
             // 
@@ -210,7 +214,7 @@
             // 
             // lblBattery
             // 
-            this.lblBattery.Font = new System.Drawing.Font("Monospac821 BT", 14F, System.Drawing.FontStyle.Bold);
+            this.lblBattery.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
             this.lblBattery.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblBattery.Location = new System.Drawing.Point(6, 212);
             this.lblBattery.Name = "lblBattery";
@@ -351,6 +355,25 @@
             this.picServo2.TabIndex = 3;
             this.picServo2.TabStop = false;
             // 
+            // tabPandaTable
+            // 
+            this.tabPandaTable.Controls.Add(this.pagePandaTable);
+            this.tabPandaTable.Location = new System.Drawing.Point(4, 22);
+            this.tabPandaTable.Name = "tabPandaTable";
+            this.tabPandaTable.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPandaTable.Size = new System.Drawing.Size(1034, 611);
+            this.tabPandaTable.TabIndex = 4;
+            this.tabPandaTable.Text = "Table";
+            this.tabPandaTable.UseVisualStyleBackColor = true;
+            // 
+            // pagePandaTable
+            // 
+            this.pagePandaTable.BackColor = System.Drawing.Color.Black;
+            this.pagePandaTable.Location = new System.Drawing.Point(6, 6);
+            this.pagePandaTable.Name = "pagePandaTable";
+            this.pagePandaTable.Size = new System.Drawing.Size(920, 600);
+            this.pagePandaTable.TabIndex = 0;
+            // 
             // PagePanda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,6 +405,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picServo4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).EndInit();
+            this.tabPandaTable.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -390,7 +414,7 @@
 
         private System.Windows.Forms.TabControl tabControlPanda;
         private System.Windows.Forms.TabPage tabPandaMatch;
-        private PagePandaMatch pnlMatch;
+        private PagePandaMatch pagePandaMatch;
         private System.Windows.Forms.TabPage tabPandaLidar;
         private System.Windows.Forms.TabPage tabPandaMove;
         private PagePandaMove pnlPandaMove;
@@ -414,5 +438,7 @@
         private System.Windows.Forms.PictureBox picServo2;
         private PagePandaLidar pagePandaLidar;
         private WorldPanel picWorld;
+        private System.Windows.Forms.TabPage tabPandaTable;
+        private PagePandaTable pagePandaTable;
     }
 }

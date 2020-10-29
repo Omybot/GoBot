@@ -33,7 +33,7 @@ namespace GoBot.Movements
 
         public override int Score => 0; // On va compter les points de ménière plus précise
 
-        public override double Value => (Actionneur.ElevatorLeft.CountTotal + Actionneur.ElevatorLeft.CountTotal) / 1000f;
+        public override double Value => GameBoard.Strategy.TimeBeforeEnd.TotalSeconds > 35 ? 0.3 : 5;
 
         public override GameElement Element => _zone;
 
@@ -44,11 +44,22 @@ namespace GoBot.Movements
         protected override void MovementBegin()
         {
             // Rien, mais on peut envisager de pré-décharger SI y'a pas de gobelet à attraper à l'arrivée ?
+            Actionneur.ElevatorLeft.DoGrabOpen();
+            Actionneur.ElevatorRight.DoGrabOpen();
         }
 
         protected override bool MovementCore()
         {
             // TODO : Attrapage (avec test) des bouées exterieures, d'ailleurs prévoir de la place pour les attraper
+
+            ThreadLink link1 = ThreadManager.CreateThread(link =>  Actionneur.ElevatorRight.DoSequencePickupColor(GameBoard.MyColor == GameBoard.ColorLeftBlue ? Buoy.Green : Buoy.Red));
+            ThreadLink link2 = ThreadManager.CreateThread(link => Actionneur.ElevatorLeft.DoSequencePickupColor(GameBoard.MyColor == GameBoard.ColorLeftBlue ? Buoy.Red : Buoy.Green));
+
+            link1.StartThread();
+            link2.StartThread();
+
+            link1.WaitEnd();
+            link2.WaitEnd();
 
             if (_zone.HasOutsideBuoys)
             {
@@ -57,8 +68,10 @@ namespace GoBot.Movements
                 Actionneur.ElevatorRight.DoGrabOpen();
                 Robot.Move(250);
                 Robot.SetSpeedFast();
-                ThreadManager.CreateThread(link => { Actionneur.ElevatorLeft.DoSequencePickupColor(Buoy.Red); }).StartThread();
-                ThreadManager.CreateThread(link => { Actionneur.ElevatorRight.DoSequencePickupColor(Buoy.Green); }).StartThread();
+                //ThreadManager.CreateThread(link => { Actionneur.ElevatorLeft.DoSequencePickupColor(Buoy.Red); }).StartThread();
+                //ThreadManager.CreateThread(link => { Actionneur.ElevatorRight.DoSequencePickupColor(Buoy.Green); }).StartThread();
+                Actionneur.ElevatorLeft.DoTakeLevel0(Buoy.Red);
+                Actionneur.ElevatorRight.DoTakeLevel0(Buoy.Green);
                 _zone.TakeOutsideBuoys();
                 Thread.Sleep(500);
                 Robot.PivotRight(180);
@@ -126,8 +139,6 @@ namespace GoBot.Movements
 
                 GameBoard.Score += score;
             }
-
-            //Robot.Move((int)(Positions[0].Coordinates.Y - Robot.Position.Coordinates.Y) - 100); // TODO tester la présence d'un adversaire ptet ?
 
             Actionneur.ElevatorLeft.DoGrabClose();
             Actionneur.ElevatorRight.DoGrabClose();
@@ -203,6 +214,8 @@ namespace GoBot.Movements
         protected override void MovementEnd()
         {
             // rien ?
+            Actionneur.ElevatorLeft.DoGrabClose();
+            Actionneur.ElevatorRight.DoGrabClose();
         }
     }
 }

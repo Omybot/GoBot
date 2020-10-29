@@ -85,6 +85,8 @@ namespace GoBot.Actionneurs
         private List<Tuple<PositionLoad, PositionFloor>> _pickupOrder;
         private List<Tuple<PositionLoad, PositionFloor>> _dropoffOrder;
 
+        private bool _isBusy;
+
         private bool _grabberOpened;
 
         private enum PositionLoad
@@ -149,10 +151,36 @@ namespace GoBot.Actionneurs
         public int CountRed => _buoysFirst.Where(b => b == Buoy.Red).Count();
         public int CountGreen => _buoysFirst.Where(b => b == Buoy.Green).Count();
 
+        public static int MaxLoad => 7;
+
         public void DoGrabOpen()
         {
             _servoGraber.SendPosition(_servoGraber.PositionOpen);
             _grabberOpened = true;
+        }
+
+        public void DoTakeLevel0(Color c)
+        {
+            DoAirLock();
+            DoGrabClose();
+            BuoySet(Tuple.Create(PositionLoad.First, PositionFloor.Ground), c);
+        }
+
+        public void DoStoreBack(Color c)
+        {
+            DoAirLock();
+            DoGrabClose();
+
+            if (WaitSomething())
+            {
+                DoStoreBackColor(c); 
+            }
+            else
+            {
+                DoAirUnlock();
+            }
+
+            DoGrabClose();
         }
 
         public void DoGrabRelease()
@@ -207,10 +235,20 @@ namespace GoBot.Actionneurs
             _servoPush.SendPosition(_servoPush.PositionClose);
         }
 
+        public void DoPushLight()
+        {
+            _servoPush.SendPosition(_servoPush.PositionLight);
+        }
+
         public void DoPushOutside()
         {
             _servoPush.SendPosition(_servoPush.PositionOpen);
             Thread.Sleep(750); // TODO régler la tempo
+        }
+
+        public void DoPushOutsideFast()
+        {
+            _servoPush.SendPosition(_servoPush.PositionOpen);
         }
 
         public void DoAirLock()
@@ -310,6 +348,29 @@ namespace GoBot.Actionneurs
             }
         }
 
+        public void DoSequencePickupColorThread(Color c)
+        {
+            DoAirLock();
+            DoGrabClose();
+            Thread.Sleep(250);
+
+            ThreadManager.CreateThread(link =>
+            {
+                while (_isBusy) ;
+                _isBusy = true;
+                if (WaitSomething())
+                {
+                    DoStoreColor(c);
+                    DoGrabClose();
+                }
+                else
+                {
+                    DoAirUnlock();
+                }
+                _isBusy = false;
+            }).StartThread();
+        }
+
         public void DoSequencePickup()
         {
             DoAirLock();
@@ -361,7 +422,25 @@ namespace GoBot.Actionneurs
             DoAirUnlock();
             BuoySet(place, c);
 
-            Robots.MainRobot.SetMotorAtPosition(_elevator.ID, _elevator.PositionFloor0);
+            DoElevatorGround();
+            DoPlaceLoad(PositionLoad.First, false);
+        }
+
+        public void DoStoreBackColor(Color c)
+        {
+            DoElevatorStop();
+            DoGrabRelease();
+
+            Tuple<PositionLoad, PositionFloor> place = PlaceToPickupBack();
+
+            DoPlaceLoad(place.Item1, true);
+            DoPlaceFloor(place.Item2);
+
+            DoAirUnlock();
+            BuoySet(place, c);
+
+            DoElevatorGround();
+            DoPlaceLoad(PositionLoad.First, false);
         }
 
         public void DoStorageReset()
@@ -534,6 +613,11 @@ namespace GoBot.Actionneurs
         private Tuple<PositionLoad, PositionFloor> PlaceToPickup()
         {
             return _pickupOrder.Find(o => (o.Item1 == PositionLoad.First ? _buoysFirst[(int)o.Item2] : _buoysSecond[(int)o.Item2]) == Color.Transparent);
+        }
+
+        private Tuple<PositionLoad, PositionFloor> PlaceToPickupBack()
+        {
+            return _pickupOrder.Find(o => o.Item1 == PositionLoad.Second && _buoysSecond[(int)o.Item2] == Color.Transparent);
         }
 
         private Tuple<PositionLoad, PositionFloor> PlaceToDropoff()

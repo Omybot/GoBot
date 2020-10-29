@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 using GoBot.Communications;
@@ -38,7 +39,19 @@ namespace GoBot.IHM.Pages
 
                 _linkBattery = ThreadManager.CreateThread(link => UpdateBatteryIcon());
                 _linkBattery.StartInfiniteLoop(1000);
+
+                pagePandaMatch.CalibrationDone += PagePandaMatch_CalibrationDone;
             }
+        }
+
+        private void PagePandaMatch_CalibrationDone()
+        {
+            tabControlPanda.InvokeAuto(() => ChangePageDelay());
+        }
+
+        private void ChangePageDelay(int delayMs = 500)
+        {
+            Thread.Sleep(500); tabControlPanda.SelectedIndex += 1;
         }
 
         private void UpdateBatteryIcon()

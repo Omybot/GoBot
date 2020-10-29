@@ -8,6 +8,7 @@ using Geometry;
 using Geometry.Shapes;
 using GoBot.Actionneurs;
 using GoBot.GameElements;
+using GoBot.Threading;
 
 namespace GoBot.Strategies
 {
@@ -27,21 +28,60 @@ namespace GoBot.Strategies
 
             // Ajouter les points fixes au score (non forfait, elements posés etc)
             int initScore = 0;
-            initScore += 7; // Non forfait + phare posé
+            initScore += 2; // Phare posé
             initScore += 15; // 2 manches à air
-            initScore += (3 + 10); // Phare appuyé + déployé
             GameBoard.Score = initScore;
 
             // Sortir ICI de la zonde de départ
             robot.UpdateGraph(GameBoard.ObstaclesAll);
 
-            robot.MoveForward((int)(850 - 120 - Robots.MainRobot.LenghtBack)); // Pour s'aligner sur le centre de l'écueil
+            // codé en bleu avec miroir
+            Elevator left = GameBoard.MyColor == GameBoard.ColorLeftBlue ? (Elevator)Actionneur.ElevatorLeft : Actionneur.ElevatorRight;
+            Elevator right = GameBoard.MyColor == GameBoard.ColorLeftBlue ? (Elevator)Actionneur.ElevatorRight : Actionneur.ElevatorLeft;
+
+            ThreadManager.CreateThread(link =>
+            {
+                left.DoGrabOpen();
+                Thread.Sleep(750);
+                left.DoGrabClose();
+            }).StartThread();
+
+            robot.MoveForward((int)(850 - 120 - Robots.MainRobot.LenghtBack + 50)); // Pour s'aligner sur le centre de l'écueil
+
+            left.DoGrabOpen();
+
+            robot.MoveBackward(50);
+
+            right.DoGrabOpen();
+
+            if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
+                GameBoard.Elements.FindBuoy(new RealPoint(450, 510)).IsAvailable = false;
+            else
+                GameBoard.Elements.FindBuoy(new RealPoint(3000 - 450, 510)).IsAvailable = false;
 
             robot.GoToAngle(-90);
             robot.SetSpeedSlow();
+            robot.MoveForward(50);
+
+            ThreadLink grabLink = ThreadManager.CreateThread(l => right.DoSequencePickupColor(GameBoard.MyColor == GameBoard.ColorLeftBlue ? Buoy.Green : Buoy.Red));
+            grabLink.StartThread();
+            Thread.Sleep(1000);
+
             Actionneur.ElevatorLeft.DoGrabOpen();
             Actionneur.ElevatorRight.DoGrabOpen();
-            robot.MoveForward(500);
+            robot.MoveForward(450);
+            grabLink.WaitEnd();
+
+
+
+
+            //robot.MoveForward((int)(850 - 120 - Robots.MainRobot.LenghtBack)); // Pour s'aligner sur le centre de l'écueil
+
+            //robot.GoToAngle(-90);
+            //robot.SetSpeedSlow();
+            //Actionneur.ElevatorLeft.DoGrabOpen();
+            //Actionneur.ElevatorRight.DoGrabOpen();
+            //robot.MoveForward(500);
 
             Threading.ThreadManager.CreateThread(link => { Actionneur.ElevatorLeft.DoSequencePickupColor(Buoy.Red); }).StartThread();
             Threading.ThreadManager.CreateThread(link => { Actionneur.ElevatorRight.DoSequencePickupColor(Buoy.Green); }).StartThread();

@@ -201,6 +201,9 @@ namespace GoBot
                         if (AfficheObstacles)
                             DessineObstacles(g, Robots.MainRobot);
 
+                        if (true)
+                            DrawOpponents(g, GameBoard.ObstaclesOpponents);
+
                         if (AfficheElementsJeu)
                             DessineElementsJeu(g, GameBoard.Elements);
 
@@ -464,6 +467,19 @@ namespace GoBot
             DessineZoneMorte(g);
 
             g.ResetClip();
+        }
+
+        private static void DrawOpponents(Graphics g, IEnumerable<IShape> opponents)
+        {
+            foreach (IShape shape in opponents)
+            {
+                if (shape is Circle)
+                {
+                    Circle pos = (Circle)shape;
+                    Rectangle r = Scale.RealToScreenRect(new RectangleF((float)(pos.Center.X - pos.Radius), (float)(pos.Center.Y - pos.Radius), (float)pos.Radius*2, (float)pos.Radius*2));
+                    g.DrawImage(Properties.Resources.Skull, r);
+                }
+            }
         }
 
         private static void DessineZoneMorte(Graphics g)

@@ -11,6 +11,9 @@ namespace GoBot.IHM.Pages
 {
     public partial class PagePandaMatch : UserControl
     {
+        public delegate void DoneDelegate();
+        public event DoneDelegate CalibrationDone;
+
         public PagePandaMatch()
         {
             InitializeComponent();
@@ -132,6 +135,7 @@ namespace GoBot.IHM.Pages
                 link.Name = "Calibration";
                 Recalibration.Calibration();
                 picCalibration.InvokeAuto(() => picCalibration.Image = Properties.Resources.ValidOk96);
+                CalibrationDone?.Invoke();
             }).StartThread();
             btnTrap.Focus();
         }

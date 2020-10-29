@@ -84,6 +84,19 @@ namespace GoBot.Strategies
             for (int i = 0; i < GameBoard.Elements.ColorDropoffs.Count; i++)
                 Movements.Add(new MovementColorDropoff(GameBoard.Elements.ColorDropoffs[i]));
 
+            for (int i = 0; i < GameBoard.Elements.LightHouses.Count; i++)
+                Movements.Add(new MovementLightHouse(GameBoard.Elements.LightHouses[i]));
+
+            //Movements.Add(new MovementBuoy(GameBoard.Elements.FindBuoy(new Geometry.Shapes.RealPoint(300, 400))));
+            //Movements.Add(new MovementBuoy(GameBoard.Elements.FindBuoy(new Geometry.Shapes.RealPoint(2700, 400))));
+
+            if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
+                for (int i = 0; i < GameBoard.Elements.BuoysForLeft.Count; i++)
+                    Movements.Add(new MovementBuoy(GameBoard.Elements.BuoysForLeft[i]));
+            else
+                for (int i = 0; i < GameBoard.Elements.BuoysForRight.Count; i++)
+                    Movements.Add(new MovementBuoy(GameBoard.Elements.BuoysForRight[i]));
+
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {
                 for (int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)

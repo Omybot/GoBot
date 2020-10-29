@@ -58,6 +58,7 @@ namespace GoBot.Actionneurs
     {
         public int PositionOpen { get; set; }
         public int PositionClose { get; set; }
+        public int PositionLight { get; set; }
     }
 
     public class ServoPushArmLeft : ServoPushArm

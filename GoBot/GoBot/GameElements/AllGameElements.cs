@@ -18,6 +18,7 @@ namespace GoBot.GameElements
         private List<GroundedZone> _groundedZones;
         private List<RandomDropOff> _randomDropoff;
         private List<ColorDropOff> _colorDropoff;
+        private List<LightHouse> _lightHouses;
 
         public AllGameElements()
         {
@@ -95,6 +96,10 @@ namespace GoBot.GameElements
                 _buoys.Find(b => b.Position.Distance(new RealPoint(3000 - 1335, 1650)) < 1),
                 _buoys.Find(b => b.Position.Distance(new RealPoint(3000 - 1005, 1955)) < 1),
                 _buoys.Find(b => b.Position.Distance(new RealPoint(3000 - 1395, 1955)) < 1)));
+
+            _lightHouses = new List<LightHouse>();
+            _lightHouses.Add(new LightHouse(new RealPoint(325, -122), GameBoard.ColorLeftBlue));
+            _lightHouses.Add(new LightHouse(new RealPoint(3000 - 325, -122), GameBoard.ColorRightYellow));
         }
 
         public IEnumerable<GameElement> AllElements
@@ -108,15 +113,24 @@ namespace GoBot.GameElements
                 elements = elements.Concat(_groundedZones);
                 elements = elements.Concat(_randomDropoff);
                 elements = elements.Concat(_colorDropoff);
+                elements = elements.Concat(_lightHouses);
 
                 return elements;
             }
         }
 
+        public Buoy FindBuoy(RealPoint pos)
+        {
+            return _buoys.OrderBy(b => b.Position.Distance(pos)).First();
+        }
+
         public List<Buoy> Buoys => _buoys;
+        public List<Buoy> BuoysForLeft => _buoys.Where(b => b.Position.X < 1800 && b.Position.Y < 1500).ToList();
+        public List<Buoy> BuoysForRight => _buoys.Where(b => b.Position.X > 1200 && b.Position.Y < 1500).ToList();
         public List<GroundedZone> GroundedZones => _groundedZones;
         public List<RandomDropOff> RandomDropoffs => _randomDropoff;
         public List<ColorDropOff> ColorDropoffs => _colorDropoff;
+        public List<LightHouse> LightHouses => _lightHouses;
 
         public IEnumerator<GameElement> GetEnumerator()
         {
@@ -166,11 +180,11 @@ namespace GoBot.GameElements
 
             int opponentRadius = 150;
 
-            foreach (Buoy b in _buoys)
-            {
-                if (positions.Exists(p => p.Distance(b.Position) < opponentRadius))
-                    b.IsAvailable = false;
-            }
+            //foreach (Buoy b in _buoys)
+            //{
+            //    if (positions.Exists(p => p.Distance(b.Position) < opponentRadius))
+            //        b.IsAvailable = false;
+            //}
         }
     }
 }
