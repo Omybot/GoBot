@@ -34,6 +34,7 @@ namespace GoBot.IHM.Pages
 
             checkedListBox.SetItemChecked(0, true);
             checkedListBox.SetItemChecked(1, true);
+            checkedListBox.SetItemChecked(5, true);
 
             toolTip.SetToolTip(btnTeleportRPFace, "Téléportation de face");
             toolTip.SetToolTip(btnTeleportRPCentre, "Téléportation de centre");

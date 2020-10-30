@@ -79,7 +79,11 @@ namespace GoBot.Strategies
                 Movements.Add(new MovementGroundedZone(GameBoard.Elements.GroundedZones[i]));
 
             for (int i = 0; i < GameBoard.Elements.RandomDropoffs.Count; i++)
+            {
                 Movements.Add(new MovementRandomDropoff(GameBoard.Elements.RandomDropoffs[i]));
+                Movements.Add(new MovementGreenDropoff(GameBoard.Elements.RandomDropoffs[i]));
+                Movements.Add(new MovementRedDropoff(GameBoard.Elements.RandomDropoffs[i]));
+            }
 
             for (int i = 0; i < GameBoard.Elements.ColorDropoffs.Count; i++)
                 Movements.Add(new MovementColorDropoff(GameBoard.Elements.ColorDropoffs[i]));

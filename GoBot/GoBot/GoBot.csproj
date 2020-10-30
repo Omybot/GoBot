@@ -216,6 +216,8 @@
     </Compile>
     <Compile Include="Movements\MovementBuoy.cs" />
     <Compile Include="Movements\MovementColorDropoff.cs" />
+    <Compile Include="Movements\MovementRedDropoff.cs" />
+    <Compile Include="Movements\MovementGreenDropoff.cs" />
     <Compile Include="Movements\MovementFlags.cs" />
     <Compile Include="Movements\MovementGroundedZone.cs" />
     <Compile Include="Movements\MovementLightHouse.cs" />

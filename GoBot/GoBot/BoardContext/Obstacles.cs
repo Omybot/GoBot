@@ -9,7 +9,7 @@ namespace GoBot.BoardContext
 {
     public class Obstacles
     {
-        private IEnumerable<IShape> _boardObstacles;
+        private List<IShape> _boardObstacles;
         private Dictionary<ColorPlus, IEnumerable<IShape>> _colorObstacles;
 
         private IEnumerable<IShape> _detectionObstacles;
@@ -95,6 +95,11 @@ namespace GoBot.BoardContext
             }
         }
 
+        public void AddObstacle(IShape shape)
+        {
+            _boardObstacles.Add(shape);
+        }
+
         public void SetDetections(IEnumerable<IShape> detections)
         {
             _detectionObstacles = detections;
@@ -106,7 +111,7 @@ namespace GoBot.BoardContext
             ObstaclesChanged?.Invoke();
         }
 
-        private IEnumerable<IShape> CreateBoardObstacles()
+        private List<IShape> CreateBoardObstacles()
         {
             List<IShape> obstacles = new List<IShape>();
 

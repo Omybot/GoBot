@@ -60,6 +60,7 @@ namespace GoBot.Movements
             _elevator.DoGrabOpen();
             Robot.SetSpeedSlow();
             Robot.MoveForward(150);
+            Robot.SetSpeedFast();
             _elevator.DoSequencePickupColorThread(_buoy.Color);
             _buoy.IsAvailable = false;
 

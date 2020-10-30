@@ -29,11 +29,12 @@ namespace GoBot.Movements
             _zone.Owner == GameBoard.MyColor &&
             Math.Max(_zone.LoadsOnRed, _zone.LoadsOnRed) < 4 &&
             !Actionneur.Lifter.Loaded &&
-            Actionneur.ElevatorLeft.CountTotal + Actionneur.ElevatorLeft.CountTotal > 0;
+            _zone.HasInsideBuoys &&
+            Actionneur.ElevatorLeft.CountTotal + Actionneur.ElevatorRight.CountTotal > 0;
 
         public override int Score => 0; // On va compter les points de ménière plus précise
 
-        public override double Value => GameBoard.Strategy.TimeBeforeEnd.TotalSeconds > 35 ? 0.3 : 5;
+        public override double Value => GameBoard.Strategy.TimeBeforeEnd.TotalSeconds > 25 ? 0.3 : 5;
 
         public override GameElement Element => _zone;
 
@@ -138,6 +139,21 @@ namespace GoBot.Movements
                     score += 2;
 
                 GameBoard.Score += score;
+            }
+
+            if (_zone.LoadsOnGreen > 4 || _zone.LoadsOnRed > 4)
+            {
+                Actionneur.ElevatorLeft.DoGrabOpen();
+                Actionneur.ElevatorRight.DoGrabOpen();
+                Thread.Sleep(150);
+                Robot.SetSpeedVerySlow();
+                Robot.MoveForward(170);
+                Robot.SetSpeedFast();
+                Robot.MoveBackward(170);
+            }
+            else
+            {
+                Robot.MoveBackward(100);
             }
 
             Actionneur.ElevatorLeft.DoGrabClose();

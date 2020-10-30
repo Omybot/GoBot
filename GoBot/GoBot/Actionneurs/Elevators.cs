@@ -265,6 +265,15 @@ namespace GoBot.Actionneurs
             _servoLocker.SendPosition(_servoLocker.PositionDisengage);
         }
 
+        public void DoAirUnlockDropoff()
+        {
+            _servoLocker.SendPosition(_servoLocker.PositionEngage);
+            Robots.MainRobot.SetActuatorOnOffValue(_makeVacuum, false);
+            Robots.MainRobot.SetActuatorOnOffValue(_openVacuum, true);
+            Thread.Sleep(100);
+            _servoLocker.SendPosition(_servoLocker.PositionDisengage);
+        }
+
         public void DoElevatorInit()
         {
             _elevator.OriginInit();
@@ -332,6 +341,42 @@ namespace GoBot.Actionneurs
             Robots.MainRobot.SetSpeedFast();
         }
 
+        public void DoDemoLoad7()
+        {
+            ThreadLink left, right;
+
+            while (CountTotal < 7)
+            {
+                Actionneur.ElevatorLeft.DoGrabOpen();
+                Actionneur.ElevatorRight.DoGrabOpen();
+                Robots.MainRobot.Move(85);
+                Actionneur.ElevatorLeft.DoElevatorGround();
+                Actionneur.ElevatorRight.DoElevatorGround();
+                left = ThreadManager.CreateThread(link => Actionneur.ElevatorLeft.DoSequencePickup());
+                right = ThreadManager.CreateThread(link => Actionneur.ElevatorRight.DoSequencePickup());
+                left.StartThread();
+                right.StartThread();
+                left.WaitEnd();
+                right.WaitEnd();
+            }
+        }
+
+        public void DoDemoUnload7()
+        {
+            ThreadLink left, right;
+
+            while (CountTotal > 0)
+            {
+                Robots.MainRobot.Move(-85);
+                left = ThreadManager.CreateThread(link => Actionneur.ElevatorLeft.DoSequenceDropOff());
+                right = ThreadManager.CreateThread(link => Actionneur.ElevatorRight.DoSequenceDropOff());
+                left.StartThread();
+                right.StartThread();
+                left.WaitEnd();
+                right.WaitEnd();
+            }
+        }
+
         public void DoSequencePickupColor(Color c)
         {
             DoAirLock();
@@ -339,6 +384,7 @@ namespace GoBot.Actionneurs
 
             if (WaitSomething())
             {
+                DoLockerMaintain();
                 DoStoreColor(c);
                 DoGrabClose();
             }
@@ -360,6 +406,7 @@ namespace GoBot.Actionneurs
                 _isBusy = true;
                 if (WaitSomething())
                 {
+                    DoLockerMaintain();
                     DoStoreColor(c);
                     DoGrabClose();
                 }
@@ -378,6 +425,7 @@ namespace GoBot.Actionneurs
 
             if (WaitSomething())
             {
+                DoLockerMaintain();
                 DoStoreColor(Buoy.Red); // TODO détecter la couleur avec le capteur de couleur
             }
             else
@@ -547,11 +595,13 @@ namespace GoBot.Actionneurs
             if (place.Item2 != PositionFloor.Ground)
             {
                 DoAirLock();
-                Thread.Sleep(100);
+
+                WaitSomething(500);
+                DoLockerMaintain();
                 Robots.MainRobot.SetMotorAtPosition(_elevator.ID, _elevator.PositionFloor0, true);
             }
 
-            DoAirUnlock();
+            DoAirUnlockDropoff();
             BuoyRemove(place);
 
             return c;

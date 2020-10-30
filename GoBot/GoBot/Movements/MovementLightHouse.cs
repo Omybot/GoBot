@@ -50,11 +50,11 @@ namespace GoBot.Movements
             Robot.SetSpeedVerySlow();
             Robot.Recalibration(SensAR.Avant, true, true);
             Actionneur.ElevatorLeft.DoPushLight();
-            Actionneur.ElevatorLeft.DoPushLight();
-            Thread.Sleep(500);
+            Actionneur.ElevatorRight.DoPushLight();
+            Thread.Sleep(750);
             _lightHouse.Enable = true;
             Actionneur.ElevatorLeft.DoPushInsideFast();
-            Actionneur.ElevatorLeft.DoPushInsideFast();
+            Actionneur.ElevatorRight.DoPushInsideFast();
             Robot.SetSpeedFast();
             Robots.MainRobot.MoveBackward(100);
 

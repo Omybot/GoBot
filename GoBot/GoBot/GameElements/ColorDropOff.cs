@@ -21,8 +21,8 @@ namespace GoBot.GameElements
 
         public ColorDropOff(RealPoint position, Color color, Buoy buoyOutside1, Buoy buoyOutside2, Buoy buoyInside1, Buoy buoyInside2) : base(position, color, 150)
         {
-            _loadOnRed = Enumerable.Repeat(Color.Transparent, 4).ToList();
-            _loadOnGreen = Enumerable.Repeat(Color.Transparent, 4).ToList();
+            _loadOnRed = Enumerable.Repeat(Color.Transparent, 5).ToList();
+            _loadOnGreen = Enumerable.Repeat(Color.Transparent, 5).ToList();
 
             _buoyOutside1 = buoyOutside1;
             _buoyOutside2 = buoyOutside2;

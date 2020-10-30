@@ -99,13 +99,21 @@ namespace GoBot.Strategies
 
             if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
             {
-                //*fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
-                //*fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
+                fixedMovements.Add(new MovementGroundedZone(GameBoard.Elements.GroundedZones[2]));
+                fixedMovements.Add(new MovementBuoy(GameBoard.Elements.FindBuoy(new RealPoint(300, 400))));
+                fixedMovements.Add(new MovementLightHouse(GameBoard.Elements.LightHouses[0]));
+                fixedMovements.Add(new MovementGreenDropoff(GameBoard.Elements.RandomDropoffs[0]));
+                fixedMovements.Add(new MovementGroundedZone(GameBoard.Elements.GroundedZones[0]));
+                fixedMovements.Add(new MovementRedDropoff(GameBoard.Elements.RandomDropoffs[0]));
             }
             else
             {
-                //*fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
-                //*fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
+                fixedMovements.Add(new MovementGroundedZone(GameBoard.Elements.GroundedZones[1]));
+                fixedMovements.Add(new MovementBuoy(GameBoard.Elements.FindBuoy(new RealPoint(2700, 400))));
+                fixedMovements.Add(new MovementLightHouse(GameBoard.Elements.LightHouses[1]));
+                fixedMovements.Add(new MovementGreenDropoff(GameBoard.Elements.RandomDropoffs[1]));
+                fixedMovements.Add(new MovementGroundedZone(GameBoard.Elements.GroundedZones[3]));
+                fixedMovements.Add(new MovementRedDropoff(GameBoard.Elements.RandomDropoffs[1]));
             }
         }
 
@@ -114,10 +122,16 @@ namespace GoBot.Strategies
             Movement bestMovement;
 
             int iMovement = 0;
+            bool ok = true;
 
             // Execution de la strat fixe tant que rien n'échoue
-            while (iMovement < fixedMovements.Count && fixedMovements[iMovement].Execute())
+            while (ok && iMovement < fixedMovements.Count)
+            {
+                int score = fixedMovements[iMovement].Score;
+                ok = fixedMovements[iMovement].Execute();
+                if (ok) GameBoard.Score += score;
                 iMovement++;
+            }
 
             // Passage en mode recherche de la meilleure action
             while (IsRunning)

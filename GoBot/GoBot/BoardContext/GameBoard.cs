@@ -69,6 +69,11 @@ namespace GoBot.BoardContext
             set { _currentStrategy = value; }
         }
 
+        public static void AddObstacle(IShape shape)
+        {
+            _obstacles.AddObstacle(shape);
+        }
+
         public static AllGameElements Elements
         {
             get { return _elements; }
@@ -234,7 +239,7 @@ namespace GoBot.BoardContext
 
         public static void SetOpponents(List<RealPoint> positions)
         {
-            if (_obstacles != null)
+            if (_obstacles != null && Strategy != null && Strategy.IsRunning)
             {
                 // Positions ennemies signalées par la balise
 
