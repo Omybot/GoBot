@@ -164,7 +164,7 @@ namespace GoBot.IHM.Pages
                     if (boxGroup.Checked)
                     {
                         points = points.Where(o => GameBoard.IsInside(o)).ToList();
-                        List<List<RealPoint>> groups = points.GroupByDistance(50, 20);
+                        List<List<RealPoint>> groups = points.GroupByDistance(50);
 
                         List<Color> colors = new List<Color>() { Color.Blue, Color.Green, Color.Red, Color.Brown };
 

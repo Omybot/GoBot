@@ -258,5 +258,10 @@ namespace GoBot
             DebugLidar fen = new DebugLidar();
             fen.ShowDialog();
         }
+
+        private void pageCheckSpeed1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -159,6 +159,12 @@
     <Compile Include="IHM\PagesPanda\PagePandaMatch.Designer.cs">
       <DependentUpon>PagePandaMatch.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\Pages\PageCheckSpeed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Pages\PageCheckSpeed.Designer.cs">
+      <DependentUpon>PageCheckSpeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\Pages\PagePanda.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -496,6 +502,9 @@
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaMatch.resx">
       <DependentUpon>PagePandaMatch.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Pages\PageCheckSpeed.resx">
+      <DependentUpon>PageCheckSpeed.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PagePanda.resx">
       <DependentUpon>PagePanda.cs</DependentUpon>
     </EmbeddedResource>
@@ -745,6 +754,12 @@
     <None Include="Images\FlagT2.png" />
     <None Include="Images\Lifter.png" />
     <None Include="Images\Skull.png" />
+    <None Include="Images\SearchBuoyGreen.png" />
+    <None Include="Images\SearchBuoyRed.png" />
+    <None Include="Images\GrabberLeftOpened.png" />
+    <None Include="Images\GrabberLeftClosed.png" />
+    <None Include="Images\GrabberRightClosed.png" />
+    <None Include="Images\GrabberRightOpened.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -60,7 +60,7 @@ namespace GoBot.IHM.Pages
 
             picBattery.InvokeAuto(() =>
             {
-                if (!Robots.Simulation && !Connections.ConnectionIO.ConnectionChecker.Connected)
+                if (!Robots.Simulation && !Connections.ConnectionCanAlim.ConnectionChecker.Connected)
                 {
                     picBattery.Image = Properties.Resources.BatteryUnknow96;
                     lblBattery.Text = ("--,--") + "V";

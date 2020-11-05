@@ -22,7 +22,8 @@ namespace GoBot
         // Communication
         public Board AsservBoard { get; protected set; }
         public Historique Historique { get; protected set; }
-        public double BatterieVoltage { get; protected set; }
+        public double BatterieVoltage { get; set; }
+        public double BatterieIntensity { get; set; }
 
         // Constitution
         public IDRobot IDRobot { get; private set; }
@@ -103,6 +104,7 @@ namespace GoBot
         public abstract void EnablePower(bool on);
         public abstract List<double>[] DiagnosticCpuPwm(int valuesCount);
         public abstract List<int>[] DiagnosticPID(int steps, SensAR sens, int valuesCount);
+        public abstract List<int>[] DiagnosticLine(int distance, SensAR sens);
 
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Composants
@@ -9,22 +10,22 @@ namespace Composants
         public SwitchButton()
         {
             InitializeComponent();
-            value = false;
-            mirrored = true;
-            ChangeImages();
+            _value = false;
+            _isMirrored = true;
+            Invalidate();
         }
-        
+
         public delegate void ValueChangedDelegate(object sender, bool value);
 
         /// <summary>
         /// Se produit lorsque l'état du bouton change
         /// </summary>
         public event ValueChangedDelegate ValueChanged;
-        
-        private bool value;
-        private bool mirrored;
 
-        private bool FocusedImage { get; set; }
+        private bool _value;
+        private bool _isMirrored;
+
+        private bool _isFocus;
 
         /// <summary>
         /// Retourne vrai ou faux selon l'état du composant
@@ -33,14 +34,14 @@ namespace Composants
         {
             get
             {
-                return value;
+                return _value;
             }
             set
             {
-                if (this.value != value)
+                if (this._value != value)
                 {
-                    this.value = value;
-                    ChangeImages();
+                    this._value = value;
+                    Invalidate();
                     OnValueChanged();
                 }
             }
@@ -53,12 +54,12 @@ namespace Composants
         {
             get
             {
-                return mirrored;
+                return _isMirrored;
             }
             set
             {
-                mirrored = value;
-                ChangeImages();
+                _isMirrored = value;
+                Invalidate();
             }
         }
 
@@ -69,48 +70,87 @@ namespace Composants
 
         protected override void OnEnter(EventArgs e)
         {
-            FocusedImage = true;
-            ChangeImages();
+            _isFocus = true;
+            Invalidate();
             base.OnEnter(e);
         }
 
         protected override void OnLeave(EventArgs e)
         {
-            FocusedImage = false;
-            ChangeImages();
+            _isFocus = false;
+            Invalidate();
             base.OnLeave(e);
         }
 
         protected void OnValueChanged()
         {
-            ValueChanged?.Invoke(this, value);
+            ValueChanged?.Invoke(this, _value);
         }
 
-        private void SwitchButton_Click(object sender, EventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            GraphicsPath path = new GraphicsPath();
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            int w, h;
+            bool ballOnLeft;
+
+            w = Width - 1;
+            h = Height - 1;
+
+            path.AddLine(h / 2 + 1, 1, w - h / 2 - 1, 1);
+            path.AddArc(new Rectangle(w - h - 1, 1, h - 2, h - 2), -90, 180);
+            path.AddLine(w - h / 2 - 1, h - 1, h / 2 + 1, h - 1);
+            path.AddArc(new Rectangle(1, 1, h - 2, h - 2), 90, 180);
+
+            Rectangle rBall;
+
+            if (_value)
+            {
+                Brush b = new LinearGradientBrush(new Rectangle(1, 1, w - 2, h - 2), Color.FromArgb(43, 226, 75), Color.FromArgb(36, 209, 68), 12);
+                e.Graphics.FillPath(b, path);
+                b.Dispose();
+
+                Pen p = new Pen(Color.FromArgb(22, 126, 40));
+                e.Graphics.DrawPath(_isFocus ? Pens.DodgerBlue : p, path);
+                p.Dispose();
+
+                ballOnLeft = _isMirrored;
+            }
+            else
+            {
+                e.Graphics.FillPath(Brushes.WhiteSmoke, path);
+                ballOnLeft = !_isMirrored;
+                e.Graphics.DrawPath(_isFocus ? Pens.DodgerBlue : Pens.LightGray, path);
+            }
+
+            if (ballOnLeft)
+                rBall = new Rectangle(0, 0, h, h);
+            else
+                rBall = new Rectangle(w - h, 0, h, h);
+
+            Brush bBall = new LinearGradientBrush(rBall, Color.WhiteSmoke, Color.LightGray, 100);
+            e.Graphics.FillEllipse(bBall, rBall);
+            bBall.Dispose();
+
+            e.Graphics.DrawEllipse(_isFocus ? Pens.DodgerBlue : Pens.Gray, rBall);
+
+            path.Dispose();
+
+            //base.OnPaint(e);
+
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            base.OnPaintBackground(e);
+        }
+
+        private void SwitchButton_MouseClick(object sender, MouseEventArgs e)
         {
             Focus();
             Value = !Value;
-        }
-
-        private void ChangeImages()
-        {
-            if (value)
-                pictureBox.Image = Properties.Resources.SwitchOn;
-            else
-                pictureBox.Image = Properties.Resources.SwitchOff;
-
-            int x = 0;
-            if((mirrored && !value) || (!mirrored && value))
-                x = 20;
-
-            Bitmap bouton;
-
-            if(FocusedImage)
-                bouton = Properties.Resources.CursorFocused;
-            else
-                bouton = Properties.Resources.Cursor;
-
-            Graphics.FromImage(pictureBox.Image).DrawImage(bouton, x, 0);
         }
     }
 }

@@ -418,7 +418,7 @@ namespace GoBot
                 Position.Coordinates.X + lenght < GameBoard.Width &&
                 Position.Coordinates.Y - lenght > 0 &&
                 Position.Coordinates.Y + lenght < GameBoard.Height)// &&
-                //!GameBoard.ObstaclesAll.ToList().Exists(o => o.Cross(contact))) // TODO ça marche pas on dirait le test de recallage sur les obstacles
+                                                                   //!GameBoard.ObstaclesAll.ToList().Exists(o => o.Cross(contact))) // TODO ça marche pas on dirait le test de recallage sur les obstacles
             {
                 if (sens == SensAR.Arriere)
                     MoveBackward(1);
@@ -545,6 +545,28 @@ namespace GoBot
             {
                 output[0].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * steps * 10000000 / (i * i * i)));
                 output[1].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * steps * 10000000 / (i * i * i) + 10));
+            }
+
+            return output;
+        }
+
+        public override List<int>[] DiagnosticLine(int distance, SensAR sens)
+        {
+            List<int>[] output = new List<int>[2];
+            output[0] = new List<int>();
+            output[1] = new List<int>();
+
+            RealPoint startPos = new RealPoint(Position.Coordinates);
+
+            MoveForward(distance, false);
+
+            while ((Position.Coordinates.X != _destination.Coordinates.X ||
+                Position.Coordinates.Y != _destination.Coordinates.Y) && !Execution.Shutdown)
+            {
+                double dist = startPos.Distance(Position.Coordinates);
+                output[0].Add((int)(dist * 1000));
+                output[1].Add((int)(dist * 1000));
+                Thread.Sleep(1);
             }
 
             return output;

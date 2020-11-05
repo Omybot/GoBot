@@ -28,19 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox
-            // 
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(35, 15);
-            this.pictureBox.TabIndex = 0;
-            this.pictureBox.TabStop = false;
-            this.pictureBox.Click += new System.EventHandler(this.SwitchButton_Click);
             // 
             // SwitchButton
             // 
@@ -48,19 +36,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.pictureBox);
             this.MaximumSize = new System.Drawing.Size(35, 15);
             this.MinimumSize = new System.Drawing.Size(35, 15);
             this.Name = "SwitchButton";
             this.Size = new System.Drawing.Size(35, 15);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SwitchButton_MouseClick);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox pictureBox;
 
     }
 }

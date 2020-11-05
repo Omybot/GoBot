@@ -30,6 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagePandaActuators));
             this.btnTrap = new System.Windows.Forms.Button();
+            this.btnGrabberRight = new System.Windows.Forms.Button();
+            this.btnGrabberLeft = new System.Windows.Forms.Button();
+            this.btnSearchRed = new System.Windows.Forms.Button();
+            this.btnSearchGreen = new System.Windows.Forms.Button();
+            this.btnRightDropoff = new System.Windows.Forms.Button();
+            this.btnRightPickup = new System.Windows.Forms.Button();
+            this.btnLeftDropoff = new System.Windows.Forms.Button();
+            this.btnLeftPickup = new System.Windows.Forms.Button();
             this.btnClamp5 = new System.Windows.Forms.Button();
             this.btnClamp4 = new System.Windows.Forms.Button();
             this.btnClamp3 = new System.Windows.Forms.Button();
@@ -48,6 +56,86 @@
             this.btnTrap.Size = new System.Drawing.Size(23, 23);
             this.btnTrap.TabIndex = 0;
             this.btnTrap.UseVisualStyleBackColor = true;
+            // 
+            // btnGrabberRight
+            // 
+            this.btnGrabberRight.Image = global::GoBot.Properties.Resources.GrabberRightOpened;
+            this.btnGrabberRight.Location = new System.Drawing.Point(621, 154);
+            this.btnGrabberRight.Name = "btnGrabberRight";
+            this.btnGrabberRight.Size = new System.Drawing.Size(142, 142);
+            this.btnGrabberRight.TabIndex = 17;
+            this.btnGrabberRight.UseVisualStyleBackColor = true;
+            this.btnGrabberRight.Click += new System.EventHandler(this.btnGrabberRight_Click);
+            // 
+            // btnGrabberLeft
+            // 
+            this.btnGrabberLeft.Image = global::GoBot.Properties.Resources.GrabberLeftOpened;
+            this.btnGrabberLeft.Location = new System.Drawing.Point(153, 154);
+            this.btnGrabberLeft.Name = "btnGrabberLeft";
+            this.btnGrabberLeft.Size = new System.Drawing.Size(142, 142);
+            this.btnGrabberLeft.TabIndex = 16;
+            this.btnGrabberLeft.UseVisualStyleBackColor = true;
+            this.btnGrabberLeft.Click += new System.EventHandler(this.btnGrabberLeft_Click);
+            // 
+            // btnSearchRed
+            // 
+            this.btnSearchRed.Image = global::GoBot.Properties.Resources.SearchBuoyRed;
+            this.btnSearchRed.Location = new System.Drawing.Point(153, 302);
+            this.btnSearchRed.Name = "btnSearchRed";
+            this.btnSearchRed.Size = new System.Drawing.Size(142, 142);
+            this.btnSearchRed.TabIndex = 15;
+            this.btnSearchRed.UseVisualStyleBackColor = true;
+            this.btnSearchRed.Click += new System.EventHandler(this.btnSearchRed_Click);
+            // 
+            // btnSearchGreen
+            // 
+            this.btnSearchGreen.Image = global::GoBot.Properties.Resources.SearchBuoyGreen;
+            this.btnSearchGreen.Location = new System.Drawing.Point(621, 302);
+            this.btnSearchGreen.Name = "btnSearchGreen";
+            this.btnSearchGreen.Size = new System.Drawing.Size(142, 142);
+            this.btnSearchGreen.TabIndex = 14;
+            this.btnSearchGreen.UseVisualStyleBackColor = true;
+            this.btnSearchGreen.Click += new System.EventHandler(this.btnSearchGreen_Click);
+            // 
+            // btnRightDropoff
+            // 
+            this.btnRightDropoff.Image = ((System.Drawing.Image)(resources.GetObject("btnRightDropoff.Image")));
+            this.btnRightDropoff.Location = new System.Drawing.Point(769, 302);
+            this.btnRightDropoff.Name = "btnRightDropoff";
+            this.btnRightDropoff.Size = new System.Drawing.Size(142, 142);
+            this.btnRightDropoff.TabIndex = 13;
+            this.btnRightDropoff.UseVisualStyleBackColor = true;
+            this.btnRightDropoff.Click += new System.EventHandler(this.btnRightDropoff_Click);
+            // 
+            // btnRightPickup
+            // 
+            this.btnRightPickup.Image = global::GoBot.Properties.Resources.BigArrowUp;
+            this.btnRightPickup.Location = new System.Drawing.Point(769, 154);
+            this.btnRightPickup.Name = "btnRightPickup";
+            this.btnRightPickup.Size = new System.Drawing.Size(142, 142);
+            this.btnRightPickup.TabIndex = 12;
+            this.btnRightPickup.UseVisualStyleBackColor = true;
+            this.btnRightPickup.Click += new System.EventHandler(this.btnRightPickup_Click);
+            // 
+            // btnLeftDropoff
+            // 
+            this.btnLeftDropoff.Image = ((System.Drawing.Image)(resources.GetObject("btnLeftDropoff.Image")));
+            this.btnLeftDropoff.Location = new System.Drawing.Point(5, 302);
+            this.btnLeftDropoff.Name = "btnLeftDropoff";
+            this.btnLeftDropoff.Size = new System.Drawing.Size(142, 142);
+            this.btnLeftDropoff.TabIndex = 11;
+            this.btnLeftDropoff.UseVisualStyleBackColor = true;
+            this.btnLeftDropoff.Click += new System.EventHandler(this.btnLeftDropoff_Click);
+            // 
+            // btnLeftPickup
+            // 
+            this.btnLeftPickup.Image = global::GoBot.Properties.Resources.BigArrowUp;
+            this.btnLeftPickup.Location = new System.Drawing.Point(5, 154);
+            this.btnLeftPickup.Name = "btnLeftPickup";
+            this.btnLeftPickup.Size = new System.Drawing.Size(142, 142);
+            this.btnLeftPickup.TabIndex = 10;
+            this.btnLeftPickup.UseVisualStyleBackColor = true;
+            this.btnLeftPickup.Click += new System.EventHandler(this.btnLeftPickup_Click);
             // 
             // btnClamp5
             // 
@@ -103,9 +191,9 @@
             // 
             this.btnFlagRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFlagRight.Image = global::GoBot.Properties.Resources.FlagO;
-            this.btnFlagRight.Location = new System.Drawing.Point(761, 6);
+            this.btnFlagRight.Location = new System.Drawing.Point(769, 6);
             this.btnFlagRight.Name = "btnFlagRight";
-            this.btnFlagRight.Size = new System.Drawing.Size(150, 150);
+            this.btnFlagRight.Size = new System.Drawing.Size(142, 142);
             this.btnFlagRight.TabIndex = 2;
             this.btnFlagRight.UseVisualStyleBackColor = true;
             this.btnFlagRight.Click += new System.EventHandler(this.btnFlagRight_Click);
@@ -115,7 +203,7 @@
             this.btnFLagLeft.Image = global::GoBot.Properties.Resources.FlagT;
             this.btnFLagLeft.Location = new System.Drawing.Point(5, 6);
             this.btnFLagLeft.Name = "btnFLagLeft";
-            this.btnFLagLeft.Size = new System.Drawing.Size(150, 150);
+            this.btnFLagLeft.Size = new System.Drawing.Size(142, 142);
             this.btnFLagLeft.TabIndex = 1;
             this.btnFLagLeft.UseVisualStyleBackColor = true;
             this.btnFLagLeft.Click += new System.EventHandler(this.btnFlagLeft_Click);
@@ -123,9 +211,9 @@
             // btnFingerLeft
             // 
             this.btnFingerLeft.Image = global::GoBot.Properties.Resources.FingerLeft;
-            this.btnFingerLeft.Location = new System.Drawing.Point(5, 445);
+            this.btnFingerLeft.Location = new System.Drawing.Point(5, 450);
             this.btnFingerLeft.Name = "btnFingerLeft";
-            this.btnFingerLeft.Size = new System.Drawing.Size(150, 150);
+            this.btnFingerLeft.Size = new System.Drawing.Size(142, 142);
             this.btnFingerLeft.TabIndex = 3;
             this.btnFingerLeft.UseVisualStyleBackColor = true;
             this.btnFingerLeft.Click += new System.EventHandler(this.btnFingerLeft_Click);
@@ -134,9 +222,9 @@
             // 
             this.btnFingerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFingerRight.Image = global::GoBot.Properties.Resources.Finger;
-            this.btnFingerRight.Location = new System.Drawing.Point(761, 445);
+            this.btnFingerRight.Location = new System.Drawing.Point(769, 450);
             this.btnFingerRight.Name = "btnFingerRight";
-            this.btnFingerRight.Size = new System.Drawing.Size(150, 150);
+            this.btnFingerRight.Size = new System.Drawing.Size(142, 142);
             this.btnFingerRight.TabIndex = 4;
             this.btnFingerRight.UseVisualStyleBackColor = true;
             this.btnFingerRight.Click += new System.EventHandler(this.btnFingerRight_Click);
@@ -146,6 +234,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.btnGrabberRight);
+            this.Controls.Add(this.btnGrabberLeft);
+            this.Controls.Add(this.btnSearchRed);
+            this.Controls.Add(this.btnSearchGreen);
+            this.Controls.Add(this.btnRightDropoff);
+            this.Controls.Add(this.btnRightPickup);
+            this.Controls.Add(this.btnLeftDropoff);
+            this.Controls.Add(this.btnLeftPickup);
             this.Controls.Add(this.btnClamp5);
             this.Controls.Add(this.btnClamp4);
             this.Controls.Add(this.btnClamp3);
@@ -175,5 +271,13 @@
         private System.Windows.Forms.Button btnClamp3;
         private System.Windows.Forms.Button btnClamp4;
         private System.Windows.Forms.Button btnClamp5;
+        private System.Windows.Forms.Button btnLeftPickup;
+        private System.Windows.Forms.Button btnLeftDropoff;
+        private System.Windows.Forms.Button btnRightDropoff;
+        private System.Windows.Forms.Button btnRightPickup;
+        private System.Windows.Forms.Button btnSearchGreen;
+        private System.Windows.Forms.Button btnSearchRed;
+        private System.Windows.Forms.Button btnGrabberLeft;
+        private System.Windows.Forms.Button btnGrabberRight;
     }
 }

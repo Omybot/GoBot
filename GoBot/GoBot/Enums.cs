@@ -83,7 +83,8 @@
         PressureSensorRightFront = 0x11,
         PressureSensorLeftFront = 0x12,
         PressureSensorRightBack = 0x13,
-        PressureSensorLeftBack = 0x14
+        PressureSensorLeftBack = 0x14,
+        PresenceBuoyRight = 0x20
     }
 
     public enum SensorColorID

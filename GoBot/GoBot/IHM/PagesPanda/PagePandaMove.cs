@@ -64,7 +64,9 @@ namespace GoBot.IHM.Pages
 
         private void btnCalibration_Click(object sender, EventArgs e)
         {
+            Robots.MainRobot.SetSpeedVerySlow();
             Robots.MainRobot.Recalibration(SensAR.Arriere, true);
+            Robots.MainRobot.SetSpeedFast();
             btnTrap.Focus();
         }
     }

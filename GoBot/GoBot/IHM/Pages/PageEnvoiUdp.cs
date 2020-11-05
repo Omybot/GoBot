@@ -6,6 +6,9 @@ using System.Net;
 
 using GoBot.Communications;
 using GoBot.Communications.UDP;
+using GoBot.Communications.CAN;
+using GoBot.Actionneurs;
+using System.Diagnostics;
 
 namespace GoBot.IHM.Pages
 {

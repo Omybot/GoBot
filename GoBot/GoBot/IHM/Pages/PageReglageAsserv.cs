@@ -66,42 +66,45 @@ namespace GoBot.IHM.Pages
             while (tempsDroiteStable > 0 && mesures[1][tempsDroiteStable] < mesures[1][mesures[1].Count - 1] * 1.05 && mesures[1][tempsDroiteStable] > mesures[1][mesures[1].Count - 1] * 0.95)
                 tempsDroiteStable--;
 
-            lblTpsStabilisationGauche.Text = tempsGaucheStable + "ms";
-            lblTpsStabilisationDroite.Text = tempsDroiteStable + "ms";
-
-            lblOvershootGauche.Text = depassementGauchePositif.ToString("0.00") + "%";
-            lblOvershootDroite.Text = depassementDroitePositif.ToString("0.00") + "%";
-
-            lblValeurFinGauche.Text = mesures[0][mesures[0].Count - 1].ToString();
-            lblValeurFinDroite.Text = mesures[1][mesures[1].Count - 1].ToString();
-
-            ctrlGraphique.DeleteCurve("Roue droite");
-            ctrlGraphique.DeleteCurve("Roue gauche");
-
-
-            for (int i = 0; i < mesures[0].Count; i++)
+            this.InvokeAuto(() =>
             {
-                if(boxMoyenne.Checked && i > 1 && i < mesures[0].Count - 2)
-                {
-                    double valeur = (mesures[0][i - 2] + mesures[0][i - 1] + mesures[0][i] + mesures[0][i + 1] + mesures[0][i + 2]) / 5.0;
-                    ctrlGraphique.AddPoint("Roue gauche", valeur, Color.Blue);
-                }
-                else
-                    ctrlGraphique.AddPoint("Roue gauche", mesures[0][i], Color.Blue);
-            }
+                lblTpsStabilisationGauche.Text = tempsGaucheStable + "ms";
+                lblTpsStabilisationDroite.Text = tempsDroiteStable + "ms";
 
-            for (int i = 0; i < mesures[1].Count; i++)
-            {
-                if (boxMoyenne.Checked && i > 1 && i < mesures[1].Count - 2)
-                {
-                    double valeur = (mesures[1][i - 2] + mesures[1][i - 1] + mesures[1][i] + mesures[1][i + 1] + mesures[1][i + 2]) / 5.0;
-                    ctrlGraphique.AddPoint("Roue droite", valeur, Color.Green);
-                }
-                else
-                    ctrlGraphique.AddPoint("Roue droite", mesures[1][i], Color.Green);
-            }
+                lblOvershootGauche.Text = depassementGauchePositif.ToString("0.00") + "%";
+                lblOvershootDroite.Text = depassementDroitePositif.ToString("0.00") + "%";
 
-            ctrlGraphique.DrawCurves();
+                lblValeurFinGauche.Text = mesures[0][mesures[0].Count - 1].ToString();
+                lblValeurFinDroite.Text = mesures[1][mesures[1].Count - 1].ToString();
+
+                ctrlGraphique.DeleteCurve("Roue droite");
+                ctrlGraphique.DeleteCurve("Roue gauche");
+
+
+                for (int i = 0; i < mesures[0].Count; i++)
+                {
+                    if (boxMoyenne.Checked && i > 1 && i < mesures[0].Count - 2)
+                    {
+                        double valeur = (mesures[0][i - 2] + mesures[0][i - 1] + mesures[0][i] + mesures[0][i + 1] + mesures[0][i + 2]) / 5.0;
+                        ctrlGraphique.AddPoint("Roue gauche", valeur, Color.Blue);
+                    }
+                    else
+                        ctrlGraphique.AddPoint("Roue gauche", mesures[0][i], Color.Blue);
+                }
+
+                for (int i = 0; i < mesures[1].Count; i++)
+                {
+                    if (boxMoyenne.Checked && i > 1 && i < mesures[1].Count - 2)
+                    {
+                        double valeur = (mesures[1][i - 2] + mesures[1][i - 1] + mesures[1][i] + mesures[1][i + 1] + mesures[1][i + 2]) / 5.0;
+                        ctrlGraphique.AddPoint("Roue droite", valeur, Color.Green);
+                    }
+                    else
+                        ctrlGraphique.AddPoint("Roue droite", mesures[1][i], Color.Green);
+                }
+
+                ctrlGraphique.DrawCurves();
+            });
 
             Robot.DiagnosticPID((int)numPasCodeurs.Value, SensAR.Arriere, (int)numNbPoints.Value);
         }

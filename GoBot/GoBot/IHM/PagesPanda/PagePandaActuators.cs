@@ -1,6 +1,8 @@
 ﻿using GoBot.Actionneurs;
+using GoBot.GameElements;
 using GoBot.Threading;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace GoBot.IHM.Pages
@@ -10,10 +12,13 @@ namespace GoBot.IHM.Pages
         private ThreadLink _linkFingerRight, _linkFingerLeft;
         private bool _flagRight, _flagLeft;
         private bool _clamp1, _clamp2, _clamp3, _clamp4, _clamp5;
+        private bool _grabberLeft, _grabberRight;
 
         public PagePandaActuators()
         {
             InitializeComponent();
+            _grabberLeft = true;
+            _grabberRight = true;
         }
 
         private void PagePandaActuators_Load(object sender, System.EventArgs e)
@@ -62,6 +67,69 @@ namespace GoBot.IHM.Pages
                 Actionneur.Flags.DoCloseLeft();
 
             _flagLeft = !_flagLeft;
+        }
+
+        private void btnLeftPickup_Click(object sender, EventArgs e)
+        {
+            Actionneur.ElevatorLeft.DoDemoPickup();
+        }
+
+        private void btnLeftDropoff_Click(object sender, EventArgs e)
+        {
+            Actionneur.ElevatorRight.DoDemoDropoff();
+        }
+
+        private void btnRightPickup_Click(object sender, EventArgs e)
+        {
+            Actionneur.ElevatorRight.DoDemoPickup();
+        }
+
+        private void btnRightDropoff_Click(object sender, EventArgs e)
+        {
+            Actionneur.ElevatorRight.DoDemoDropoff();
+        }
+
+        private void btnSearchGreen_Click(object sender, EventArgs e)
+        {
+            Actionneur.ElevatorRight.DoSearchBuoy(Buoy.Green);
+        }
+
+        private void btnSearchRed_Click(object sender, EventArgs e)
+        {
+            Actionneur.ElevatorLeft.DoSearchBuoy(Buoy.Red);
+        }
+
+        private void btnGrabberRight_Click(object sender, EventArgs e)
+        {
+            _grabberRight = !_grabberRight;
+
+            if (_grabberRight)
+            {
+                Actionneur.ElevatorRight.DoGrabOpen();
+                Actionneur.ElevatorRight.Armed = true;
+                btnGrabberRight.Image = Properties.Resources.GrabberRightOpened;
+            }
+            else
+            {
+                Actionneur.ElevatorRight.DoGrabClose();
+                btnGrabberRight.Image = Properties.Resources.GrabberRightClosed;
+            }
+        }
+
+        private void btnGrabberLeft_Click(object sender, EventArgs e)
+        {
+            _grabberLeft = !_grabberLeft;
+
+            if (_grabberLeft)
+            {
+                Actionneur.ElevatorLeft.DoGrabOpen();
+                btnGrabberLeft.Image = Properties.Resources.GrabberLeftOpened;
+            }
+            else
+            {
+                Actionneur.ElevatorLeft.DoGrabClose();
+                btnGrabberLeft.Image = Properties.Resources.GrabberLeftClosed;
+            }
         }
 
         private void btnClamp1_Click(object sender, EventArgs e)

@@ -61,6 +61,8 @@ namespace GoBot
             this.pageDiagnosticMove = new GoBot.IHM.Pages.PageDiagnosticMove();
             this.tabPID = new System.Windows.Forms.TabPage();
             this.pageReglageAsserv = new GoBot.IHM.Pages.PageReglageAsserv();
+            this.tabSpeed = new System.Windows.Forms.TabPage();
+            this.pageCheckSpeed1 = new GoBot.IHM.Pages.PageCheckSpeed();
             this.tabPics = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabIO = new System.Windows.Forms.TabPage();
@@ -113,6 +115,7 @@ namespace GoBot
             this.tabControl3.SuspendLayout();
             this.tabDiagnotic.SuspendLayout();
             this.tabPID.SuspendLayout();
+            this.tabSpeed.SuspendLayout();
             this.tabPics.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabIO.SuspendLayout();
@@ -411,6 +414,7 @@ namespace GoBot
             // 
             this.tabControl3.Controls.Add(this.tabDiagnotic);
             this.tabControl3.Controls.Add(this.tabPID);
+            this.tabControl3.Controls.Add(this.tabSpeed);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl3.Location = new System.Drawing.Point(3, 3);
             this.tabControl3.Name = "tabControl3";
@@ -455,6 +459,26 @@ namespace GoBot
             this.pageReglageAsserv.Name = "pageReglageAsserv";
             this.pageReglageAsserv.Size = new System.Drawing.Size(1280, 674);
             this.pageReglageAsserv.TabIndex = 0;
+            // 
+            // tabSpeed
+            // 
+            this.tabSpeed.Controls.Add(this.pageCheckSpeed1);
+            this.tabSpeed.Location = new System.Drawing.Point(4, 22);
+            this.tabSpeed.Name = "tabSpeed";
+            this.tabSpeed.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSpeed.Size = new System.Drawing.Size(1286, 680);
+            this.tabSpeed.TabIndex = 2;
+            this.tabSpeed.Text = "Position codeurs";
+            this.tabSpeed.UseVisualStyleBackColor = true;
+            // 
+            // pageCheckSpeed1
+            // 
+            this.pageCheckSpeed1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pageCheckSpeed1.Location = new System.Drawing.Point(3, 3);
+            this.pageCheckSpeed1.Name = "pageCheckSpeed1";
+            this.pageCheckSpeed1.Size = new System.Drawing.Size(1280, 674);
+            this.pageCheckSpeed1.TabIndex = 0;
+            this.pageCheckSpeed1.Load += new System.EventHandler(this.pageCheckSpeed1_Load);
             // 
             // tabPics
             // 
@@ -840,6 +864,7 @@ namespace GoBot
             this.tabControl3.ResumeLayout(false);
             this.tabDiagnotic.ResumeLayout(false);
             this.tabPID.ResumeLayout(false);
+            this.tabSpeed.ResumeLayout(false);
             this.tabPics.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabIO.ResumeLayout(false);
@@ -930,6 +955,8 @@ namespace GoBot
         private System.Windows.Forms.Button btnDebug;
         private System.Windows.Forms.TabPage tabPandaNew;
         private IHM.Pages.PagePanda pagePanda;
+        private System.Windows.Forms.TabPage tabSpeed;
+        private IHM.Pages.PageCheckSpeed pageCheckSpeed1;
     }
 }
 

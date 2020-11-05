@@ -194,7 +194,7 @@
             // lblTorqueUnit
             // 
             this.lblTorqueUnit.AutoSize = true;
-            this.lblTorqueUnit.Location = new System.Drawing.Point(186, 77);
+            this.lblTorqueUnit.Location = new System.Drawing.Point(201, 77);
             this.lblTorqueUnit.Name = "lblTorqueUnit";
             this.lblTorqueUnit.Size = new System.Drawing.Size(22, 13);
             this.lblTorqueUnit.TabIndex = 42;
@@ -223,7 +223,7 @@
             0,
             0});
             this.numTorqueMax.Name = "numTorqueMax";
-            this.numTorqueMax.Size = new System.Drawing.Size(50, 20);
+            this.numTorqueMax.Size = new System.Drawing.Size(69, 20);
             this.numTorqueMax.TabIndex = 35;
             this.numTorqueMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numTorqueMax.ValueChanged += new System.EventHandler(this.numTorqueMax_ValueChanged);
@@ -511,12 +511,12 @@
             0});
             this.numSpeedMax.Location = new System.Drawing.Point(130, 49);
             this.numSpeedMax.Maximum = new decimal(new int[] {
-            65000,
+            200000,
             0,
             0,
             0});
             this.numSpeedMax.Name = "numSpeedMax";
-            this.numSpeedMax.Size = new System.Drawing.Size(50, 20);
+            this.numSpeedMax.Size = new System.Drawing.Size(69, 20);
             this.numSpeedMax.TabIndex = 34;
             this.numSpeedMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numSpeedMax.ValueChanged += new System.EventHandler(this.numSpeedMax_ValueChanged);
@@ -549,12 +549,12 @@
             0});
             this.numAccel.Location = new System.Drawing.Point(130, 23);
             this.numAccel.Maximum = new decimal(new int[] {
-            65000,
+            200000,
             0,
             0,
             0});
             this.numAccel.Name = "numAccel";
-            this.numAccel.Size = new System.Drawing.Size(50, 20);
+            this.numAccel.Size = new System.Drawing.Size(69, 20);
             this.numAccel.TabIndex = 37;
             this.numAccel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numAccel.ValueChanged += new System.EventHandler(this.numAccel_ValueChanged);
@@ -703,7 +703,7 @@
             // lblSpeedUnit
             // 
             this.lblSpeedUnit.AutoSize = true;
-            this.lblSpeedUnit.Location = new System.Drawing.Point(186, 51);
+            this.lblSpeedUnit.Location = new System.Drawing.Point(201, 51);
             this.lblSpeedUnit.Name = "lblSpeedUnit";
             this.lblSpeedUnit.Size = new System.Drawing.Size(40, 13);
             this.lblSpeedUnit.TabIndex = 44;
@@ -712,7 +712,7 @@
             // lblAccelUnit
             // 
             this.lblAccelUnit.AutoSize = true;
-            this.lblAccelUnit.Location = new System.Drawing.Point(186, 25);
+            this.lblAccelUnit.Location = new System.Drawing.Point(201, 25);
             this.lblAccelUnit.Name = "lblAccelUnit";
             this.lblAccelUnit.Size = new System.Drawing.Size(43, 13);
             this.lblAccelUnit.TabIndex = 43;

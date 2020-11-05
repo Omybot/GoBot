@@ -143,6 +143,16 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BigArrowUp1 {
+            get {
+                object obj = ResourceManager.GetObject("BigArrowUp1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BottomLine16 {
             get {
                 object obj = ResourceManager.GetObject("BottomLine16", resourceCulture);
@@ -403,9 +413,49 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GrabberLeftClosed {
+            get {
+                object obj = ResourceManager.GetObject("GrabberLeftClosed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GrabberLeftOpened {
+            get {
+                object obj = ResourceManager.GetObject("GrabberLeftOpened", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GrabberRight {
             get {
                 object obj = ResourceManager.GetObject("GrabberRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GrabberRightClosed {
+            get {
+                object obj = ResourceManager.GetObject("GrabberRightClosed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GrabberRightOpened {
+            get {
+                object obj = ResourceManager.GetObject("GrabberRightOpened", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -646,6 +696,26 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap Save16 {
             get {
                 object obj = ResourceManager.GetObject("Save16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SearchBuoyGreen {
+            get {
+                object obj = ResourceManager.GetObject("SearchBuoyGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SearchBuoyRed {
+            get {
+                object obj = ResourceManager.GetObject("SearchBuoyRed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

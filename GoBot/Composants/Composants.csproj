@@ -54,12 +54,6 @@
     <Compile Include="BinaryGraph.Designer.cs">
       <DependentUpon>BinaryGraph.cs</DependentUpon>
     </Compile>
-    <Compile Include="Button3D.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button3D.Designer.cs">
-      <DependentUpon>Button3D.cs</DependentUpon>
-    </Compile>
     <Compile Include="ByteBinaryGraph.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -152,9 +146,6 @@
     <EmbeddedResource Include="BinaryGraph.resx">
       <DependentUpon>BinaryGraph.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Button3D.resx">
-      <DependentUpon>Button3D.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ByteBinaryGraph.resx">
       <DependentUpon>ByteBinaryGraph.cs</DependentUpon>
     </EmbeddedResource>
@@ -189,12 +180,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\SwitchOff.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\SwitchOn.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="img\BatHigh.PNG" />
   </ItemGroup>
   <ItemGroup>
@@ -217,12 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\RedLed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\Button3DOff.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\Button3DOn.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="img\ConnectionHalf.png" />

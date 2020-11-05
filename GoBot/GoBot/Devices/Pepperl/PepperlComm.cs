@@ -60,7 +60,7 @@ namespace GoBot.Devices
 
             String response = SendMessage(message.ToString());
 
-            Console.WriteLine(response);
+            //Console.WriteLine(response);
 
             return JsonDumbParser.Parse(response);
         }

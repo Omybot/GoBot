@@ -115,33 +115,6 @@ namespace Geometry.Shapes
             return groups;
         }
 
-        public static List<List<RealPoint>> GroupByDistance(this IEnumerable<RealPoint> pts, double maxDistance, double maxSize)
-        {
-            List<RealPoint> pool = new List<RealPoint>(pts);
-
-            List<List<RealPoint>> fullGroups = new List<List<RealPoint>>();
-            List<List<RealPoint>> groups = new List<List<RealPoint>>();
-            
-            while (pool.Count > 0)
-            {
-                List<RealPoint> group = new List<RealPoint>();
-                groups.Add(group);
-                group.Add(pool[0]);
-                pool.RemoveAt(0);
-
-                for (int i = 0; i < group.Count; i++)
-                {
-                    List<RealPoint> closePts = pool.Where(p => p.Distance(group[i]) < maxDistance).ToList();
-                    List<RealPoint> acceptedPts = closePts.Where(o => !group.Exists(o2 => o2.Distance(o) > maxDistance)).ToList();
-                    
-                    group.AddRange(acceptedPts);
-                    acceptedPts.ForEach(o => pool.Remove(o));
-                }
-            }
-
-            return groups;
-        }
-
         /// <summary>
         /// Décalle tous les points dans une certaine direction
         /// </summary>

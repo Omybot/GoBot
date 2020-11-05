@@ -68,7 +68,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(68, 254);
+            this.btnOk.Location = new System.Drawing.Point(68, 225);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(53, 23);
             this.btnOk.TabIndex = 116;
@@ -83,7 +83,7 @@
             0,
             0,
             0});
-            this.numCoeffD.Location = new System.Drawing.Point(68, 112);
+            this.numCoeffD.Location = new System.Drawing.Point(68, 83);
             this.numCoeffD.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -96,7 +96,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(47, 114);
+            this.label6.Location = new System.Drawing.Point(47, 85);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(15, 13);
             this.label6.TabIndex = 114;
@@ -109,7 +109,7 @@
             0,
             0,
             0});
-            this.numCoeffI.Location = new System.Drawing.Point(68, 86);
+            this.numCoeffI.Location = new System.Drawing.Point(68, 57);
             this.numCoeffI.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -122,7 +122,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(52, 88);
+            this.label5.Location = new System.Drawing.Point(52, 59);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(10, 13);
             this.label5.TabIndex = 112;
@@ -135,7 +135,7 @@
             0,
             0,
             0});
-            this.numCoeffP.Location = new System.Drawing.Point(68, 60);
+            this.numCoeffP.Location = new System.Drawing.Point(68, 31);
             this.numCoeffP.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -148,7 +148,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(48, 62);
+            this.label4.Location = new System.Drawing.Point(48, 33);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(14, 13);
             this.label4.TabIndex = 110;
@@ -156,7 +156,7 @@
             // 
             // numPasCodeurs
             // 
-            this.numPasCodeurs.Location = new System.Drawing.Point(68, 161);
+            this.numPasCodeurs.Location = new System.Drawing.Point(68, 132);
             this.numPasCodeurs.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -174,7 +174,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 163);
+            this.label1.Location = new System.Drawing.Point(13, 134);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 13);
             this.label1.TabIndex = 118;
@@ -183,7 +183,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 189);
+            this.label2.Location = new System.Drawing.Point(13, 160);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 13);
             this.label2.TabIndex = 120;
@@ -191,7 +191,7 @@
             // 
             // numNbPoints
             // 
-            this.numNbPoints.Location = new System.Drawing.Point(68, 187);
+            this.numNbPoints.Location = new System.Drawing.Point(68, 158);
             this.numNbPoints.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -307,11 +307,16 @@
             // ctrlGraphique
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphique.BorderColor = System.Drawing.Color.LightGray;
+            this.ctrlGraphique.BorderVisible = false;
+            this.ctrlGraphique.LimitsVisible = false;
+            this.ctrlGraphique.Location = new System.Drawing.Point(199, 64);
             this.ctrlGraphique.MaxLimit = 1D;
             this.ctrlGraphique.MinLimit = 0D;
-            this.ctrlGraphique.Location = new System.Drawing.Point(199, 64);
             this.ctrlGraphique.Name = "ctrlGraphique";
+            this.ctrlGraphique.NamesAlignment = System.Drawing.ContentAlignment.BottomLeft;
+            this.ctrlGraphique.NamesVisible = false;
+            this.ctrlGraphique.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
             this.ctrlGraphique.Size = new System.Drawing.Size(773, 424);
             this.ctrlGraphique.TabIndex = 123;
             // 
@@ -320,7 +325,7 @@
             this.boxMoyenne.AutoSize = true;
             this.boxMoyenne.Checked = true;
             this.boxMoyenne.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxMoyenne.Location = new System.Drawing.Point(69, 221);
+            this.boxMoyenne.Location = new System.Drawing.Point(69, 192);
             this.boxMoyenne.Name = "boxMoyenne";
             this.boxMoyenne.Size = new System.Drawing.Size(79, 17);
             this.boxMoyenne.TabIndex = 124;
@@ -376,7 +381,7 @@
             this.label13.TabIndex = 0;
             this.label13.Text = "Gauche :";
             // 
-            // PanelReglageAsserv
+            // PageReglageAsserv
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -396,7 +401,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.numCoeffP);
             this.Controls.Add(this.label4);
-            this.Name = "PanelReglageAsserv";
+            this.Name = "PageReglageAsserv";
             this.Size = new System.Drawing.Size(1003, 550);
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffI)).EndInit();

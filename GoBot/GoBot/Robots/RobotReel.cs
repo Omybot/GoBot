@@ -13,6 +13,8 @@ using GoBot.Communications.UDP;
 using GoBot.BoardContext;
 using GoBot.Communications.CAN;
 using GoBot.Strategies;
+using GoBot.Actionneurs;
+using GoBot.GameElements;
 
 namespace GoBot
 {
@@ -72,6 +74,7 @@ namespace GoBot
             _boardSensorOnOff.Add(SensorOnOffID.PressureSensorLeftFront, Board.RecMove);
             _boardSensorOnOff.Add(SensorOnOffID.PressureSensorRightBack, Board.RecIO);
             _boardSensorOnOff.Add(SensorOnOffID.PressureSensorRightFront, Board.RecIO);
+            _boardSensorOnOff.Add(SensorOnOffID.PresenceBuoyRight, Board.RecIO);
 
             _boardActuatorOnOff = new Dictionary<ActuatorOnOffID, Board>();
             _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyRight, Board.RecMove);
@@ -154,6 +157,8 @@ namespace GoBot
         {
             Historique = new Historique(IDRobot);
 
+            Connections.ConnectionCan.FrameReceived += ReceptionCanMessage;
+
             _asserConnection.FrameReceived += ReceptionUdpMessage;
 
             if (this == Robots.MainRobot)
@@ -222,11 +227,11 @@ namespace GoBot
 
         public void ReceptionCanMessage(Frame frame)
         {
-
-            switch ((CanFrameFunction)frame[1])
+            switch (CanFrameFactory.ExtractFunction(frame))
             {
                 case CanFrameFunction.BatterieVoltage:
-                    BatterieVoltage = (double)(frame[2] * 256 + frame[3]) / 100.0;
+                    BatterieVoltage = (frame[3] * 256 + frame[4]) / 1000f;
+                    BatterieIntensity = (frame[5] * 256 + frame[6]) / 1000f;
                     break;
             }
         }
@@ -240,7 +245,7 @@ namespace GoBot
             switch ((UdpFrameFunction)frame[1])
             {
                 case UdpFrameFunction.RetourTension:
-                    BatterieVoltage = (frame[2] * 256 + frame[3]) / 100f;
+                    //BatterieVoltage = (frame[2] * 256 + frame[3]) / 100f;
                     break;
                 case UdpFrameFunction.MoteurFin:
                     _lockMotor[(MotorID)frame[2]]?.Release();
@@ -361,6 +366,12 @@ namespace GoBot
                     if (sensorOnOff == SensorOnOffID.StartTrigger)
                         SetStartTrigger(newState);
 
+                    if (sensorOnOff == SensorOnOffID.PresenceBuoyRight && newState && Actionneur.ElevatorRight.Armed)
+                    {
+                        Actionneur.ElevatorRight.Armed = false;
+                        Actionneur.ElevatorRight.DoSequencePickupColorThread(Buoy.Red);
+                    }
+
                     if (newState != SensorsOnOffValue[sensorOnOff])
                         OnSensorOnOffChanged(sensorOnOff, newState);
 
@@ -435,7 +446,7 @@ namespace GoBot
                     break;
                 case UdpFrameFunction.RetourCouleurEquipe:
                     GameBoard.MyColor = frame[2] == 0 ? GameBoard.ColorLeftBlue : GameBoard.ColorRightYellow;
-                    if(Config.CurrentConfig.IsMiniRobot) StartTriggerEnable = true;
+                    if (Config.CurrentConfig.IsMiniRobot) StartTriggerEnable = true;
                     break;
             }
         }
@@ -747,13 +758,37 @@ namespace GoBot
                 Thread.Sleep(30);
             }
 
-            while (_lastPidTest[0].Count > pointsCount)
-                _lastPidTest[0].RemoveAt(_lastPidTest[0].Count - 1);
+            List<int>[] output = new List<int>[2];
+            output[0] = _lastPidTest[0].GetRange(0, pointsCount);
+            output[1] = _lastPidTest[1].GetRange(0, pointsCount);
 
-            while (_lastPidTest[1].Count > pointsCount)
-                _lastPidTest[1].RemoveAt(_lastPidTest[1].Count - 1);
+            return output;
+        }
 
-            return _lastPidTest;
+        public override List<int>[] DiagnosticLine(int distance, SensAR sens)
+        {
+            _lastPidTest = new List<int>[2];
+            _lastPidTest[0] = new List<int>();
+            _lastPidTest[1] = new List<int>();
+
+            _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+
+            Frame frame = UdpFrameFactory.Deplacer(sens, distance, this);
+            _asserConnection.SendMessage(frame);
+
+            frame = UdpFrameFactory.DemandePositionsCodeurs(this);
+
+            while (!_lockFrame[UdpFrameFunction.FinDeplacement].WaitOne(0))
+            {
+                _asserConnection.SendMessage(frame);
+                Thread.Sleep(30);
+            }
+
+            List<int>[] output = new List<int>[2];
+            output[0] = new List<int>(_lastPidTest[0]);
+            output[1] = new List<int>(_lastPidTest[1]);
+
+            return output;
         }
 
         public override List<double>[] DiagnosticCpuPwm(int pointsCount)

@@ -16,9 +16,10 @@ namespace GoBot.Communications
         private static Dictionary<CanBoard, CanSubConnection> _connectionsCan;
 
 
-        public static UDPConnection ConnectionMove { get; set; }
-        public static UDPConnection ConnectionIO { get; set; }
-        public static UDPConnection ConnectionCanBridge { get; set; }
+        public static UDPConnection ConnectionMove { get; private set; }
+        public static UDPConnection ConnectionIO { get; private set; }
+        public static UDPConnection ConnectionCanBridge { get; private set; }
+        public static CanSubConnection ConnectionCanAlim { get; private set; }
         public static Dictionary<CanBoard, CanSubConnection> ConnectionsCan { get { return _connectionsCan; } }
 
         public static CanConnection ConnectionCan { get; set; }
@@ -72,7 +73,9 @@ namespace GoBot.Communications
             _connectionsCan.Add(CanBoard.CanServo4, new CanSubConnection(ConnectionCan, CanBoard.CanServo4));
             _connectionsCan.Add(CanBoard.CanServo5, new CanSubConnection(ConnectionCan, CanBoard.CanServo5));
             _connectionsCan.Add(CanBoard.CanServo6, new CanSubConnection(ConnectionCan, CanBoard.CanServo6));
-            _connectionsCan.Add(CanBoard.CanAlim, new CanSubConnection(ConnectionCan, CanBoard.CanAlim));
+
+            ConnectionCanAlim = new CanSubConnection(ConnectionCan, CanBoard.CanAlim);
+            _connectionsCan.Add(CanBoard.CanAlim, ConnectionCanAlim);
 
             _connectionsCan.Values.ToList().ForEach(o => AllConnections.Add(o));
 

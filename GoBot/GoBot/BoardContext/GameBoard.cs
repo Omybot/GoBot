@@ -243,8 +243,9 @@ namespace GoBot.BoardContext
             {
                 // Positions ennemies signalées par la balise
 
-                // TODO2020 Truc dégueu pour ne pas détecter notre robot secondaire qui est dans la zone de départ au début du match
-                positions = positions.Where(o => !NotreZoneDepart().Contains(o)).ToList();
+                // TODOEACHYEAR Tester ICI si on veut devenir aveugle à la présence d'aversaire dans notre zone de départ au début du match
+                if (Strategy != null && Strategy.TimeSinceBegin.TotalSeconds < 20)
+                    positions = positions.Where(o => !StartZoneMe().Contains(o)).ToList();
 
                 if (GameBoard.Strategy == null)
                 {
@@ -265,12 +266,12 @@ namespace GoBot.BoardContext
 
                 _obstacles.SetDetections(positions.Select(p =>
                 {
-                    //TODO 2020 : accès à l'élément 0 c'est faux... il faut tester la zone de départ explicitement
-                    if (_obstacles.FromColor.ElementAt(0).Contains(p))
+                    // TODOEACHYEAR C'est ICI qu'on s'amuse à rédurie le périmètre d'un robot adverse qui n'est pas sorti de sa zone de départ
+                    if (StartZoneOpponent().Contains(p))
                     {
                         _startZonePresence = true;
                         if (_startZoneSizeReduction)
-                            return new Circle(p, _currentOpponentRadius / 3);
+                            return new Circle(p, _currentOpponentRadius / 2);
                         else
                             return new Circle(p, _currentOpponentRadius);
                     }
@@ -288,12 +289,30 @@ namespace GoBot.BoardContext
             }
         }
 
-        public static IShape NotreZoneDepart()
+        public static IShape StartZoneMe()
         {
             if (GameBoard.MyColor == GameBoard.ColorRightYellow)
-                return new PolygonRectangle(new RealPoint(2550, 300), 400, 900);
+                return StartZoneRight();
             else
-                return new PolygonRectangle(new RealPoint(0, 300), 400, 900);
+                return StartZoneLeft();
+        }
+
+        public static IShape StartZoneOpponent()
+        {
+            if (GameBoard.MyColor == GameBoard.ColorRightYellow)
+                return StartZoneLeft();
+            else
+                return StartZoneRight();
+        }
+
+        private static IShape StartZoneLeft()
+        {
+            return new PolygonRectangle(new RealPoint(0, 300), 400, 900);
+        }
+
+        private static IShape StartZoneRight()
+        {
+            return new PolygonRectangle(new RealPoint(2550, 300), 400, 900);
         }
 
         public static void Init()
@@ -305,13 +324,13 @@ namespace GoBot.BoardContext
             List<RealPoint> pts = measure.Where(o => IsInside(o, 100)).ToList();
             pts = pts.Where(o => o.Distance(Robots.MainRobot.Position.Coordinates) > 300).ToList();
 
-            List<List<RealPoint>> groups = pts.GroupByDistance(50, 20);
+            List<List<RealPoint>> groups = pts.GroupByDistance(50);
 
             List<RealPoint> obstacles = new List<RealPoint>();
 
             foreach (List<RealPoint> group in groups)
             {
-                if (group.Count > 2)
+                if (DetectionIsOpponent(group))
                 {
                     RealPoint center = group.GetBarycenter();
                     if (!obstacles.Exists(o => o.Distance(center) < 150))
@@ -320,6 +339,11 @@ namespace GoBot.BoardContext
             }
 
             SetOpponents(obstacles);
+        }
+
+        private static bool DetectionIsOpponent(List<RealPoint> group)
+        {
+            return group.Count > 2;// && group.GetContainingCircle().Radius < 100; // On pourrai ignorer les murs avec la contrainte de taille, mais c'est pratique de ne pas rentrer dans les murs finallement...
         }
 
         /// <summary>

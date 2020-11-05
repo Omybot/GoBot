@@ -21,7 +21,7 @@ namespace Composants
         private Dictionary<String, List<double>> CurvesData { get; set; }
         private Dictionary<String, bool> CurvesDisplayed { get; set; }
         private Dictionary<String, Pen> CurvesPen { get; set; }
-        private Dictionary<String, bool> CurveFilled { get; set; }
+        private Dictionary<String, bool> CurvesFilled { get; set; }
 
         /// <summary>
         /// Définit le type d'échelle utilisée par le graph
@@ -68,7 +68,7 @@ namespace Composants
             InitializeComponent();
             CurvesData = new Dictionary<string, List<double>>();
             CurvesDisplayed = new Dictionary<string, bool>();
-            CurveFilled = new Dictionary<string, bool>();
+            CurvesFilled = new Dictionary<string, bool>();
 
             CurvesPen = new Dictionary<string, Pen>();
             ScaleMode = ScaleType.DynamicGlobal;
@@ -99,7 +99,7 @@ namespace Composants
                     if (col != null)
                         CurvesPen[curveName] = new Pen(col.Value);
 
-                    CurveFilled[curveName] = fill;
+                    CurvesFilled[curveName] = fill;
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace Composants
                     else
                         CurvesPen.Add(curveName, new Pen(Color.Black));
 
-                    CurveFilled.Add(curveName, fill);
+                    CurvesFilled.Add(curveName, fill);
                 }
 
                 data.Add(value);
@@ -193,7 +193,7 @@ namespace Composants
                             //gTemp.DrawLine(CurvesPen[courbe.Key], new Point(i - 1, (int)((pictureBox.Height - 1) - coef * (courbe.Value[i - 1] - min))), new Point(i, (int)((pictureBox.Height - 1) - coef * (courbe.Value[i] - min))));
                         }
 
-                        if (CurveFilled[courbe.Key])
+                        if (CurvesFilled[courbe.Key])
                         {
                             List<Point> ptsFill = new List<Point>(pts);
                             
@@ -294,6 +294,7 @@ namespace Composants
             if (CurvesData.ContainsKey(curveName))
             {
                 CurvesData.Remove(curveName);
+                CurvesFilled.Remove(curveName);
                 CurvesPen.Remove(curveName);
             }
             if (CurvesDisplayed.ContainsKey(curveName))

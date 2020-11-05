@@ -42,6 +42,16 @@ namespace GoBot.Strategies
         public DateTime StartingDateTime { get; protected set; }
 
         /// <summary>
+        /// Retourne le temps écoulé depuis le début du match
+        /// </summary>
+        public TimeSpan TimeSinceBegin
+        {
+            get
+            {
+                return DateTime.Now - StartingDateTime;
+            }
+        }
+        /// <summary>
         /// Retourne le temps restant avant la fin du match
         /// </summary>
         public TimeSpan TimeBeforeEnd

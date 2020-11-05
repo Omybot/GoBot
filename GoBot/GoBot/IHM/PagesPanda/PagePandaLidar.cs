@@ -216,7 +216,7 @@ namespace GoBot.IHM.Pages
                     if (_enableGroup)
                     {
                         //points = points.Where(o => GameBoard.IsInside(o)).ToList();
-                        List<List<RealPoint>> groups = pointsObjects.GroupByDistance(80, -1);
+                        List<List<RealPoint>> groups = pointsObjects.GroupByDistance(80);
 
                         //for (int i = 0; i < groups.Count; i++)
                         //{

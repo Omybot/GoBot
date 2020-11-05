@@ -38,8 +38,6 @@
             this.trkLineDecel = new Composants.TrackBarPlus();
             this.numLineDecel = new System.Windows.Forms.NumericUpDown();
             this.lblLineDecel = new System.Windows.Forms.Label();
-            this.btnFast = new System.Windows.Forms.Button();
-            this.btnLow = new System.Windows.Forms.Button();
             this.btnGoTo = new System.Windows.Forms.Button();
             this.numTeta = new System.Windows.Forms.NumericUpDown();
             this.lblGoToTheta = new System.Windows.Forms.Label();
@@ -47,14 +45,11 @@
             this.lblGoToY = new System.Windows.Forms.Label();
             this.numX = new System.Windows.Forms.NumericUpDown();
             this.lblGoToX = new System.Windows.Forms.Label();
-            this.btnStop = new System.Windows.Forms.Button();
             this.btnPIDXY = new System.Windows.Forms.Button();
             this.pnlManual = new Composants.FocusablePanel();
             this.lblManual = new System.Windows.Forms.Label();
             this.numCoeffD = new System.Windows.Forms.NumericUpDown();
             this.trkLineAccel = new Composants.TrackBarPlus();
-            this.btnForward = new System.Windows.Forms.Button();
-            this.btnCalibration = new System.Windows.Forms.Button();
             this.lblPIDD = new System.Windows.Forms.Label();
             this.trkLineSpeed = new Composants.TrackBarPlus();
             this.txtDistance = new Composants.TextBoxPlus();
@@ -62,26 +57,31 @@
             this.numCoeffI = new System.Windows.Forms.NumericUpDown();
             this.numLineAccel = new System.Windows.Forms.NumericUpDown();
             this.txtAngle = new Composants.TextBoxPlus();
-            this.btnTurnBackwardRight = new System.Windows.Forms.Button();
             this.lblPIDI = new System.Windows.Forms.Label();
-            this.btnBackward = new System.Windows.Forms.Button();
-            this.btnPivotLeft = new System.Windows.Forms.Button();
             this.numCoeffP = new System.Windows.Forms.NumericUpDown();
-            this.btnTurnForwardRight = new System.Windows.Forms.Button();
-            this.btnTurnBackwardLeft = new System.Windows.Forms.Button();
             this.lblPIDP = new System.Windows.Forms.Label();
             this.trkPivotSpeed = new Composants.TrackBarPlus();
-            this.btnTurnForwardLeft = new System.Windows.Forms.Button();
             this.lblLineAccel = new System.Windows.Forms.Label();
             this.numPivotAccel = new System.Windows.Forms.NumericUpDown();
             this.trkPivotAccel = new Composants.TrackBarPlus();
             this.lblLineSpeed = new System.Windows.Forms.Label();
-            this.btnPivotRight = new System.Windows.Forms.Button();
             this.numPivotSpeed = new System.Windows.Forms.NumericUpDown();
             this.lblPivotSpeed = new System.Windows.Forms.Label();
             this.lblPivotAccel = new System.Windows.Forms.Label();
             this.grpDisplacement = new System.Windows.Forms.GroupBox();
             this.btnCalibrationForward = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnPivotRight = new System.Windows.Forms.Button();
+            this.btnFast = new System.Windows.Forms.Button();
+            this.btnLow = new System.Windows.Forms.Button();
+            this.btnTurnForwardLeft = new System.Windows.Forms.Button();
+            this.btnTurnBackwardLeft = new System.Windows.Forms.Button();
+            this.btnTurnForwardRight = new System.Windows.Forms.Button();
+            this.btnPivotLeft = new System.Windows.Forms.Button();
+            this.btnBackward = new System.Windows.Forms.Button();
+            this.btnTurnBackwardRight = new System.Windows.Forms.Button();
+            this.btnForward = new System.Windows.Forms.Button();
+            this.btnCalibration = new System.Windows.Forms.Button();
             this.contextMenuStop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numLineDecel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTeta)).BeginInit();
@@ -197,32 +197,6 @@
             this.lblLineDecel.Text = "Décéleration ligne";
             this.lblLineDecel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnFast
-            // 
-            this.btnFast.Image = global::GoBot.Properties.Resources.Rabbit;
-            this.btnFast.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFast.Location = new System.Drawing.Point(75, 413);
-            this.btnFast.Name = "btnFast";
-            this.btnFast.Size = new System.Drawing.Size(74, 23);
-            this.btnFast.TabIndex = 118;
-            this.btnFast.Text = "Rapide";
-            this.btnFast.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnFast.UseVisualStyleBackColor = true;
-            this.btnFast.Click += new System.EventHandler(this.btnFast_Click);
-            // 
-            // btnLow
-            // 
-            this.btnLow.Image = global::GoBot.Properties.Resources.Turtle;
-            this.btnLow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLow.Location = new System.Drawing.Point(5, 413);
-            this.btnLow.Name = "btnLow";
-            this.btnLow.Size = new System.Drawing.Size(64, 23);
-            this.btnLow.TabIndex = 117;
-            this.btnLow.Text = "Lent";
-            this.btnLow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnLow.UseVisualStyleBackColor = true;
-            this.btnLow.Click += new System.EventHandler(this.btnLow_Click);
-            // 
             // btnGoTo
             // 
             this.btnGoTo.Location = new System.Drawing.Point(253, 149);
@@ -317,22 +291,6 @@
             this.lblGoToX.TabIndex = 110;
             this.lblGoToX.Text = "X";
             // 
-            // btnStop
-            // 
-            this.btnStop.ContextMenuStrip = this.contextMenuStop;
-            this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStop.ForeColor = System.Drawing.Color.Black;
-            this.btnStop.Image = global::GoBot.Properties.Resources.Stop;
-            this.btnStop.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnStop.Location = new System.Drawing.Point(24, 29);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(0);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(97, 97);
-            this.btnStop.TabIndex = 63;
-            this.btnStop.Text = "STOP";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStopSmooth_Click);
-            // 
             // btnPIDXY
             // 
             this.btnPIDXY.Location = new System.Drawing.Point(207, 378);
@@ -398,26 +356,6 @@
             this.trkLineAccel.Vertical = false;
             this.trkLineAccel.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkLineAccel_TickValueChanged);
             this.trkLineAccel.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkLineAccel_ValueChanged);
-            // 
-            // btnForward
-            // 
-            this.btnForward.Image = global::GoBot.Properties.Resources.UpGreen16;
-            this.btnForward.Location = new System.Drawing.Point(178, 24);
-            this.btnForward.Name = "btnForward";
-            this.btnForward.Size = new System.Drawing.Size(67, 23);
-            this.btnForward.TabIndex = 75;
-            this.btnForward.UseVisualStyleBackColor = true;
-            this.btnForward.Click += new System.EventHandler(this.btnForward_Click);
-            // 
-            // btnCalibration
-            // 
-            this.btnCalibration.Image = global::GoBot.Properties.Resources.BottomLine16;
-            this.btnCalibration.Location = new System.Drawing.Point(285, 103);
-            this.btnCalibration.Name = "btnCalibration";
-            this.btnCalibration.Size = new System.Drawing.Size(30, 23);
-            this.btnCalibration.TabIndex = 93;
-            this.btnCalibration.UseVisualStyleBackColor = true;
-            this.btnCalibration.Click += new System.EventHandler(this.btnCalibration_Click);
             // 
             // lblPIDD
             // 
@@ -528,16 +466,6 @@
             this.txtAngle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtAngle.TextMode = Composants.TextBoxPlus.TextModeEnum.Decimal;
             // 
-            // btnTurnBackwardRight
-            // 
-            this.btnTurnBackwardRight.Image = global::GoBot.Properties.Resources.TopToRigth16;
-            this.btnTurnBackwardRight.Location = new System.Drawing.Point(251, 103);
-            this.btnTurnBackwardRight.Name = "btnTurnBackwardRight";
-            this.btnTurnBackwardRight.Size = new System.Drawing.Size(32, 23);
-            this.btnTurnBackwardRight.TabIndex = 84;
-            this.btnTurnBackwardRight.UseVisualStyleBackColor = true;
-            this.btnTurnBackwardRight.Click += new System.EventHandler(this.btnTurnBackwardRight_Click);
-            // 
             // lblPIDI
             // 
             this.lblPIDI.AutoSize = true;
@@ -546,27 +474,6 @@
             this.lblPIDI.Size = new System.Drawing.Size(10, 13);
             this.lblPIDI.TabIndex = 105;
             this.lblPIDI.Text = "I";
-            // 
-            // btnBackward
-            // 
-            this.btnBackward.Image = global::GoBot.Properties.Resources.DownGreen16;
-            this.btnBackward.Location = new System.Drawing.Point(178, 103);
-            this.btnBackward.Name = "btnBackward";
-            this.btnBackward.Size = new System.Drawing.Size(67, 23);
-            this.btnBackward.TabIndex = 79;
-            this.btnBackward.UseVisualStyleBackColor = true;
-            this.btnBackward.Click += new System.EventHandler(this.btnBackward_Click);
-            // 
-            // btnPivotLeft
-            // 
-            this.btnPivotLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPivotLeft.Image = global::GoBot.Properties.Resources.TurnLeft16;
-            this.btnPivotLeft.Location = new System.Drawing.Point(140, 51);
-            this.btnPivotLeft.Name = "btnPivotLeft";
-            this.btnPivotLeft.Size = new System.Drawing.Size(32, 48);
-            this.btnPivotLeft.TabIndex = 77;
-            this.btnPivotLeft.UseVisualStyleBackColor = true;
-            this.btnPivotLeft.Click += new System.EventHandler(this.btnPivotLeft_Click);
             // 
             // numCoeffP
             // 
@@ -585,26 +492,6 @@
             this.numCoeffP.Size = new System.Drawing.Size(45, 20);
             this.numCoeffP.TabIndex = 104;
             this.numCoeffP.ValueChanged += new System.EventHandler(this.numCoeffPID_ValueChanged);
-            // 
-            // btnTurnForwardRight
-            // 
-            this.btnTurnForwardRight.Image = global::GoBot.Properties.Resources.BottomToRigth16;
-            this.btnTurnForwardRight.Location = new System.Drawing.Point(251, 24);
-            this.btnTurnForwardRight.Name = "btnTurnForwardRight";
-            this.btnTurnForwardRight.Size = new System.Drawing.Size(32, 23);
-            this.btnTurnForwardRight.TabIndex = 82;
-            this.btnTurnForwardRight.UseVisualStyleBackColor = true;
-            this.btnTurnForwardRight.Click += new System.EventHandler(this.btnTurnForwardRight_Click);
-            // 
-            // btnTurnBackwardLeft
-            // 
-            this.btnTurnBackwardLeft.Image = global::GoBot.Properties.Resources.TopToLeft16;
-            this.btnTurnBackwardLeft.Location = new System.Drawing.Point(140, 103);
-            this.btnTurnBackwardLeft.Name = "btnTurnBackwardLeft";
-            this.btnTurnBackwardLeft.Size = new System.Drawing.Size(32, 23);
-            this.btnTurnBackwardLeft.TabIndex = 83;
-            this.btnTurnBackwardLeft.UseVisualStyleBackColor = true;
-            this.btnTurnBackwardLeft.Click += new System.EventHandler(this.btnTurnBackwardLeft_Click);
             // 
             // lblPIDP
             // 
@@ -632,16 +519,6 @@
             this.trkPivotSpeed.Vertical = false;
             this.trkPivotSpeed.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkPivotSpeed_TickValueChanged);
             this.trkPivotSpeed.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkPivotSpeed_ValueChanged);
-            // 
-            // btnTurnForwardLeft
-            // 
-            this.btnTurnForwardLeft.Image = global::GoBot.Properties.Resources.BottomToLeft16;
-            this.btnTurnForwardLeft.Location = new System.Drawing.Point(140, 24);
-            this.btnTurnForwardLeft.Name = "btnTurnForwardLeft";
-            this.btnTurnForwardLeft.Size = new System.Drawing.Size(32, 23);
-            this.btnTurnForwardLeft.TabIndex = 81;
-            this.btnTurnForwardLeft.UseVisualStyleBackColor = true;
-            this.btnTurnForwardLeft.Click += new System.EventHandler(this.btnTurnForwardLeft_Click);
             // 
             // lblLineAccel
             // 
@@ -696,16 +573,6 @@
             this.lblLineSpeed.TabIndex = 69;
             this.lblLineSpeed.Text = "Vitesse ligne";
             this.lblLineSpeed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnPivotRight
-            // 
-            this.btnPivotRight.Image = global::GoBot.Properties.Resources.TurnRigth16;
-            this.btnPivotRight.Location = new System.Drawing.Point(251, 51);
-            this.btnPivotRight.Name = "btnPivotRight";
-            this.btnPivotRight.Size = new System.Drawing.Size(32, 48);
-            this.btnPivotRight.TabIndex = 80;
-            this.btnPivotRight.UseVisualStyleBackColor = true;
-            this.btnPivotRight.Click += new System.EventHandler(this.btnPivotRight_Click);
             // 
             // numPivotSpeed
             // 
@@ -809,6 +676,138 @@
             this.btnCalibrationForward.TabIndex = 124;
             this.btnCalibrationForward.UseVisualStyleBackColor = true;
             this.btnCalibrationForward.Click += new System.EventHandler(this.btnCalibrationForward_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.ContextMenuStrip = this.contextMenuStop;
+            this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStop.ForeColor = System.Drawing.Color.Black;
+            this.btnStop.Image = global::GoBot.Properties.Resources.Stop;
+            this.btnStop.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnStop.Location = new System.Drawing.Point(24, 29);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(0);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(97, 97);
+            this.btnStop.TabIndex = 63;
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStopSmooth_Click);
+            // 
+            // btnPivotRight
+            // 
+            this.btnPivotRight.Image = global::GoBot.Properties.Resources.TurnRigth16;
+            this.btnPivotRight.Location = new System.Drawing.Point(251, 51);
+            this.btnPivotRight.Name = "btnPivotRight";
+            this.btnPivotRight.Size = new System.Drawing.Size(32, 48);
+            this.btnPivotRight.TabIndex = 80;
+            this.btnPivotRight.UseVisualStyleBackColor = true;
+            this.btnPivotRight.Click += new System.EventHandler(this.btnPivotRight_Click);
+            // 
+            // btnFast
+            // 
+            this.btnFast.Image = global::GoBot.Properties.Resources.Rabbit;
+            this.btnFast.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFast.Location = new System.Drawing.Point(75, 413);
+            this.btnFast.Name = "btnFast";
+            this.btnFast.Size = new System.Drawing.Size(74, 23);
+            this.btnFast.TabIndex = 118;
+            this.btnFast.Text = "Rapide";
+            this.btnFast.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnFast.UseVisualStyleBackColor = true;
+            this.btnFast.Click += new System.EventHandler(this.btnFast_Click);
+            // 
+            // btnLow
+            // 
+            this.btnLow.Image = global::GoBot.Properties.Resources.Turtle;
+            this.btnLow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLow.Location = new System.Drawing.Point(5, 413);
+            this.btnLow.Name = "btnLow";
+            this.btnLow.Size = new System.Drawing.Size(64, 23);
+            this.btnLow.TabIndex = 117;
+            this.btnLow.Text = "Lent";
+            this.btnLow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLow.UseVisualStyleBackColor = true;
+            this.btnLow.Click += new System.EventHandler(this.btnLow_Click);
+            // 
+            // btnTurnForwardLeft
+            // 
+            this.btnTurnForwardLeft.Image = global::GoBot.Properties.Resources.BottomToLeft16;
+            this.btnTurnForwardLeft.Location = new System.Drawing.Point(140, 24);
+            this.btnTurnForwardLeft.Name = "btnTurnForwardLeft";
+            this.btnTurnForwardLeft.Size = new System.Drawing.Size(32, 23);
+            this.btnTurnForwardLeft.TabIndex = 81;
+            this.btnTurnForwardLeft.UseVisualStyleBackColor = true;
+            this.btnTurnForwardLeft.Click += new System.EventHandler(this.btnTurnForwardLeft_Click);
+            // 
+            // btnTurnBackwardLeft
+            // 
+            this.btnTurnBackwardLeft.Image = global::GoBot.Properties.Resources.TopToLeft16;
+            this.btnTurnBackwardLeft.Location = new System.Drawing.Point(140, 103);
+            this.btnTurnBackwardLeft.Name = "btnTurnBackwardLeft";
+            this.btnTurnBackwardLeft.Size = new System.Drawing.Size(32, 23);
+            this.btnTurnBackwardLeft.TabIndex = 83;
+            this.btnTurnBackwardLeft.UseVisualStyleBackColor = true;
+            this.btnTurnBackwardLeft.Click += new System.EventHandler(this.btnTurnBackwardLeft_Click);
+            // 
+            // btnTurnForwardRight
+            // 
+            this.btnTurnForwardRight.Image = global::GoBot.Properties.Resources.BottomToRigth16;
+            this.btnTurnForwardRight.Location = new System.Drawing.Point(251, 24);
+            this.btnTurnForwardRight.Name = "btnTurnForwardRight";
+            this.btnTurnForwardRight.Size = new System.Drawing.Size(32, 23);
+            this.btnTurnForwardRight.TabIndex = 82;
+            this.btnTurnForwardRight.UseVisualStyleBackColor = true;
+            this.btnTurnForwardRight.Click += new System.EventHandler(this.btnTurnForwardRight_Click);
+            // 
+            // btnPivotLeft
+            // 
+            this.btnPivotLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPivotLeft.Image = global::GoBot.Properties.Resources.TurnLeft16;
+            this.btnPivotLeft.Location = new System.Drawing.Point(140, 51);
+            this.btnPivotLeft.Name = "btnPivotLeft";
+            this.btnPivotLeft.Size = new System.Drawing.Size(32, 48);
+            this.btnPivotLeft.TabIndex = 77;
+            this.btnPivotLeft.UseVisualStyleBackColor = true;
+            this.btnPivotLeft.Click += new System.EventHandler(this.btnPivotLeft_Click);
+            // 
+            // btnBackward
+            // 
+            this.btnBackward.Image = global::GoBot.Properties.Resources.DownGreen16;
+            this.btnBackward.Location = new System.Drawing.Point(178, 103);
+            this.btnBackward.Name = "btnBackward";
+            this.btnBackward.Size = new System.Drawing.Size(67, 23);
+            this.btnBackward.TabIndex = 79;
+            this.btnBackward.UseVisualStyleBackColor = true;
+            this.btnBackward.Click += new System.EventHandler(this.btnBackward_Click);
+            // 
+            // btnTurnBackwardRight
+            // 
+            this.btnTurnBackwardRight.Image = global::GoBot.Properties.Resources.TopToRigth16;
+            this.btnTurnBackwardRight.Location = new System.Drawing.Point(251, 103);
+            this.btnTurnBackwardRight.Name = "btnTurnBackwardRight";
+            this.btnTurnBackwardRight.Size = new System.Drawing.Size(32, 23);
+            this.btnTurnBackwardRight.TabIndex = 84;
+            this.btnTurnBackwardRight.UseVisualStyleBackColor = true;
+            this.btnTurnBackwardRight.Click += new System.EventHandler(this.btnTurnBackwardRight_Click);
+            // 
+            // btnForward
+            // 
+            this.btnForward.Image = global::GoBot.Properties.Resources.UpGreen16;
+            this.btnForward.Location = new System.Drawing.Point(178, 24);
+            this.btnForward.Name = "btnForward";
+            this.btnForward.Size = new System.Drawing.Size(67, 23);
+            this.btnForward.TabIndex = 75;
+            this.btnForward.UseVisualStyleBackColor = true;
+            this.btnForward.Click += new System.EventHandler(this.btnForward_Click);
+            // 
+            // btnCalibration
+            // 
+            this.btnCalibration.Image = global::GoBot.Properties.Resources.BottomLine16;
+            this.btnCalibration.Location = new System.Drawing.Point(285, 103);
+            this.btnCalibration.Name = "btnCalibration";
+            this.btnCalibration.Size = new System.Drawing.Size(30, 23);
+            this.btnCalibration.TabIndex = 93;
+            this.btnCalibration.UseVisualStyleBackColor = true;
+            this.btnCalibration.Click += new System.EventHandler(this.btnCalibration_Click);
             // 
             // PanelDisplacement
             // 

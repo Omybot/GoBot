@@ -28,6 +28,8 @@ namespace GoBot.Actionneurs
             _pressure = SensorOnOffID.PressureSensorRightFront;
 
             _elevator = Config.CurrentConfig.MotorElevatorRight;
+
+            _sensor = SensorOnOffID.PresenceBuoyRight;
         }
 
         protected override RealPoint GetEntryFrontPoint()
@@ -55,6 +57,8 @@ namespace GoBot.Actionneurs
             _pressure = SensorOnOffID.PressureSensorLeftFront;
 
             _elevator = Config.CurrentConfig.MotorElevatorLeft;
+
+            _sensor = SensorOnOffID.PresenceBuoyRight;
         }
 
         protected override RealPoint GetEntryFrontPoint()
@@ -79,22 +83,25 @@ namespace GoBot.Actionneurs
         protected SensorOnOffID _pressure;
         protected MotorElevator _elevator;
 
+        protected SensorOnOffID _sensor;
+
         protected List<Color> _buoysSecond; // 0 = en haut...1...2 = étages inférieurs
         protected List<Color> _buoysFirst; // 0 = en haut...1...2...3 = En bas, non monté
 
-        private List<Tuple<PositionLoad, PositionFloor>> _pickupOrder;
-        private List<Tuple<PositionLoad, PositionFloor>> _dropoffOrder;
+        protected List<Tuple<PositionLoad, PositionFloor>> _pickupOrder;
+        protected List<Tuple<PositionLoad, PositionFloor>> _dropoffOrder;
 
-        private bool _isBusy;
+        protected bool _isBusy;
 
-        private bool _grabberOpened;
+        protected bool _grabberOpened;
+        protected bool _armed;
 
-        private enum PositionLoad
+        protected enum PositionLoad
         {
             First,
             Second
         }
-        private enum PositionFloor
+        protected enum PositionFloor
         {
             Floor3 = 0,
             Floor2,
@@ -106,6 +113,7 @@ namespace GoBot.Actionneurs
         {
             _isInitialized = false;
             _grabberOpened = false;
+            _armed = false;
 
             _buoysSecond = Enumerable.Repeat(Color.Transparent, 3).ToList();
             _buoysFirst = Enumerable.Repeat(Color.Transparent, 4).ToList();
@@ -132,6 +140,12 @@ namespace GoBot.Actionneurs
         public List<Color> LoadFirst => _buoysFirst;
         public List<Color> LoadSecond => _buoysSecond;
         public bool GrabberOpened => _grabberOpened;
+
+        public bool Armed
+        {
+            get { return _armed; }
+            set { _armed = value; }
+        }
 
         public void FillWith(Color c)
         {
@@ -361,6 +375,18 @@ namespace GoBot.Actionneurs
             }
         }
 
+        public void DoDemoPickup()
+        {
+            Robots.MainRobot.SetSpeedSlow();
+            DoGrabOpen();
+            Thread.Sleep(200);
+            Robots.MainRobot.MoveForward(85);
+            DoSequencePickupColorThread(Buoy.Red);
+            Thread.Sleep(350);
+            Robots.MainRobot.MoveBackward(85);
+            Robots.MainRobot.SetSpeedFast();
+        }
+
         public void DoDemoUnload7()
         {
             ThreadLink left, right;
@@ -430,6 +456,7 @@ namespace GoBot.Actionneurs
             }
             else
             {
+                Console.WriteLine("Fin de l'attente, pas de gobelet détecté");
                 DoAirUnlock();
             }
 
@@ -497,7 +524,7 @@ namespace GoBot.Actionneurs
             _buoysFirst = Enumerable.Repeat(Color.Transparent, 4).ToList();
         }
 
-        public bool WaitSomething(int timeout = 500)
+        public bool WaitSomething(int timeout = 1000)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
@@ -507,37 +534,28 @@ namespace GoBot.Actionneurs
             return HasSomething();
         }
 
-        public void DoSearchBuoy()
+        public void DoSearchBuoy(Color color)
         {
             List<RealPoint> pts = ((Hokuyo)(AllDevices.LidarGround)).GetPoints();
 
-            List<List<RealPoint>> groups = pts.GroupByDistance(80, -1);
-            List<Circle> circles = new List<Circle>();
+            List<List<RealPoint>> groups = pts.GroupByDistance(80);
 
-            //for (int i = 0; i < groups.Count; i++)
-            //{
-            //    Circle circle = groups[i].FitCircle();
-            //    if (circle.Radius < 100 && groups[i].Count > 4)
-            //    {
-            //        circles.Add(circle);
-            //    }
-            //}
+            List<Tuple<Circle, Color>> buoys = new List<Tuple<Circle, Color>>();
 
             for (int i = 0; i < groups.Count; i++)
             {
                 if (groups[i].Count > 4)
                 {
                     RealPoint center = groups[i].GetBarycenter();
-                    double var = groups[i].Average(p => p.Distance(center) * p.Distance(center));
-                    circles.Add(new Circle(center, var));
+                    double var = Math.Sqrt(groups[i].Average(p => p.Distance(center) * p.Distance(center))) * 2;
+
+                    buoys.Add(Tuple.Create(new Circle(center, var), var > 35 ? Buoy.Green : Buoy.Red));
                 }
             }
 
-            if (circles.Count > 0)
+            if (buoys.Count > 0 && buoys.Exists(b => b.Item2 == color))
             {
-                Circle nearest = circles.OrderBy(c => c.Distance(Robots.MainRobot.Position.Coordinates)).First();
-
-                Console.WriteLine(nearest.Center);
+                Circle buoy = buoys.OrderBy(b => b.Item1.Distance(Robots.MainRobot.Position.Coordinates)).First(b => b.Item2 == color).Item1;
 
                 RealPoint entryFrontPoint = GetEntryFrontPoint();
                 RealPoint entryBackPoint = GetEntryBackPoint();
@@ -547,7 +565,7 @@ namespace GoBot.Actionneurs
 
                 for (AngleDelta i = 0; i < 360; i++)
                 {
-                    Segment inter = new Segment(entryBackPoint.Rotation(i, Robots.MainRobot.Position.Coordinates), nearest.Center);
+                    Segment inter = new Segment(entryBackPoint.Rotation(i, Robots.MainRobot.Position.Coordinates), buoy.Center);
                     double error = inter.Distance(entryFrontPoint.Rotation(i, Robots.MainRobot.Position.Coordinates));
                     if (error < bestError)
                     {
@@ -565,10 +583,10 @@ namespace GoBot.Actionneurs
 
                 DoGrabOpen();
 
-                int dist = (int)GetEntryFrontPoint().Distance(nearest.Center) + 50;
+                int dist = (int)GetEntryFrontPoint().Distance(buoy.Center) + 50;
                 Robots.MainRobot.Move(dist);
 
-                DoSequencePickupColor(Buoy.Red); // TODO Détecter la couleur au lidar ?
+                DoSequencePickupColor(color); // TODO Détecter la couleur au lidar ?
                 //DoSequencePickup();// ... ou pas...
 
                 DoGrabClose();
@@ -580,6 +598,34 @@ namespace GoBot.Actionneurs
 
         protected abstract RealPoint GetEntryFrontPoint();
         protected abstract RealPoint GetEntryBackPoint();
+
+        public bool DetectSomething()
+        {
+            return Robots.MainRobot.ReadSensorOnOff(_sensor);
+        }
+
+        public void DoDemoGrabLoop()
+        {
+            int delay = 220;
+            DoGrabOpen();
+            Thread.Sleep(delay);
+            DoGrabClose();
+            Thread.Sleep(delay);
+            DoGrabOpen();
+            Thread.Sleep(delay);
+            DoGrabClose();
+            Thread.Sleep(delay);
+        }
+
+        public void DoDemoDropoff()
+        {
+            Robots.MainRobot.SetSpeedSlow();
+            DoSequenceDropOff();
+            DoGrabRelease();
+            Robots.MainRobot.MoveForward(85);
+            Robots.MainRobot.MoveBackward(85);
+            Robots.MainRobot.SetSpeedFast();
+        }
 
         public Color DoSequenceDropOff()
         {
