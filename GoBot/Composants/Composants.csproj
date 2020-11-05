@@ -213,22 +213,10 @@
     <None Include="img\ConnectionOk.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\Cursor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\CursorFocused.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="img\Rainbow.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="img\Rainbow2D.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\TrackBar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\TrackBarFocused.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="img\ArrowBottom.png" />

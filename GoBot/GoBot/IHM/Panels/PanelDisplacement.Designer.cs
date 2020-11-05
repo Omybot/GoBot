@@ -137,7 +137,7 @@
             this.btnPIDVit.Location = new System.Drawing.Point(279, 378);
             this.btnPIDVit.Name = "btnPIDVit";
             this.btnPIDVit.Size = new System.Drawing.Size(35, 23);
-            this.btnPIDVit.TabIndex = 123;
+            this.btnPIDVit.TabIndex = 38;
             this.btnPIDVit.Text = "Vit";
             this.btnPIDVit.UseVisualStyleBackColor = true;
             this.btnPIDVit.Click += new System.EventHandler(this.btnPIDVit_Click);
@@ -147,7 +147,7 @@
             this.btnPIDPol.Location = new System.Drawing.Point(243, 378);
             this.btnPIDPol.Name = "btnPIDPol";
             this.btnPIDPol.Size = new System.Drawing.Size(35, 23);
-            this.btnPIDPol.TabIndex = 122;
+            this.btnPIDPol.TabIndex = 37;
             this.btnPIDPol.Text = "Cap";
             this.btnPIDPol.UseVisualStyleBackColor = true;
             this.btnPIDPol.Click += new System.EventHandler(this.btnPIDPol_Click);
@@ -165,7 +165,7 @@
             this.trkLineDecel.Name = "trkLineDecel";
             this.trkLineDecel.Reverse = false;
             this.trkLineDecel.Size = new System.Drawing.Size(250, 15);
-            this.trkLineDecel.TabIndex = 120;
+            this.trkLineDecel.TabIndex = 24;
             this.trkLineDecel.Vertical = false;
             this.trkLineDecel.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkLineDecel_TickValueChanged);
             this.trkLineDecel.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkLineDecel_ValueChanged);
@@ -185,7 +185,7 @@
             0});
             this.numLineDecel.Name = "numLineDecel";
             this.numLineDecel.Size = new System.Drawing.Size(51, 20);
-            this.numLineDecel.TabIndex = 121;
+            this.numLineDecel.TabIndex = 25;
             this.numLineDecel.ValueChanged += new System.EventHandler(this.numLineDecel_ValueChanged);
             // 
             // lblLineDecel
@@ -202,7 +202,7 @@
             this.btnGoTo.Location = new System.Drawing.Point(253, 149);
             this.btnGoTo.Name = "btnGoTo";
             this.btnGoTo.Size = new System.Drawing.Size(53, 23);
-            this.btnGoTo.TabIndex = 116;
+            this.btnGoTo.TabIndex = 19;
             this.btnGoTo.Text = "Go";
             this.btnGoTo.UseVisualStyleBackColor = true;
             this.btnGoTo.Click += new System.EventHandler(this.btnGoTo_Click);
@@ -228,7 +228,7 @@
             -2147483648});
             this.numTeta.Name = "numTeta";
             this.numTeta.Size = new System.Drawing.Size(51, 20);
-            this.numTeta.TabIndex = 115;
+            this.numTeta.TabIndex = 18;
             // 
             // lblGoToTheta
             // 
@@ -236,7 +236,7 @@
             this.lblGoToTheta.Location = new System.Drawing.Point(173, 153);
             this.lblGoToTheta.Name = "lblGoToTheta";
             this.lblGoToTheta.Size = new System.Drawing.Size(14, 13);
-            this.lblGoToTheta.TabIndex = 114;
+            this.lblGoToTheta.TabIndex = 17;
             this.lblGoToTheta.Text = "T";
             // 
             // numY
@@ -254,7 +254,7 @@
             0});
             this.numY.Name = "numY";
             this.numY.Size = new System.Drawing.Size(51, 20);
-            this.numY.TabIndex = 113;
+            this.numY.TabIndex = 16;
             // 
             // lblGoToY
             // 
@@ -262,7 +262,7 @@
             this.lblGoToY.Location = new System.Drawing.Point(99, 153);
             this.lblGoToY.Name = "lblGoToY";
             this.lblGoToY.Size = new System.Drawing.Size(14, 13);
-            this.lblGoToY.TabIndex = 112;
+            this.lblGoToY.TabIndex = 15;
             this.lblGoToY.Text = "Y";
             // 
             // numX
@@ -280,7 +280,7 @@
             0});
             this.numX.Name = "numX";
             this.numX.Size = new System.Drawing.Size(51, 20);
-            this.numX.TabIndex = 111;
+            this.numX.TabIndex = 14;
             // 
             // lblGoToX
             // 
@@ -288,7 +288,7 @@
             this.lblGoToX.Location = new System.Drawing.Point(22, 153);
             this.lblGoToX.Name = "lblGoToX";
             this.lblGoToX.Size = new System.Drawing.Size(14, 13);
-            this.lblGoToX.TabIndex = 110;
+            this.lblGoToX.TabIndex = 13;
             this.lblGoToX.Text = "X";
             // 
             // btnPIDXY
@@ -296,7 +296,7 @@
             this.btnPIDXY.Location = new System.Drawing.Point(207, 378);
             this.btnPIDXY.Name = "btnPIDXY";
             this.btnPIDXY.Size = new System.Drawing.Size(35, 23);
-            this.btnPIDXY.TabIndex = 109;
+            this.btnPIDXY.TabIndex = 36;
             this.btnPIDXY.Text = "XY";
             this.btnPIDXY.UseVisualStyleBackColor = true;
             this.btnPIDXY.Click += new System.EventHandler(this.btnPIDXY_Click);
@@ -308,7 +308,7 @@
             this.pnlManual.Location = new System.Drawing.Point(259, 414);
             this.pnlManual.Name = "pnlManual";
             this.pnlManual.Size = new System.Drawing.Size(56, 22);
-            this.pnlManual.TabIndex = 91;
+            this.pnlManual.TabIndex = 42;
             this.pnlManual.KeyPressed += new Composants.FocusablePanel.KeyPressedDelegate(this.pnlManual_KeyPressed);
             this.pnlManual.KeyUp += new System.Windows.Forms.KeyEventHandler(this.pnlManual_KeyUp);
             // 
@@ -318,7 +318,7 @@
             this.lblManual.Location = new System.Drawing.Point(164, 418);
             this.lblManual.Name = "lblManual";
             this.lblManual.Size = new System.Drawing.Size(89, 13);
-            this.lblManual.TabIndex = 92;
+            this.lblManual.TabIndex = 41;
             this.lblManual.Text = "Contrôle manuel :";
             // 
             // numCoeffD
@@ -336,7 +336,7 @@
             0});
             this.numCoeffD.Name = "numCoeffD";
             this.numCoeffD.Size = new System.Drawing.Size(45, 20);
-            this.numCoeffD.TabIndex = 108;
+            this.numCoeffD.TabIndex = 35;
             this.numCoeffD.ValueChanged += new System.EventHandler(this.numCoeffPID_ValueChanged);
             // 
             // trkLineAccel
@@ -352,7 +352,7 @@
             this.trkLineAccel.Name = "trkLineAccel";
             this.trkLineAccel.Reverse = false;
             this.trkLineAccel.Size = new System.Drawing.Size(250, 15);
-            this.trkLineAccel.TabIndex = 88;
+            this.trkLineAccel.TabIndex = 22;
             this.trkLineAccel.Vertical = false;
             this.trkLineAccel.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkLineAccel_TickValueChanged);
             this.trkLineAccel.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkLineAccel_ValueChanged);
@@ -363,7 +363,7 @@
             this.lblPIDD.Location = new System.Drawing.Point(130, 380);
             this.lblPIDD.Name = "lblPIDD";
             this.lblPIDD.Size = new System.Drawing.Size(15, 13);
-            this.lblPIDD.TabIndex = 107;
+            this.lblPIDD.TabIndex = 34;
             this.lblPIDD.Text = "D";
             // 
             // trkLineSpeed
@@ -379,7 +379,7 @@
             this.trkLineSpeed.Name = "trkLineSpeed";
             this.trkLineSpeed.Reverse = false;
             this.trkLineSpeed.Size = new System.Drawing.Size(250, 15);
-            this.trkLineSpeed.TabIndex = 87;
+            this.trkLineSpeed.TabIndex = 20;
             this.trkLineSpeed.Vertical = false;
             this.trkLineSpeed.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkLineSpeed_TickValueChanged);
             this.trkLineSpeed.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkLineSpeed_ValueChanged);
@@ -393,7 +393,7 @@
             this.txtDistance.Location = new System.Drawing.Point(178, 53);
             this.txtDistance.Name = "txtDistance";
             this.txtDistance.Size = new System.Drawing.Size(67, 20);
-            this.txtDistance.TabIndex = 76;
+            this.txtDistance.TabIndex = 11;
             this.txtDistance.Text = "Distance";
             this.txtDistance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtDistance.TextMode = Composants.TextBoxPlus.TextModeEnum.Numeric;
@@ -413,7 +413,7 @@
             0});
             this.numLineSpeed.Name = "numLineSpeed";
             this.numLineSpeed.Size = new System.Drawing.Size(51, 20);
-            this.numLineSpeed.TabIndex = 95;
+            this.numLineSpeed.TabIndex = 21;
             this.numLineSpeed.ValueChanged += new System.EventHandler(this.numLineSpeed_ValueChanged);
             // 
             // numCoeffI
@@ -431,7 +431,7 @@
             0});
             this.numCoeffI.Name = "numCoeffI";
             this.numCoeffI.Size = new System.Drawing.Size(45, 20);
-            this.numCoeffI.TabIndex = 106;
+            this.numCoeffI.TabIndex = 33;
             this.numCoeffI.ValueChanged += new System.EventHandler(this.numCoeffPID_ValueChanged);
             // 
             // numLineAccel
@@ -449,7 +449,7 @@
             0});
             this.numLineAccel.Name = "numLineAccel";
             this.numLineAccel.Size = new System.Drawing.Size(51, 20);
-            this.numLineAccel.TabIndex = 96;
+            this.numLineAccel.TabIndex = 23;
             this.numLineAccel.ValueChanged += new System.EventHandler(this.numLineAccel_ValueChanged);
             // 
             // txtAngle
@@ -461,7 +461,7 @@
             this.txtAngle.Location = new System.Drawing.Point(178, 77);
             this.txtAngle.Name = "txtAngle";
             this.txtAngle.Size = new System.Drawing.Size(67, 20);
-            this.txtAngle.TabIndex = 78;
+            this.txtAngle.TabIndex = 12;
             this.txtAngle.Text = "Angle";
             this.txtAngle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtAngle.TextMode = Composants.TextBoxPlus.TextModeEnum.Decimal;
@@ -472,7 +472,7 @@
             this.lblPIDI.Location = new System.Drawing.Point(70, 380);
             this.lblPIDI.Name = "lblPIDI";
             this.lblPIDI.Size = new System.Drawing.Size(10, 13);
-            this.lblPIDI.TabIndex = 105;
+            this.lblPIDI.TabIndex = 32;
             this.lblPIDI.Text = "I";
             // 
             // numCoeffP
@@ -490,7 +490,7 @@
             0});
             this.numCoeffP.Name = "numCoeffP";
             this.numCoeffP.Size = new System.Drawing.Size(45, 20);
-            this.numCoeffP.TabIndex = 104;
+            this.numCoeffP.TabIndex = 31;
             this.numCoeffP.ValueChanged += new System.EventHandler(this.numCoeffPID_ValueChanged);
             // 
             // lblPIDP
@@ -499,7 +499,7 @@
             this.lblPIDP.Location = new System.Drawing.Point(4, 380);
             this.lblPIDP.Name = "lblPIDP";
             this.lblPIDP.Size = new System.Drawing.Size(14, 13);
-            this.lblPIDP.TabIndex = 103;
+            this.lblPIDP.TabIndex = 30;
             this.lblPIDP.Text = "P";
             // 
             // trkPivotSpeed
@@ -515,7 +515,7 @@
             this.trkPivotSpeed.Name = "trkPivotSpeed";
             this.trkPivotSpeed.Reverse = false;
             this.trkPivotSpeed.Size = new System.Drawing.Size(250, 15);
-            this.trkPivotSpeed.TabIndex = 99;
+            this.trkPivotSpeed.TabIndex = 26;
             this.trkPivotSpeed.Vertical = false;
             this.trkPivotSpeed.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkPivotSpeed_TickValueChanged);
             this.trkPivotSpeed.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkPivotSpeed_ValueChanged);
@@ -544,7 +544,7 @@
             0});
             this.numPivotAccel.Name = "numPivotAccel";
             this.numPivotAccel.Size = new System.Drawing.Size(51, 20);
-            this.numPivotAccel.TabIndex = 102;
+            this.numPivotAccel.TabIndex = 29;
             this.numPivotAccel.ValueChanged += new System.EventHandler(this.numPivotAccel_ValueChanged);
             // 
             // trkPivotAccel
@@ -560,7 +560,7 @@
             this.trkPivotAccel.Name = "trkPivotAccel";
             this.trkPivotAccel.Reverse = false;
             this.trkPivotAccel.Size = new System.Drawing.Size(250, 15);
-            this.trkPivotAccel.TabIndex = 100;
+            this.trkPivotAccel.TabIndex = 28;
             this.trkPivotAccel.Vertical = false;
             this.trkPivotAccel.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkPivotAccel_TickValueChanged);
             this.trkPivotAccel.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkPivotAccel_ValueChanged);
@@ -589,7 +589,7 @@
             0});
             this.numPivotSpeed.Name = "numPivotSpeed";
             this.numPivotSpeed.Size = new System.Drawing.Size(51, 20);
-            this.numPivotSpeed.TabIndex = 101;
+            this.numPivotSpeed.TabIndex = 27;
             this.numPivotSpeed.ValueChanged += new System.EventHandler(this.numPivotSpeed_ValueChanged);
             // 
             // lblPivotSpeed
@@ -673,7 +673,7 @@
             this.btnCalibrationForward.Location = new System.Drawing.Point(285, 24);
             this.btnCalibrationForward.Name = "btnCalibrationForward";
             this.btnCalibrationForward.Size = new System.Drawing.Size(30, 23);
-            this.btnCalibrationForward.TabIndex = 124;
+            this.btnCalibrationForward.TabIndex = 9;
             this.btnCalibrationForward.UseVisualStyleBackColor = true;
             this.btnCalibrationForward.Click += new System.EventHandler(this.btnCalibrationForward_Click);
             // 
@@ -688,7 +688,7 @@
             this.btnStop.Margin = new System.Windows.Forms.Padding(0);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(97, 97);
-            this.btnStop.TabIndex = 63;
+            this.btnStop.TabIndex = 0;
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStopSmooth_Click);
             // 
@@ -698,7 +698,7 @@
             this.btnPivotRight.Location = new System.Drawing.Point(251, 51);
             this.btnPivotRight.Name = "btnPivotRight";
             this.btnPivotRight.Size = new System.Drawing.Size(32, 48);
-            this.btnPivotRight.TabIndex = 80;
+            this.btnPivotRight.TabIndex = 5;
             this.btnPivotRight.UseVisualStyleBackColor = true;
             this.btnPivotRight.Click += new System.EventHandler(this.btnPivotRight_Click);
             // 
@@ -709,7 +709,7 @@
             this.btnFast.Location = new System.Drawing.Point(75, 413);
             this.btnFast.Name = "btnFast";
             this.btnFast.Size = new System.Drawing.Size(74, 23);
-            this.btnFast.TabIndex = 118;
+            this.btnFast.TabIndex = 40;
             this.btnFast.Text = "Rapide";
             this.btnFast.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnFast.UseVisualStyleBackColor = true;
@@ -722,7 +722,7 @@
             this.btnLow.Location = new System.Drawing.Point(5, 413);
             this.btnLow.Name = "btnLow";
             this.btnLow.Size = new System.Drawing.Size(64, 23);
-            this.btnLow.TabIndex = 117;
+            this.btnLow.TabIndex = 39;
             this.btnLow.Text = "Lent";
             this.btnLow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnLow.UseVisualStyleBackColor = true;
@@ -734,7 +734,7 @@
             this.btnTurnForwardLeft.Location = new System.Drawing.Point(140, 24);
             this.btnTurnForwardLeft.Name = "btnTurnForwardLeft";
             this.btnTurnForwardLeft.Size = new System.Drawing.Size(32, 23);
-            this.btnTurnForwardLeft.TabIndex = 81;
+            this.btnTurnForwardLeft.TabIndex = 1;
             this.btnTurnForwardLeft.UseVisualStyleBackColor = true;
             this.btnTurnForwardLeft.Click += new System.EventHandler(this.btnTurnForwardLeft_Click);
             // 
@@ -744,7 +744,7 @@
             this.btnTurnBackwardLeft.Location = new System.Drawing.Point(140, 103);
             this.btnTurnBackwardLeft.Name = "btnTurnBackwardLeft";
             this.btnTurnBackwardLeft.Size = new System.Drawing.Size(32, 23);
-            this.btnTurnBackwardLeft.TabIndex = 83;
+            this.btnTurnBackwardLeft.TabIndex = 6;
             this.btnTurnBackwardLeft.UseVisualStyleBackColor = true;
             this.btnTurnBackwardLeft.Click += new System.EventHandler(this.btnTurnBackwardLeft_Click);
             // 
@@ -754,7 +754,7 @@
             this.btnTurnForwardRight.Location = new System.Drawing.Point(251, 24);
             this.btnTurnForwardRight.Name = "btnTurnForwardRight";
             this.btnTurnForwardRight.Size = new System.Drawing.Size(32, 23);
-            this.btnTurnForwardRight.TabIndex = 82;
+            this.btnTurnForwardRight.TabIndex = 3;
             this.btnTurnForwardRight.UseVisualStyleBackColor = true;
             this.btnTurnForwardRight.Click += new System.EventHandler(this.btnTurnForwardRight_Click);
             // 
@@ -765,7 +765,7 @@
             this.btnPivotLeft.Location = new System.Drawing.Point(140, 51);
             this.btnPivotLeft.Name = "btnPivotLeft";
             this.btnPivotLeft.Size = new System.Drawing.Size(32, 48);
-            this.btnPivotLeft.TabIndex = 77;
+            this.btnPivotLeft.TabIndex = 4;
             this.btnPivotLeft.UseVisualStyleBackColor = true;
             this.btnPivotLeft.Click += new System.EventHandler(this.btnPivotLeft_Click);
             // 
@@ -775,7 +775,7 @@
             this.btnBackward.Location = new System.Drawing.Point(178, 103);
             this.btnBackward.Name = "btnBackward";
             this.btnBackward.Size = new System.Drawing.Size(67, 23);
-            this.btnBackward.TabIndex = 79;
+            this.btnBackward.TabIndex = 7;
             this.btnBackward.UseVisualStyleBackColor = true;
             this.btnBackward.Click += new System.EventHandler(this.btnBackward_Click);
             // 
@@ -785,7 +785,7 @@
             this.btnTurnBackwardRight.Location = new System.Drawing.Point(251, 103);
             this.btnTurnBackwardRight.Name = "btnTurnBackwardRight";
             this.btnTurnBackwardRight.Size = new System.Drawing.Size(32, 23);
-            this.btnTurnBackwardRight.TabIndex = 84;
+            this.btnTurnBackwardRight.TabIndex = 8;
             this.btnTurnBackwardRight.UseVisualStyleBackColor = true;
             this.btnTurnBackwardRight.Click += new System.EventHandler(this.btnTurnBackwardRight_Click);
             // 
@@ -795,7 +795,7 @@
             this.btnForward.Location = new System.Drawing.Point(178, 24);
             this.btnForward.Name = "btnForward";
             this.btnForward.Size = new System.Drawing.Size(67, 23);
-            this.btnForward.TabIndex = 75;
+            this.btnForward.TabIndex = 2;
             this.btnForward.UseVisualStyleBackColor = true;
             this.btnForward.Click += new System.EventHandler(this.btnForward_Click);
             // 
@@ -805,7 +805,7 @@
             this.btnCalibration.Location = new System.Drawing.Point(285, 103);
             this.btnCalibration.Name = "btnCalibration";
             this.btnCalibration.Size = new System.Drawing.Size(30, 23);
-            this.btnCalibration.TabIndex = 93;
+            this.btnCalibration.TabIndex = 10;
             this.btnCalibration.UseVisualStyleBackColor = true;
             this.btnCalibration.Click += new System.EventHandler(this.btnCalibration_Click);
             // 

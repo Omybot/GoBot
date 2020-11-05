@@ -173,26 +173,6 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Cursor {
-            get {
-                object obj = ResourceManager.GetObject("Cursor", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CursorFocused {
-            get {
-                object obj = ResourceManager.GetObject("CursorFocused", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Rainbow {
             get {
                 object obj = ResourceManager.GetObject("Rainbow", resourceCulture);
@@ -216,26 +196,6 @@ namespace Composants.Properties {
         internal static System.Drawing.Bitmap RedLed {
             get {
                 object obj = ResourceManager.GetObject("RedLed", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap TrackBar {
-            get {
-                object obj = ResourceManager.GetObject("TrackBar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap TrackBarFocused {
-            get {
-                object obj = ResourceManager.GetObject("TrackBarFocused", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

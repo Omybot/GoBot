@@ -36,6 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.DoubleBuffered = true;
             this.MaximumSize = new System.Drawing.Size(35, 15);
             this.MinimumSize = new System.Drawing.Size(35, 15);
             this.Name = "SwitchButton";

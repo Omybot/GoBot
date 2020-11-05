@@ -113,7 +113,7 @@ namespace Composants
                 b.Dispose();
 
                 Pen p = new Pen(Color.FromArgb(22, 126, 40));
-                e.Graphics.DrawPath(_isFocus ? Pens.DodgerBlue : p, path);
+                e.Graphics.DrawPath(p, path);
                 p.Dispose();
 
                 ballOnLeft = _isMirrored;
@@ -122,7 +122,7 @@ namespace Composants
             {
                 e.Graphics.FillPath(Brushes.WhiteSmoke, path);
                 ballOnLeft = !_isMirrored;
-                e.Graphics.DrawPath(_isFocus ? Pens.DodgerBlue : Pens.LightGray, path);
+                e.Graphics.DrawPath(Pens.LightGray, path);
             }
 
             if (ballOnLeft)

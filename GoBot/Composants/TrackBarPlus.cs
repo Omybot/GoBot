@@ -1,185 +1,136 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+using System.Drawing.Drawing2D;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
 namespace Composants
 {
     public partial class TrackBarPlus : UserControl
     {
-        private bool reverse;
-        private bool vertical;
-        private double max, min;
+        private bool _isReversed;
+        private bool _isVertical;
+        private double _value, _maxValue, _minValue;
+        private int _decimalPlaces;
+        private bool _isMoving;
+        private int _cursorSize;
 
-        private double lastTickedValue = -1;
+        private double _lastTickedValue = -1;
 
         public delegate void ValueChangedDelegate(object sender, double value);
 
         public event ValueChangedDelegate TickValueChanged;
-
-        /// <summary>
-        /// Se produit lorsque la valeur sélectionnée change
-        /// </summary>
         public event ValueChangedDelegate ValueChanged;
-
-        private Timer TimerTickValue { get; set; }
-        private bool Moving { get; set; }
-        private bool FocusedImage { get; set; }
-
-        /// <summary>
-        /// Obtient la valeur actuellement sélectionnée
-        /// </summary>
-        public double Value { get; private set; }
-
-        /// <summary>
-        /// Obtient ou définit l'intervalle entre deux evenements TickValueChanged
-        /// </summary>
-        public uint IntervalTimer { get; set; }
-
-        /// <summary>
-        /// Obtient ou définit le nombre de chiffres après la virgule
-        /// </summary>
-        public int DecimalPlaces { get; set; }
-
-        /// <summary>
-        /// Obtient ou définit la valeur minimum sélectionnable
-        /// </summary>
-        public double Min
-        {
-            get { return min; }
-            set
-            {
-                min = value;
-                SetValue(Value);
-            }
-        }
-
-        /// <summary>
-        /// Obtient ou définit la valeur maximum sélectionnable
-        /// </summary>
-        public double Max
-        {
-            get { return max; }
-            set
-            {
-                max = value;
-                SetValue(Value);
-            }
-        }
-
-        /// <summary>
-        /// Obtient ou définit si le control est dessiné à la vertical ou non
-        /// </summary>
-        public bool Vertical
-        {
-            get
-            {
-                return vertical;
-            }
-            set
-            {
-                int ancienWidth = Width;
-                int ancienHeight = Height;
-
-                if (value)
-                {
-                    MaximumSize = new Size(15, 3000);
-                    MinimumSize = new Size(15, 30);
-
-                    imgBarre.Anchor = AnchorStyles.Bottom | AnchorStyles.Top;
-                    imgBarre.Left = 5;
-                    imgBarre.Top = 0;
-                    imgBarre.Width = 5;
-                    imgBarre.Height = Height;
-
-                    Height = Math.Max(ancienWidth, ancienHeight);
-                    Width = Math.Min(ancienWidth, ancienHeight);
-                }
-                else
-                {
-                    MaximumSize = new Size(3000, 15);
-                    MinimumSize = new Size(30, 15);
-
-                    imgBarre.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-                    imgBarre.Left = 0;
-                    imgBarre.Top = 5;
-                    imgBarre.Height = 5;
-                    imgBarre.Width = Width;
-
-                    Width = Math.Max(ancienWidth, ancienHeight);
-                    Height = Math.Min(ancienWidth, ancienHeight);
-                }
-
-                vertical = value;
-                ChangeImages();
-            }
-        }
-
-        /// <summary>
-        /// Obtient ou définit si le control est inversé (= minimum à droite)
-        /// </summary>
-        public bool Reverse
-        {
-            get
-            {
-                return reverse;
-            }
-            set
-            {
-                reverse = value;
-
-                ChangeImages();
-            }
-        }
 
         public TrackBarPlus()
         {
             InitializeComponent();
 
             DecimalPlaces = 0;
-            vertical = false;
-            reverse = false;
+            _isVertical = false;
+            _isReversed = false;
             IntervalTimer = 1;
             TimerTickValue = new Timer();
             TimerTickValue.Tick += new EventHandler(TimerTickValue_Tick);
 
-            Min = 0;
-            Max = 100;
-            Moving = false;
+            _minValue = 0;
+            _maxValue = 100;
+            _isMoving = false;
+            _decimalPlaces = 0;
 
-            imgCurseur.MouseDown += new MouseEventHandler(img_MouseDown);
-            imgCurseur.MouseUp += new MouseEventHandler(img_MouseUp);
-            imgCurseur.MouseMove += new MouseEventHandler(img_MouseMove);
-
-            imgBarre.MouseDown += new MouseEventHandler(img_MouseDown);
-            imgBarre.MouseUp += new MouseEventHandler(img_MouseUp);
-            imgBarre.MouseMove += new MouseEventHandler(img_MouseMove);
+            _cursorSize = Height - 1;
         }
 
-        /// <summary>
-        /// Définit la valeur actuellement sélectionnée
-        /// </summary>
-        /// <param name="val">Valeur à sélectionner</param>
-        /// <param name="tickEvent">Vrai si l'évenement TickValueChanged doit être déclenché</param>
+        private Timer TimerTickValue { get; set; }
+
+        public double Value => _value;
+
+        public uint IntervalTimer { get; set; }
+
+        public int DecimalPlaces { get; set; }
+
+        public double Min
+        {
+            get { return _minValue; }
+            set
+            {
+                _minValue = value;
+                SetValue(_value);
+            }
+        }
+
+        public double Max
+        {
+            get { return _maxValue; }
+            set
+            {
+                _maxValue = value;
+                SetValue(_value);
+            }
+        }
+
+        public bool Vertical
+        {
+            get
+            {
+                return _isVertical;
+            }
+            set
+            {
+                int oldWidth = Width;
+                int oldHeight = Height;
+
+                if (value)
+                {
+                    MaximumSize = new Size(15, 3000);
+                    MinimumSize = new Size(15, 30);
+
+                    Height = Math.Max(oldWidth, oldHeight);
+                    Width = Math.Min(oldWidth, oldHeight);
+                }
+                else
+                {
+                    MaximumSize = new Size(3000, 15);
+                    MinimumSize = new Size(30, 15);
+
+                    Width = Math.Max(oldWidth, oldHeight);
+                    Height = Math.Min(oldWidth, oldHeight);
+                }
+
+                _isVertical = value;
+                _cursorSize = _isVertical ? Width - 1 : Height - 1;
+                Invalidate();
+            }
+        }
+
+        public bool Reverse
+        {
+            get
+            {
+                return _isReversed;
+            }
+            set
+            {
+                _isReversed = value;
+                Invalidate();
+            }
+        }
+
         public void SetValue(double val, bool tickEvent = true)
         {
             val = Math.Max(Min, Math.Min(Max, val));
 
-            if (Value != val)
+            if (_value != val)
             {
-                Value = Math.Round(val, DecimalPlaces);
+                _value = Math.Round(val, DecimalPlaces);
 
                 if (tickEvent)
-                    TickValueChanged?.Invoke(this, Value);
+                    TickValueChanged?.Invoke(this, _value);
 
-                ValueChanged?.Invoke(this, Value);
+                ValueChanged?.Invoke(this, _value);
             }
 
-            DrawImage();
+            Invalidate();
         }
 
         #region Events
@@ -200,22 +151,22 @@ namespace Composants
             }
             else if (e.KeyCode == Keys.Left)
             {
-                SetValue(Value - Math.Ceiling((Max - Min) * 0.05) * direction);
+                SetValue(_value - Math.Ceiling((Max - Min) * 0.05) * direction);
                 e.IsInputKey = true;
             }
             else if (e.KeyCode == Keys.Right)
             {
-                SetValue(Value + Math.Ceiling((Max - Min) * 0.05) * direction);
+                SetValue(_value + Math.Ceiling((Max - Min) * 0.05) * direction);
                 e.IsInputKey = true;
             }
             else if (e.KeyCode == Keys.Add)
             {
-                SetValue(Value + direction);
+                SetValue(_value + direction);
                 e.IsInputKey = true;
             }
             else if (e.KeyCode == Keys.Subtract)
             {
-                SetValue(Value - direction);
+                SetValue(_value - direction);
                 e.IsInputKey = true;
             }
             base.OnPreviewKeyDown(e);
@@ -238,15 +189,13 @@ namespace Composants
 
         protected override void OnEnter(EventArgs e)
         {
-            FocusedImage = true;
-            ChangeImages();
+            Invalidate();
             base.OnEnter(e);
         }
 
         protected override void OnLeave(EventArgs e)
         {
-            FocusedImage = false;
-            ChangeImages();
+            Invalidate();
             base.OnLeave(e);
         }
 
@@ -272,7 +221,7 @@ namespace Composants
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (Moving) SetCursorPosition(this.PointToClient(Cursor.Position));
+            if (_isMoving) SetCursorPosition(this.PointToClient(Cursor.Position));
 
             base.OnMouseMove(e);
         }
@@ -280,61 +229,38 @@ namespace Composants
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             Focus();
-            SetValue(Value + e.Delta / SystemInformation.MouseWheelScrollDelta, true);
+            SetValue(_value + Math.Sign(e.Delta) * (_maxValue - _minValue) / 100, true);
         }
-        
+
         private void TrackBarPlus_Leave(object sender, EventArgs e)
         {
-            ChangeImages();
+            Invalidate();
         }
 
         private void TrackBarPlus_Enter(object sender, EventArgs e)
         {
-            ChangeImages();
+            Invalidate();
+        }
+
+        private void TrackBarPlus_SizeChanged(object sender, EventArgs e)
+        {
+            _cursorSize = _isVertical ? Width - 1 : Height - 1;
         }
 
         #endregion
 
-        private void ChangeImages()
-        {
-            if (!FocusedImage)
-            {
-                imgBarre.BackgroundImage = Properties.Resources.TrackBar;
-                imgCurseur.Image = Properties.Resources.Cursor;
-            }
-            else
-            {
-                imgBarre.BackgroundImage = Properties.Resources.TrackBarFocused;
-                imgCurseur.Image = Properties.Resources.CursorFocused;
-
-                if (Moving)
-                    imgCurseur.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
-            }
-
-            if (!Reverse)
-                imgBarre.BackgroundImage.RotateFlip(RotateFlipType.Rotate180FlipY);
-            if (Vertical)
-                imgBarre.BackgroundImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
-        }
-
         private void StartMoving()
         {
-            Moving = true;
-
-            Focus();
+            _isMoving = true;
 
             // Le premier tick se fait en 1 milliseconde, les autres suivant l'intervalle
             TimerTickValue.Interval = 1;
             TimerTickValue.Start();
-
-            ChangeImages();
         }
 
         private void EndMoving()
         {
-            Moving = false;
-
-            ChangeImages();
+            _isMoving = false;
         }
 
         void TimerTickValue_Tick(object sender, EventArgs e)
@@ -342,40 +268,104 @@ namespace Composants
             // les ticks suivants se font avec l'intervalle voulu
             TimerTickValue.Interval = (int)IntervalTimer;
 
-            if (lastTickedValue != Value)
+            if (_lastTickedValue != _value)
             {
-                lastTickedValue = Value;
-                TickValueChanged?.Invoke(this, Value);
+                _lastTickedValue = _value;
+                TickValueChanged?.Invoke(this, _value);
             }
 
-            if (!Moving)
+            if (!_isMoving)
                 TimerTickValue.Stop();
         }
 
-        private Point ImageTopLeft(Point centerPosition)
+        private void TrackBarPlus_Paint(object sender, PaintEventArgs e)
         {
-            if (!Vertical)
-                return new Point(centerPosition.X - (imgCurseur.Width / 2), imgCurseur.Location.Y);
-            else
-                return new Point(imgCurseur.Location.X, centerPosition.Y - (imgCurseur.Height / 2));
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            PaintBack(e.Graphics);
+            PaintCursor(e.Graphics);
         }
 
-        private void DrawImage()
+        private void PaintBack(Graphics g)
         {
-            if (!Vertical)
+            GraphicsPath path = new GraphicsPath();
+            int x, y, w, h;
+
+            Brush b;
+
+            if (_isVertical)
             {
-                if (!Reverse)
-                    imgCurseur.Location = new Point((int)(((Value - Min) * (Width - imgCurseur.Width)) / (Max - Min)), imgCurseur.Location.Y);
+                h = Height - 1;
+                w = (int)(Width / 2.5);
+                x = Width / 2 - w / 2;
+                y = 0;
+
+                path.AddLine(x + w - 1, y + w / 2 + 1, x + w - 1, y + h - w / 2 - 1);
+                path.AddArc(new Rectangle(x + 1, y + h - w - 1, w - 2, w - 2), 0, 180);
+                path.AddLine(x + 1, y + w - 1, x + 1, y + w / 2 + 1);
+                path.AddArc(new Rectangle(x + 1, y + 1, w - 2, w - 2), 180, 180);
+
+                if (_isReversed)
+                    b = new LinearGradientBrush(new Rectangle(x, y, w, h), Color.Gainsboro, Color.White, LinearGradientMode.Vertical);
                 else
-                    imgCurseur.Location = new Point((int)(Width - imgCurseur.Width - (((Value - Min) * (Width - imgCurseur.Width)) / (Max - Min))), imgCurseur.Location.Y);
+                    b = new LinearGradientBrush(new Rectangle(x, y, w, h), Color.White, Color.Gainsboro, LinearGradientMode.Vertical);
             }
             else
             {
-                if (Reverse)
-                    imgCurseur.Location = new Point(imgCurseur.Location.X, (int)(((Value - Min) * (Height - imgCurseur.Height)) / (Max - Min)));
+                h = (int)(Height / 2.5);
+                w = Width - 1;
+                x = 0;
+                y = Height / 2 - h / 2;
+
+                path.AddLine(x + h / 2 + 1, y + 1, x + w - h / 2 - 1, y + 1);
+                path.AddArc(new Rectangle(x + w - h - 1, y + 1, h - 2, h - 2), -90, 180);
+                path.AddLine(x + w - h / 2 - 1, y + h - 1, x + h / 2 + 1, y + h - 1);
+                path.AddArc(new Rectangle(x + 1, y + 1, h - 2, h - 2), 90, 180);
+
+                if (_isReversed)
+                    b = new LinearGradientBrush(new Rectangle(x, y, w, h), Color.White, Color.Gainsboro, LinearGradientMode.Horizontal);
                 else
-                    imgCurseur.Location = new Point(imgCurseur.Location.X, (int)(Height - imgCurseur.Height - ((Value - Min) * (Height - imgCurseur.Height)) / (Max - Min)));
+                    b = new LinearGradientBrush(new Rectangle(x, y, w, h), Color.Gainsboro, Color.White, LinearGradientMode.Horizontal);
             }
+
+            g.FillPath(b, path);
+            b.Dispose();
+
+            g.DrawPath(Pens.LightGray, path);
+
+            path.Dispose();
+        }
+
+        private void PaintCursor(Graphics g)
+        {
+            Rectangle rBall;
+
+            if (_isVertical)
+            {
+                int y;
+                if (_isReversed)
+                    y = (int)(((_value - _minValue) * (Height - 1 - _cursorSize)) / (_maxValue - _minValue));
+                else
+                    y = Height - _cursorSize - 1 - (int)(((_value - _minValue) * (Height - 1 - _cursorSize)) / (_maxValue - _minValue));
+
+                rBall = new Rectangle(0, y, _cursorSize, _cursorSize);
+            }
+            else
+            {
+                int x;
+                if (_isReversed)
+                    x = Width - _cursorSize - 1 - (int)(((_value - _minValue) * (Width - 1 - _cursorSize)) / (_maxValue - _minValue));
+                else
+                    x = (int)(((_value - _minValue) * (Width - 1 - _cursorSize)) / (_maxValue - _minValue));
+
+                rBall = new Rectangle(x, 0, _cursorSize, _cursorSize);
+            }
+
+            Brush bBall = new LinearGradientBrush(rBall, Color.WhiteSmoke, Color.LightGray, 100);
+            g.FillEllipse(bBall, rBall);
+            bBall.Dispose();
+
+            g.DrawEllipse(Focused ? Pens.DodgerBlue : Pens.Gray, rBall);
         }
 
         private void SetCursorPosition(Point pos)
@@ -384,30 +374,29 @@ namespace Composants
 
             if (!Vertical)
             {
-                if (pos.X - imgCurseur.Width / 2 <= 0)
-                    val = (Reverse) ? Max : Min;
-                else if (pos.X >= this.Width - imgCurseur.Width / 2)
-                    val = (Reverse) ? Min : Max;
+                if (pos.X <= _cursorSize / 2)
+                    val = (_isReversed) ? _maxValue : _minValue;
+                else if (pos.X >= this.Width - _cursorSize / 2 - 1)
+                    val = (_isReversed) ? _minValue : _maxValue;
                 else
                 {
-                    val = Min + (Max - Min) * (pos.X - imgCurseur.Width / 2) / (float)(Width - imgCurseur.Width);
+                    val = _minValue + (_maxValue - _minValue) * (pos.X - _cursorSize / 2) / (float)(Width - 1 - _cursorSize);
 
-                    if (Reverse)
-                        val = Max - val + Min;
+                    if (_isReversed)
+                        val = _maxValue - val + _minValue;
                 }
             }
             else
             {
-                if (ImageTopLeft(pos).Y <= 0)
-                    val = (!Reverse) ? Max : Min;
-                else if (pos.Y >= this.Height - imgCurseur.Height / 2)
-                    val = (!Reverse) ? Min : Max;
+                if (pos.Y <= _cursorSize / 2)
+                    val = (!_isReversed) ? _maxValue : _minValue;
+                else if (pos.Y >= this.Height - _cursorSize / 2 - 1)
+                    val = (!_isReversed) ? _minValue : _maxValue;
                 else
                 {
-                    val = Min + (Max - Min) * (pos.Y - imgCurseur.Height / 2) / (float)(Height - imgCurseur.Height);
-                    Console.WriteLine(val);
-                    if (!Reverse)
-                        val = Max - val + Min;
+                    val = _minValue + (_maxValue - _minValue) * (pos.Y - _cursorSize / 2) / (float)(Height - 1 - _cursorSize);
+                    if (!_isReversed)
+                        val = _maxValue - val + _minValue;
                 }
             }
 
