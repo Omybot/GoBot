@@ -69,5 +69,15 @@ namespace GoBot.IHM.Pages
             Robots.MainRobot.SetSpeedFast();
             btnTrap.Focus();
         }
+
+        private void btnFast_Click(object sender, EventArgs e)
+        {
+            Robots.MainRobot.SetSpeedFast();
+        }
+
+        private void btnSlow_Click(object sender, EventArgs e)
+        {
+            Robots.MainRobot.SetSpeedVerySlow();
+        }
     }
 }

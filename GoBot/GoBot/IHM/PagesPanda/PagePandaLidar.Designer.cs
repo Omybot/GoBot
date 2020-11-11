@@ -147,7 +147,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picWorld.Location = new System.Drawing.Point(110, 16);
             this.picWorld.Name = "picWorld";
-            this.picWorld.Size = new System.Drawing.Size(792, 568);
+            this.picWorld.Size = new System.Drawing.Size(797, 568);
             this.picWorld.TabIndex = 11;
             this.picWorld.TabStop = false;
             this.picWorld.WorldChange += new GoBot.IHM.WorldPanel.WorldChangeDelegate(this.picWorld_WorldChange);
@@ -169,7 +169,7 @@
             this.Controls.Add(this.btnZoomPlus);
             this.Controls.Add(this.picWorld);
             this.Name = "PagePandaLidar";
-            this.Size = new System.Drawing.Size(916, 600);
+            this.Size = new System.Drawing.Size(920, 600);
             this.Load += new System.EventHandler(this.PanelLidar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
             this.ResumeLayout(false);

@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.btnTrap = new System.Windows.Forms.Button();
+            this.btnFast = new System.Windows.Forms.Button();
+            this.btnSlow = new System.Windows.Forms.Button();
             this.btnCalibration = new System.Windows.Forms.Button();
             this.btnAsserv = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
@@ -44,6 +46,26 @@
             this.btnTrap.Size = new System.Drawing.Size(23, 23);
             this.btnTrap.TabIndex = 0;
             this.btnTrap.UseVisualStyleBackColor = true;
+            // 
+            // btnFast
+            // 
+            this.btnFast.Image = global::GoBot.Properties.Resources.Fast;
+            this.btnFast.Location = new System.Drawing.Point(161, 3);
+            this.btnFast.Name = "btnFast";
+            this.btnFast.Size = new System.Drawing.Size(150, 150);
+            this.btnFast.TabIndex = 8;
+            this.btnFast.UseVisualStyleBackColor = true;
+            this.btnFast.Click += new System.EventHandler(this.btnFast_Click);
+            // 
+            // btnSlow
+            // 
+            this.btnSlow.Image = global::GoBot.Properties.Resources.Slow;
+            this.btnSlow.Location = new System.Drawing.Point(5, 3);
+            this.btnSlow.Name = "btnSlow";
+            this.btnSlow.Size = new System.Drawing.Size(150, 150);
+            this.btnSlow.TabIndex = 7;
+            this.btnSlow.UseVisualStyleBackColor = true;
+            this.btnSlow.Click += new System.EventHandler(this.btnSlow_Click);
             // 
             // btnCalibration
             // 
@@ -68,7 +90,7 @@
             // btnRight
             // 
             this.btnRight.Image = global::GoBot.Properties.Resources.TurnRight124;
-            this.btnRight.Location = new System.Drawing.Point(333, 211);
+            this.btnRight.Location = new System.Drawing.Point(380, 225);
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(150, 150);
             this.btnRight.TabIndex = 4;
@@ -78,7 +100,7 @@
             // btnLeft
             // 
             this.btnLeft.Image = global::GoBot.Properties.Resources.TurnLeft124;
-            this.btnLeft.Location = new System.Drawing.Point(646, 211);
+            this.btnLeft.Location = new System.Drawing.Point(693, 225);
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(150, 150);
             this.btnLeft.TabIndex = 2;
@@ -88,7 +110,7 @@
             // btnDown
             // 
             this.btnDown.Image = global::GoBot.Properties.Resources.Down124;
-            this.btnDown.Location = new System.Drawing.Point(490, 371);
+            this.btnDown.Location = new System.Drawing.Point(537, 385);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(150, 150);
             this.btnDown.TabIndex = 3;
@@ -98,7 +120,7 @@
             // btnUp
             // 
             this.btnUp.Image = global::GoBot.Properties.Resources.Up124;
-            this.btnUp.Location = new System.Drawing.Point(490, 53);
+            this.btnUp.Location = new System.Drawing.Point(537, 67);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(150, 150);
             this.btnUp.TabIndex = 1;
@@ -110,6 +132,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.btnFast);
+            this.Controls.Add(this.btnSlow);
             this.Controls.Add(this.btnCalibration);
             this.Controls.Add(this.btnAsserv);
             this.Controls.Add(this.btnTrap);
@@ -119,7 +143,7 @@
             this.Controls.Add(this.btnUp);
             this.DoubleBuffered = true;
             this.Name = "PagePandaMove";
-            this.Size = new System.Drawing.Size(916, 600);
+            this.Size = new System.Drawing.Size(920, 600);
             this.Load += new System.EventHandler(this.PagePandaMove_Load);
             this.ResumeLayout(false);
 
@@ -134,5 +158,7 @@
         private System.Windows.Forms.Button btnTrap;
         private System.Windows.Forms.Button btnAsserv;
         private System.Windows.Forms.Button btnCalibration;
+        private System.Windows.Forms.Button btnSlow;
+        private System.Windows.Forms.Button btnFast;
     }
 }

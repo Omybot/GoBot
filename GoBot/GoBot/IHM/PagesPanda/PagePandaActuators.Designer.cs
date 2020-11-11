@@ -59,8 +59,9 @@
             // 
             // btnGrabberRight
             // 
+            this.btnGrabberRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGrabberRight.Image = global::GoBot.Properties.Resources.GrabberRightOpened;
-            this.btnGrabberRight.Location = new System.Drawing.Point(621, 154);
+            this.btnGrabberRight.Location = new System.Drawing.Point(625, 154);
             this.btnGrabberRight.Name = "btnGrabberRight";
             this.btnGrabberRight.Size = new System.Drawing.Size(142, 142);
             this.btnGrabberRight.TabIndex = 17;
@@ -89,8 +90,9 @@
             // 
             // btnSearchGreen
             // 
+            this.btnSearchGreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearchGreen.Image = global::GoBot.Properties.Resources.SearchBuoyGreen;
-            this.btnSearchGreen.Location = new System.Drawing.Point(621, 302);
+            this.btnSearchGreen.Location = new System.Drawing.Point(625, 302);
             this.btnSearchGreen.Name = "btnSearchGreen";
             this.btnSearchGreen.Size = new System.Drawing.Size(142, 142);
             this.btnSearchGreen.TabIndex = 14;
@@ -99,8 +101,9 @@
             // 
             // btnRightDropoff
             // 
+            this.btnRightDropoff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRightDropoff.Image = ((System.Drawing.Image)(resources.GetObject("btnRightDropoff.Image")));
-            this.btnRightDropoff.Location = new System.Drawing.Point(769, 302);
+            this.btnRightDropoff.Location = new System.Drawing.Point(773, 302);
             this.btnRightDropoff.Name = "btnRightDropoff";
             this.btnRightDropoff.Size = new System.Drawing.Size(142, 142);
             this.btnRightDropoff.TabIndex = 13;
@@ -109,8 +112,9 @@
             // 
             // btnRightPickup
             // 
+            this.btnRightPickup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRightPickup.Image = global::GoBot.Properties.Resources.BigArrowUp;
-            this.btnRightPickup.Location = new System.Drawing.Point(769, 154);
+            this.btnRightPickup.Location = new System.Drawing.Point(773, 154);
             this.btnRightPickup.Name = "btnRightPickup";
             this.btnRightPickup.Size = new System.Drawing.Size(142, 142);
             this.btnRightPickup.TabIndex = 12;
@@ -140,7 +144,7 @@
             // btnClamp5
             // 
             this.btnClamp5.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp5.Image")));
-            this.btnClamp5.Location = new System.Drawing.Point(565, 531);
+            this.btnClamp5.Location = new System.Drawing.Point(567, 531);
             this.btnClamp5.Name = "btnClamp5";
             this.btnClamp5.Size = new System.Drawing.Size(64, 64);
             this.btnClamp5.TabIndex = 9;
@@ -150,7 +154,7 @@
             // btnClamp4
             // 
             this.btnClamp4.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp4.Image")));
-            this.btnClamp4.Location = new System.Drawing.Point(495, 531);
+            this.btnClamp4.Location = new System.Drawing.Point(497, 531);
             this.btnClamp4.Name = "btnClamp4";
             this.btnClamp4.Size = new System.Drawing.Size(64, 64);
             this.btnClamp4.TabIndex = 8;
@@ -160,7 +164,7 @@
             // btnClamp3
             // 
             this.btnClamp3.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp3.Image")));
-            this.btnClamp3.Location = new System.Drawing.Point(425, 531);
+            this.btnClamp3.Location = new System.Drawing.Point(427, 531);
             this.btnClamp3.Name = "btnClamp3";
             this.btnClamp3.Size = new System.Drawing.Size(64, 64);
             this.btnClamp3.TabIndex = 7;
@@ -170,7 +174,7 @@
             // btnClamp2
             // 
             this.btnClamp2.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp2.Image")));
-            this.btnClamp2.Location = new System.Drawing.Point(355, 531);
+            this.btnClamp2.Location = new System.Drawing.Point(357, 531);
             this.btnClamp2.Name = "btnClamp2";
             this.btnClamp2.Size = new System.Drawing.Size(64, 64);
             this.btnClamp2.TabIndex = 6;
@@ -180,7 +184,7 @@
             // btnClamp1
             // 
             this.btnClamp1.Image = ((System.Drawing.Image)(resources.GetObject("btnClamp1.Image")));
-            this.btnClamp1.Location = new System.Drawing.Point(285, 531);
+            this.btnClamp1.Location = new System.Drawing.Point(287, 531);
             this.btnClamp1.Name = "btnClamp1";
             this.btnClamp1.Size = new System.Drawing.Size(64, 64);
             this.btnClamp1.TabIndex = 5;
@@ -191,7 +195,7 @@
             // 
             this.btnFlagRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFlagRight.Image = global::GoBot.Properties.Resources.FlagO;
-            this.btnFlagRight.Location = new System.Drawing.Point(769, 6);
+            this.btnFlagRight.Location = new System.Drawing.Point(773, 6);
             this.btnFlagRight.Name = "btnFlagRight";
             this.btnFlagRight.Size = new System.Drawing.Size(142, 142);
             this.btnFlagRight.TabIndex = 2;
@@ -222,7 +226,7 @@
             // 
             this.btnFingerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFingerRight.Image = global::GoBot.Properties.Resources.Finger;
-            this.btnFingerRight.Location = new System.Drawing.Point(769, 450);
+            this.btnFingerRight.Location = new System.Drawing.Point(773, 450);
             this.btnFingerRight.Name = "btnFingerRight";
             this.btnFingerRight.Size = new System.Drawing.Size(142, 142);
             this.btnFingerRight.TabIndex = 4;
@@ -254,7 +258,7 @@
             this.Controls.Add(this.btnFingerRight);
             this.DoubleBuffered = true;
             this.Name = "PagePandaActuators";
-            this.Size = new System.Drawing.Size(916, 600);
+            this.Size = new System.Drawing.Size(920, 600);
             this.Load += new System.EventHandler(this.PagePandaActuators_Load);
             this.ResumeLayout(false);
 

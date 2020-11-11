@@ -129,6 +129,18 @@
     <Compile Include="IHM\Forms\FormConfirm.Designer.cs">
       <DependentUpon>FormConfirm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaModel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaModel.Designer.cs">
+      <DependentUpon>PagePandaModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaScore.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PagesPanda\PagePandaScore.Designer.cs">
+      <DependentUpon>PagePandaScore.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PagesPanda\PagePandaActuators.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -487,6 +499,12 @@
     <EmbeddedResource Include="IHM\Forms\FormConfirm.resx">
       <DependentUpon>FormConfirm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PagesPanda\PagePandaModel.resx">
+      <DependentUpon>PagePandaModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PagesPanda\PagePandaScore.resx">
+      <DependentUpon>PagePandaScore.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PagesPanda\PagePandaActuators.resx">
       <DependentUpon>PagePandaActuators.cs</DependentUpon>
     </EmbeddedResource>
@@ -760,6 +778,8 @@
     <None Include="Images\GrabberLeftClosed.png" />
     <None Include="Images\GrabberRightClosed.png" />
     <None Include="Images\GrabberRightOpened.png" />
+    <None Include="Images\Slow.png" />
+    <None Include="Images\Fast.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

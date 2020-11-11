@@ -43,6 +43,8 @@
             this.lblServo5 = new System.Windows.Forms.Label();
             this.lblServo6 = new System.Windows.Forms.Label();
             this.lblIO = new System.Windows.Forms.Label();
+            this.btnInit = new System.Windows.Forms.Button();
+            this.picInit = new System.Windows.Forms.PictureBox();
             this.picServo6 = new System.Windows.Forms.PictureBox();
             this.picServo2 = new System.Windows.Forms.PictureBox();
             this.picCAN = new System.Windows.Forms.PictureBox();
@@ -57,8 +59,7 @@
             this.picCalibration = new System.Windows.Forms.PictureBox();
             this.picStartTrigger = new System.Windows.Forms.PictureBox();
             this.picTable = new System.Windows.Forms.PictureBox();
-            this.btnInit = new System.Windows.Forms.Button();
-            this.picInit = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picInit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).BeginInit();
@@ -73,7 +74,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCalibration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStartTrigger)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTable)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picInit)).BeginInit();
             this.SuspendLayout();
             // 
             // btnTrap
@@ -249,6 +249,26 @@
             this.lblIO.Text = "IO";
             this.lblIO.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // btnInit
+            // 
+            this.btnInit.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
+            this.btnInit.Location = new System.Drawing.Point(5, 146);
+            this.btnInit.Name = "btnInit";
+            this.btnInit.Size = new System.Drawing.Size(261, 100);
+            this.btnInit.TabIndex = 125;
+            this.btnInit.Text = "Init";
+            this.btnInit.UseVisualStyleBackColor = true;
+            this.btnInit.Click += new System.EventHandler(this.btnInit_Click);
+            // 
+            // picInit
+            // 
+            this.picInit.Image = global::GoBot.Properties.Resources.ValidNok96;
+            this.picInit.Location = new System.Drawing.Point(269, 146);
+            this.picInit.Name = "picInit";
+            this.picInit.Size = new System.Drawing.Size(96, 96);
+            this.picInit.TabIndex = 126;
+            this.picInit.TabStop = false;
+            // 
             // picServo6
             // 
             this.picServo6.Image = global::GoBot.Properties.Resources.ValidNok48;
@@ -395,26 +415,6 @@
             this.picTable.TabIndex = 0;
             this.picTable.TabStop = false;
             // 
-            // btnInit
-            // 
-            this.btnInit.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
-            this.btnInit.Location = new System.Drawing.Point(5, 146);
-            this.btnInit.Name = "btnInit";
-            this.btnInit.Size = new System.Drawing.Size(261, 100);
-            this.btnInit.TabIndex = 125;
-            this.btnInit.Text = "Init";
-            this.btnInit.UseVisualStyleBackColor = true;
-            this.btnInit.Click += new System.EventHandler(this.btnInit_Click);
-            // 
-            // picInit
-            // 
-            this.picInit.Image = global::GoBot.Properties.Resources.ValidNok96;
-            this.picInit.Location = new System.Drawing.Point(269, 146);
-            this.picInit.Name = "picInit";
-            this.picInit.Size = new System.Drawing.Size(96, 96);
-            this.picInit.TabIndex = 126;
-            this.picInit.TabStop = false;
-            // 
             // PagePandaMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -453,8 +453,9 @@
             this.Controls.Add(this.picTable);
             this.DoubleBuffered = true;
             this.Name = "PagePandaMatch";
-            this.Size = new System.Drawing.Size(916, 600);
+            this.Size = new System.Drawing.Size(920, 600);
             this.Load += new System.EventHandler(this.PageMatch_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.picInit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).EndInit();
@@ -469,7 +470,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCalibration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStartTrigger)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picTable)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picInit)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -33,6 +33,8 @@
             this.tabControlPanda = new System.Windows.Forms.TabControl();
             this.tabPandaMatch = new System.Windows.Forms.TabPage();
             this.pagePandaMatch = new GoBot.IHM.Pages.PagePandaMatch();
+            this.tabPandaTable = new System.Windows.Forms.TabPage();
+            this.pagePandaTable = new GoBot.IHM.Pages.PagePandaTable();
             this.tabPandaMove = new System.Windows.Forms.TabPage();
             this.pnlPandaMove = new GoBot.IHM.Pages.PagePandaMove();
             this.tabPandaActuators = new System.Windows.Forms.TabPage();
@@ -56,10 +58,11 @@
             this.picServo4 = new System.Windows.Forms.PictureBox();
             this.picCAN = new System.Windows.Forms.PictureBox();
             this.picServo2 = new System.Windows.Forms.PictureBox();
-            this.tabPandaTable = new System.Windows.Forms.TabPage();
-            this.pagePandaTable = new GoBot.IHM.Pages.PagePandaTable();
+            this.tabScore = new System.Windows.Forms.TabPage();
+            this.pagePandaScore1 = new GoBot.IHM.Pages.PagePandaScore();
             this.tabControlPanda.SuspendLayout();
             this.tabPandaMatch.SuspendLayout();
+            this.tabPandaTable.SuspendLayout();
             this.tabPandaMove.SuspendLayout();
             this.tabPandaActuators.SuspendLayout();
             this.tabPandaLidar.SuspendLayout();
@@ -78,7 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picServo4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).BeginInit();
-            this.tabPandaTable.SuspendLayout();
+            this.tabScore.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlPanda
@@ -88,6 +91,7 @@
             this.tabControlPanda.Controls.Add(this.tabPandaMove);
             this.tabControlPanda.Controls.Add(this.tabPandaActuators);
             this.tabControlPanda.Controls.Add(this.tabPandaLidar);
+            this.tabControlPanda.Controls.Add(this.tabScore);
             this.tabControlPanda.Location = new System.Drawing.Point(0, 0);
             this.tabControlPanda.Margin = new System.Windows.Forms.Padding(0);
             this.tabControlPanda.Name = "tabControlPanda";
@@ -106,13 +110,32 @@
             this.tabPandaMatch.TabIndex = 0;
             this.tabPandaMatch.Text = "Match";
             // 
-            // pnlMatch
+            // pagePandaMatch
             // 
             this.pagePandaMatch.BackColor = System.Drawing.Color.Black;
             this.pagePandaMatch.Location = new System.Drawing.Point(6, 6);
-            this.pagePandaMatch.Name = "pnlMatch";
+            this.pagePandaMatch.Name = "pagePandaMatch";
             this.pagePandaMatch.Size = new System.Drawing.Size(920, 600);
             this.pagePandaMatch.TabIndex = 0;
+            // 
+            // tabPandaTable
+            // 
+            this.tabPandaTable.Controls.Add(this.pagePandaTable);
+            this.tabPandaTable.Location = new System.Drawing.Point(4, 22);
+            this.tabPandaTable.Name = "tabPandaTable";
+            this.tabPandaTable.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPandaTable.Size = new System.Drawing.Size(1034, 611);
+            this.tabPandaTable.TabIndex = 4;
+            this.tabPandaTable.Text = "Table";
+            this.tabPandaTable.UseVisualStyleBackColor = true;
+            // 
+            // pagePandaTable
+            // 
+            this.pagePandaTable.BackColor = System.Drawing.Color.Black;
+            this.pagePandaTable.Location = new System.Drawing.Point(6, 6);
+            this.pagePandaTable.Name = "pagePandaTable";
+            this.pagePandaTable.Size = new System.Drawing.Size(920, 600);
+            this.pagePandaTable.TabIndex = 0;
             // 
             // tabPandaMove
             // 
@@ -355,24 +378,24 @@
             this.picServo2.TabIndex = 3;
             this.picServo2.TabStop = false;
             // 
-            // tabPandaTable
+            // tabScore
             // 
-            this.tabPandaTable.Controls.Add(this.pagePandaTable);
-            this.tabPandaTable.Location = new System.Drawing.Point(4, 22);
-            this.tabPandaTable.Name = "tabPandaTable";
-            this.tabPandaTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPandaTable.Size = new System.Drawing.Size(1034, 611);
-            this.tabPandaTable.TabIndex = 4;
-            this.tabPandaTable.Text = "Table";
-            this.tabPandaTable.UseVisualStyleBackColor = true;
+            this.tabScore.Controls.Add(this.pagePandaScore1);
+            this.tabScore.Location = new System.Drawing.Point(4, 22);
+            this.tabScore.Name = "tabScore";
+            this.tabScore.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScore.Size = new System.Drawing.Size(1034, 611);
+            this.tabScore.TabIndex = 5;
+            this.tabScore.Text = "Score";
+            this.tabScore.UseVisualStyleBackColor = true;
             // 
-            // pagePandaTable
+            // pagePandaScore1
             // 
-            this.pagePandaTable.BackColor = System.Drawing.Color.Black;
-            this.pagePandaTable.Location = new System.Drawing.Point(6, 6);
-            this.pagePandaTable.Name = "pagePandaTable";
-            this.pagePandaTable.Size = new System.Drawing.Size(920, 600);
-            this.pagePandaTable.TabIndex = 0;
+            this.pagePandaScore1.BackColor = System.Drawing.Color.Black;
+            this.pagePandaScore1.Location = new System.Drawing.Point(6, 6);
+            this.pagePandaScore1.Name = "pagePandaScore1";
+            this.pagePandaScore1.Size = new System.Drawing.Size(920, 600);
+            this.pagePandaScore1.TabIndex = 0;
             // 
             // PagePanda
             // 
@@ -387,6 +410,7 @@
             this.Load += new System.EventHandler(this.PagePanda_Load);
             this.tabControlPanda.ResumeLayout(false);
             this.tabPandaMatch.ResumeLayout(false);
+            this.tabPandaTable.ResumeLayout(false);
             this.tabPandaMove.ResumeLayout(false);
             this.tabPandaActuators.ResumeLayout(false);
             this.tabPandaLidar.ResumeLayout(false);
@@ -405,7 +429,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picServo4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCAN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picServo2)).EndInit();
-            this.tabPandaTable.ResumeLayout(false);
+            this.tabScore.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -440,5 +464,7 @@
         private WorldPanel picWorld;
         private System.Windows.Forms.TabPage tabPandaTable;
         private PagePandaTable pagePandaTable;
+        private System.Windows.Forms.TabPage tabScore;
+        private PagePandaScore pagePandaScore1;
     }
 }
