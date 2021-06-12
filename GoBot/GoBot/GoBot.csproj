@@ -69,12 +69,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
+    <Compile Include="Actionneurs\Arms.cs" />
     <Compile Include="Actionneurs\Elevators.cs" />
     <Compile Include="Actionneurs\Fingers.cs" />
     <Compile Include="Actionneurs\Flags.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
     <Compile Include="Actionneurs\Lifter.cs" />
+    <Compile Include="Actionneurs\Lifts.cs" />
     <Compile Include="Communications\CAN\CanConnection.cs" />
     <Compile Include="Communications\CAN\CanFrameDecoder.cs" />
     <Compile Include="Communications\CAN\CanSubConnection.cs" />

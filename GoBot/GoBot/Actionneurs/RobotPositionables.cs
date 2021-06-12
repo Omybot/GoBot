@@ -31,6 +31,16 @@ namespace GoBot
 
         public ServoLifter ServoLifter { get; set; } = new ServoLifter();
         public ServoTilter ServoTilter { get; set; } = new ServoTilter();
+
+        // Peit robot
+
+        public SmallElevatorLeft SmallElevatorLeft { get; set; } = new SmallElevatorLeft();
+        public SmallElevatorRight SmallElevatorRight { get; set; } = new SmallElevatorRight();
+        public SmallElevatorBack SmallElevatorBack { get; set; } = new SmallElevatorBack();
+        public ArmLeft ArmLeft { get; set; } = new ArmLeft();²
+        public ArmRight ArmRight { get; set; } = new ArmRight();
+        public Selector Selector { get; set; } = new Selector();
+        public Retractor Retractor { get; set; } = new Retractor();
     }
 }
 
@@ -201,4 +211,55 @@ namespace GoBot.Actionneurs
     }
 
     #endregion
+
+    // Petit robot
+
+    public abstract class Arm : PositionableServo
+    {
+        public int PositionClose { get; set; }
+        public int PositionOpen { get; set; }
+    }
+
+    public class ArmLeft : Arm
+    {
+        public override ServomoteurID ID => ServomoteurID.ArmLeft;
+    }
+
+    public class ArmRight : Arm
+    {
+        public override ServomoteurID ID => ServomoteurID.ArmRight;
+    }
+
+    public abstract class SmallElevator : PositionableServo
+    {
+        public int PositionBottom { get; set; }
+        public int PositionMiddle { get; set; }
+        public int PositionTop { get; set; }
+        public int PositionGrab { get; set; }
+    }
+    public class SmallElevatorLeft : SmallElevator
+    {
+        public override ServomoteurID ID => ServomoteurID.ElevatorLeft;
+    }
+    public class SmallElevatorRight : SmallElevator
+    {
+        public override ServomoteurID ID => ServomoteurID.ElevatorRight;
+    }
+    public class SmallElevatorBack : SmallElevator
+    {
+        public override ServomoteurID ID => ServomoteurID.ElevatorBack;
+    }
+    public class Selector : PositionableServo
+    {
+        public override ServomoteurID ID => ServomoteurID.Selector;
+        public int PositionLeft { get; set; }
+        public int PositionMiddle { get; set; }
+        public int PositionRight { get; set; }
+    }
+    public class Retractor : PositionableServo
+    {
+        public override ServomoteurID ID => ServomoteurID.Retractor;
+        public int PositionEngage { get; set; }
+        public int PositionDisengage { get; set; }
+    }
 }

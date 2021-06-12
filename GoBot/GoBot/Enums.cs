@@ -50,6 +50,16 @@
         FingerRight = 21,
         FingerLeft = 22,
         GrabberRight = 23,
+
+        // Petit robot (astuce no >= 100 = modulo)
+        ElevatorLeft = 100,
+        ElevatorRight = 101,
+        ElevatorBack = 102,
+        Retractor = 103,
+
+        Selector = 104,
+        ArmLeft = 105,
+        ArmRight = 106
     }
 
     public enum MotorID
@@ -74,7 +84,15 @@
         OpenVacuumRightFront = 0x21,
         OpenVacuumLeftFront = 0x20,
         OpenVacuumRightBack = 0x22,
-        OpenVacuumLeftBack = 0x23
+        OpenVacuumLeftBack = 0x23,
+
+        // Petit robot
+        MakeVacuumLeft = 0x24,
+        MakeVacuumRight = 0x25,
+        MakeVacuumBack = 0x26,
+        OpenVacuumLeft = 0x27,
+        OpenVacuumRight = 0x28,
+        OpenVacuumBack = 0x29
     }
 
     public enum SensorOnOffID
@@ -84,7 +102,12 @@
         PressureSensorLeftFront = 0x12,
         PressureSensorRightBack = 0x13,
         PressureSensorLeftBack = 0x14,
-        PresenceBuoyRight = 0x20
+        PresenceBuoyRight = 0x20,
+
+        // Petit robot
+        PressureSensorLeft = 0x21,
+        PressureSensorRight = 0x22,
+        PressureSensorBack = 0x23
     }
 
     public enum SensorColorID
