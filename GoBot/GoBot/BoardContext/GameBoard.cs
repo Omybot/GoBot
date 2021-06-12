@@ -400,5 +400,11 @@ namespace GoBot.BoardContext
 
             return (int)(factor * maxSpeed);
         }
+
+        public static void RemoveVirtualBuoy(RealPoint center)
+        {
+            Buoy b = _elements.FindBuoy(center);
+            if (b.IsVirtual)_elements.RemoveBuoy(b);
+        }
     }
 }

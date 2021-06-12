@@ -81,6 +81,11 @@ namespace GoBot.Devices
             return positions;
         }
 
+        public override List<RealPoint> GetPoints()
+        {
+            return Detection(_position);
+        }
+
         private List<RealPoint> Detection(Position refPosition)
         {
             List<RealPoint> positions = new List<RealPoint>();

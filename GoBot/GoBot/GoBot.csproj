@@ -234,6 +234,7 @@
     </Compile>
     <Compile Include="Movements\MovementBuoy.cs" />
     <Compile Include="Movements\MovementColorDropoff.cs" />
+    <Compile Include="Movements\MovementRandomPickup.cs" />
     <Compile Include="Movements\MovementRedDropoff.cs" />
     <Compile Include="Movements\MovementGreenDropoff.cs" />
     <Compile Include="Movements\MovementFlags.cs" />
@@ -780,6 +781,7 @@
     <None Include="Images\GrabberRightOpened.png" />
     <None Include="Images\Slow.png" />
     <None Include="Images\Fast.png" />
+    <None Include="Images\Logo.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

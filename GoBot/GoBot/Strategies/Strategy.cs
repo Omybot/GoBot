@@ -124,6 +124,8 @@ namespace GoBot.Strategies
                     }
                 }
             }
+
+            Movements.Add(new MovementRandomPickup(GameBoard.Elements.RandomPickup));
         }
 
         /// <summary>

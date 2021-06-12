@@ -191,6 +191,9 @@ namespace GoBot
                     {
                         Graphics g = Graphics.FromImage(bmp);
                         g.SmoothingMode = SmoothingMode.AntiAlias;
+                        g.SetClip(Scale.RealToScreenRect(new RectangleF(0, 0, 3000, 2000)));
+                        g.DrawEllipse(Pens.DimGray, Scale.RealToScreenRect(new RectangleF(1000, -500, 1000, 1000)));
+                        g.ResetClip();
 
                         if (AfficheGraph || AfficheGraphArretes)
                             DessineGraph(Robots.MainRobot, g, AfficheGraph, AfficheGraphArretes);

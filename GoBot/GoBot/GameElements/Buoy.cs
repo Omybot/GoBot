@@ -15,12 +15,17 @@ namespace GoBot.GameElements
 
         private Color _color;
 
-        public Buoy(RealPoint position, Color owner, Color color, int hoverRadius) : base(position, owner, hoverRadius)
+        private bool _virtual;
+
+        public Buoy(RealPoint position, Color owner, Color color, bool isVirtual = false) : base(position, owner, 36)
         {
             _color = color;
+            _virtual = isVirtual;
         }
 
         public Color Color => _color;
+
+        public bool IsVirtual => _virtual;
 
         public override void Paint(Graphics g, WorldScale scale)
         {

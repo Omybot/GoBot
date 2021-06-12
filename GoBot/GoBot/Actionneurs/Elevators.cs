@@ -7,7 +7,7 @@ using System.Threading;
 
 using Geometry;
 using Geometry.Shapes;
-
+using GoBot.BoardContext;
 using GoBot.Devices;
 using GoBot.GameElements;
 using GoBot.Threading;
@@ -159,6 +159,7 @@ namespace GoBot.Actionneurs
             _buoysSecond[(int)PositionFloor.Floor1] = c;
         }
 
+        public bool CanStoreMore => CountTotal < 7;
         public int CountTotal => _buoysSecond.Concat(_buoysFirst).Where(b => b != Color.Transparent).Count();
         public int CountSecond => _buoysSecond.Where(b => b != Color.Transparent).Count();
         public int CountFirst => _buoysFirst.Where(b => b != Color.Transparent).Count();
@@ -534,13 +535,20 @@ namespace GoBot.Actionneurs
             return HasSomething();
         }
 
-        public void DoSearchBuoy(Color color)
+        public bool DoSearchBuoy(Color color, IShape containerZone = null)
         {
-            List<RealPoint> pts = ((Hokuyo)(AllDevices.LidarGround)).GetPoints();
+            List<RealPoint> pts = AllDevices.LidarGround.GetPoints();
+
+            pts = pts.Where(o => GameBoard.IsInside(o, 50)).ToList();
+            if (containerZone != null)
+            {
+                pts = pts.Where(o => containerZone.Contains(o)).ToList();
+            }
 
             List<List<RealPoint>> groups = pts.GroupByDistance(80);
-
             List<Tuple<Circle, Color>> buoys = new List<Tuple<Circle, Color>>();
+
+            bool output = false;
 
             for (int i = 0; i < groups.Count; i++)
             {
@@ -593,7 +601,17 @@ namespace GoBot.Actionneurs
                 Robots.MainRobot.Move(-dist);
 
                 //DoSearchBuoy();
+                output = true;
+
+                if (Robots.Simulation)
+                    GameBoard.RemoveVirtualBuoy(buoy.Center);
             }
+            else
+            {
+                output = false;
+            }
+
+            return output;
         }
 
         protected abstract RealPoint GetEntryFrontPoint();

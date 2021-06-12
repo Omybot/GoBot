@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using GoBot.BoardContext;
+using System.Threading;
 
 namespace GoBot.Devices
 {
@@ -20,6 +21,9 @@ namespace GoBot.Devices
 
         ThreadLink _feedLink;
 
+        List<RealPoint> _lastMeasure;
+        Mutex _lockMeasure;
+
         public Pepperl(IPAddress ip)
         {
             _ip = ip;
@@ -28,6 +32,7 @@ namespace GoBot.Devices
             _freq = PepperlFreq.Hz35;
             _filter = PepperlFilter.None;
             _filterWidth = 2;
+
             _checker.SendConnectionTest += _checker_SendConnectionTest;
         }
 
@@ -61,11 +66,12 @@ namespace GoBot.Devices
             return distance * Resolution.InRadians;
         }
 
-        List<Double> distances = new List<double>();
-
         private void _manager_NewMeasure(List<PepperlManager.PepperlPoint> measure, Geometry.AnglePosition startAngle, Geometry.AngleDelta resolution)
         {
             List<RealPoint> points = ValuesToPositions(measure.Select(p => p.distance).ToList(), startAngle, resolution, false, 0, 5000, _position);
+            _lastMeasure = new List<RealPoint>(points);
+            _lockMeasure?.ReleaseMutex();
+
             OnNewMeasure(points);
         }
 
@@ -150,6 +156,16 @@ namespace GoBot.Devices
         private void FeedWatchDog()
         {
             _manager.FeedWatchDog();
+        }
+
+        public override List<RealPoint> GetPoints()
+        {
+            _lockMeasure = new Mutex();
+            _lockMeasure.WaitOne();
+            _lockMeasure.Dispose();
+            _lockMeasure = null;
+
+            return new List<RealPoint>(_lastMeasure);
         }
     }
 }

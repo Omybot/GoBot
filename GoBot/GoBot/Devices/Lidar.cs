@@ -59,6 +59,7 @@ namespace GoBot.Devices
 
         protected abstract bool StartLoop();
         protected abstract void StopLoop();
+        public abstract List<RealPoint> GetPoints();
                 
         protected void OnNewMeasure(List<RealPoint> measure)
         {

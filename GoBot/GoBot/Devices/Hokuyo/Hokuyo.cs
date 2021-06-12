@@ -133,7 +133,7 @@ namespace GoBot.Devices
             _linkMeasures.Cancel();
         }
 
-        public List<RealPoint> GetPoints()
+        public override List<RealPoint> GetPoints()
         {
             return GetPoints(true);
         }

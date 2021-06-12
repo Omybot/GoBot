@@ -53,5 +53,10 @@ namespace GoBot.GameElements
             pWhite.Dispose();
             pWhiteBold.Dispose();
         }
+
+        public bool Contains(RealPoint p)
+        {
+            return new Circle(_position, _hoverRadius).Contains(p);
+        }
     }
 }

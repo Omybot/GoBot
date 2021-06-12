@@ -51,12 +51,15 @@ namespace GoBot.GameElements
 
         public void AddLoad(List<Color> load)
         {
-            load = new List<Color>(load);
+            if (load != null)
+            {
+                load = new List<Color>(load);
 
-            if (Owner == GameBoard.ColorLeftBlue)
-                load.Reverse();
+                if (Owner == GameBoard.ColorLeftBlue)
+                    load.Reverse();
 
-            _loads.Add(load);
+                _loads.Add(load);
+            }
         }
 
         public void SetLoadTop(List<Color> load)

@@ -54,7 +54,7 @@
             this.btnColorLeft.Location = new System.Drawing.Point(191, 25);
             this.btnColorLeft.MaximumSize = new System.Drawing.Size(35, 15);
             this.btnColorLeft.MinimumSize = new System.Drawing.Size(35, 15);
-            this.btnColorLeft.Mirrored = true;
+            this.btnColorLeft.Mirrored = false;
             this.btnColorLeft.Name = "btnColorLeft";
             this.btnColorLeft.Size = new System.Drawing.Size(35, 15);
             this.btnColorLeft.TabIndex = 0;
@@ -91,7 +91,7 @@
             this.btnColorRight.Location = new System.Drawing.Point(191, 192);
             this.btnColorRight.MaximumSize = new System.Drawing.Size(35, 15);
             this.btnColorRight.MinimumSize = new System.Drawing.Size(35, 15);
-            this.btnColorRight.Mirrored = true;
+            this.btnColorRight.Mirrored = false;
             this.btnColorRight.Name = "btnColorRight";
             this.btnColorRight.Size = new System.Drawing.Size(35, 15);
             this.btnColorRight.TabIndex = 4;

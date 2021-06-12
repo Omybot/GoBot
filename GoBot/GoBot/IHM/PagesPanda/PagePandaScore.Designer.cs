@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblScore = new System.Windows.Forms.Label();
+            this.pnlDetails = new System.Windows.Forms.Panel();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label43 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -80,7 +80,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.picLogo = new System.Windows.Forms.PictureBox();
+            this.lblSlogan = new System.Windows.Forms.Label();
+            this.lblSubSlogan = new System.Windows.Forms.Label();
+            this.pnlDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
@@ -89,6 +92,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -104,74 +108,75 @@
             this.label1.Text = "Estimation du score";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // lblScore
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblScore.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Font = new System.Drawing.Font("Eras Demi ITC", 128F);
-            this.label2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label2.Location = new System.Drawing.Point(0, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(920, 197);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "116";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblScore.Font = new System.Drawing.Font("Eras Demi ITC", 172F);
+            this.lblScore.ForeColor = System.Drawing.Color.LimeGreen;
+            this.lblScore.Location = new System.Drawing.Point(0, 62);
+            this.lblScore.Name = "lblScore";
+            this.lblScore.Size = new System.Drawing.Size(920, 258);
+            this.lblScore.TabIndex = 1;
+            this.lblScore.Text = "116";
+            this.lblScore.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // panel1
+            // pnlDetails
             // 
-            this.panel1.Controls.Add(this.pictureBox4);
-            this.panel1.Controls.Add(this.label43);
-            this.panel1.Controls.Add(this.label16);
-            this.panel1.Controls.Add(this.label37);
-            this.panel1.Controls.Add(this.label38);
-            this.panel1.Controls.Add(this.label39);
-            this.panel1.Controls.Add(this.label40);
-            this.panel1.Controls.Add(this.label41);
-            this.panel1.Controls.Add(this.label42);
-            this.panel1.Controls.Add(this.label36);
-            this.panel1.Controls.Add(this.label33);
-            this.panel1.Controls.Add(this.label34);
-            this.panel1.Controls.Add(this.label35);
-            this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.label12);
-            this.panel1.Controls.Add(this.label13);
-            this.panel1.Controls.Add(this.label22);
-            this.panel1.Controls.Add(this.label23);
-            this.panel1.Controls.Add(this.label25);
-            this.panel1.Controls.Add(this.label31);
-            this.panel1.Controls.Add(this.label32);
-            this.panel1.Controls.Add(this.label29);
-            this.panel1.Controls.Add(this.label30);
-            this.panel1.Controls.Add(this.label27);
-            this.panel1.Controls.Add(this.label28);
-            this.panel1.Controls.Add(this.label26);
-            this.panel1.Controls.Add(this.label24);
-            this.panel1.Controls.Add(this.label21);
-            this.panel1.Controls.Add(this.pictureBox8);
-            this.panel1.Controls.Add(this.pictureBox7);
-            this.panel1.Controls.Add(this.label20);
-            this.panel1.Controls.Add(this.label19);
-            this.panel1.Controls.Add(this.pictureBox6);
-            this.panel1.Controls.Add(this.label18);
-            this.panel1.Controls.Add(this.pictureBox5);
-            this.panel1.Controls.Add(this.pictureBox3);
-            this.panel1.Controls.Add(this.label17);
-            this.panel1.Controls.Add(this.label15);
-            this.panel1.Controls.Add(this.pictureBox2);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.label14);
-            this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.label9);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(3, 241);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(917, 356);
-            this.panel1.TabIndex = 2;
+            this.pnlDetails.Controls.Add(this.pictureBox4);
+            this.pnlDetails.Controls.Add(this.label43);
+            this.pnlDetails.Controls.Add(this.label16);
+            this.pnlDetails.Controls.Add(this.label37);
+            this.pnlDetails.Controls.Add(this.label38);
+            this.pnlDetails.Controls.Add(this.label39);
+            this.pnlDetails.Controls.Add(this.label40);
+            this.pnlDetails.Controls.Add(this.label41);
+            this.pnlDetails.Controls.Add(this.label42);
+            this.pnlDetails.Controls.Add(this.label36);
+            this.pnlDetails.Controls.Add(this.label33);
+            this.pnlDetails.Controls.Add(this.label34);
+            this.pnlDetails.Controls.Add(this.label35);
+            this.pnlDetails.Controls.Add(this.label11);
+            this.pnlDetails.Controls.Add(this.label12);
+            this.pnlDetails.Controls.Add(this.label13);
+            this.pnlDetails.Controls.Add(this.label22);
+            this.pnlDetails.Controls.Add(this.label23);
+            this.pnlDetails.Controls.Add(this.label25);
+            this.pnlDetails.Controls.Add(this.label31);
+            this.pnlDetails.Controls.Add(this.label32);
+            this.pnlDetails.Controls.Add(this.label29);
+            this.pnlDetails.Controls.Add(this.label30);
+            this.pnlDetails.Controls.Add(this.label27);
+            this.pnlDetails.Controls.Add(this.label28);
+            this.pnlDetails.Controls.Add(this.label26);
+            this.pnlDetails.Controls.Add(this.label24);
+            this.pnlDetails.Controls.Add(this.label21);
+            this.pnlDetails.Controls.Add(this.pictureBox8);
+            this.pnlDetails.Controls.Add(this.pictureBox7);
+            this.pnlDetails.Controls.Add(this.label20);
+            this.pnlDetails.Controls.Add(this.label19);
+            this.pnlDetails.Controls.Add(this.pictureBox6);
+            this.pnlDetails.Controls.Add(this.label18);
+            this.pnlDetails.Controls.Add(this.pictureBox5);
+            this.pnlDetails.Controls.Add(this.pictureBox3);
+            this.pnlDetails.Controls.Add(this.label17);
+            this.pnlDetails.Controls.Add(this.label15);
+            this.pnlDetails.Controls.Add(this.pictureBox2);
+            this.pnlDetails.Controls.Add(this.pictureBox1);
+            this.pnlDetails.Controls.Add(this.label14);
+            this.pnlDetails.Controls.Add(this.label10);
+            this.pnlDetails.Controls.Add(this.label9);
+            this.pnlDetails.Controls.Add(this.label8);
+            this.pnlDetails.Controls.Add(this.label7);
+            this.pnlDetails.Controls.Add(this.label6);
+            this.pnlDetails.Controls.Add(this.label5);
+            this.pnlDetails.Controls.Add(this.label4);
+            this.pnlDetails.Controls.Add(this.label3);
+            this.pnlDetails.Location = new System.Drawing.Point(3, 241);
+            this.pnlDetails.Name = "pnlDetails";
+            this.pnlDetails.Size = new System.Drawing.Size(917, 356);
+            this.pnlDetails.TabIndex = 2;
+            this.pnlDetails.Visible = false;
             // 
             // pictureBox4
             // 
@@ -696,19 +701,62 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Bouées valides";
             // 
+            // picLogo
+            // 
+            this.picLogo.BackColor = System.Drawing.Color.Transparent;
+            this.picLogo.Image = global::GoBot.Properties.Resources.Logo;
+            this.picLogo.Location = new System.Drawing.Point(395, 301);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Size = new System.Drawing.Size(136, 197);
+            this.picLogo.TabIndex = 3;
+            this.picLogo.TabStop = false;
+            this.picLogo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picLogo_MouseClick);
+            this.picLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picLogo_MouseDown);
+            this.picLogo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picLogo_MouseUp);
+            // 
+            // lblSlogan
+            // 
+            this.lblSlogan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSlogan.BackColor = System.Drawing.Color.Transparent;
+            this.lblSlogan.Font = new System.Drawing.Font("Eras Demi ITC", 36F);
+            this.lblSlogan.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblSlogan.Location = new System.Drawing.Point(0, 507);
+            this.lblSlogan.Name = "lblSlogan";
+            this.lblSlogan.Size = new System.Drawing.Size(920, 55);
+            this.lblSlogan.TabIndex = 4;
+            this.lblSlogan.Text = "Garanti sans pépins !";
+            this.lblSlogan.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblSubSlogan
+            // 
+            this.lblSubSlogan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSubSlogan.Font = new System.Drawing.Font("Eras Demi ITC", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubSlogan.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblSubSlogan.Location = new System.Drawing.Point(0, 555);
+            this.lblSubSlogan.Name = "lblSubSlogan";
+            this.lblSubSlogan.Size = new System.Drawing.Size(920, 41);
+            this.lblSubSlogan.TabIndex = 5;
+            this.lblSubSlogan.Text = "Enfin, presque...";
+            this.lblSubSlogan.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // PagePandaScore
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.lblSubSlogan);
+            this.Controls.Add(this.lblSlogan);
+            this.Controls.Add(this.picLogo);
+            this.Controls.Add(this.pnlDetails);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblScore);
             this.DoubleBuffered = true;
             this.Name = "PagePandaScore";
             this.Size = new System.Drawing.Size(920, 600);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlDetails.ResumeLayout(false);
+            this.pnlDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
@@ -717,6 +765,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -724,8 +773,8 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblScore;
+        private System.Windows.Forms.Panel pnlDetails;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label16;
@@ -775,5 +824,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox picLogo;
+        private System.Windows.Forms.Label lblSlogan;
+        private System.Windows.Forms.Label lblSubSlogan;
     }
 }
