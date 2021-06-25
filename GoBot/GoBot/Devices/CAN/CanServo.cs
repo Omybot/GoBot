@@ -35,7 +35,7 @@ namespace GoBot.Devices.CAN
 
         public CanServo(ServomoteurID id, iCanSpeakable communication)
         {
-            _id = id;
+            _id = (ServomoteurID)((int)id % 100);
             _communication = communication;
             _lockResponse = new Semaphore(0, int.MaxValue);
             _enableAutoCut = false;

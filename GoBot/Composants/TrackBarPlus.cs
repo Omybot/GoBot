@@ -348,6 +348,9 @@ namespace Composants
                 else
                     y = Height - _cursorSize - 1 - (int)(((_value - _minValue) * (Height - 1 - _cursorSize)) / (_maxValue - _minValue));
 
+                if (_minValue == _maxValue)
+                    y = 0;
+
                 rBall = new Rectangle(0, y, _cursorSize, _cursorSize);
             }
             else
@@ -357,6 +360,9 @@ namespace Composants
                     x = Width - _cursorSize - 1 - (int)(((_value - _minValue) * (Width - 1 - _cursorSize)) / (_maxValue - _minValue));
                 else
                     x = (int)(((_value - _minValue) * (Width - 1 - _cursorSize)) / (_maxValue - _minValue));
+
+                if (_minValue == _maxValue)
+                    x = 0;
 
                 rBall = new Rectangle(x, 0, _cursorSize, _cursorSize);
             }

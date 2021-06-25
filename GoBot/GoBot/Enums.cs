@@ -52,14 +52,15 @@
         GrabberRight = 23,
 
         // Petit robot (astuce no >= 100 = modulo)
-        ElevatorLeft = 100,
-        ElevatorRight = 101,
-        ElevatorBack = 102,
-        Retractor = 103,
+        ElevatorRight = 100,
+        Unued101 = 101,
+        ArmLeft = 102,
+        ElevatorLeft = 103,
 
-        Selector = 104,
-        ArmLeft = 105,
-        ArmRight = 106
+        ElevatorBack = 104,
+        Retractor = 105,
+        ArmRight = 106,
+        Selector = 107
     }
 
     public enum MotorID

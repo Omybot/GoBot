@@ -37,7 +37,7 @@ namespace GoBot
         public SmallElevatorLeft SmallElevatorLeft { get; set; } = new SmallElevatorLeft();
         public SmallElevatorRight SmallElevatorRight { get; set; } = new SmallElevatorRight();
         public SmallElevatorBack SmallElevatorBack { get; set; } = new SmallElevatorBack();
-        public ArmLeft ArmLeft { get; set; } = new ArmLeft();²
+        public ArmLeft ArmLeft { get; set; } = new ArmLeft();
         public ArmRight ArmRight { get; set; } = new ArmRight();
         public Selector Selector { get; set; } = new Selector();
         public Retractor Retractor { get; set; } = new Retractor();

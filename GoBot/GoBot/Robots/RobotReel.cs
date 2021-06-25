@@ -88,6 +88,18 @@ namespace GoBot
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightBack, Board.RecIO);
             _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightFront, Board.RecMove);
 
+            // Petit robot
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRight, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumBack, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumRight, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumBack, Board.RecMove);
+
+            _boardSensorOnOff.Add(SensorOnOffID.PressureSensorLeft, Board.RecMove);
+            _boardSensorOnOff.Add(SensorOnOffID.PressureSensorRight, Board.RecMove);
+            _boardSensorOnOff.Add(SensorOnOffID.PressureSensorBack, Board.RecMove);
+
             _boardMotor = new Dictionary<MotorID, Board>();
             _boardMotor.Add(MotorID.ElevatorLeft, Board.RecIO);
             _boardMotor.Add(MotorID.ElevatorRight, Board.RecIO);

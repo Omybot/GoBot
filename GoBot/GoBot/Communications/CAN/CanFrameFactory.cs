@@ -29,7 +29,10 @@ namespace GoBot.Communications.CAN
 
         public static ServomoteurID ExtractServomoteurID(Frame frame)
         {
-            return (ServomoteurID)((int)(ExtractBoard(frame) - 1) * 4 + frame[3]);
+            if (Config.CurrentConfig.IsMiniRobot)
+                return (ServomoteurID)((int)(ExtractBoard(frame) - 1) * 4 + frame[3]);
+            else
+                return (ServomoteurID)((int)(ExtractBoard(frame) - 1) * 4 + frame[3]);
         }
 
         public static int ExtractValue(Frame frame, int paramNo = 0)

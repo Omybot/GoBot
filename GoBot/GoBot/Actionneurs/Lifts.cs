@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace GoBot.Actionneurs
 {
@@ -46,6 +47,29 @@ namespace GoBot.Actionneurs
         public void DoPositionGrab()
         {
             _elevator.SendPosition(_elevator.PositionGrab);
+        }
+
+        public void DoTest()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                DoPositionBottom();
+                Thread.Sleep(500);
+                DoAirLock();
+
+                Thread.Sleep(500);
+                if (HasSomething())
+                {
+                    DoPositionTop();
+                }
+                else
+                {
+                    DoPositionMiddle();
+                }
+
+                Thread.Sleep(1000);
+                DoAirUnlock();
+            }
         }
     }
 
@@ -109,6 +133,19 @@ namespace GoBot.Actionneurs
         public void DoDisengage()
         {
             _retractor.SendPosition(_retractor.PositionDisengage);
+        }
+
+        public void DoTestBack()
+        {
+            DoEngage();
+            Thread.Sleep(500);
+            DoDisengage();
+            Thread.Sleep(500);
+            DoPositionSelectorRight();
+            Thread.Sleep(500);
+            DoPositionSelectorMiddle();
+            Thread.Sleep(500);
+            DoPositionSelectorLeft();
         }
     }
 }

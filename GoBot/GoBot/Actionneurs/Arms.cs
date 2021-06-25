@@ -10,6 +10,12 @@ namespace GoBot.Actionneurs
         protected ArmLeft _leftArm;
         protected ArmRight _rightArm;
 
+        public Arms()
+        {
+            _leftArm = new ArmLeft();
+            _rightArm = new ArmRight();
+        }
+
         public void DoOpenLeft()
         {
             _leftArm.SendPosition(_leftArm.PositionOpen);
