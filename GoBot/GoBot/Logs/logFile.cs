@@ -11,6 +11,7 @@ namespace GoBot.Logs
         public LogFile(String fileName)
         {
             FileName = fileName;
+            if (!Directory.Exists(Path.GetDirectoryName(FileName))) Directory.CreateDirectory(Path.GetDirectoryName(FileName));
             Writer = new StreamWriter(FileName);
             Writer.AutoFlush = true;
         }
